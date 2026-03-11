@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import path from "path";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
 
@@ -7,11 +8,24 @@ export function getPrismaClient(): PrismaClient {
         return globalForPrisma.prisma;
     }
 
-    // Dynamic import workaround - use require for synchronous loading
+    // Dynamic import for the adapter
     const { PrismaLibSql } = require("@prisma/adapter-libsql");
-    const url = process.env.DATABASE_URL || "file:./prisma/dev.db";
-    const adapter = new PrismaLibSql({ url });
-    const client = new PrismaClient({ adapter } as any);
+    
+    // Construct absolute path
+    // In Hostinger standalone, the app runs from .next/standalone/
+    // but the prisma folder is usually at the root of the project.
+    // We try to find the root.
+    const rootPath = process.cwd();
+    const dbPath = path.join(rootPath, "prisma", "dev.db");
+    const dbUrl = `file:${dbPath}`;
+    
+    console.log("Prisma connecting to:", dbUrl);
+    
+    const adapter = new PrismaLibSql({ url: dbUrl });
+    const client = new PrismaClient({ 
+        adapter: adapter as any,
+        log: ['query', 'error', 'warn'] 
+    });
 
     if (process.env.NODE_ENV !== "production") {
         globalForPrisma.prisma = client;
@@ -20,7 +34,6 @@ export function getPrismaClient(): PrismaClient {
     return client;
 }
 
-// Export a proxy that lazily initializes
 export const prisma = new Proxy({} as PrismaClient, {
     get(_target, prop) {
         const client = getPrismaClient();
