@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useLanguage } from "@/lib/i18n-context"
 import { useSession } from "next-auth/react"
 import { useCart } from "@/lib/cart-context"
@@ -21,7 +21,7 @@ import { Copy, Info } from "lucide-react"
 
 const DEPOSIT_PERCENT = 30 // 30% deposit option
 
-export default function CheckoutPage() {
+function CheckoutContent() {
     const { lang } = useLanguage()
     const { data: session, status } = useSession()
     const router = useRouter()
@@ -722,5 +722,17 @@ export default function CheckoutPage() {
                 </div>
             </div>
         </div>
+    )
+}
+
+export default function CheckoutPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <Loader2 className="w-10 h-10 animate-spin text-[#0066FF]" />
+            </div>
+        }>
+            <CheckoutContent />
+        </Suspense>
     )
 }
