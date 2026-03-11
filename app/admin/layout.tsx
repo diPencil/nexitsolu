@@ -194,31 +194,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </div>
 
                 {/* Nav */}
-                <nav className="flex-1 px-3 py-6 space-y-8 overflow-y-auto custom-scrollbar select-none">
-                    <style jsx global>{`
-                        .custom-scrollbar::-webkit-scrollbar {
-                            width: 4px;
-                        }
-                        .custom-scrollbar::-webkit-scrollbar-track {
-                            background: transparent;
-                        }
-                        .custom-scrollbar::-webkit-scrollbar-thumb {
-                            background: rgba(0, 102, 255, 0.1);
-                            border-radius: 10px;
-                        }
-                        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                            background: rgba(0, 102, 255, 0.3);
-                        }
-                        /* Ensure mouse wheel works */
-                        .custom-scrollbar {
-                            scrollbar-width: thin;
-                            scrollbar-color: rgba(0, 102, 255, 0.1) transparent;
-                            -webkit-overflow-scrolling: touch;
-                        }
-                    `}</style>
+                <nav 
+                    className="flex-1 px-3 py-6 space-y-8 overflow-y-auto select-none"
+                    data-lenis-prevent="true"
+                >
                     {menuGroups.map((group, groupIndex) => (
                         <div key={groupIndex} className="space-y-1">
-                            <p className="px-3 text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3">
+                            <p className="px-3 text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em] mb-3">
                                 {group.title}
                             </p>
                             {group.items.map((item) => {
@@ -228,20 +210,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${isActive
-                                            ? 'bg-[#0066FF] text-white shadow-lg shadow-blue-500/20'
+                                        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${isActive
+                                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
                                             : 'text-zinc-500 hover:text-white hover:bg-white/5'
                                         }`}
                                     >
-                                        <item.icon className="w-[18px] h-[18px] shrink-0" />
+                                        <item.icon className={`w-[18px] h-[18px] shrink-0 ${isActive ? 'text-white' : 'text-zinc-500'}`} />
                                         <span className="truncate flex-1">{item.name}</span>
                                         {hasCount && (
-                                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${isActive ? 'bg-white/20 text-white' : 'bg-[#0066FF]/10 text-[#0066FF]'} border border-white/5`}>
+                                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${isActive ? 'bg-white/20 text-white' : 'bg-blue-600/10 text-blue-500'} border border-white/5`}>
                                                 {item.count}
                                             </span>
-                                        )}
-                                        {isActive && !hasCount && (
-                                            <div className={`w-1.5 h-1.5 rounded-full bg-white/50 ${lang === 'ar' ? 'mr-auto' : 'ml-auto'} shrink-0`} />
                                         )}
                                     </Link>
                                 )
