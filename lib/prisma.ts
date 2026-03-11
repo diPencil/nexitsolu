@@ -15,8 +15,8 @@ export function getPrismaClient(): PrismaClient {
     // In Hostinger standalone, the app runs from .next/standalone/
     // but the prisma folder is usually at the root of the project.
     // We try to find the root.
-    const rootPath = process.cwd();
-    const dbPath = path.join(rootPath, "prisma", "dev.db");
+    // Force absolute path for Hostinger
+    const dbPath = "/home/u909646470/domains/nexitsolu.com/nodejs/prisma/dev.db";
     const dbUrl = `file:${dbPath}`;
     
     console.log("Prisma connecting to:", dbUrl);
