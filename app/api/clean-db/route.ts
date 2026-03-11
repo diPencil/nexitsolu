@@ -19,25 +19,25 @@ export async function GET(req: Request) {
 
         // امسح كل الداتا بالترتيب الصح (Foreign Keys)
         await prisma.orderItem.deleteMany({})
-        logs.push("Cleared OrderItems")
-
+        await prisma.invoice.deleteMany({})
         await prisma.order.deleteMany({})
-        logs.push("Cleared Orders")
-
+        
+        await prisma.reviewMessage.deleteMany({})
         await prisma.review.deleteMany({})
-        logs.push("Cleared Reviews")
-
+        
         await prisma.message.deleteMany({})
-        logs.push("Cleared Messages")
-
         await prisma.notification.deleteMany({})
-        logs.push("Cleared Notifications")
-
+        await prisma.favorite.deleteMany({})
+        await prisma.wishlist.deleteMany({})
+        
         await prisma.product.deleteMany({})
-        logs.push("Cleared Products")
-
         await prisma.category.deleteMany({})
-        logs.push("Cleared Categories")
+        
+        await prisma.managedITRequest.deleteMany({})
+        await prisma.subscription.deleteMany({})
+        await prisma.techSupportRequest.deleteMany({})
+        await prisma.contactMessage.deleteMany({})
+        await prisma.shippingZone.deleteMany({})
 
         // امسح كل اليوزرز اللي مش أدمن
         await prisma.user.deleteMany({

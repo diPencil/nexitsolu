@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Sparkles, Star, ArrowUpRight, CheckCircle2, Bot, User, Loader2, Send, Plus, ArrowLeft, RefreshCcw, ExternalLink, MessageCircle } from "lucide-react"
+import { Sparkles, Star, ArrowUpRight, CheckCircle2, Bot, User, Loader2, Send, Plus, ArrowLeft, RefreshCcw, ExternalLink, MessageCircle, Copy, ThumbsUp, ThumbsDown, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/i18n-context"
 import Link from "next/link"
@@ -139,6 +139,7 @@ export default function NexBotClient() {
     
     const [inputValue, setInputValue] = useState("")
     const [messages, setMessages] = useState<{ role: 'user' | 'bot', content: string }[]>([])
+    const [feedback, setFeedback] = useState<Record<number, 'up' | 'down' | null>>({})
     const [isLoading, setIsLoading] = useState(false)
     const chatEndRef = useRef<HTMLDivElement>(null)
     const isInitialQueryExecuted = useRef(false)
@@ -245,11 +246,13 @@ export default function NexBotClient() {
                                 {lang === "ar" ? "مرحبًا بك في مستقبل الدعم" : "Welcome to the future of support"}
                             </div>
 
-                            <h1 className="text-3xl md:text-7xl font-semibold tracking-tighter leading-tight mb-6">
-                                {lang === "ar" ? "مساعد" : "Meet Our"} <span className="text-[#0066FF] mx-2">{lang === "ar" ? "نيكسيت الذكي" : "NexBot AI"}</span>
+                            <h1 className="text-3xl md:text-7xl font-semibold tracking-tighter leading-tight mb-1 md:mb-2 flex flex-col items-center justify-center">
+                                <div>
+                                    {lang === "ar" ? "مساعد" : "Meet Our"} <span className="text-[#0066FF] mx-1 md:mx-2">{lang === "ar" ? "نيكسيت الذكي" : "NexBot"}</span>
+                                </div>
                             </h1>
 
-                            <p className="text-zinc-500 mb-10 max-w-2xl mx-auto text-sm md:text-xl px-2 leading-relaxed">
+                            <p className="text-zinc-500 mb-10 max-w-5xl mx-auto text-base md:text-lg px-2">
                                 {lang === "ar"
                                     ? "احصل على إجابات فورية حول خدماتنا وتقنياتنا وحلول البنية التحتية."
                                     : "Get instant answers about our services, infrastructure solutions, and technology."}
@@ -309,6 +312,12 @@ export default function NexBotClient() {
                                     {lang === "ar" ? "تحليل دقيق" : "Precision Analysis"}
                                 </span>
                             </div>
+
+                            <div className="mt-8 pt-6 border-t border-white/5 flex flex-col items-center justify-center gap-2 text-center text-xs md:text-sm text-zinc-500 font-medium">
+                                <div className="mt-2 text-[9px] md:text-[11px] opacity-80 max-w-4xl px-4 leading-relaxed tracking-wider font-bold text-white">
+                                    NexBOT Powered by SuperFeliz AI | &quot;Feliz&quot; (proprietary AI agent) of diPencil Studio. All rights reserved by <a href="https://dipencil.com" target="_blank" rel="noopener noreferrer" className="text-[#0066FF] hover:underline decoration-2 underline-offset-4 transition-all">Pencil Company</a> © 2026
+                                </div>
+                            </div>
                         </div>
                     </motion.section>
                 ) : (
@@ -325,8 +334,8 @@ export default function NexBotClient() {
                                     <Bot className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h2 className="text-white font-bold text-sm md:text-lg">{lang === "ar" ? "نيكسيت الذكي" : "NexBot AI"}</h2>
-                                    <p className="text-[10px] md:text-xs text-zinc-500 font-medium uppercase tracking-widest">
+                                    <h2 className="text-white font-bold text-sm md:text-lg">{lang === "ar" ? "نيكسيت الذكي - تم التطوير بواسطة SuperFeliz AI" : "NexBot - by SuperFeliz AI"}</h2>
+                                    <p className="text-[8px] md:text-[10px] text-zinc-500 font-medium uppercase tracking-widest">
                                         {lang === "ar" ? "مساعدك التقني الذكي" : "Your intelligent AI assistant"}
                                     </p>
                                 </div>
@@ -345,7 +354,7 @@ export default function NexBotClient() {
             </AnimatePresence>
 
             {/* Chat Messages Section */}
-            <section className="container mx-auto px-4 max-w-4xl pb-32 md:pb-40">
+            <section className="container mx-auto px-4 max-w-4xl pb-16 md:pb-20">
                 <div className="space-y-8">
                     {messages.map((msg, i) => (
                         <motion.div
@@ -358,12 +367,54 @@ export default function NexBotClient() {
                                 <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl shrink-0 flex items-center justify-center shadow-lg ${msg.role === 'user' ? 'bg-zinc-800 text-zinc-400' : 'bg-[#0066FF] text-white'}`}>
                                     {msg.role === 'user' ? <User className="w-5 h-5 md:w-6 md:h-6" /> : <Bot className="w-5 h-5 md:w-6 md:h-6" />}
                                 </div>
-                                <div className={`p-5 md:p-8 rounded-3xl text-sm md:text-lg leading-relaxed shadow-xl whitespace-pre-wrap ${
-                                    msg.role === 'user' 
-                                    ? 'bg-[#0066FF] text-white rounded-tr-none' 
-                                    : 'bg-zinc-900 border border-white/5 text-zinc-300 rounded-tl-none'
-                                }`}>
-                                    <FormattedMessage content={msg.content} role={msg.role} />
+                                <div className="flex flex-col gap-2 w-full max-w-[calc(100%-3rem)] md:max-w-[calc(100%-4rem)]">
+                                    <div className={`p-5 md:p-8 rounded-3xl text-sm md:text-lg leading-relaxed shadow-xl whitespace-pre-wrap ${
+                                        msg.role === 'user' 
+                                        ? 'bg-[#0066FF] text-white rounded-tr-none' 
+                                        : 'bg-zinc-900 border border-white/5 text-zinc-300 rounded-tl-none'
+                                    }`}>
+                                        {msg.role === 'bot' && (
+                                            <span className="mb-2 md:mb-3 block">
+                                                <span className="text-sm md:text-base text-[#0066FF] font-bold block">Feliz Oper</span>
+                                                <span className="text-[10px] md:text-xs text-[#0066FF] font-normal opacity-75 block">Powered by diPencil</span>
+                                            </span>
+                                        )}
+                                        <FormattedMessage content={msg.content} role={msg.role} />
+                                    </div>
+                                    {msg.role === 'bot' && (
+                                        <div className="flex flex-wrap items-center gap-3 md:gap-4 mt-1 md:mt-2 px-1 w-full" dir="ltr">
+                                            <div className="flex items-center gap-0.5 md:gap-1.5 text-zinc-500 shrink-0">
+                                                <button className="p-1.5 md:p-2 hover:text-white hover:bg-zinc-800 rounded-lg transition-all" title="Copy" onClick={() => navigator.clipboard.writeText(msg.content)}>
+                                                    <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                                </button>
+                                                <button 
+                                                    className={`p-1.5 md:p-2 rounded-lg transition-all ${feedback[i] === 'up' ? 'text-emerald-500 bg-zinc-800' : 'hover:text-white hover:bg-zinc-800'}`}
+                                                    title="Good Response"
+                                                    onClick={() => setFeedback(prev => ({ ...prev, [i]: prev[i] === 'up' ? null : 'up' }))}
+                                                >
+                                                    <ThumbsUp className={`w-3.5 h-3.5 md:w-4 md:h-4 ${feedback[i] === 'up' ? 'fill-emerald-500' : ''}`} />
+                                                </button>
+                                                <button 
+                                                    className={`p-1.5 md:p-2 rounded-lg transition-all ${feedback[i] === 'down' ? 'text-red-500 bg-zinc-800' : 'hover:text-white hover:bg-zinc-800'}`}
+                                                    title="Bad Response"
+                                                    onClick={() => setFeedback(prev => ({ ...prev, [i]: prev[i] === 'down' ? null : 'down' }))}
+                                                >
+                                                    <ThumbsDown className={`w-3.5 h-3.5 md:w-4 md:h-4 ${feedback[i] === 'down' ? 'fill-red-500' : ''}`} />
+                                                </button>
+                                                <button className="p-1.5 md:p-2 hover:text-white hover:bg-zinc-800 rounded-lg transition-all" title="Share" onClick={() => {
+                                                    if (navigator.share) {
+                                                        navigator.share({ title: 'AI Response', text: msg.content })
+                                                    }
+                                                }}>
+                                                    <Share2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                                </button>
+                                            </div>
+                                            <span className="text-[7px] md:text-[9px] font-medium flex items-center gap-1 md:gap-1.5 whitespace-nowrap text-[#0066FF] hover:bg-[#0066FF]/10 hover:border-[#0066FF]/50 px-2.5 md:px-3 py-1 md:py-1.5 rounded-full border border-[#0066FF]/30 transition-all cursor-default shrink-0">
+                                                <Sparkles className="w-2.5 h-2.5 md:w-3 md:h-3" />
+                                                Creation Using SuperFeliz
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>
@@ -391,7 +442,7 @@ export default function NexBotClient() {
             </section>
             {/* Persistent Bottom Input Section */}
             {messages.length > 0 && (
-                <div className="fixed bottom-0 left-0 w-full z-100 bg-linear-to-t from-[#050505] via-[#050505] to-transparent pt-10 pb-6 md:pb-8">
+                <div className="fixed bottom-0 left-0 w-full z-100 bg-linear-to-t from-[#050505] via-[#050505] to-transparent pt-2 pb-2 md:pt-3 md:pb-6">
                     <div className="container mx-auto px-4 max-w-4xl">
                         <form 
                             onSubmit={(e) => { e.preventDefault(); handleSendMessage(inputValue); }}

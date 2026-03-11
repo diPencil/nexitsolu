@@ -15,19 +15,20 @@ export function getPrismaClient(): PrismaClient {
     // In Hostinger standalone, the app runs from .next/standalone/
     // but the prisma folder is usually at the root of the project.
     // We try to find the root.
-    // Detect if running on Hostinger or Local
-    const isHostinger = process.env.NODE_ENV === 'production' || process.cwd().includes('u909646470');
+    // Detect if running on Hostinger (Linux path) or Local (Windows path)
+    const isLocal = process.platform === 'win32';
     
     let dbPath;
-    if (isHostinger) {
+    if (!isLocal) {
+        // Assume Hostinger/Linux production path
         dbPath = "/home/u909646470/domains/nexitsolu.com/nodejs/prisma/dev.db";
     } else {
-        // Local path
+        // Local Windows path
         dbPath = path.join(process.cwd(), "prisma", "dev.db");
     }
     
     const dbUrl = `file:${dbPath}`;
-    console.log(`Prisma connecting to (${isHostinger ? 'Production' : 'Local'}):`, dbUrl);
+    console.log(`Prisma connecting to (${isLocal ? 'Local' : 'Production'}):`, dbUrl);
     
     const adapter = new PrismaLibSql({ url: dbUrl });
     const client = new PrismaClient({ 

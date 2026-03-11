@@ -759,18 +759,18 @@ export default function Home() {
                 src={project.logo}
                 alt={project.partner}
                 fill
-                className="object-cover group-hover:scale-110 transition-all duration-1000 opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100"
+                className="object-cover group-hover:scale-110 transition-all duration-1000 opacity-90 group-hover:opacity-100"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity duration-500" />
 
               {/* Top Right Action Button */}
-              <div className={`absolute top-3 md:top-6 ${lang === "ar" ? "left-3 md:left-6" : "right-3 md:right-6"} opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500`}>
+              <div className={`absolute top-3 md:top-6 ${lang === "ar" ? "left-3 md:left-6" : "right-3 md:right-6"} opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 z-10`}>
                 <div className="p-2 md:p-3 rounded-full bg-white text-black shadow-2xl hover:scale-110 active:scale-95 transition-transform">
                   <ArrowUpRight className={`w-3 h-3 md:w-4 md:h-4 ${lang === "ar" ? "-scale-x-100" : ""}`} />
                 </div>
               </div>
 
-              <div className={`absolute bottom-3 md:bottom-8 ${lang === "ar" ? "right-3 md:right-8 text-right" : "left-3 md:left-8 text-left"} ${lang === "ar" ? "left-3 md:left-8" : "right-3 md:right-8"}`}>
+              <div className={`absolute bottom-3 md:bottom-8 ${lang === "ar" ? "right-3 md:right-8 text-right" : "left-3 md:left-8 text-left"} ${lang === "ar" ? "left-3 md:left-8" : "right-3 md:right-8"} z-10`}>
                 <span className={`bg-[#0066FF] text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[7px] md:text-[9px] uppercase font-black mb-1.5 md:mb-3 inline-block shadow-lg`}>
                   {project.cat}
                 </span>
@@ -973,11 +973,12 @@ export default function Home() {
             <Link key={i} href={`/resources/tech-insights/${article.slug}`} className="group block">
               <motion.div whileHover={{ y: -10 }}>
                 <div className="relative aspect-square rounded-2xl md:rounded-4xl overflow-hidden mb-3 md:mb-8 border border-white/5 bg-zinc-900 shadow-xl group-hover:border-[#0066FF]/30 transition-all">
-                  <Image src={article.image} alt={isAr ? article.title_ar : article.title_en} fill className="object-cover group-hover:scale-110 transition-transform duration-1000 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100" />
-                  <div className="absolute top-3 md:top-6 left-3 md:left-6 flex flex-col gap-2">
+                  <Image src={article.image} alt={isAr ? article.title_ar : article.title_en} fill className="object-cover group-hover:scale-110 transition-transform duration-1000 opacity-90 group-hover:opacity-100" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity duration-500" />
+                  <div className="absolute top-3 md:top-6 left-3 md:left-6 flex flex-col gap-2 z-10">
                     <span className="bg-[#0066FF] text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[7px] md:text-[9px] uppercase font-bold w-fit shadow-lg">{article.cat}</span>
                   </div>
-                  <div className={`absolute bottom-3 md:bottom-6 ${lang === "ar" ? "left-3 md:left-6" : "right-3 md:right-6"}`}>
+                  <div className={`absolute bottom-3 md:bottom-6 z-10 ${lang === "ar" ? "left-3 md:left-6" : "right-3 md:right-6"}`}>
                     <div className="p-2 md:p-3 rounded-full bg-white text-black shadow-2xl group-hover:bg-[#0066FF] group-hover:text-white transition-colors">
                       <ArrowUpRight className={`w-3 h-3 md:w-4 md:h-4 ${lang === "ar" ? "-scale-x-100" : ""}`} />
                     </div>

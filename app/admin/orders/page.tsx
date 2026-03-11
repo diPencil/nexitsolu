@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/i18n-context"
 import { toast } from "sonner"
+import { ConfirmDialog } from "@/components/confirm-dialog"
 
 export default function AdminOrders() {
     const { lang } = useLanguage()
@@ -23,6 +24,7 @@ export default function AdminOrders() {
     const [isLoading, setIsLoading] = useState(true)
     const [filter, setFilter] = useState("ALL")
     const [selectedOrder, setSelectedOrder] = useState<any>(null)
+    const [confirmStatus, setConfirmStatus] = useState<{ isOpen: boolean, id: string | null, status: string }>({ isOpen: false, id: null, status: "" })
 
     useEffect(() => {
         fetchOrders()
@@ -190,23 +192,12 @@ export default function AdminOrders() {
                                 <select 
                                     className={`text-[10px] px-2.5 py-1 rounded-md border font-bold bg-transparent outline-none cursor-pointer ${statusColors[selectedOrder.status]}`}
                                     value={selectedOrder.status}
-                                    onChange={async (e) => {
-                                        const newStatus = e.target.value
-                                        try {
-                                            const res = await fetch('/api/admin/orders', {
-                                                method: 'PATCH',
-                                                headers: { 'Content-Type': 'application/json' },
-                                                body: JSON.stringify({ id: selectedOrder.id, status: newStatus })
-                                            })
-                                            if (res.ok) {
-                                                const updated = await res.json()
-                                                setSelectedOrder(updated)
-                                                fetchOrders()
-                                                toast.success(lang === 'ar' ? "تم تحديث الحالة" : "Status updated")
-                                            }
-                                        } catch (err) {
-                                            toast.error(lang === 'ar' ? "فشل تحديث الحالة" : "Failed to update status")
-                                        }
+                                    onChange={(e) => {
+                                        setConfirmStatus({
+                                            isOpen: true,
+                                            id: selectedOrder.id,
+                                            status: e.target.value
+                                        })
                                     }}
                                 >
                                     {Object.keys(statusColors).map(s => (
@@ -270,6 +261,41 @@ export default function AdminOrders() {
                     </motion.div>
                 </div>
             )}
+
+            <ConfirmDialog 
+                isOpen={confirmStatus.isOpen}
+                onConfirm={async () => {
+                    if (!confirmStatus.id) return
+                    try {
+                        const res = await fetch('/api/admin/orders', {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: confirmStatus.id, status: confirmStatus.status })
+                        })
+                        if (res.ok) {
+                            const updated = await res.json()
+                            if (selectedOrder && selectedOrder.id === confirmStatus.id) {
+                                setSelectedOrder(updated)
+                            }
+                            fetchOrders()
+                            toast.success(lang === 'ar' ? "تم تحديث الحالة بنجاح" : "Status updated successfully")
+                        }
+                    } catch (err) {
+                        toast.error(lang === 'ar' ? "فشل تحديث الحالة" : "Failed to update status")
+                    } finally {
+                        setConfirmStatus({ isOpen: false, id: null, status: "" })
+                    }
+                }}
+                onCancel={() => setConfirmStatus({ isOpen: false, id: null, status: "" })}
+                title={lang === 'ar' ? 'تحديث حالة الطلب؟' : 'Update Order Status?'}
+                message={lang === 'ar' 
+                    ? `هل أنت متأكد من تغيير حالة الطلب إلى ${confirmStatus.status}؟` 
+                    : `Are you sure you want to change order status to ${confirmStatus.status}?`
+                }
+                confirmText={lang === 'ar' ? 'تأكيد' : 'Confirm'}
+                cancelText={lang === 'ar' ? 'إلغاء' : 'Cancel'}
+                danger={confirmStatus.status === 'CANCELLED'}
+            />
         </div>
     )
 }

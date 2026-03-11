@@ -78,8 +78,8 @@ export function NexBotAI() {
     }
 
     return (
-        <section className="relative z-20 container mx-auto px-4 pt-8 pb-16 md:py-32">
-            <div className="relative rounded-4xl md:rounded-[4rem] bg-zinc-950 border border-white/5 hover:border-[#0066FF]/50 hover:shadow-[0_0_80px_rgba(0,102,255,0.15)] transition-all duration-700 p-6 md:p-32 text-center overflow-hidden group">
+        <section className="relative z-20 container mx-auto px-4 pt-8 pb-16 md:py-24">
+            <div className="relative rounded-4xl md:rounded-[4rem] bg-zinc-950 border border-white/5 hover:border-[#0066FF]/50 hover:shadow-[0_0_80px_rgba(0,102,255,0.15)] transition-all duration-700 p-6 md:py-16 md:px-8 text-center overflow-hidden group">
                 {/* Background Glows */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 group-hover:opacity-30 transition-opacity">
                     <div className="absolute -top-1/2 -left-1/4 w-full h-full bg-[#0066FF] rounded-full blur-[120px]" />
@@ -153,6 +153,12 @@ export function NexBotAI() {
                         <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4 text-[#0066FF]" />
                         {lang === "ar" ? "تحليل دقيق" : "Precision Analysis"}
                     </span>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-white/5 flex flex-col items-center justify-center gap-2 text-center text-xs md:text-sm text-zinc-500 font-medium relative z-10">
+                    <div className="mt-2 text-[7px] md:text-[9px] opacity-80 max-w-4xl px-4 leading-relaxed tracking-wider font-bold text-white">
+                        NexBOT Powered by SuperFeliz AI | &quot;Feliz&quot; (proprietary AI agent) of diPencil Studio. All rights reserved by <a href="https://dipencil.com" target="_blank" rel="noopener noreferrer" className="text-[#0066FF] hover:underline decoration-2 underline-offset-4 transition-all">Pencil Company</a> © 2026
+                    </div>
                 </div>
             </div>
         </section>

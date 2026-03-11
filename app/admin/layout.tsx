@@ -233,8 +233,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <div className="p-3 border-t border-white/5 mt-auto">
                     {/* User Info */}
                     <div className="flex items-center gap-3 px-3 py-2 mb-2">
-                        <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center font-bold text-xs shrink-0">
-                            {session?.user?.name?.[0]?.toUpperCase() || 'A'}
+                        <div className="w-8 h-8 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 overflow-hidden relative">
+                            <Image src="/favicon.png" alt="Admin" fill className="object-contain p-1" />
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-xs font-bold text-white truncate">{session?.user?.name || 'Admin'}</p>

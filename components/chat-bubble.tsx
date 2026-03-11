@@ -2,14 +2,16 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageCircle, X, Send, User, Loader2, Sparkles, CheckCheck, History, ArrowLeft, Clock } from "lucide-react"
+import { MessageCircle, X, Send, User, Loader2, Sparkles, CheckCheck, History, ArrowLeft, Clock, Copy, ThumbsUp, ThumbsDown, Share2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { pusherClient } from "@/lib/pusher"
 import { useLanguage } from "@/lib/i18n-context"
+import { usePathname } from "next/navigation"
 
 export function ChatBubble() {
     const { data: session } = useSession()
     const { lang } = useLanguage()
+    const pathname = usePathname()
     const [isOpen, setIsOpen] = useState(false)
     const [messages, setMessages] = useState<any[]>([])
     const [input, setInput] = useState("")
@@ -20,6 +22,7 @@ export function ChatBubble() {
     const [conversations, setConversations] = useState<any[]>([])
     const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null)
     const [isLoadingConversations, setIsLoadingConversations] = useState(false)
+    const [feedback, setFeedback] = useState<Record<string, 'up' | 'down' | null>>({})
     const scrollRef = useRef<HTMLDivElement>(null)
 
     const fetchConversations = async () => {
@@ -129,7 +132,10 @@ export function ChatBubble() {
         }
     }
 
-    if (!session?.user) return null
+    const [isMounted, setIsMounted] = useState(false)
+    useEffect(() => setIsMounted(true), [])
+
+    if (!isMounted || !session?.user || pathname?.includes('/nexbot')) return null
 
     return (
         <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-9999">
@@ -249,14 +255,54 @@ export function ChatBubble() {
                                     {messages.map((m, i) => {
                                         const isMe = m.senderId === (session.user as any).id
                                         return (
-                                            <div key={m.id || i} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-                                                <div className={`max-w-[80%] p-4 rounded-2xl text-sm ${isMe ? 'bg-[#0066FF] text-white rounded-br-none shadow-lg shadow-blue-500/10' : 'bg-zinc-900 text-zinc-300 rounded-bl-none border border-white/5'
+                                            <div key={m.id || i} className={`flex flex-col gap-2 w-full ${isMe ? 'items-end' : 'items-start'}`}>
+                                                <div className={`max-w-[85%] p-3 md:p-4 rounded-2xl text-xs md:text-sm shadow-md whitespace-pre-wrap ${isMe ? 'bg-[#0066FF] text-white rounded-br-none' : 'bg-zinc-800 text-zinc-200 rounded-bl-none border border-white/5'
                                                     }`}>
-                                                    <p className="whitespace-pre-wrap">{m.content}</p>
+                                                    {!isMe && (
+                                                        <span className="mb-2 block">
+                                                            <span className="text-xs text-[#0066FF] font-bold block">Feliz Oper</span>
+                                                            <span className="text-[10px] text-[#0066FF] font-normal opacity-75 block">Powered by diPencil</span>
+                                                        </span>
+                                                    )}
+                                                    <p>{m.content}</p>
                                                     <span className="text-[8px] opacity-40 mt-1 block text-end">
                                                         {new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                     </span>
                                                 </div>
+                                                {!isMe && (
+                                                    <div className="flex flex-wrap items-center gap-2 md:gap-3 text-zinc-500 max-w-full px-1 w-full" dir="ltr">
+                                                        <div className="flex items-center gap-0.5 shrink-0">
+                                                            <button className="p-1 hover:text-white hover:bg-zinc-800 rounded-md transition-all" title="Copy" onClick={() => navigator.clipboard.writeText(m.content)}>
+                                                                <Copy className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                                                            </button>
+                                                            <button 
+                                                                className={`p-1 rounded-md transition-all ${feedback[m.id || i] === 'up' ? 'text-emerald-500 bg-zinc-800' : 'hover:text-white hover:bg-zinc-800'}`}
+                                                                title="Good Response"
+                                                                onClick={() => setFeedback(prev => ({ ...prev, [m.id || i]: prev[m.id || i] === 'up' ? null : 'up' }))}
+                                                            >
+                                                                <ThumbsUp className={`w-3 h-3 md:w-3.5 md:h-3.5 ${feedback[m.id || i] === 'up' ? 'fill-emerald-500' : ''}`} />
+                                                            </button>
+                                                            <button 
+                                                                className={`p-1 rounded-md transition-all ${feedback[m.id || i] === 'down' ? 'text-red-500 bg-zinc-800' : 'hover:text-white hover:bg-zinc-800'}`}
+                                                                title="Bad Response"
+                                                                onClick={() => setFeedback(prev => ({ ...prev, [m.id || i]: prev[m.id || i] === 'down' ? null : 'down' }))}
+                                                            >
+                                                                <ThumbsDown className={`w-3 h-3 md:w-3.5 md:h-3.5 ${feedback[m.id || i] === 'down' ? 'fill-red-500' : ''}`} />
+                                                            </button>
+                                                            <button className="p-1 hover:text-white hover:bg-zinc-800 rounded-md transition-all" title="Share" onClick={() => {
+                                                                if (navigator.share) {
+                                                                    navigator.share({ title: 'AI Response', text: m.content })
+                                                                }
+                                                            }}>
+                                                                <Share2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                                                            </button>
+                                                        </div>
+                                                        <span className="text-[7px] md:text-[8px] font-medium flex items-center gap-1 whitespace-nowrap text-[#0066FF] hover:bg-[#0066FF]/10 hover:border-[#0066FF]/50 px-2 pt-1 pb-1 rounded-full border border-[#0066FF]/30 transition-all cursor-default shrink-0">
+                                                            <Sparkles className="w-2.5 h-2.5" />
+                                                            Creation Using SuperFeliz
+                                                        </span>
+                                                    </div>
+                                                )}
                                             </div>
                                         )
                                     })}

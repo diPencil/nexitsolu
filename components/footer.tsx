@@ -23,7 +23,7 @@ export function Footer() {
 
     if (isAuthPage) {
         return (
-            <footer className="bg-black py-6 px-6 border-t border-zinc-900/50">
+            <footer className={`bg-black py-6 px-6 border-t border-zinc-900/50 ${pathname?.startsWith('/nexbot') ? 'hidden md:block' : ''}`}>
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-zinc-600 uppercase tracking-[0.2em]">
                     <div>{lang === 'ar' ? 'نيكسيت سوليوشنز © ٢٠٢٦ - جميع الحقوق محفوظة' : `Nexit Solutions © ${new Date().getFullYear()} — Engineering Excellence. All Rights Reserved.`}</div>
                     <a 

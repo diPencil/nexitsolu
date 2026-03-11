@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/i18n-context"
 import { toast } from "sonner"
 import Image from "next/image"
+import { ConfirmDialog } from "@/components/confirm-dialog"
 
 function AdminInvoicesContent() {
     const { lang } = useLanguage()
@@ -45,6 +46,8 @@ function AdminInvoicesContent() {
     const [invoiceItems, setInvoiceItems] = useState([
         { description: "", price: 0, quantity: 1 }
     ])
+
+    const [confirmAction, setConfirmAction] = useState<{ isOpen: boolean, id: string | null, action: 'delete' | 'status' | null, statusValue?: string }>({ isOpen: false, id: null, action: null })
 
     useEffect(() => {
         fetchInvoices()
@@ -158,16 +161,15 @@ function AdminInvoicesContent() {
     }
 
     const handleDeleteInvoice = async (id: string) => {
-        if (!confirm(lang === 'ar' ? "هل أنت متأكد من الحذف؟" : "Are you sure you want to delete?")) return
-
         try {
             const res = await fetch(`/api/admin/invoices?id=${id}`, { method: "DELETE" })
             if (res.ok) {
-                toast.success(lang === 'ar' ? "تم الحذف" : "Deleted")
+                toast.success(lang === 'ar' ? "تم الحذف بنجاح" : "Invoice deleted successfully")
                 fetchInvoices()
+                setConfirmAction({ isOpen: false, id: null, action: null })
             }
         } catch (err) {
-            toast.error("Failed to delete")
+            toast.error(lang === 'ar' ? "فشل الحذف" : "Failed to delete")
         }
     }
 
@@ -180,8 +182,9 @@ function AdminInvoicesContent() {
             })
 
             if (res.ok) {
-                toast.success(lang === 'ar' ? "تم تحديث الحالة" : "Status updated")
+                toast.success(lang === 'ar' ? "تم تحديث الحالة بنجاح" : "Status updated successfully")
                 fetchInvoices()
+                setConfirmAction({ isOpen: false, id: null, action: null })
                 if (viewInvoice && viewInvoice.id === id) {
                     setViewInvoice({...viewInvoice, status: newStatus})
                 }
@@ -271,7 +274,12 @@ function AdminInvoicesContent() {
                                                 value={inv.status}
                                                 onChange={(e) => {
                                                     e.stopPropagation()
-                                                    handleStatusUpdate(inv.id, e.target.value)
+                                                    setConfirmAction({
+                                                        isOpen: true,
+                                                        id: inv.id,
+                                                        action: 'status',
+                                                        statusValue: e.target.value
+                                                    })
                                                 }}
                                                 className={`text-[10px] px-2.5 py-1 rounded-md border font-bold outline-none cursor-pointer ${statusColors[inv.status] || statusColors.PENDING}`}
                                             >
@@ -292,8 +300,8 @@ function AdminInvoicesContent() {
                                                     <Eye className="w-3.5 h-3.5" />
                                                 </button>
                                                 <button
-                                                    onClick={(e) => { e.stopPropagation(); handleDeleteInvoice(inv.id); }}
-                                                    className="p-2 rounded-lg bg-zinc-900 border border-white/5 text-zinc-500 hover:text-red-500 transition-all"
+                                                    onClick={(e) => { e.stopPropagation(); setConfirmAction({ isOpen: true, id: inv.id, action: 'delete' }); }}
+                                                    className="p-2 rounded-lg bg-zinc-900 border border-white/5 text-zinc-500 hover:text-red-500 transition-all font-medium"
                                                 >
                                                     <Trash2 className="w-3.5 h-3.5" />
                                                 </button>
@@ -655,7 +663,12 @@ function AdminInvoicesContent() {
                                         <button 
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                handleStatusUpdate(viewInvoice.id, 'PAID')
+                                                setConfirmAction({
+                                                    isOpen: true,
+                                                    id: viewInvoice.id,
+                                                    action: 'status',
+                                                    statusValue: 'PAID'
+                                                })
                                             }}
                                             className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 transition-colors border border-emerald-500/10"
                                         >
@@ -684,6 +697,32 @@ function AdminInvoicesContent() {
                     </div>
                 )}
             </AnimatePresence>
+
+            <ConfirmDialog 
+                isOpen={confirmAction.isOpen}
+                onConfirm={() => {
+                    if (!confirmAction.id) return
+                    if (confirmAction.action === 'delete') {
+                        handleDeleteInvoice(confirmAction.id)
+                    } else if (confirmAction.action === 'status' && confirmAction.statusValue) {
+                        handleStatusUpdate(confirmAction.id, confirmAction.statusValue)
+                    }
+                }}
+                onCancel={() => setConfirmAction({ isOpen: false, id: null, action: null })}
+                title={
+                    confirmAction.action === 'delete' 
+                        ? (lang === 'ar' ? 'حذف الفاتورة؟' : 'Delete Invoice?') 
+                        : (lang === 'ar' ? 'تحديث الحالة؟' : 'Update Status?')
+                }
+                message={
+                    confirmAction.action === 'delete'
+                        ? (lang === 'ar' ? 'هل أنت متأكد من رغبتك في حذف هذه الفاتورة؟' : 'Are you sure you want to delete this invoice?')
+                        : (lang === 'ar' ? `هل أنت متأكد من تحديث حالة الفاتورة إلى ${confirmAction.statusValue}؟` : `Are you sure you want to update invoice status to ${confirmAction.statusValue}?`)
+                }
+                confirmText={confirmAction.action === 'delete' ? (lang === 'ar' ? 'حذف' : 'Delete') : (lang === 'ar' ? 'تأكيد' : 'Confirm')}
+                cancelText={lang === 'ar' ? 'إلغاء' : 'Cancel'}
+                danger={confirmAction.action === 'delete' || confirmAction.statusValue === 'CANCELLED'}
+            />
         </div>
     )
 }

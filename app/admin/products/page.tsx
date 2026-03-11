@@ -667,6 +667,8 @@ export default function AdminProducts() {
     const [allZones, setAllZones] = useState<any[]>([])
     const [selectedZones, setSelectedZones] = useState<string[]>([])
     const [confirmDelete, setConfirmDelete] = useState<{ isOpen: boolean, id: string | null }>({ isOpen: false, id: null })
+    const [searchTerm, setSearchTerm] = useState("")
+    const [selectedCategory, setSelectedCategory] = useState("all")
 
     const [formData, setFormData] = useState({
         name: "", nameAr: "", description: "", descriptionAr: "",
@@ -753,6 +755,13 @@ export default function AdminProducts() {
         } catch { toast.error("Error deleting") }
     }
 
+    const filteredProducts = products.filter((p: any) => {
+        const nameMatch = (p.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (p.nameAr || "").toLowerCase().includes(searchTerm.toLowerCase());
+        const categoryMatch = selectedCategory === "all" || p.category === selectedCategory || (p.tag === selectedCategory);
+        return nameMatch && categoryMatch;
+    });
+
     return (
         <div className="space-y-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -804,12 +813,26 @@ export default function AdminProducts() {
                         type="text"
                         placeholder={lang === 'ar' ? 'ابحث عن منتج...' : 'Search products...'}
                         className={`w-full bg-zinc-950 border border-white/5 rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-sm focus:border-[#0066FF] outline-none transition-all`}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
-                <button className="px-6 rounded-2xl border border-white/5 bg-zinc-950 text-zinc-500 hover:text-white transition-all flex items-center gap-2">
-                    <Filter className="w-4 h-4" />
-                    {lang === 'ar' ? 'تصفية' : 'Filter'}
-                </button>
+                <div className="relative">
+                    <Filter className={`absolute top-3.5 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-zinc-600`} />
+                    <select
+                        className={`bg-zinc-950 border border-white/5 rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-sm focus:border-[#0066FF] outline-none transition-all appearance-none min-w-[160px] text-zinc-400 cursor-pointer`}
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                        <option value="all">{lang === 'ar' ? 'كل الفئات' : 'All Categories'}</option>
+                        {categories.map((cat: any) => (
+                            <option key={cat.id} value={cat.name}>
+                                {lang === 'ar' ? cat.nameAr : cat.nameEn}
+                            </option>
+                        ))}
+                    </select>
+                    <ChevronDown className={`absolute top-4 ${lang === 'ar' ? 'left-4' : 'right-4'} w-4 h-4 text-zinc-600 pointer-events-none`} />
+                </div>
             </div>
 
             {/* Products table */}
@@ -831,7 +854,7 @@ export default function AdminProducts() {
                                 <tr><td colSpan={6} className="px-6 py-20 text-center">
                                     <Loader2 className="w-10 h-10 animate-spin text-[#0066FF] mx-auto" />
                                 </td></tr>
-                            ) : products.map((p: any) => {
+                            ) : filteredProducts.length > 0 ? filteredProducts.map((p: any) => {
                                 const zones = p.shippingZones ? JSON.parse(p.shippingZones) : []
                                 return (
                                     <tr key={p.id} className="hover:bg-white/5 transition-all group">
@@ -886,7 +909,13 @@ export default function AdminProducts() {
                                         </td>
                                     </tr>
                                 )
-                            })}
+                            }) : (
+                                <tr>
+                                    <td colSpan={6} className="px-6 py-20 text-center text-zinc-500 font-medium">
+                                        {lang === 'ar' ? 'لا توجد منتجات تطابق البحث' : 'No products found matching your search'}
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -936,9 +965,12 @@ export default function AdminProducts() {
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Category</label>
-                                            <select className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none appearance-none" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
-                                                {categories.map(cat => <option key={cat.id} value={cat.id}>{lang === 'ar' ? cat.labelAr : cat.labelEn}</option>)}
-                                            </select>
+                                            <div className="relative">
+                                                <select className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none appearance-none" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
+                                                    {categories.map(cat => <option key={cat.id} value={cat.name}>{lang === 'ar' ? cat.nameAr : cat.nameEn}</option>)}
+                                                </select>
+                                                <ChevronDown className="absolute top-5 right-6 w-4 h-4 text-zinc-500 pointer-events-none" />
+                                            </div>
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">

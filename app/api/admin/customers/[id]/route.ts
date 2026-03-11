@@ -138,12 +138,31 @@ export async function DELETE(
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        // Prevent self-deletion
-        const currentId = (session.user as any).id;
-        if (id === currentId) {
-            return new NextResponse("You cannot delete yourself", { status: 400 });
-        }
+        // Perform cascading deletion manually
+        // We delete order-related items first
+        await prisma.orderItem.deleteMany({ where: { order: { userId: id } } });
+        await prisma.invoice.deleteMany({ where: { userId: id } });
+        await prisma.order.deleteMany({ where: { userId: id } });
 
+        // Then other relations
+        await prisma.reviewMessage.deleteMany({ where: { userId: id } });
+        await prisma.review.deleteMany({ where: { userId: id } });
+        await prisma.message.deleteMany({
+            where: {
+                OR: [
+                    { senderId: id },
+                    { receiverId: id }
+                ]
+            }
+        });
+        await prisma.notification.deleteMany({ where: { userId: id } });
+        await prisma.favorite.deleteMany({ where: { userId: id } });
+        await prisma.wishlist.deleteMany({ where: { userId: id } });
+        await prisma.managedITRequest.deleteMany({ where: { userId: id } });
+        await prisma.subscription.deleteMany({ where: { userId: id } });
+        await prisma.conversation.deleteMany({ where: { userId: id } });
+
+        // Finally, delete the user
         await prisma.user.delete({
             where: { id }
         });

@@ -6,6 +6,7 @@ import { Shield, User, Mail, Globe, Edit2, Loader2, Save, X, Phone, MessageSquar
 import { useLanguage } from "@/lib/i18n-context"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export default function AdminSettings() {
     const { data: session, update } = useSession()
@@ -142,7 +143,7 @@ export default function AdminSettings() {
     ]
 
     return (
-        <div className="space-y-6 max-w-4xl pb-32">
+        <div className="space-y-6 pb-32">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <h1 className="text-3xl font-bold mb-2">{lang === 'ar' ? 'الإعدادات' : 'Settings'}</h1>
@@ -288,8 +289,8 @@ export default function AdminSettings() {
                         </div>
                         <div className="p-8">
                             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-                                <div className="w-24 h-24 rounded-3xl bg-linear-to-br from-[#0066FF] to-purple-600 flex items-center justify-center font-black text-4xl text-white border-2 border-white/10 shadow-2xl shadow-[#0066FF]/20 shrink-0">
-                                    {userData?.name?.[0]?.toUpperCase() || 'A'}
+                                <div className="w-24 h-24 rounded-3xl bg-zinc-900 flex items-center justify-center border-2 border-white/10 shadow-2xl relative overflow-hidden p-4">
+                                    <Image src="/favicon.png" alt="Admin" fill className="object-contain p-4" />
                                 </div>
                                 <div className="flex-1 text-center md:text-start space-y-4">
                                     <div>

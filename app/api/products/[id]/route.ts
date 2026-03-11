@@ -103,7 +103,14 @@ export async function DELETE(
 
         const { id } = await params;
 
-        // Perform the deletion
+        // Perform cascading deletion manually since we aren't using onDelete: Cascade in Prisma
+        await prisma.favorite.deleteMany({ where: { productId: id } });
+        await prisma.wishlist.deleteMany({ where: { productId: id } });
+        await prisma.reviewMessage.deleteMany({ where: { review: { productId: id } } });
+        await prisma.review.deleteMany({ where: { productId: id } });
+        await prisma.orderItem.deleteMany({ where: { productId: id } });
+
+        // Perform the deletion of the product itself
         await prisma.product.delete({
             where: { id }
         });
