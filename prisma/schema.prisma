@@ -1,0 +1,286 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id                String             @id @default(cuid())
+  name              String?
+  email             String             @unique
+  password          String
+  role              Role               @default(CUSTOMER)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  governorate       String?
+  phone             String?
+  username          String?            @unique
+  position          String?
+  whatsapp          String?
+  isSupportClosed   Boolean            @default(false)
+  closedReason      String?
+  status            String             @default("ACTIVE") // ACTIVE, BLOCKED
+  favorites         Favorite[]
+  managedITRequests ManagedITRequest[]
+  conversations     Conversation[]
+  messagesRecv      Message[]          @relation("ReceivedMessages")
+  messagesSent      Message[]          @relation("SentMessages")
+  notifications     Notification[]
+  orders            Order[]
+  reviews           Review[]
+  subscriptions     Subscription[]
+  wishlist          Wishlist[]
+  invoices          Invoice[]
+}
+
+model Product {
+  id            String      @id @default(cuid())
+  name          String
+  nameAr        String?
+  description   String?
+  descriptionAr String?
+  price         Float
+  discountPrice Float?
+  category      String
+  image         String?
+  gallery       String?
+  tag           String?
+  stock         Int         @default(0)
+  shippingZones String?
+  views         Int         @default(0)
+  shares        Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  favoritedBy   Favorite[]
+  orderItems    OrderItem[]
+  reviews       Review[]
+  wishlistedBy  Wishlist[]
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, productId])
+}
+
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, productId])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  total           Float
+  status          OrderStatus @default(PENDING)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  notes           String?
+  orderNumber     String?     @unique
+  paidAmount      Float?
+  paymentMethod   String?
+  paymentType     String?
+  shippingAddress String?
+  shippingCity    String?
+  shippingName    String?
+  shippingPhone   String?
+  senderPhone     String?
+  transactionId   String?
+  user            User        @relation(fields: [userId], references: [id])
+  items           OrderItem[]
+  invoices        Invoice[]
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model ShippingZone {
+  id       String  @id @default(cuid())
+  name     String  @unique
+  nameAr   String
+  nameEn   String
+  price    Float
+  isActive Boolean @default(true)
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  product   Product @relation(fields: [productId], references: [id])
+  order     Order   @relation(fields: [orderId], references: [id])
+}
+
+model Category {
+  id      String  @id @default(cuid())
+  name    String  @unique // unique slug like "workstations"
+  nameAr  String
+  nameEn  String
+  createdAt DateTime @default(now())
+}
+
+model Conversation {
+  id              String    @id @default(cuid())
+  ticketId        String    @unique // e.g., NEX-1001
+  userId          String
+  status          String    @default("OPEN") // OPEN, CLOSED
+  closedReason    String?
+  closedAt        DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  user            User      @relation(fields: [userId], references: [id])
+  messages        Message[]
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  senderId       String
+  receiverId     String
+  conversationId String?
+  content        String
+  createdAt      DateTime     @default(now())
+  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+  receiver       User         @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  sender         User         @relation("SentMessages", fields: [senderId], references: [id])
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String
+  planName  String
+  amount    Float
+  type      String
+  status    String   @default("ACTIVE")
+  startDate DateTime @default(now())
+  endDate   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model ManagedITRequest {
+  id          String   @id @default(cuid())
+  userId      String
+  companyName String
+  industry    String?
+  services    String
+  model       String
+  days        String
+  hours       String
+  contactName String
+  email       String
+  phone       String
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  rating    Int      @default(5)
+  comment   String
+  reply           String?
+  customerReply   String?
+  customerReplyAt DateTime?
+  status          String   @default("APPROVED")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  messages  ReviewMessage[]
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model ReviewMessage {
+  id        String   @id @default(cuid())
+  reviewId  String
+  userId    String
+  content   String
+  role      Role     @default(CUSTOMER)
+  createdAt DateTime @default(now())
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+  COMPANY
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  status    String   @default("UNREAD") // UNREAD, READ, REPLIED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TechSupportRequest {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  whatsapp    String?
+  supportType String
+  message     String
+  status      String   @default("PENDING") // PENDING, IN_PROGRESS, RESOLVED, CLOSED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Invoice {
+  id          String   @id @default(cuid())
+  invoiceNo   String   @unique
+  userId      String
+  orderId     String?
+  amount      Float
+  status      String   @default("PENDING") // PENDING, PAID, CANCELLED
+  fileUrl     String?
+  dueDate     DateTime?
+  notes       String?
+  items       Json?
+  subtotal    Float?
+  discount    Float?
+  tax         Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
+  order       Order?   @relation(fields: [orderId], references: [id])
+}
