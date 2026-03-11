@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import NexBotClient from "./NexBotClient"
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
     title: "NexBot AI | Your Intelligent Assistant",
     description: "Get instant answers about Nexit services, infrastructure, and digital transformation.",
