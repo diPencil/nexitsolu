@@ -21,13 +21,6 @@ const nextConfig = {
     config.resolve.alias['@'] = __dirname;
     return config;
   },
-  experimental: {
-    turbo: {
-      resolveAlias: {
-        '@': './',
-      },
-    },
-  },
 }
 
 export default nextConfig

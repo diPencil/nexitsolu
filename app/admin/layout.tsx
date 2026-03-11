@@ -194,7 +194,28 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </div>
 
                 {/* Nav */}
-                <nav className="flex-1 px-3 py-6 space-y-8 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 select-none">
+                <nav className="flex-1 px-3 py-6 space-y-8 overflow-y-auto custom-scrollbar select-none">
+                    <style jsx global>{`
+                        .custom-scrollbar::-webkit-scrollbar {
+                            width: 4px;
+                        }
+                        .custom-scrollbar::-webkit-scrollbar-track {
+                            background: transparent;
+                        }
+                        .custom-scrollbar::-webkit-scrollbar-thumb {
+                            background: rgba(0, 102, 255, 0.1);
+                            border-radius: 10px;
+                        }
+                        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                            background: rgba(0, 102, 255, 0.3);
+                        }
+                        /* Ensure mouse wheel works */
+                        .custom-scrollbar {
+                            scrollbar-width: thin;
+                            scrollbar-color: rgba(0, 102, 255, 0.1) transparent;
+                            -webkit-overflow-scrolling: touch;
+                        }
+                    `}</style>
                     {menuGroups.map((group, groupIndex) => (
                         <div key={groupIndex} className="space-y-1">
                             <p className="px-3 text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3">
