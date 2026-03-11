@@ -16,7 +16,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: false,
+  trailingSlash: true,
   webpack: (config) => {
     config.resolve.alias['@'] = __dirname;
     return config;
