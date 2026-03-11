@@ -28,6 +28,13 @@ import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/i18n-context"
 import { motion, AnimatePresence } from "framer-motion"
 
+interface NavItem {
+    name: string
+    icon: any
+    href: string
+    count?: number | null
+}
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const { data: session, status } = useSession()
     const router = useRouter()
@@ -119,22 +126,53 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         return null
     }
 
-    const navItems = [
-        { name: lang === 'ar' ? 'الرئيسية' : 'Dashboard', icon: LayoutDashboard, href: '/admin' },
-        { name: lang === 'ar' ? 'المنتجات' : 'Products', icon: Package, href: '/admin/products', count: stats?.totalProducts },
-        { name: lang === 'ar' ? 'التقييمات' : 'Reviews', icon: Star, href: '/admin/reviews', count: stats?.totalReviews },
-        { name: lang === 'ar' ? 'الطلبات' : 'Orders', icon: ShoppingCart, href: '/admin/orders', count: stats?.totalOrders },
-        { name: lang === 'ar' ? 'الفواتير' : 'Invoices', icon: FileText, href: '/admin/invoices', count: stats?.totalInvoices },
-        { name: lang === 'ar' ? 'العملاء' : 'Customers', icon: Users, href: '/admin/customers', count: stats?.totalCustomers },
-        { name: lang === 'ar' ? 'الشركات' : 'Companies', icon: Briefcase, href: '/admin/companies', count: stats?.totalCompanies },
-        { name: lang === 'ar' ? 'الاشتراكات' : 'Subscriptions', icon: Briefcase, href: '/admin/subscriptions', count: stats?.totalSubscriptions },
-        { name: lang === 'ar' ? 'العقود' : 'Contracts', icon: ShieldCheck, href: '/admin/managed-it', count: stats?.totalManagedIT },
-        { name: lang === 'ar' ? 'الدعم الفني' : 'Tech Support', icon: ShieldCheck, href: '/admin/tech-support', count: stats?.totalTechSupport },
-        { name: lang === 'ar' ? 'تواصل معنا' : 'Contact Us', icon: MessageCircle, href: '/admin/contact-messages', count: stats?.totalContactMessages },
-        { name: lang === 'ar' ? 'المحادثات' : 'Messages', icon: MessageCircle, href: '/admin/messages', count: stats?.totalConversations },
-        { name: lang === 'ar' ? 'الإعدادات' : 'Settings', icon: Settings, href: '/admin/settings' },
+    const menuGroups: { title: string, items: NavItem[] }[] = [
+        {
+            title: lang === 'ar' ? 'الرئيسية' : 'Main',
+            items: [
+                { name: lang === 'ar' ? 'الرئيسية' : 'Dashboard', icon: LayoutDashboard, href: '/admin' },
+            ]
+        },
+        {
+            title: lang === 'ar' ? 'المتجر' : 'Shop',
+            items: [
+                { name: lang === 'ar' ? 'المنتجات' : 'Products', icon: Package, href: '/admin/products', count: stats?.totalProducts },
+                { name: lang === 'ar' ? 'الطلبات' : 'Orders', icon: ShoppingCart, href: '/admin/orders', count: stats?.totalOrders },
+                { name: lang === 'ar' ? 'الفواتير' : 'Invoices', icon: FileText, href: '/admin/invoices', count: stats?.totalInvoices },
+                { name: lang === 'ar' ? 'التقييمات' : 'Reviews', icon: Star, href: '/admin/reviews', count: stats?.totalReviews },
+            ]
+        },
+        {
+            title: lang === 'ar' ? 'العملاء' : 'CRM',
+            items: [
+                { name: lang === 'ar' ? 'العملاء' : 'Customers', icon: Users, href: '/admin/customers', count: stats?.totalCustomers },
+                { name: lang === 'ar' ? 'الشركات' : 'Companies', icon: Briefcase, href: '/admin/companies', count: stats?.totalCompanies },
+            ]
+        },
+        {
+            title: lang === 'ar' ? 'الخدمات' : 'Services',
+            items: [
+                { name: lang === 'ar' ? 'الاشتراكات' : 'Subscriptions', icon: Briefcase, href: '/admin/subscriptions', count: stats?.totalSubscriptions },
+                { name: lang === 'ar' ? 'العقود' : 'Contracts', icon: ShieldCheck, href: '/admin/managed-it', count: stats?.totalManagedIT },
+                { name: lang === 'ar' ? 'الدعم الفني' : 'Tech Support', icon: ShieldCheck, href: '/admin/tech-support', count: stats?.totalTechSupport },
+            ]
+        },
+        {
+            title: lang === 'ar' ? 'التواصل' : 'Communication',
+            items: [
+                { name: lang === 'ar' ? 'تواصل معنا' : 'Contact Us', icon: MessageCircle, href: '/admin/contact-messages', count: stats?.totalContactMessages },
+                { name: lang === 'ar' ? 'المحادثات' : 'Messages', icon: MessageCircle, href: '/admin/messages', count: stats?.totalConversations },
+            ]
+        },
+        {
+            title: lang === 'ar' ? 'النظام' : 'System',
+            items: [
+                { name: lang === 'ar' ? 'الإعدادات' : 'Settings', icon: Settings, href: '/admin/settings' },
+            ]
+        }
     ]
 
+    const navItems = menuGroups.flatMap(group => group.items)
     const currentPage = navItems.find(item => item.href === pathname)?.name || (lang === 'ar' ? 'الرئيسية' : 'Dashboard')
 
     const handleLogout = async () => {
@@ -148,7 +186,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 className={`${isSidebarOpen ? 'w-[260px]' : 'w-0'} border-e border-white/5 bg-[#0d0d0d] overflow-hidden flex flex-col transition-all duration-300 fixed md:relative h-full z-50`}
             >
                 {/* Logo */}
-                <div className="p-5 flex items-center gap-3 border-b border-white/5">
+                <div className="p-5 flex items-center gap-3 border-b border-white/5 shrink-0">
                     <Link href="/admin" className="flex items-center gap-2 mb-1">
                         <Image src="/nexitlogo.png" alt="Nexit Logo" width={140} height={32} className="h-8 w-auto object-contain brightness-110 shrink-0" />
                         <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-[0.2em] bg-white/5 px-2 py-0.5 rounded-md border border-white/5 hidden sm:block mt-1">{lang === 'ar' ? 'الأدمن' : 'Admin'}</span>
@@ -156,35 +194,39 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </div>
 
                 {/* Nav */}
-                <nav className="flex-1 px-3 mt-6 space-y-1">
-                    <p className="px-3 text-[9px] font-bold text-zinc-700 uppercase tracking-[0.2em] mb-3">
-                        {lang === 'ar' ? 'القائمة' : 'Main Menu'}
-                    </p>
-                    {navItems.map((item) => {
-                        const isActive = pathname === item.href
-                        const hasCount = item.count !== undefined && item.count !== null
-                        return (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${isActive
-                                    ? 'bg-[#0066FF] text-white shadow-lg shadow-blue-500/20'
-                                    : 'text-zinc-500 hover:text-white hover:bg-white/5'
-                                }`}
-                            >
-                                <item.icon className="w-[18px] h-[18px] shrink-0" />
-                                <span className="truncate flex-1">{item.name}</span>
-                                {hasCount && (
-                                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${isActive ? 'bg-white/20 text-white' : 'bg-[#0066FF]/10 text-[#0066FF]'} border border-white/5`}>
-                                        {item.count}
-                                    </span>
-                                )}
-                                {isActive && !hasCount && (
-                                    <div className={`w-1.5 h-1.5 rounded-full bg-white/50 ${lang === 'ar' ? 'mr-auto' : 'ml-auto'} shrink-0`} />
-                                )}
-                            </Link>
-                        )
-                    })}
+                <nav className="flex-1 px-3 py-6 space-y-8 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 select-none">
+                    {menuGroups.map((group, groupIndex) => (
+                        <div key={groupIndex} className="space-y-1">
+                            <p className="px-3 text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-3">
+                                {group.title}
+                            </p>
+                            {group.items.map((item) => {
+                                const isActive = pathname === item.href
+                                const hasCount = item.count !== undefined && item.count !== null
+                                return (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${isActive
+                                            ? 'bg-[#0066FF] text-white shadow-lg shadow-blue-500/20'
+                                            : 'text-zinc-500 hover:text-white hover:bg-white/5'
+                                        }`}
+                                    >
+                                        <item.icon className="w-[18px] h-[18px] shrink-0" />
+                                        <span className="truncate flex-1">{item.name}</span>
+                                        {hasCount && (
+                                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${isActive ? 'bg-white/20 text-white' : 'bg-[#0066FF]/10 text-[#0066FF]'} border border-white/5`}>
+                                                {item.count}
+                                            </span>
+                                        )}
+                                        {isActive && !hasCount && (
+                                            <div className={`w-1.5 h-1.5 rounded-full bg-white/50 ${lang === 'ar' ? 'mr-auto' : 'ml-auto'} shrink-0`} />
+                                        )}
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    ))}
                 </nav>
 
                 {/* User + Logout */}
