@@ -24,7 +24,8 @@ import {
     Star,
     FileText,
     Truck,
-    Warehouse
+    Warehouse,
+    ScrollText
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/i18n-context"
@@ -177,6 +178,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {
             title: lang === 'ar' ? 'النظام' : 'System',
             items: [
+                { name: lang === 'ar' ? 'سجل النشاط' : 'Activity log', icon: ScrollText, href: '/admin/activity' },
                 { name: lang === 'ar' ? 'الإعدادات' : 'Settings', icon: Settings, href: '/admin/settings' },
             ]
         }

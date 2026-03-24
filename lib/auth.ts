@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { NextAuthOptions } from "next-auth";
@@ -55,6 +54,8 @@ export const authOptions: NextAuthOptions = {
             if (user) {
                 token.role = (user as any).role;
                 token.id = user.id;
+                token.email = (user as any).email;
+                token.name = user.name;
                 token.username = (user as any).username;
                 token.phone = (user as any).phone;
                 token.whatsapp = (user as any).whatsapp;
@@ -80,6 +81,41 @@ export const authOptions: NextAuthOptions = {
     },
     pages: {
         signIn: "/login",
+    },
+    events: {
+        async signIn({ user, isNewUser }) {
+            const { recordActivity } = await import("@/lib/activity-log");
+            await recordActivity({
+                userId: user.id,
+                userEmail: user.email ?? null,
+                userRole: String((user as { role?: string }).role ?? ""),
+                username: (user as { username?: string | null }).username ?? null,
+                action: "AUTH_SIGN_IN",
+                category: "auth",
+                summary: isNewUser
+                    ? "Signed in (new user)"
+                    : "Signed in",
+            });
+        },
+        async signOut({ token }) {
+            const t = token as {
+                sub?: string;
+                email?: string | null;
+                role?: string;
+                username?: string | null;
+            };
+            if (!t?.sub) return;
+            const { recordActivity } = await import("@/lib/activity-log");
+            await recordActivity({
+                userId: t.sub,
+                userEmail: t.email ?? null,
+                userRole: t.role ? String(t.role) : null,
+                username: t.username ?? null,
+                action: "AUTH_SIGN_OUT",
+                category: "auth",
+                summary: "Signed out",
+            });
+        },
     },
     session: {
         strategy: "jwt",
