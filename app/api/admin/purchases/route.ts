@@ -54,6 +54,13 @@ export async function POST(req: Request) {
             : 0;
         const amountRemaining = Math.max(0, totalPrice - amountPaid);
 
+        if (isPaid && !String(transactionRef ?? "").trim()) {
+            return NextResponse.json(
+                { error: "Transaction / reference is required when marking as paid" },
+                { status: 400 }
+            );
+        }
+
         // Transaction to ensure both purchase is recorded and stock is updated
         const result = await prisma.$transaction(async (tx) => {
             // 1. Create Purchase record

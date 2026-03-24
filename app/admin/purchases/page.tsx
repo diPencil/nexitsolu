@@ -102,6 +102,12 @@ export default function PurchasesPage() {
             toast.error(lang === "ar" ? "اختر طريقة الدفع" : "Select a payment method")
             return
         }
+        if (formData.paymentStatus === "PAID" && !formData.transactionRef?.trim()) {
+            toast.error(
+                lang === "ar" ? "أدخل رقم العملية أو المرجع" : "Enter the transaction / reference number"
+            )
+            return
+        }
 
         setIsSaving(true)
         try {
@@ -523,13 +529,19 @@ export default function PurchasesPage() {
                                                     <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
                                                         <Hash className="w-3 h-3" />
                                                         {lang === "ar" ? "رقم العملية / المرجع" : "Transaction / reference #"}
+                                                        <span className="text-red-400">*</span>
                                                     </label>
                                                     <input
                                                         type="text"
+                                                        required
                                                         value={formData.transactionRef}
                                                         onChange={(e) => setFormData({ ...formData, transactionRef: e.target.value })}
                                                         className="w-full bg-zinc-950 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
-                                                        placeholder={lang === "ar" ? "اختياري" : "Optional"}
+                                                        placeholder={
+                                                            lang === "ar"
+                                                                ? "مثال: INST-2025-88421"
+                                                                : "e.g. INST-2025-88421"
+                                                        }
                                                     />
                                                 </div>
                                                 <div className="space-y-2">

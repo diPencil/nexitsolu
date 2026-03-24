@@ -1055,13 +1055,15 @@ export default function AdminProducts() {
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (AR)</label>
                                             <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[100px]" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
                                         </div>
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (EN)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[140px]" value={formData.longDescription} onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (AR)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[140px]" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
+                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                            <div className="space-y-2">
+                                                <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (EN)</label>
+                                                <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[160px]" value={formData.longDescription} onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (AR)</label>
+                                                <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[160px]" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
+                                            </div>
                                         </div>
 
                                         {/* ── Visibility Toggle ── */}

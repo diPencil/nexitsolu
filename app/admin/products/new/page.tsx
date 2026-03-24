@@ -233,13 +233,15 @@ export default function NewProductPage() {
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block">وصف قصير (AR)</label>
                                 <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[120px] text-sm text-end" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Long description (EN)</label>
-                                <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[180px] text-sm" value={formData.longDescription} placeholder="Full specs, details for the product page..." onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block">وصف طويل (AR)</label>
-                                <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[180px] text-sm text-end" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Long description (EN)</label>
+                                    <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[200px] text-sm" value={formData.longDescription} placeholder="Full specs, details for the product page..." onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block lg:text-start">وصف طويل (AR)</label>
+                                    <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[200px] text-sm text-end" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -62,6 +62,7 @@ export default function ProductDetailPage() {
     const [reviewsCount, setReviewsCount] = useState(0)
     const [averageRating, setAverageRating] = useState(0)
     const [storeCategories, setStoreCategories] = useState<any[]>([])
+    const [extraTab, setExtraTab] = useState<"reviews" | "description">("reviews")
 
     useEffect(() => {
         fetch("/api/categories")
@@ -77,6 +78,18 @@ export default function ProductDetailPage() {
             fetchReviews()
         }
     }, [product])
+
+    useEffect(() => {
+        if (!product?.id) return
+        const has = String(product.longDescription || product.longDescriptionAr || "").trim()
+        setExtraTab(has ? "description" : "reviews")
+    }, [product?.id, product?.longDescription, product?.longDescriptionAr])
+
+    const scrollToProductExtra = () => {
+        requestAnimationFrame(() =>
+            document.getElementById("product-extra-section")?.scrollIntoView({ behavior: "smooth", block: "start" })
+        )
+    }
 
     useEffect(() => {
         if (!lightboxUrl) return
@@ -376,7 +389,13 @@ export default function ProductDetailPage() {
                                     <p className="text-[#0066FF] font-black text-[10px] uppercase tracking-[0.2em]">
                                         {categoryTitle}
                                     </p>
-                                    <div className="flex items-center gap-4 group cursor-pointer" onClick={() => document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' })}>
+                                    <div
+                                        className="flex items-center gap-4 group cursor-pointer"
+                                        onClick={() => {
+                                            setExtraTab("reviews")
+                                            scrollToProductExtra()
+                                        }}
+                                    >
                                         <div className="flex bg-yellow-500/10 px-2 py-1 rounded-lg mr-1 items-center gap-0.5">
                                             {[1, 2, 3, 4, 5].map(star => (
                                                 <Star key={star} className={`w-2.5 h-2.5 ${star <= averageRating ? 'fill-yellow-500 text-yellow-500' : 'text-zinc-700'}`} />
@@ -590,22 +609,73 @@ export default function ProductDetailPage() {
                         </div>
                     </div>
 
-                    {longDescription && (
-                        <div className={`mt-16 md:mt-20 max-w-4xl mx-auto ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-                            <div className="rounded-3xl border border-white/5 bg-white/3 p-6 md:p-8">
-                                <h2 className="text-white font-bold text-sm uppercase tracking-widest mb-4">
-                                    {lang === 'ar' ? 'الوصف التفصيلي' : 'Full description'}
-                                </h2>
-                                <div className="text-zinc-300 leading-relaxed whitespace-pre-wrap text-sm md:text-base">
-                                    {longDescription}
-                                </div>
-                            </div>
+                    <div
+                        className="mt-16 md:mt-20 max-w-4xl mx-auto space-y-8 scroll-mt-28"
+                        id="product-extra-section"
+                    >
+                        <div
+                            className={`flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-full bg-white/5 border border-white/10 w-full sm:w-fit ${lang === "ar" ? "sm:mr-auto sm:ms-0" : "sm:mx-auto"}`}
+                            role="tablist"
+                            aria-label={lang === "ar" ? "الوصف والتقييمات" : "Description and reviews"}
+                        >
+                            <button
+                                type="button"
+                                role="tab"
+                                aria-selected={extraTab === "description"}
+                                onClick={() => {
+                                    setExtraTab("description")
+                                    scrollToProductExtra()
+                                }}
+                                className={`rounded-full px-5 py-2.5 text-xs font-black uppercase tracking-wider transition-all ${
+                                    extraTab === "description"
+                                        ? "bg-[#0066FF] text-white shadow-lg shadow-[#0066FF]/25"
+                                        : "text-zinc-400 hover:text-white"
+                                }`}
+                            >
+                                {lang === "ar" ? "الوصف الكامل" : "Full description"}
+                            </button>
+                            <button
+                                type="button"
+                                role="tab"
+                                aria-selected={extraTab === "reviews"}
+                                onClick={() => {
+                                    setExtraTab("reviews")
+                                    scrollToProductExtra()
+                                }}
+                                className={`rounded-full px-5 py-2.5 text-xs font-black uppercase tracking-wider transition-all ${
+                                    extraTab === "reviews"
+                                        ? "bg-[#0066FF] text-white shadow-lg shadow-[#0066FF]/25"
+                                        : "text-zinc-400 hover:text-white"
+                                }`}
+                            >
+                                {lang === "ar" ? `التقييمات (${reviewsCount})` : `Reviews (${reviewsCount})`}
+                            </button>
                         </div>
-                    )}
 
-                    {/* Reviews Section */}
-                    <div className="mt-20 scroll-mt-32" id="reviews-section">
-                        <ReviewsSection productId={product.id} />
+                        {extraTab === "description" && (
+                            <div
+                                className={`rounded-3xl border border-white/5 bg-white/3 p-6 md:p-8 ${lang === "ar" ? "text-right" : "text-left"}`}
+                                role="tabpanel"
+                            >
+                                {longDescription ? (
+                                    <div className="text-zinc-300 leading-relaxed whitespace-pre-wrap text-sm md:text-base">
+                                        {longDescription}
+                                    </div>
+                                ) : (
+                                    <p className="text-zinc-500 text-center py-10 text-sm">
+                                        {lang === "ar"
+                                            ? "لا يوجد وصف تفصيلي لهذا المنتج بعد."
+                                            : "No full description for this product yet."}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
+                        {extraTab === "reviews" && (
+                            <div className="scroll-mt-32" id="reviews-section" role="tabpanel">
+                                <ReviewsSection productId={product.id} />
+                            </div>
+                        )}
                     </div>
 
                     {/* Related Products Section */}
