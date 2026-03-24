@@ -1,29 +1,54 @@
-import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
-export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url)
-    const email = searchParams.get("email")
+const prisma = new PrismaClient();
 
-    if (!email) {
-        return NextResponse.json({ error: "Email is required" }, { status: 400 })
+export async function GET() {
+  try {
+    // 1. Check if an admin already exists
+    const adminExists = await prisma.user.findFirst({
+      where: {
+        role: "ADMIN",
+      },
+    });
+
+    if (adminExists) {
+      return NextResponse.json({
+        message: "Admin already exists. No action taken.",
+        user: adminExists.email,
+      });
     }
 
-    try {
-        const user = await prisma.user.update({
-            where: { email },
-            data: { role: "ADMIN" }
-        })
+    // 2. Create the new admin
+    const hashedPassword = await bcrypt.hash("Admin@123", 10);
+    
+    const newAdmin = await prisma.user.create({
+      data: {
+        email: "admin@nexitsolu.com",
+        username: "admin",
+        password: hashedPassword,
+        role: "ADMIN",
+        name: "Main Admin",
+        status: "ACTIVE",
+      },
+    });
 
-        return NextResponse.json({ 
-            success: true, 
-            message: `User ${user.email} is now an ADMIN! Welcome to the club 👑`,
-            role: user.role
-        })
-    } catch (error: any) {
-        return NextResponse.json({ 
-            error: "User not found or database error", 
-            details: error.message 
-        }, { status: 404 })
-    }
+    return NextResponse.json({
+      message: "Admin created successfully!",
+      credentials: {
+        email: "admin@nexitsolu.com",
+        password: "Admin@123"
+      },
+      note: "PLEASE DELETE THIS FILE (/app/api/setup-admin/route.ts) IMMEDIATELY AFTER USE!"
+    });
+  } catch (error: any) {
+    console.error("Setup Error:", error);
+    return NextResponse.json({ 
+      error: "Something went wrong", 
+      details: error.message 
+    }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
 }
