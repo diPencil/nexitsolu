@@ -9,31 +9,29 @@ export function getPrismaClient(): PrismaClient {
     }
 
     // Dynamic import for the adapter
+    const { createClient } = require("@libsql/client");
     const { PrismaLibSql } = require("@prisma/adapter-libsql");
     
-    // Construct absolute path
     // In Hostinger standalone, the app runs from .next/standalone/
     // but the prisma folder is usually at the root of the project.
-    // We try to find the root.
-    // Detect if running on Hostinger (Linux path) or Local (Windows path)
-    const isLocal = process.platform === 'win32';
-    
-    let dbPath;
-    if (!isLocal) {
-        // Assume Hostinger/Linux production path
-        dbPath = "/home/u909646470/domains/nexitsolu.com/nodejs/prisma/dev.db";
-    } else {
-        // Local Windows path
-        dbPath = path.join(process.cwd(), "prisma", "dev.db");
+    // Use DATABASE_URL from .env if it exists, otherwise fall back to local path.
+    let dbUrl = process.env.DATABASE_URL;
+
+    if (!dbUrl || dbUrl.includes("D:/")) {
+        // Fallback for local or if .env is missing absolute path
+        const dbPath = path.join(process.cwd(), "prisma", "dev.db");
+        dbUrl = `file:${dbPath}`;
     }
     
-    const dbUrl = `file:${dbPath}`;
-    console.log(`Prisma connecting to (${isLocal ? 'Local' : 'Production'}):`, dbUrl);
+    console.log(`Prisma connecting to:`, dbUrl);
     
-    const adapter = new PrismaLibSql({ url: dbUrl });
+    // For LibSQL/SQLite
+    const libsql = createClient({ url: dbUrl });
+    const adapter = new PrismaLibSql(libsql);
+    
     const client = new PrismaClient({ 
         adapter: adapter as any,
-        log: ['query', 'error', 'warn'] 
+        log: ['error', 'warn'] 
     });
 
     if (process.env.NODE_ENV !== "production") {
