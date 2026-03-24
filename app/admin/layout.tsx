@@ -139,6 +139,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 { name: lang === 'ar' ? 'المنتجات' : 'Products', icon: Package, href: '/admin/products', count: stats?.totalProducts },
                 { name: lang === 'ar' ? 'الطلبات' : 'Orders', icon: ShoppingCart, href: '/admin/orders', count: stats?.totalOrders },
                 { name: lang === 'ar' ? 'الفواتير' : 'Invoices', icon: FileText, href: '/admin/invoices', count: stats?.totalInvoices },
+                { name: lang === 'ar' ? 'عروض السعر' : 'Quotations', icon: FileText, href: '/admin/quotations', count: stats?.totalQuotations },
                 { name: lang === 'ar' ? 'التقييمات' : 'Reviews', icon: Star, href: '/admin/reviews', count: stats?.totalReviews },
             ]
         },

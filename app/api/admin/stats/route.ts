@@ -15,6 +15,7 @@ export async function GET() {
             reviewCount,
             companyCount,
             conversationCount,
+            quotationCount,
             recentOrders, 
             topCustomers
         ] = await Promise.all([
@@ -29,6 +30,7 @@ export async function GET() {
             prisma.review.count(),
             prisma.user.count({ where: { role: 'COMPANY' } }),
             prisma.conversation.count(),
+            prisma.quotation.count(),
             prisma.order.findMany({
                 take: 8,
                 orderBy: { createdAt: 'desc' },
@@ -63,6 +65,7 @@ export async function GET() {
                 totalReviews: reviewCount,
                 totalCompanies: companyCount,
                 totalConversations: conversationCount,
+                totalQuotations: quotationCount,
             },
             recentOrders,
             topCustomers,

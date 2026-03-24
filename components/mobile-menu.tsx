@@ -49,6 +49,7 @@ export function MobileMenu() {
         { label: lang === "ar" ? "برمجيات" : "Software", href: "/services/software" },
         { label: lang === "ar" ? "معدات هاردوير" : "Hardware", href: "/services/hardware" },
         { label: lang === "ar" ? "استضافة و VPS" : "Hosting & VPS", href: "/services/hosting-vps" },
+        { label: lang === "ar" ? "طلب عرض سعر" : "Request a Quote", href: "/quotation/request" },
       ]
     },
     {

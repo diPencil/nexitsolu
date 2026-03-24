@@ -326,7 +326,17 @@ function AdminInvoicesContent() {
                             className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl"
                         >
                             <div className="sticky top-0 z-10 bg-zinc-950/80 backdrop-blur-md p-6 border-b border-white/5 flex items-center justify-between">
-                                <h3 className="font-bold">{lang === 'ar' ? 'إنشاء فاتورة جديدة' : 'Create New Invoice'}</h3>
+                                <div className="flex items-center gap-4">
+                                    <Image 
+                                        src="/nexitlogo.png" 
+                                        alt="Nexit" 
+                                        width={100} 
+                                        height={30} 
+                                        className="object-contain"
+                                    />
+                                    <div className="h-6 w-px bg-white/10" />
+                                    <h3 className="font-bold">{lang === 'ar' ? 'إنشاء فاتورة جديدة' : 'Create New Invoice'}</h3>
+                                </div>
                                 <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-white/5 rounded-lg transition-all"><X className="w-4 h-4" /></button>
                             </div>
                             <form onSubmit={handleCreateInvoice} className="p-6 space-y-6">
@@ -535,23 +545,26 @@ function AdminInvoicesContent() {
                             <div className="p-8 space-y-8 bg-[#0a0a0a] overflow-y-auto flex-1 invoice-print-area">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <div className="mb-8 flex flex-col items-start gap-3">
-                                            {/* Nexit Logo */}
-                                            <Image 
-                                                src="/nexitlogo.png" 
-                                                alt="Nexitweb Logo" 
-                                                width={160} 
-                                                height={50} 
-                                                className="object-contain"
-                                                priority
-                                            />
-                                            {/* We can keep the text/icon if we want, but image is more brand accurate. */}
-                                            {/* <div className="flex items-center gap-2">
-                                                <div className="w-10 h-10 bg-[#0066FF] rounded-xl flex items-center justify-center">
-                                                    <FileText className="w-6 h-6 text-white" />
-                                                </div>
-                                                <span className="font-bold text-xl tracking-tight">NEXIT<span className="text-[#0066FF]">WEB</span></span>
-                                            </div> */}
+                                        <div className="mb-8">
+                                            {/* Nexit Logo - White for Screen, Colored for Print */}
+                                            <div className="relative">
+                                                <Image 
+                                                    src="/nexitlogo.png" 
+                                                    alt="Nexitweb Logo" 
+                                                    width={160} 
+                                                    height={50} 
+                                                    className="object-contain print:hidden"
+                                                    priority
+                                                />
+                                                <Image 
+                                                    src="/nexit-logo.png" 
+                                                    alt="Nexitweb Logo" 
+                                                    width={160} 
+                                                    height={50} 
+                                                    className="object-contain hidden print:block"
+                                                    priority
+                                                />
+                                            </div>
                                         </div>
                                         <h2 className="text-4xl font-black mb-1 tracking-tighter">{lang === 'ar' ? 'فاتورة' : 'INVOICE'}</h2>
                                         <p className="text-[#0066FF] font-mono text-sm tracking-widest">#{viewInvoice.invoiceNo}</p>
@@ -735,6 +748,53 @@ export default function AdminInvoices() {
             </div>
         }>
             <AdminInvoicesContent />
+            <style jsx global>{`
+                @media print {
+                    body {
+                        background: white !important;
+                        color: black !important;
+                    }
+                    .fixed {
+                        position: absolute !important;
+                        background: white !important;
+                    }
+                    .backdrop-blur-xl, .bg-black/80 {
+                        display: none !important;
+                    }
+                    .invoice-print-area {
+                        background: white !important;
+                        color: black !important;
+                        padding: 1.5cm !important;
+                        position: fixed !important;
+                        top: 0 !important;
+                        left: 0 !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                        z-index: 9999 !important;
+                        overflow: visible !important;
+                    }
+                    .invoice-print-area * {
+                        color: black !important;
+                        border-color: #eee !important;
+                    }
+                    .invoice-print-area .text-zinc-500, 
+                    .invoice-print-area .text-zinc-400,
+                    .invoice-print-area .text-zinc-600 {
+                        color: #666 !important;
+                    }
+                    .invoice-print-area .bg-zinc-900\/50,
+                    .invoice-print-area .bg-white\/5 {
+                        background: #f9f9f9 !important;
+                        border-color: #eee !important;
+                    }
+                    .invoice-print-area .text-\[\#0066FF\] {
+                        color: #0066FF !important;
+                    }
+                    .no-print, button, .p-4.bg-zinc-900.border-t {
+                        display: none !important;
+                    }
+                }
+            `}</style>
         </Suspense>
     )
 }
