@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity";
 
 // GET all products
 export async function GET() {
@@ -84,6 +88,13 @@ export async function POST(req: Request) {
                 stock: parseInt(stock),
                 active: active !== undefined ? active : true
             },
+        });
+
+        await logBusinessActivity(sessionUser(session), {
+            action: "PRODUCT_CREATE",
+            summary: `Added product: ${product.name}`,
+            resourceType: "Product",
+            resourceId: product.id,
         });
 
         return NextResponse.json(product);

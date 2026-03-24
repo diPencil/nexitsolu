@@ -4,6 +4,10 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { pusherServer } from "@/lib/pusher";
 import { notifyAdmins } from "@/lib/notifications";
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity";
 
 export async function GET() {
     try {
@@ -88,6 +92,13 @@ export async function POST(req: Request) {
             `طلب جديد ${orderNumber} من ${order.user.name || order.user.email} - ${total} EGP`, `New order ${orderNumber} from ${order.user.name || order.user.email} - ${total} EGP`,
             "ORDER"
         );
+
+        await logBusinessActivity(sessionUser(session), {
+            action: "ORDER_CREATE",
+            summary: `Placed order ${orderNumber} — ${total} EGP`,
+            resourceType: "Order",
+            resourceId: order.id,
+        });
 
         return NextResponse.json(order);
     } catch (error) {

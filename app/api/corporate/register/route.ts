@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { notifyAdmins } from "@/lib/notifications";
+import { logBusinessActivity } from "@/lib/log-business-activity";
 
 export async function POST(req: Request) {
     try {
@@ -47,6 +48,22 @@ export async function POST(req: Request) {
             "شركة جديدة", "New Company",
             `تم تسجيل شركة جديدة: ${name} (${username})`, `New company registered: ${name} (${username})`,
             "CUSTOMER"
+        );
+
+        await logBusinessActivity(
+            {
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                role: "COMPANY",
+                username: user.username,
+            },
+            {
+                action: "REGISTER_COMPANY",
+                summary: `New company account: ${name} (@${username})`,
+                resourceType: "User",
+                resourceId: user.id,
+            }
         );
 
         return NextResponse.json(user);

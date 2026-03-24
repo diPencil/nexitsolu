@@ -2,6 +2,10 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity";
 
 export async function GET() {
     try {
@@ -70,6 +74,13 @@ export async function POST(req: Request) {
             }
         });
 
+        await logBusinessActivity(sessionUser(session), {
+            action: "INVOICE_CREATE",
+            summary: `Created invoice #${invoiceNo} for user ${userId}`,
+            resourceType: "Invoice",
+            resourceId: invoice.id,
+        });
+
         return NextResponse.json(invoice);
     } catch (error: any) {
         console.error("Invoice creation error:", error);
@@ -101,6 +112,13 @@ export async function PATCH(req: Request) {
             }
         });
 
+        await logBusinessActivity(sessionUser(session), {
+            action: "INVOICE_UPDATE",
+            summary: `Updated invoice #${invoice.invoiceNo}${status ? ` (${status})` : ""}`,
+            resourceType: "Invoice",
+            resourceId: invoice.id,
+        });
+
         return NextResponse.json(invoice);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -119,8 +137,22 @@ export async function DELETE(req: Request) {
 
         if (!id) return new NextResponse("Missing ID", { status: 400 });
 
+        const existing = await prisma.invoice.findUnique({
+            where: { id },
+            select: { invoiceNo: true },
+        });
+
         await prisma.invoice.delete({
             where: { id }
+        });
+
+        await logBusinessActivity(sessionUser(session), {
+            action: "INVOICE_DELETE",
+            summary: existing
+                ? `Deleted invoice #${existing.invoiceNo}`
+                : `Deleted invoice ${id}`,
+            resourceType: "Invoice",
+            resourceId: id,
         });
 
         return new NextResponse("Invoice deleted", { status: 200 });

@@ -89,8 +89,8 @@ export default function AdminActivityPage() {
                     </div>
                     <p className="text-sm text-zinc-500 max-w-xl">
                         {lang === "ar"
-                            ? "تسجيل دخول/خروج، وطلبات API التي تعدّل بيانات (POST/PUT/PATCH/DELETE). للتوسعة لاحقاً يمكن إضافة تفاصيل لكل موديول."
-                            : "Sign-in/out and mutating API requests (POST/PUT/PATCH/DELETE). You can add richer per-module logs later."}
+                            ? "تسجيل دخول/خروج؛ أحداث مهمة (حسابات، منتجات، طلبات، فواتير، عروض أسعار، توريد، موردين، رسائل، تواصل). باقي طلبات الـ API تظهر تحت تصنيف api إن وُجد ACTIVITY_LOG_INTERNAL_SECRET."
+                            : "Sign-in/out; key business events (accounts, products, orders, invoices, quotations, purchases, suppliers, chat, contact). Other API writes also appear as “api” if ACTIVITY_LOG_INTERNAL_SECRET is set."}
                     </p>
                 </div>
                 <Button
@@ -225,7 +225,9 @@ export default function AdminActivityPage() {
                                                 className={`text-[10px] font-black px-2 py-0.5 rounded-md border ${
                                                     row.category === "auth"
                                                         ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                                                        : "bg-blue-500/10 text-blue-400 border-blue-500/20"
+                                                        : row.category === "business"
+                                                          ? "bg-violet-500/10 text-violet-300 border-violet-500/25"
+                                                          : "bg-blue-500/10 text-blue-400 border-blue-500/20"
                                                 }`}
                                             >
                                                 {row.action}

@@ -2,6 +2,10 @@ import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity"
 
 export async function GET() {
     try {
@@ -42,6 +46,12 @@ export async function POST(req: Request) {
                 status: "PENDING"
             }
         })
+        await logBusinessActivity(sessionUser(session), {
+            action: "QUOTATION_CREATE",
+            summary: `Created quotation ${quotation.quotationNo}`,
+            resourceType: "Quotation",
+            resourceId: quotation.id,
+        })
         return NextResponse.json(quotation)
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 })
@@ -63,6 +73,12 @@ export async function PATCH(req: Request) {
                 validUntil: data.validUntil ? new Date(data.validUntil) : undefined
             }
         })
+        await logBusinessActivity(sessionUser(session), {
+            action: "QUOTATION_UPDATE",
+            summary: `Updated quotation ${quotation.quotationNo}`,
+            resourceType: "Quotation",
+            resourceId: quotation.id,
+        })
         return NextResponse.json(quotation)
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 })
@@ -80,7 +96,19 @@ export async function DELETE(req: Request) {
         const id = searchParams.get("id")
         if (!id) return new NextResponse("Missing ID", { status: 400 })
 
+        const existing = await prisma.quotation.findUnique({
+            where: { id },
+            select: { quotationNo: true },
+        })
         await prisma.quotation.delete({ where: { id } })
+        await logBusinessActivity(sessionUser(session), {
+            action: "QUOTATION_DELETE",
+            summary: existing
+                ? `Deleted quotation ${existing.quotationNo}`
+                : `Deleted quotation ${id}`,
+            resourceType: "Quotation",
+            resourceId: id,
+        })
         return new NextResponse("Deleted", { status: 200 })
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 })

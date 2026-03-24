@@ -2,6 +2,10 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity";
 
 export async function GET() {
     try {
@@ -60,6 +64,23 @@ export async function POST(req: Request) {
             return purchase;
         });
 
+        const [sup, prod] = await Promise.all([
+            prisma.supplier.findUnique({
+                where: { id: supplierId },
+                select: { name: true },
+            }),
+            prisma.product.findUnique({
+                where: { id: productId },
+                select: { name: true },
+            }),
+        ]);
+        await logBusinessActivity(sessionUser(session), {
+            action: "PURCHASE_RECORD",
+            summary: `Supply: ${quantity}× ${prod?.name ?? productId} from ${sup?.name ?? supplierId}`,
+            resourceType: "Purchase",
+            resourceId: result.id,
+        });
+
         return NextResponse.json(result);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -78,10 +99,27 @@ export async function DELETE(req: Request) {
 
         if (!id) return new NextResponse("Missing ID", { status: 400 });
 
+        const existing = await prisma.purchase.findUnique({
+            where: { id },
+            include: {
+                supplier: { select: { name: true } },
+                product: { select: { name: true } },
+            },
+        });
+
         // Note: We don't automatically decrement stock on delete for safety 
         // Admin should manually adjust if needed or we could add that logic
         await prisma.purchase.delete({
             where: { id }
+        });
+
+        await logBusinessActivity(sessionUser(session), {
+            action: "PURCHASE_DELETE",
+            summary: existing
+                ? `Deleted purchase: ${existing.product.name} / ${existing.supplier.name}`
+                : `Deleted purchase ${id}`,
+            resourceType: "Purchase",
+            resourceId: id,
         });
 
         return new NextResponse("Purchase record deleted", { status: 200 });

@@ -4,6 +4,66 @@ import { getToken } from "next-auth/jwt";
 
 const MUTABLE = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 
+/** Avoid duplicate rows: these routes call logBusinessActivity with human-readable text. */
+function shouldSkipGenericApiLog(method: string, pathname: string): boolean {
+    const path = pathname.replace(/\/+$/, "") || "/";
+    const m = method.toUpperCase();
+
+    if (m === "POST" && path === "/api/register") return true;
+    if (m === "POST" && path === "/api/corporate/register") return true;
+    if (m === "POST" && path === "/api/products") return true;
+    if (
+        (m === "PUT" || m === "DELETE") &&
+        /^\/api\/products\/[^/]+$/.test(path)
+    ) {
+        return true;
+    }
+    if (m === "POST" && path === "/api/messages") return true;
+    if (m === "POST" && path === "/api/contact") return true;
+    if (m === "POST" && path === "/api/orders") return true;
+    if (
+        path.startsWith("/api/admin/invoices") &&
+        ["POST", "PATCH", "DELETE"].includes(m)
+    ) {
+        return true;
+    }
+    if (
+        path.startsWith("/api/admin/purchases") &&
+        ["POST", "DELETE"].includes(m)
+    ) {
+        return true;
+    }
+    if (m === "POST" && path.startsWith("/api/admin/quotations/send")) {
+        return true;
+    }
+    if (
+        (path === "/api/admin/quotations" ||
+            path.startsWith("/api/admin/quotations?")) &&
+        ["POST", "PATCH", "DELETE"].includes(m)
+    ) {
+        return true;
+    }
+    if (
+        path.startsWith("/api/admin/suppliers") &&
+        ["POST", "PUT", "DELETE"].includes(m)
+    ) {
+        return true;
+    }
+    if (
+        m === "POST" &&
+        /^\/api\/admin\/messages\/[^/]+$/.test(path)
+    ) {
+        return true;
+    }
+    if (
+        m === "PATCH" &&
+        /^\/api\/admin\/messages\/[^/]+\/close$/.test(path)
+    ) {
+        return true;
+    }
+    return false;
+}
+
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const method = request.method;
@@ -25,6 +85,10 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
     if (!MUTABLE.has(method)) {
+        return NextResponse.next();
+    }
+
+    if (shouldSkipGenericApiLog(method, pathname)) {
         return NextResponse.next();
     }
 

@@ -3,6 +3,10 @@ import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { sendMail } from "@/lib/mail"
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity"
 
 export async function POST(req: Request) {
     try {
@@ -94,6 +98,12 @@ export async function POST(req: Request) {
             await prisma.quotation.update({
                 where: { id },
                 data: { status: "SENT" }
+            })
+            await logBusinessActivity(sessionUser(session), {
+                action: "QUOTATION_EMAIL_SENT",
+                summary: `Emailed quotation ${q.quotationNo} to ${q.user.email}`,
+                resourceType: "Quotation",
+                resourceId: q.id,
             })
             return NextResponse.json({ message: "Quotation sent successfully" })
         } else {

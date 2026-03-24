@@ -3,6 +3,10 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { pusherServer } from "@/lib/pusher";
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity";
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
@@ -41,6 +45,14 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
         } catch (pusherError) {
             console.warn("Pusher notification failed, but status was updated:", pusherError);
         }
+
+        await logBusinessActivity(sessionUser(session), {
+            action: "CONVERSATION_CLOSE",
+            summary: `Closed ticket ${updatedConversation.ticketId || conversationId}`,
+            resourceType: "Conversation",
+            resourceId: conversationId,
+            metadata: reason ? { reason: String(reason).slice(0, 200) } : undefined,
+        });
 
         return NextResponse.json(updatedConversation);
     } catch (error: any) {

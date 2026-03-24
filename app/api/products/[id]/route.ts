@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity";
 
 export async function GET(
     req: Request,
@@ -91,6 +95,13 @@ export async function PUT(
             },
         });
 
+        await logBusinessActivity(sessionUser(session), {
+            action: "PRODUCT_UPDATE",
+            summary: `Updated product: ${product.name}`,
+            resourceType: "Product",
+            resourceId: product.id,
+        });
+
         return NextResponse.json(product);
     } catch (error) {
         console.error("Update product error:", error);
@@ -110,6 +121,11 @@ export async function DELETE(
 
         const { id } = await params;
 
+        const existing = await prisma.product.findUnique({
+            where: { id },
+            select: { name: true },
+        });
+
         // Perform cascading deletion manually since we aren't using onDelete: Cascade in Prisma
         await prisma.favorite.deleteMany({ where: { productId: id } });
         await prisma.wishlist.deleteMany({ where: { productId: id } });
@@ -120,6 +136,15 @@ export async function DELETE(
         // Perform the deletion of the product itself
         await prisma.product.delete({
             where: { id }
+        });
+
+        await logBusinessActivity(sessionUser(session), {
+            action: "PRODUCT_DELETE",
+            summary: existing
+                ? `Deleted product: ${existing.name}`
+                : `Deleted product id ${id}`,
+            resourceType: "Product",
+            resourceId: id,
         });
 
         return new NextResponse("Deleted", { status: 200 });

@@ -3,6 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { notifyAdmins } from "@/lib/notifications";
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity";
 
 export async function GET(req: Request) {
     try {
@@ -123,6 +127,15 @@ export async function POST(req: Request) {
             `رسالة جديدة من ${(session.user as any).name}`, `New message from ${(session.user as any).name}`,
             "MESSAGE"
         );
+
+        const ticketLabel = conversation.ticketId || conversation.id;
+        await logBusinessActivity(sessionUser(session), {
+            action: "MESSAGE_SEND",
+            summary: `Chat message (${ticketLabel})`,
+            resourceType: "Message",
+            resourceId: message.id,
+            metadata: { conversationId: conversation.id },
+        });
 
         return NextResponse.json(message);
     } catch (error: any) {

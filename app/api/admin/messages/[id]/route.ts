@@ -3,6 +3,10 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { pusherServer } from "@/lib/pusher";
+import {
+    logBusinessActivity,
+    sessionUser,
+} from "@/lib/log-business-activity";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
@@ -68,6 +72,14 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
         } catch (pusherError) {
             console.warn("Pusher notification failed, but message was saved:", pusherError);
         }
+
+        await logBusinessActivity(sessionUser(session), {
+            action: "ADMIN_MESSAGE_REPLY",
+            summary: `Admin reply in ticket ${conversation.ticketId || conversationId}`,
+            resourceType: "Message",
+            resourceId: message.id,
+            metadata: { conversationId },
+        });
 
         return NextResponse.json(message);
     } catch (error: any) {

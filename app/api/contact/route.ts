@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyAdmins } from "@/lib/notifications";
+import { logBusinessActivity } from "@/lib/log-business-activity";
 
 export async function POST(req: Request) {
     try {
@@ -25,6 +26,16 @@ export async function POST(req: Request) {
             "تواصل معنا", "Contact Us",
             `رسالة جديدة من ${name}`, `New message from ${name}`,
             "CONTACT"
+        );
+
+        await logBusinessActivity(
+            { email, name, role: "GUEST" },
+            {
+                action: "CONTACT_FORM",
+                summary: `Contact form: ${name} (${email})${subject ? ` — ${subject}` : ""}`,
+                resourceType: "ContactMessage",
+                resourceId: newContact.id,
+            }
         );
 
         return NextResponse.json(newContact, { status: 201 });
