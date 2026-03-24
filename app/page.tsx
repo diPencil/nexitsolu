@@ -5,10 +5,10 @@ export const metadata: Metadata = {
   title: "NexIT Solutions | Innovative Software & System Integration",
   description: "NexIT Solutions provides professional software development, system integration, cybersecurity, and managed cloud services. Discover our cutting-edge solutions for your digital growth.",
   alternates: {
-    canonical: "https://nexit-solutions.com",
+    canonical: "https://nexitsolu.com",
     languages: {
-      "en-US": "https://nexit-solutions.com/en",
-      "ar-EG": "https://nexit-solutions.com/ar",
+      "en-US": "https://nexitsolu.com",
+      "ar-EG": "https://nexitsolu.com",
     },
   },
   openGraph: {
