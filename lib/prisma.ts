@@ -17,13 +17,15 @@ export function getPrismaClient(): PrismaClient {
     // Use DATABASE_URL from .env if it exists, otherwise fall back to local path.
     let dbUrl = process.env.DATABASE_URL;
 
-    if (!dbUrl || dbUrl.includes("D:/")) {
-        // Fallback for local or if .env is missing absolute path
-        const dbPath = path.join(process.cwd(), "prisma", "dev.db");
+    if (!dbUrl || dbUrl === "undefined" || dbUrl.includes("D:/")) {
+        // Force absolute path for SQLite on Linux servers if env is wonky
+        const dbPath = path.resolve(process.cwd(), "prisma", "dev.db");
         dbUrl = `file:${dbPath}`;
     }
     
-    console.log(`Prisma connecting to:`, dbUrl);
+    console.log("Prisma initializing with URL:", dbUrl);
+    
+    if (!dbUrl) dbUrl = "file:./prisma/dev.db"; // Absolute last resort
     
     // For LibSQL/SQLite
     const libsql = createClient({ url: dbUrl });
