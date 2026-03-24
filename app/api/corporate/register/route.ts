@@ -63,6 +63,7 @@ export async function POST(req: Request) {
                 summary: `New company account: ${name} (@${username})`,
                 resourceType: "User",
                 resourceId: user.id,
+                req,
             }
         );
 

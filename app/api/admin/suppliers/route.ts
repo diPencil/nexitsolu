@@ -49,6 +49,7 @@ export async function POST(req: Request) {
             summary: `Added supplier: ${supplier.name}`,
             resourceType: "Supplier",
             resourceId: supplier.id,
+            req,
         });
         return NextResponse.json(supplier);
     } catch (e: unknown) {
@@ -84,6 +85,7 @@ export async function PUT(req: Request) {
             summary: `Updated supplier: ${supplier.name}`,
             resourceType: "Supplier",
             resourceId: supplier.id,
+            req,
         });
         return NextResponse.json(supplier);
     } catch (e: unknown) {
@@ -112,6 +114,7 @@ export async function DELETE(req: Request) {
                 : `Deleted supplier id ${id}`,
             resourceType: "Supplier",
             resourceId: id,
+            req,
         });
         return new NextResponse("Deleted", { status: 200 });
     } catch (e: unknown) {

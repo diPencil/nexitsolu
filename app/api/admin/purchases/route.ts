@@ -79,6 +79,7 @@ export async function POST(req: Request) {
             summary: `Supply: ${quantity}× ${prod?.name ?? productId} from ${sup?.name ?? supplierId}`,
             resourceType: "Purchase",
             resourceId: result.id,
+            req,
         });
 
         return NextResponse.json(result);
@@ -120,6 +121,7 @@ export async function DELETE(req: Request) {
                 : `Deleted purchase ${id}`,
             resourceType: "Purchase",
             resourceId: id,
+            req,
         });
 
         return new NextResponse("Purchase record deleted", { status: 200 });

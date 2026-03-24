@@ -98,6 +98,7 @@ export async function POST(req: Request) {
             summary: `Placed order ${orderNumber} — ${total} EGP`,
             resourceType: "Order",
             resourceId: order.id,
+            req,
         });
 
         return NextResponse.json(order);

@@ -35,6 +35,7 @@ export async function POST(req: Request) {
                 summary: `Contact form: ${name} (${email})${subject ? ` — ${subject}` : ""}`,
                 resourceType: "ContactMessage",
                 resourceId: newContact.id,
+                req,
             }
         );
 

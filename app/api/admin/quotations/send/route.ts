@@ -104,6 +104,7 @@ export async function POST(req: Request) {
                 summary: `Emailed quotation ${q.quotationNo} to ${q.user.email}`,
                 resourceType: "Quotation",
                 resourceId: q.id,
+                req,
             })
             return NextResponse.json({ message: "Quotation sent successfully" })
         } else {

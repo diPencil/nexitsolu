@@ -51,6 +51,7 @@ export async function POST(req: Request) {
             summary: `Created quotation ${quotation.quotationNo}`,
             resourceType: "Quotation",
             resourceId: quotation.id,
+            req,
         })
         return NextResponse.json(quotation)
     } catch (error: any) {
@@ -78,6 +79,7 @@ export async function PATCH(req: Request) {
             summary: `Updated quotation ${quotation.quotationNo}`,
             resourceType: "Quotation",
             resourceId: quotation.id,
+            req,
         })
         return NextResponse.json(quotation)
     } catch (error: any) {
@@ -108,6 +110,7 @@ export async function DELETE(req: Request) {
                 : `Deleted quotation ${id}`,
             resourceType: "Quotation",
             resourceId: id,
+            req,
         })
         return new NextResponse("Deleted", { status: 200 })
     } catch (error: any) {

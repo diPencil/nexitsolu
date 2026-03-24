@@ -52,6 +52,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
             resourceType: "Conversation",
             resourceId: conversationId,
             metadata: reason ? { reason: String(reason).slice(0, 200) } : undefined,
+            req,
         });
 
         return NextResponse.json(updatedConversation);

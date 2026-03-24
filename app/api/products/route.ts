@@ -95,6 +95,7 @@ export async function POST(req: Request) {
             summary: `Added product: ${product.name}`,
             resourceType: "Product",
             resourceId: product.id,
+            req,
         });
 
         return NextResponse.json(product);

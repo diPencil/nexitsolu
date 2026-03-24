@@ -79,6 +79,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
             resourceType: "Message",
             resourceId: message.id,
             metadata: { conversationId },
+            req,
         });
 
         return NextResponse.json(message);

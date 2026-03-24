@@ -100,6 +100,7 @@ export async function PUT(
             summary: `Updated product: ${product.name}`,
             resourceType: "Product",
             resourceId: product.id,
+            req,
         });
 
         return NextResponse.json(product);
@@ -145,6 +146,7 @@ export async function DELETE(
                 : `Deleted product id ${id}`,
             resourceType: "Product",
             resourceId: id,
+            req,
         });
 
         return new NextResponse("Deleted", { status: 200 });

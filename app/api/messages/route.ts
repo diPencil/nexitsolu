@@ -135,6 +135,7 @@ export async function POST(req: Request) {
             resourceType: "Message",
             resourceId: message.id,
             metadata: { conversationId: conversation.id },
+            req,
         });
 
         return NextResponse.json(message);

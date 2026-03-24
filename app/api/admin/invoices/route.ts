@@ -79,6 +79,7 @@ export async function POST(req: Request) {
             summary: `Created invoice #${invoiceNo} for user ${userId}`,
             resourceType: "Invoice",
             resourceId: invoice.id,
+            req,
         });
 
         return NextResponse.json(invoice);
@@ -153,6 +154,7 @@ export async function DELETE(req: Request) {
                 : `Deleted invoice ${id}`,
             resourceType: "Invoice",
             resourceId: id,
+            req,
         });
 
         return new NextResponse("Invoice deleted", { status: 200 });
