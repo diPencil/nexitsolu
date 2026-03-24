@@ -1,15 +1,22 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Force absolute path for Hostinger
-const dbPath = "/home/u909646470/domains/nexitsolu.com/nodejs/prisma/dev.db";
-const dbUrl = `file:${dbPath}`;
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const nextConfig = {
   output: 'standalone',
+  // Avoid bundling Prisma/LibSQL into webpack/Turbopack chunks (fixes URL/env issues)
+  serverExternalPackages: [
+    '@prisma/client',
+    'prisma',
+    '@prisma/adapter-libsql',
+    '@libsql/client',
+  ],
+  // Ensure prisma folder is copied into `.next/standalone` (Hostinger / SQLite)
+  outputFileTracingIncludes: {
+    '/**': ['./prisma/**/*'],
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

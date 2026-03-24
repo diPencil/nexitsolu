@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "motion/react"
 import {
     Plus, Search, Filter, Edit, Trash2, Package,
     X, Loader2, Truck, MapPin, DollarSign, CheckSquare,
-    Square, ChevronDown, Globe, Eye, Star, Share2,
+    Square, ChevronDown, Globe, Eye, EyeOff, Star, Share2,
     Heart, List, ShoppingBag, BarChart3, TrendingUp, Banknote,
-    Tags
+    Tags, ToggleLeft, ToggleRight
 } from "lucide-react"
 import { useLanguage } from "@/lib/i18n-context"
 import { Button } from "@/components/ui/button"
@@ -673,7 +673,8 @@ export default function AdminProducts() {
     const [formData, setFormData] = useState({
         name: "", nameAr: "", description: "", descriptionAr: "",
         price: "", discountPrice: "", category: "workstations",
-        stock: "10", tag: "NEW", image: "", gallery: ""
+        stock: "10", tag: "NEW", image: "", gallery: "",
+        active: true
     })
 
     useEffect(() => {
@@ -702,11 +703,12 @@ export default function AdminProducts() {
                 stock: editingProduct.stock?.toString() || "10",
                 tag: editingProduct.tag || "NEW",
                 image: editingProduct.image || "",
-                gallery: editingProduct.gallery || ""
+                gallery: editingProduct.gallery || "",
+                active: editingProduct.active ?? true
             })
             setSelectedZones(editingProduct.shippingZones ? JSON.parse(editingProduct.shippingZones) : [])
         } else {
-            setFormData({ name: "", nameAr: "", description: "", descriptionAr: "", price: "", discountPrice: "", category: "workstations", stock: "10", tag: "NEW", image: "", gallery: "" })
+            setFormData({ name: "", nameAr: "", description: "", descriptionAr: "", price: "", discountPrice: "", category: "workstations", stock: "10", tag: "NEW", image: "", gallery: "", active: true })
             setSelectedZones([])
         }
     }, [editingProduct])
@@ -865,7 +867,10 @@ export default function AdminProducts() {
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-sm truncate max-w-[200px]">{lang === 'ar' ? p.nameAr || p.name : p.name}</p>
-                                                    <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{p.tag || p.category}</p>
+                                                    <div className="flex items-center gap-1.5 mt-0.5">
+                                                        <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${p.active ? 'bg-green-500' : 'bg-zinc-600'}`} />
+                                                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{p.active ? (p.tag || p.category) : (lang === 'ar' ? 'مخفي' : 'Hidden')}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -1023,6 +1028,26 @@ export default function AdminProducts() {
                                         <div className="space-y-2">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Description (AR)</label>
                                             <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[100px]" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
+                                        </div>
+
+                                        {/* ── Visibility Toggle ── */}
+                                        <div className="p-6 rounded-3xl bg-zinc-900/50 border border-white/5 flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${formData.active ? 'bg-green-500/10 text-green-500' : 'bg-zinc-800 text-zinc-500'}`}>
+                                                    {formData.active ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-black text-white">{lang === 'ar' ? 'حالة العرض' : 'Visibility'}</p>
+                                                    <p className="text-[10px] text-zinc-500">{formData.active ? (lang === 'ar' ? 'نشط في المتجر' : 'Active in Store') : (lang === 'ar' ? 'مخفي عن العملاء' : 'Hidden from Shop')}</p>
+                                                </div>
+                                            </div>
+                                            <button 
+                                                type="button" 
+                                                onClick={() => setFormData({ ...formData, active: !formData.active })}
+                                                className={`w-12 h-6 rounded-full relative transition-all duration-300 ${formData.active ? 'bg-green-600' : 'bg-zinc-700'}`}
+                                            >
+                                                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${formData.active ? (lang === 'ar' ? 'left-1' : 'right-1') : (lang === 'ar' ? 'right-1' : 'left-1')}`} />
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

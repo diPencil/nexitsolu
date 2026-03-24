@@ -34,9 +34,10 @@ export default function StorePage() {
         { id: 'accessories', name: lang === 'ar' ? 'ملحقات' : 'Accessories', icon: HardDrive },
     ]
 
+    const safeDbCategories = Array.isArray(dbCategories) ? dbCategories : []
     const categories = [
         ...baseCategories,
-        ...dbCategories
+        ...safeDbCategories
             .filter((c: any) => !baseCategories.some(b => b.id === c.name))
             .map((c: any) => ({
                 id: c.name,
@@ -53,17 +54,29 @@ export default function StorePage() {
 
     useEffect(() => {
         fetch("/api/products")
-            .then(res => res.json())
-            .then(data => {
-                setProducts(data)
-                setIsLoading(false)
+            .then(async (res) => {
+                const text = await res.text()
+                try {
+                    const data = JSON.parse(text)
+                    setProducts(Array.isArray(data) ? data : [])
+                } catch {
+                    setProducts([])
+                }
             })
-            .catch(() => setIsLoading(false))
-            
+            .catch(() => setProducts([]))
+            .finally(() => setIsLoading(false))
+
         fetch("/api/admin/categories")
-            .then(res => res.json())
-            .then(data => setDbCategories(data || []))
-            .catch(() => {})
+            .then(async (res) => {
+                const text = await res.text()
+                try {
+                    const data = JSON.parse(text)
+                    setDbCategories(Array.isArray(data) ? data : [])
+                } catch {
+                    setDbCategories([])
+                }
+            })
+            .catch(() => setDbCategories([]))
 
         if (status === "authenticated") {
             fetchFavorites()

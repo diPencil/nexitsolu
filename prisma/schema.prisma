@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 datasource db {
@@ -53,12 +53,14 @@ model Product {
   shippingZones String?
   views         Int         @default(0)
   shares        Int         @default(0)
+  active        Boolean     @default(true)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   favoritedBy   Favorite[]
   orderItems    OrderItem[]
   reviews       Review[]
   wishlistedBy  Wishlist[]
+  purchases     Purchase[]
 }
 
 model Favorite {
@@ -318,3 +320,32 @@ model QuotationRequest {
   updatedAt   DateTime @updatedAt
   user        User?    @relation(fields: [userId], references: [id])
 }
+
+model Supplier {
+  id        String   @id @default(cuid())
+  name      String
+  contact   String?
+  email     String?
+  phone     String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  purchases Purchase[]
+}
+
+model Purchase {
+  id           String   @id @default(cuid())
+  supplierId   String
+  productId    String
+  quantity     Int
+  unitPrice    Float
+  totalPrice   Float
+  status       String   @default("COMPLETED") // PENDING, COMPLETED, CANCELLED
+  purchaseDate DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  supplier     Supplier @relation(fields: [supplierId], references: [id])
+  product      Product  @relation(fields: [productId], references: [id])
+}
+

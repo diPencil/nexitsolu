@@ -59,10 +59,20 @@ export default function Home() {
     const fetchProducts = async () => {
       try {
         const res = await fetch("/api/products")
-        const data = await res.json()
-        setProducts(data)
+        const text = await res.text()
+        if (!res.ok) {
+          console.error("Failed to fetch products:", res.status, text.slice(0, 200))
+          return
+        }
+        try {
+          const parsed = JSON.parse(text)
+          setProducts(Array.isArray(parsed) ? parsed : [])
+        } catch {
+          console.error("Products API returned non-JSON:", text.slice(0, 200))
+          setProducts([])
+        }
       } catch (error) {
-        console.error("Failed to fetch products")
+        console.error("Failed to fetch products (network):", error)
       } finally {
         setIsProductsLoading(false)
       }
@@ -70,9 +80,18 @@ export default function Home() {
     const fetchCategories = async () => {
       try {
         const res = await fetch("/api/admin/categories")
-        const data = await res.json()
-        setDbCategories(data || [])
-      } catch (error) {}
+        const text = await res.text()
+        let data: unknown
+        try {
+          data = JSON.parse(text)
+        } catch {
+          setDbCategories([])
+          return
+        }
+        setDbCategories(Array.isArray(data) ? data : [])
+      } catch {
+        setDbCategories([])
+      }
     }
     fetchProducts()
     fetchCategories()
@@ -136,9 +155,10 @@ export default function Home() {
     { id: "accessories", labelEn: "Accessories", labelAr: "ملحقات", filter: (p: any) => p.category === 'accessories' }
   ]
 
+  const safeCategories = Array.isArray(dbCategories) ? dbCategories : []
   const storeTabs = [
     ...baseTabs,
-    ...dbCategories
+    ...safeCategories
       .filter((c: any) => !baseTabs.some(b => b.id === c.name))
       .map((c: any) => ({
         id: c.name,

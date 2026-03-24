@@ -9,8 +9,14 @@ export async function GET(
 ) {
     try {
         const { id } = await params;
+        const session = await getServerSession(authOptions);
+        const isAdmin = session?.user && (session.user as any).role === "ADMIN";
+
         const product = await prisma.product.findUnique({
-            where: { id },
+            where: { 
+                id,
+                ...(isAdmin ? {} : { active: true })
+            },
             include: {
                 favoritedBy: { select: { id: true } },
                 wishlistedBy: { select: { id: true } },
@@ -63,7 +69,7 @@ export async function PUT(
         const { 
             name, nameAr, description, descriptionAr, 
             price, discountPrice, category, image, 
-            gallery, tag, stock, shippingZones 
+            gallery, tag, stock, shippingZones, active 
         } = body;
 
         const product = await prisma.product.update({
@@ -80,7 +86,8 @@ export async function PUT(
                 gallery,
                 tag,
                 stock: stock !== undefined ? parseInt(stock) : undefined,
-                shippingZones
+                shippingZones,
+                active: active !== undefined ? active : undefined
             },
         });
 

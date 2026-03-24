@@ -6,7 +6,11 @@ import { prisma } from "@/lib/prisma";
 // GET all products
 export async function GET() {
     try {
+        const session = await getServerSession(authOptions);
+        const isAdmin = session?.user && (session.user as any).role === "ADMIN";
+
         const products = await prisma.product.findMany({
+            where: isAdmin ? {} : { active: true },
             include: {
                 favoritedBy: { select: { id: true } },
                 wishlistedBy: { select: { id: true } },
@@ -61,7 +65,8 @@ export async function POST(req: Request) {
             image, 
             gallery,
             tag, 
-            stock 
+            stock,
+            active
         } = await req.json();
 
         const product = await prisma.product.create({
@@ -77,6 +82,7 @@ export async function POST(req: Request) {
                 gallery,
                 tag,
                 stock: parseInt(stock),
+                active: active !== undefined ? active : true
             },
         });
 

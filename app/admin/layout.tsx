@@ -22,7 +22,9 @@ import {
     ShieldCheck,
     Clock,
     Star,
-    FileText
+    FileText,
+    Truck,
+    Warehouse
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/i18n-context"
@@ -156,6 +158,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 { name: lang === 'ar' ? 'الاشتراكات' : 'Subscriptions', icon: Briefcase, href: '/admin/subscriptions', count: stats?.totalSubscriptions },
                 { name: lang === 'ar' ? 'العقود' : 'Contracts', icon: ShieldCheck, href: '/admin/managed-it', count: stats?.totalManagedIT },
                 { name: lang === 'ar' ? 'الدعم الفني' : 'Tech Support', icon: ShieldCheck, href: '/admin/tech-support', count: stats?.totalTechSupport },
+            ]
+        },
+        {
+            title: lang === 'ar' ? 'المستودع' : 'Inventory',
+            items: [
+                { name: lang === 'ar' ? 'الموردين' : 'Suppliers', icon: Truck, href: '/admin/suppliers', count: stats?.totalSuppliers },
+                { name: lang === 'ar' ? 'المشتريات' : 'Purchases', icon: Warehouse, href: '/admin/purchases', count: stats?.totalPurchases },
             ]
         },
         {
