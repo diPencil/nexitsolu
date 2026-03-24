@@ -13,9 +13,13 @@ const nextConfig = {
     '@prisma/adapter-libsql',
     '@libsql/client',
   ],
-  // Ensure prisma folder is copied into `.next/standalone` (Hostinger / SQLite)
+  // Standalone: schema + Prisma CLI + engines (runtime `db push` on Hostinger)
   outputFileTracingIncludes: {
-    '/**': ['./prisma/**/*'],
+    '/**': [
+      './prisma/**/*',
+      './node_modules/prisma/**/*',
+      './node_modules/@prisma/engines/**/*',
+    ],
   },
   typescript: {
     ignoreBuildErrors: true,
