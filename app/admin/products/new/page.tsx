@@ -138,7 +138,7 @@ export default function NewProductPage() {
     }
 
     return (
-        <div className="max-w-5xl mx-auto pb-20 space-y-8">
+        <div className="max-w-7xl mx-auto pb-20 space-y-8 px-4 md:px-0">
             <div className="flex items-center justify-between">
                 <Button variant="ghost" className="rounded-2xl gap-2 text-zinc-500 hover:text-white" onClick={() => router.push("/admin/products")}>
                     <ArrowLeft className="w-4 h-4" />
@@ -224,25 +224,29 @@ export default function NewProductPage() {
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Image Gallery (Comma Separated)</label>
                             <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[100px] text-sm" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
                         </div>
-                        <div className="space-y-6">
-                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Short description (EN)</label>
-                                <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[120px] text-sm" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block">وصف قصير (AR)</label>
-                                <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[120px] text-sm text-end" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
-                            </div>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Long description (EN)</label>
-                                    <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[200px] text-sm" value={formData.longDescription} placeholder="Full specs, details for the product page..." onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block lg:text-start">وصف طويل (AR)</label>
-                                    <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[200px] text-sm text-end" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
-                                </div>
-                            </div>
+                    </div>
+                </div>
+
+                {/* Full-width description rows: EN | AR side by side */}
+                <div className="mt-10 pt-10 border-t border-white/5 space-y-8 relative z-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2 min-w-0">
+                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Short description (EN)</label>
+                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[140px] text-sm" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                        </div>
+                        <div className="space-y-2 min-w-0">
+                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block md:text-start">وصف قصير (AR)</label>
+                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[140px] text-sm text-end" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2 min-w-0">
+                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Long description (EN)</label>
+                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[220px] text-sm" value={formData.longDescription} placeholder="Full specs, details for the product page..." onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
+                        </div>
+                        <div className="space-y-2 min-w-0">
+                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block md:text-start">وصف طويل (AR)</label>
+                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[220px] text-sm text-end" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
                         </div>
                     </div>
                 </div>

@@ -955,7 +955,7 @@ export default function AdminProducts() {
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className="w-full max-w-4xl bg-zinc-950 border border-white/10 rounded-4xl shadow-2xl overflow-hidden my-auto"
+                            className="w-full max-w-6xl bg-zinc-950 border border-white/10 rounded-4xl shadow-2xl overflow-hidden my-auto"
                         >
                             <div className="p-8 border-b border-white/5 flex items-center justify-between bg-zinc-900/50">
                                 <div>
@@ -1047,24 +1047,6 @@ export default function AdminProducts() {
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Gallery URLs (comma separated)</label>
                                             <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[80px]" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
                                         </div>
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (EN)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[100px]" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (AR)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[100px]" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
-                                        </div>
-                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                            <div className="space-y-2">
-                                                <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (EN)</label>
-                                                <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[160px]" value={formData.longDescription} onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (AR)</label>
-                                                <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[160px]" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
-                                            </div>
-                                        </div>
 
                                         {/* ── Visibility Toggle ── */}
                                         <div className="p-6 rounded-3xl bg-zinc-900/50 border border-white/5 flex items-center justify-between">
@@ -1084,6 +1066,29 @@ export default function AdminProducts() {
                                             >
                                                 <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${formData.active ? (lang === 'ar' ? 'left-1' : 'right-1') : (lang === 'ar' ? 'right-1' : 'left-1')}`} />
                                             </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 pt-8 border-t border-white/5 space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2 min-w-0">
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (EN)</label>
+                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[120px]" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                                        </div>
+                                        <div className="space-y-2 min-w-0">
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (AR)</label>
+                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[120px]" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2 min-w-0">
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (EN)</label>
+                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[180px]" value={formData.longDescription} onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
+                                        </div>
+                                        <div className="space-y-2 min-w-0">
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (AR)</label>
+                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[180px]" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
                                         </div>
                                     </div>
                                 </div>
