@@ -6,7 +6,14 @@ import { Star, Send, User, MessageCircle } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { format } from "date-fns"
 
-export default function ReviewsSection({ productId }: { productId: string }) {
+export default function ReviewsSection({
+    productId,
+    embedded,
+}: {
+    productId: string
+    /** When true, omit large top margin (e.g. inside product page tabs). */
+    embedded?: boolean
+}) {
     const { lang } = useLanguage()
     const { data: session } = useSession()
     const [reviews, setReviews] = useState<any[]>([])
@@ -103,7 +110,9 @@ export default function ReviewsSection({ productId }: { productId: string }) {
         : "0.0"
 
     return (
-        <div className={`mt-20 border-t border-white/5 pt-12 ${lang === 'ar' ? 'dir-rtl text-right' : 'dir-ltr text-left'}`}>
+        <div
+            className={`${embedded ? "mt-0 pt-2" : "mt-20 border-t border-white/5 pt-12"} w-full ${lang === 'ar' ? "dir-rtl text-right" : "dir-ltr text-left"}`}
+        >
             <h2 className="text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3">
                 <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
                 {lang === 'ar' ? 'تقييمات العملاء' : 'Customer Reviews'}

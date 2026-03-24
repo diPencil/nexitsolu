@@ -610,11 +610,11 @@ export default function ProductDetailPage() {
                     </div>
 
                     <div
-                        className="mt-16 md:mt-20 max-w-4xl mx-auto space-y-8 scroll-mt-28"
+                        className="mt-16 md:mt-20 w-full space-y-8 scroll-mt-28"
                         id="product-extra-section"
                     >
                         <div
-                            className={`flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-full bg-white/5 border border-white/10 w-full sm:w-fit ${lang === "ar" ? "sm:mr-auto sm:ms-0" : "sm:mx-auto"}`}
+                            className="flex w-full rounded-2xl border border-white/10 bg-zinc-950/60 p-1 gap-1"
                             role="tablist"
                             aria-label={lang === "ar" ? "الوصف والتقييمات" : "Description and reviews"}
                         >
@@ -626,10 +626,10 @@ export default function ProductDetailPage() {
                                     setExtraTab("description")
                                     scrollToProductExtra()
                                 }}
-                                className={`rounded-full px-5 py-2.5 text-xs font-black uppercase tracking-wider transition-all ${
+                                className={`flex-1 min-w-0 rounded-xl py-3 px-3 sm:px-5 text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all ${
                                     extraTab === "description"
-                                        ? "bg-[#0066FF] text-white shadow-lg shadow-[#0066FF]/25"
-                                        : "text-zinc-400 hover:text-white"
+                                        ? "bg-[#0066FF] text-white shadow-lg shadow-[#0066FF]/20"
+                                        : "text-zinc-400 hover:text-white hover:bg-white/5"
                                 }`}
                             >
                                 {lang === "ar" ? "الوصف الكامل" : "Full description"}
@@ -642,10 +642,10 @@ export default function ProductDetailPage() {
                                     setExtraTab("reviews")
                                     scrollToProductExtra()
                                 }}
-                                className={`rounded-full px-5 py-2.5 text-xs font-black uppercase tracking-wider transition-all ${
+                                className={`flex-1 min-w-0 rounded-xl py-3 px-3 sm:px-5 text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all ${
                                     extraTab === "reviews"
-                                        ? "bg-[#0066FF] text-white shadow-lg shadow-[#0066FF]/25"
-                                        : "text-zinc-400 hover:text-white"
+                                        ? "bg-[#0066FF] text-white shadow-lg shadow-[#0066FF]/20"
+                                        : "text-zinc-400 hover:text-white hover:bg-white/5"
                                 }`}
                             >
                                 {lang === "ar" ? `التقييمات (${reviewsCount})` : `Reviews (${reviewsCount})`}
@@ -673,7 +673,7 @@ export default function ProductDetailPage() {
 
                         {extraTab === "reviews" && (
                             <div className="scroll-mt-32" id="reviews-section" role="tabpanel">
-                                <ReviewsSection productId={product.id} />
+                                <ReviewsSection productId={product.id} embedded />
                             </div>
                         )}
                     </div>

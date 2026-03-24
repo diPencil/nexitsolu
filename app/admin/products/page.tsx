@@ -1013,6 +1013,21 @@ export default function AdminProducts() {
                                                 <input className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.tag} placeholder="NEW, SALE, etc." onChange={e => setFormData({ ...formData, tag: e.target.value })} />
                                             </div>
                                         </div>
+                                    </div>
+
+                                    {/* Right Column */}
+                                    <div className="space-y-6">
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Main Image URL</label>
+                                            <div className="flex gap-4 items-center">
+                                                <input className="flex-1 bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.image} placeholder="https://..." onChange={e => setFormData({ ...formData, image: e.target.value })} />
+                                                {formData.image && <div className="w-14 h-14 rounded-2xl bg-zinc-900 border border-white/5 overflow-hidden shrink-0"><img src={formData.image} className="w-full h-full object-cover" /></div>}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Gallery URLs (comma separated)</label>
+                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[80px]" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
+                                        </div>
 
                                         {/* ── Shipping Zones ── */}
                                         <div className="space-y-2">
@@ -1031,21 +1046,6 @@ export default function AdminProducts() {
                                             <p className="text-[10px] text-zinc-600">
                                                 {selectedZones.length === 0 ? '⚡ فارغ = يشحن لجميع المحافظات تلقائياً' : `✓ ${selectedZones.length} محافظة محددة`}
                                             </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Right Column */}
-                                    <div className="space-y-6">
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Main Image URL</label>
-                                            <div className="flex gap-4 items-center">
-                                                <input className="flex-1 bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.image} placeholder="https://..." onChange={e => setFormData({ ...formData, image: e.target.value })} />
-                                                {formData.image && <div className="w-14 h-14 rounded-2xl bg-zinc-900 border border-white/5 overflow-hidden shrink-0"><img src={formData.image} className="w-full h-full object-cover" /></div>}
-                                            </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Gallery URLs (comma separated)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[80px]" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
                                         </div>
 
                                         {/* ── Visibility Toggle ── */}

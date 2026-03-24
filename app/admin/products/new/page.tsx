@@ -196,15 +196,6 @@ export default function NewProductPage() {
                                 <input type="number" required className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none font-bold" value={formData.stock} onChange={e => setFormData({ ...formData, stock: e.target.value })} />
                             </div>
                         </div>
-
-                        <div className="space-y-2 pt-2">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 flex items-center gap-2">
-                                <Truck className="w-3.5 h-3.5 text-[#0066FF]" />
-                                Shipping Coverage
-                            </label>
-                            <ZonePicker allZones={allZones} selected={selectedZones} onChange={setSelectedZones} />
-                            <p className="text-[9px] text-zinc-600 px-2">Leave empty to enable nationwide shipping.</p>
-                        </div>
                     </div>
 
                     {/* Right Column */}
@@ -223,6 +214,14 @@ export default function NewProductPage() {
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Image Gallery (Comma Separated)</label>
                             <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[100px] text-sm" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
+                        </div>
+                        <div className="space-y-2 pt-2">
+                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 flex items-center gap-2">
+                                <Truck className="w-3.5 h-3.5 text-[#0066FF]" />
+                                Shipping Coverage
+                            </label>
+                            <ZonePicker allZones={allZones} selected={selectedZones} onChange={setSelectedZones} />
+                            <p className="text-[9px] text-zinc-600 px-2">Leave empty to enable nationwide shipping.</p>
                         </div>
                     </div>
                 </div>
