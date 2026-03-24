@@ -6,12 +6,36 @@ import {
     Plus, Search, Warehouse, Package,
     Truck, DollarSign, Calendar, X,
     Loader2, ArrowUpRight, BarChart3,
-    CheckCircle2, AlertCircle
+    CheckCircle2, AlertCircle, Wallet, Hash
 } from "lucide-react"
+
+const PAYMENT_METHODS = ["INSTAPAY", "WALLET", "CASH", "BANK_TRANSFER"] as const
+
+function paymentMethodLabel(method: string | null | undefined, lang: string) {
+    const m = (method || "").toUpperCase()
+    const map: Record<string, { en: string; ar: string }> = {
+        INSTAPAY: { en: "InstaPay", ar: "انستاباي" },
+        WALLET: { en: "Wallet", ar: "محفظة" },
+        CASH: { en: "Cash", ar: "كاش" },
+        BANK_TRANSFER: { en: "Bank transfer", ar: "تحويل بنكي" },
+    }
+    const row = map[m]
+    if (!row) return method || "—"
+    return lang === "ar" ? row.ar : row.en
+}
 import Link from "next/link"
 import { useLanguage } from "@/lib/i18n-context"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+
+function purchasePaidDisplay(p: any) {
+    return (p.paymentStatus || "UNPAID") === "PAID" ? p.amountPaid ?? 0 : 0
+}
+
+function purchaseDueDisplay(p: any) {
+    if ((p.paymentStatus || "UNPAID") === "UNPAID") return p.totalPrice ?? 0
+    return p.amountRemaining ?? Math.max(0, (p.totalPrice ?? 0) - (p.amountPaid ?? 0))
+}
 
 export default function PurchasesPage() {
     const { lang } = useLanguage()
@@ -29,7 +53,11 @@ export default function PurchasesPage() {
         productId: "",
         quantity: "",
         unitPrice: "",
-        status: "COMPLETED"
+        status: "COMPLETED",
+        paymentStatus: "UNPAID" as "PAID" | "UNPAID",
+        paymentMethod: "" as string,
+        transactionRef: "",
+        amountPaid: "",
     })
 
     const fetchData = async () => {
@@ -70,6 +98,10 @@ export default function PurchasesPage() {
             toast.error("Please fill all required fields")
             return
         }
+        if (formData.paymentStatus === "PAID" && !formData.paymentMethod) {
+            toast.error(lang === "ar" ? "اختر طريقة الدفع" : "Select a payment method")
+            return
+        }
 
         setIsSaving(true)
         try {
@@ -81,14 +113,31 @@ export default function PurchasesPage() {
                     productId: formData.productId,
                     quantity: parseInt(formData.quantity),
                     unitPrice: parseFloat(formData.unitPrice),
-                    status: formData.status
+                    status: formData.status,
+                    paymentStatus: formData.paymentStatus,
+                    paymentMethod: formData.paymentStatus === "PAID" ? formData.paymentMethod : null,
+                    transactionRef: formData.paymentStatus === "PAID" ? formData.transactionRef : null,
+                    amountPaid:
+                        formData.paymentStatus === "PAID"
+                            ? parseFloat(formData.amountPaid || "0")
+                            : 0,
                 })
             })
 
             if (res.ok) {
                 toast.success(lang === 'ar' ? "تم تسجيل المشتريات وتحديث المخزن!" : "Purchase recorded & stock updated!")
                 setIsModalOpen(false)
-                setFormData({ supplierId: "", productId: "", quantity: "", unitPrice: "", status: "COMPLETED" })
+                setFormData({
+                    supplierId: "",
+                    productId: "",
+                    quantity: "",
+                    unitPrice: "",
+                    status: "COMPLETED",
+                    paymentStatus: "UNPAID",
+                    paymentMethod: "",
+                    transactionRef: "",
+                    amountPaid: "",
+                })
                 fetchData()
             } else {
                 const err = await res.json()
@@ -123,6 +172,17 @@ export default function PurchasesPage() {
     }, {})
 
     const productsByStock = [...products].sort((a, b) => (Number(b.stock) || 0) - (Number(a.stock) || 0))
+
+    const batchTotal =
+        formData.quantity &&
+        formData.unitPrice &&
+        !Number.isNaN(parseFloat(formData.quantity)) &&
+        !Number.isNaN(parseFloat(formData.unitPrice))
+            ? parseFloat(formData.quantity) * parseFloat(formData.unitPrice)
+            : 0
+    const amountPaidPreview =
+        formData.paymentStatus === "PAID" ? parseFloat(formData.amountPaid || "0") || 0 : 0
+    const remainingPreview = Math.max(0, batchTotal - amountPaidPreview)
 
     return (
         <div className="space-y-8">
@@ -210,6 +270,7 @@ export default function PurchasesPage() {
                                 <th className="px-6 py-4 text-start text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'المورد' : 'Supplier'}</th>
                                 <th className="px-6 py-4 text-start text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'الكمية' : 'Qty'}</th>
                                 <th className="px-6 py-4 text-start text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'التكلفة' : 'Cost'}</th>
+                                <th className="px-6 py-4 text-start text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'الدفع' : 'Payment'}</th>
                                 <th className="px-6 py-4 text-end text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'التاريخ' : 'Date'}</th>
                             </tr>
                         </thead>
@@ -217,12 +278,12 @@ export default function PurchasesPage() {
                             {isLoading ? (
                                 Array(5).fill(0).map((_, i) => (
                                     <tr key={i} className="animate-pulse">
-                                        <td colSpan={5} className="px-6 py-8 h-16 bg-white/5" />
+                                        <td colSpan={6} className="px-6 py-8 h-16 bg-white/5" />
                                     </tr>
                                 ))
                             ) : filteredPurchases.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-20 text-center text-zinc-500 italic">
+                                    <td colSpan={6} className="px-6 py-20 text-center text-zinc-500 italic">
                                         {lang === 'ar' ? 'لا يوجد سجلات توريد' : 'No supply records found'}
                                     </td>
                                 </tr>
@@ -253,6 +314,29 @@ export default function PurchasesPage() {
                                             <p className="text-sm font-black text-white">{p.totalPrice?.toLocaleString()} EGP</p>
                                             <p className="text-[9px] text-zinc-600 uppercase">@{p.unitPrice} each</p>
                                         </td>
+                                        <td className="px-6 py-4">
+                                            {(p.paymentStatus || "UNPAID") === "PAID" ? (
+                                                <div className="space-y-0.5">
+                                                    <span className="inline-flex px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 text-[9px] font-black uppercase">
+                                                        {lang === "ar" ? "مدفوع" : "Paid"}
+                                                    </span>
+                                                    <p className="text-[10px] text-zinc-500">
+                                                        {paymentMethodLabel(p.paymentMethod, lang)}
+                                                        {p.transactionRef ? ` · #${String(p.transactionRef).slice(0, 12)}` : ""}
+                                                    </p>
+                                                    <p className="text-[10px] text-zinc-400">
+                                                        {lang === "ar" ? "دفع" : "Paid"}{" "}
+                                                        {purchasePaidDisplay(p).toLocaleString()} ·{" "}
+                                                        {lang === "ar" ? "متبقي" : "Due"}{" "}
+                                                        {purchaseDueDisplay(p).toLocaleString()}
+                                                    </p>
+                                                </div>
+                                            ) : (
+                                                <span className="inline-flex px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400 text-[9px] font-black uppercase">
+                                                    {lang === "ar" ? "غير مدفوع" : "Unpaid"}
+                                                </span>
+                                            )}
+                                        </td>
                                         <td className="px-6 py-4 text-end">
                                             <div className="flex flex-col items-end">
                                                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[9px] font-black uppercase mb-1">
@@ -280,7 +364,7 @@ export default function PurchasesPage() {
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className="w-full max-w-2xl bg-zinc-950 border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden"
+                            className="w-full max-w-3xl bg-zinc-950 border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto"
                         >
                             <form onSubmit={handleSubmit} className="p-8 space-y-6">
                                 <div className="flex items-start justify-between gap-4 mb-4">
@@ -371,9 +455,114 @@ export default function PurchasesPage() {
                                     {formData.quantity && formData.unitPrice && (
                                         <div className="p-6 rounded-3xl bg-[#0066FF]/5 border border-[#0066FF]/20 flex items-center justify-between">
                                             <span className="text-xs font-black uppercase text-zinc-500">{lang === 'ar' ? 'إجمالي تكلفة الشروه' : 'Total Batch Cost'}</span>
-                                            <span className="text-xl font-black text-[#0066FF]">{(parseFloat(formData.quantity) * parseFloat(formData.unitPrice)).toLocaleString()} EGP</span>
+                                            <span className="text-xl font-black text-[#0066FF]">{batchTotal.toLocaleString()} EGP</span>
                                         </div>
                                     )}
+
+                                    <div className="p-5 rounded-3xl bg-zinc-900/80 border border-white/5 space-y-4">
+                                        <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                                            <Wallet className="w-3.5 h-3.5" />
+                                            {lang === "ar" ? "حالة الدفع للمورد" : "Payment to supplier"}
+                                        </p>
+                                        <div className="flex flex-wrap gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setFormData((fd) => ({
+                                                        ...fd,
+                                                        paymentStatus: "UNPAID",
+                                                        paymentMethod: "",
+                                                        transactionRef: "",
+                                                        amountPaid: "",
+                                                    }))
+                                                }
+                                                className={`flex-1 min-w-[120px] rounded-2xl py-3 px-4 text-sm font-black transition-all border ${
+                                                    formData.paymentStatus === "UNPAID"
+                                                        ? "bg-amber-500/20 border-amber-500/40 text-amber-300"
+                                                        : "bg-zinc-950 border-white/10 text-zinc-500 hover:border-white/20"
+                                                }`}
+                                            >
+                                                {lang === "ar" ? "لم أدفع بعد" : "Not paid yet"}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setFormData((fd) => ({ ...fd, paymentStatus: "PAID" }))}
+                                                className={`flex-1 min-w-[120px] rounded-2xl py-3 px-4 text-sm font-black transition-all border ${
+                                                    formData.paymentStatus === "PAID"
+                                                        ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
+                                                        : "bg-zinc-950 border-white/10 text-zinc-500 hover:border-white/20"
+                                                }`}
+                                            >
+                                                {lang === "ar" ? "تم الدفع" : "Paid"}
+                                            </button>
+                                        </div>
+
+                                        {formData.paymentStatus === "PAID" && (
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-white/5">
+                                                <div className="space-y-2 md:col-span-2">
+                                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">
+                                                        {lang === "ar" ? "طريقة الدفع" : "Payment method"}
+                                                    </label>
+                                                    <select
+                                                        required={formData.paymentStatus === "PAID"}
+                                                        value={formData.paymentMethod}
+                                                        onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
+                                                        className="w-full bg-zinc-950 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm appearance-none cursor-pointer"
+                                                    >
+                                                        <option value="" className="bg-zinc-950">
+                                                            {lang === "ar" ? "-- اختر الطريقة --" : "-- Select method --"}
+                                                        </option>
+                                                        {PAYMENT_METHODS.map((m) => (
+                                                            <option key={m} value={m} className="bg-zinc-950">
+                                                                {paymentMethodLabel(m, lang)}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div className="space-y-2 md:col-span-2">
+                                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                                                        <Hash className="w-3 h-3" />
+                                                        {lang === "ar" ? "رقم العملية / المرجع" : "Transaction / reference #"}
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        value={formData.transactionRef}
+                                                        onChange={(e) => setFormData({ ...formData, transactionRef: e.target.value })}
+                                                        className="w-full bg-zinc-950 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
+                                                        placeholder={lang === "ar" ? "اختياري" : "Optional"}
+                                                    />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                                                        <DollarSign className="w-3 h-3" />
+                                                        {lang === "ar" ? "المبلغ المدفوع" : "Amount paid"}
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        min="0"
+                                                        step="0.01"
+                                                        value={formData.amountPaid}
+                                                        onChange={(e) => setFormData({ ...formData, amountPaid: e.target.value })}
+                                                        className="w-full bg-zinc-950 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm font-black text-emerald-400"
+                                                        placeholder="0.00"
+                                                    />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">
+                                                        {lang === "ar" ? "المتبقي علينا" : "Remaining due"}
+                                                    </label>
+                                                    <div className="w-full bg-zinc-950 border border-white/5 rounded-2xl py-4 px-6 text-sm font-black text-amber-400">
+                                                        {batchTotal > 0 ? remainingPreview.toLocaleString() : "—"} EGP
+                                                    </div>
+                                                    <p className="text-[9px] text-zinc-600">
+                                                        {lang === "ar"
+                                                            ? "يُحسب تلقائياً: إجمالي الشحنة − المدفوع"
+                                                            : "Auto: batch total − amount paid"}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
 
                                     <div className="p-4 rounded-2xl bg-orange-500/5 border border-orange-500/20 flex gap-3">
                                         <AlertCircle className="w-5 h-5 text-orange-500 shrink-0" />
@@ -500,6 +689,9 @@ export default function PurchasesPage() {
                                                             <th className="px-4 py-3 text-[10px] font-black text-zinc-500 uppercase tracking-widest">
                                                                 {lang === "ar" ? "الإجمالي" : "Total"}
                                                             </th>
+                                                            <th className="px-4 py-3 text-[10px] font-black text-zinc-500 uppercase tracking-widest">
+                                                                {lang === "ar" ? "الدفع" : "Pay"}
+                                                            </th>
                                                             <th className="px-4 py-3 text-end text-[10px] font-black text-zinc-500 uppercase tracking-widest">
                                                                 {lang === "ar" ? "التاريخ" : "Date"}
                                                             </th>
@@ -515,6 +707,29 @@ export default function PurchasesPage() {
                                                                 <td className="px-4 py-3 font-bold text-emerald-500">+{p.quantity}</td>
                                                                 <td className="px-4 py-3 font-black text-white">
                                                                     {(p.totalPrice || 0).toLocaleString()} EGP
+                                                                </td>
+                                                                <td className="px-4 py-3 text-zinc-400 text-xs">
+                                                                    {(p.paymentStatus || "UNPAID") === "PAID" ? (
+                                                                        <>
+                                                                            <span className="text-emerald-400 font-bold">
+                                                                                {paymentMethodLabel(p.paymentMethod, lang)}
+                                                                            </span>
+                                                                            {p.transactionRef ? (
+                                                                                <span className="block text-zinc-500 truncate max-w-[140px]">
+                                                                                    #{p.transactionRef}
+                                                                                </span>
+                                                                            ) : null}
+                                                                            <span className="block text-[10px] text-zinc-500">
+                                                                                {purchasePaidDisplay(p).toLocaleString()} /{" "}
+                                                                                {purchaseDueDisplay(p).toLocaleString()}{" "}
+                                                                                {lang === "ar" ? "متبقي" : "due"}
+                                                                            </span>
+                                                                        </>
+                                                                    ) : (
+                                                                        <span className="text-amber-500/90 font-bold">
+                                                                            {lang === "ar" ? "غير مدفوع" : "Unpaid"}
+                                                                        </span>
+                                                                    )}
                                                                 </td>
                                                                 <td className="px-4 py-3 text-end text-zinc-500 text-xs">
                                                                     {new Date(p.purchaseDate).toLocaleString()}
@@ -591,6 +806,12 @@ export default function PurchasesPage() {
                                                                 <th className="px-4 py-3 text-end text-[10px] font-black text-zinc-500 uppercase tracking-widest">
                                                                     {lang === "ar" ? "المبلغ" : "Amount"}
                                                                 </th>
+                                                                <th className="px-4 py-3 text-end text-[10px] font-black text-zinc-500 uppercase tracking-widest">
+                                                                    {lang === "ar" ? "المدفوع" : "Paid"}
+                                                                </th>
+                                                                <th className="px-4 py-3 text-end text-[10px] font-black text-zinc-500 uppercase tracking-widest">
+                                                                    {lang === "ar" ? "المتبقي" : "Due"}
+                                                                </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody className="divide-y divide-white/5">
@@ -603,6 +824,12 @@ export default function PurchasesPage() {
                                                                     <td className="px-4 py-3 text-zinc-400">{p.quantity}</td>
                                                                     <td className="px-4 py-3 text-end font-black text-white">
                                                                         {(p.totalPrice || 0).toLocaleString()} EGP
+                                                                    </td>
+                                                                    <td className="px-4 py-3 text-end text-emerald-400 font-bold">
+                                                                        {purchasePaidDisplay(p).toLocaleString()}
+                                                                    </td>
+                                                                    <td className="px-4 py-3 text-end text-amber-400/90 font-bold">
+                                                                        {purchaseDueDisplay(p).toLocaleString()}
                                                                     </td>
                                                                 </tr>
                                                             ))}

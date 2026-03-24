@@ -35,7 +35,24 @@ export async function POST(req: Request) {
         }
 
         const data = await req.json();
-        const { supplierId, productId, quantity, unitPrice, status } = data;
+        const {
+            supplierId,
+            productId,
+            quantity,
+            unitPrice,
+            status,
+            paymentStatus,
+            paymentMethod,
+            transactionRef,
+            amountPaid: amountPaidRaw,
+        } = data;
+
+        const totalPrice = Number(quantity) * Number(unitPrice);
+        const isPaid = paymentStatus === "PAID";
+        const amountPaid = isPaid
+            ? Math.max(0, Number(amountPaidRaw ?? 0))
+            : 0;
+        const amountRemaining = Math.max(0, totalPrice - amountPaid);
 
         // Transaction to ensure both purchase is recorded and stock is updated
         const result = await prisma.$transaction(async (tx) => {
@@ -46,8 +63,16 @@ export async function POST(req: Request) {
                     productId,
                     quantity,
                     unitPrice,
-                    totalPrice: quantity * unitPrice,
-                    status: status || "COMPLETED"
+                    totalPrice,
+                    status: status || "COMPLETED",
+                    paymentStatus: isPaid ? "PAID" : "UNPAID",
+                    paymentMethod: isPaid && paymentMethod ? String(paymentMethod) : null,
+                    transactionRef:
+                        isPaid && transactionRef?.trim()
+                            ? String(transactionRef).trim()
+                            : null,
+                    amountPaid,
+                    amountRemaining,
                 }
             });
 

@@ -375,7 +375,13 @@ model Purchase {
   purchaseDate DateTime @default(now())
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  
+
+  paymentStatus   String  @default("UNPAID") // PAID | UNPAID
+  paymentMethod   String? // INSTAPAY, WALLET, CASH, BANK_TRANSFER
+  transactionRef  String?
+  amountPaid      Float   @default(0)
+  amountRemaining Float   @default(0) // snapshot: totalPrice - amountPaid at save
+
   supplier     Supplier @relation(fields: [supplierId], references: [id])
   product      Product  @relation(fields: [productId], references: [id])
 }
