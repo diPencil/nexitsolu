@@ -673,7 +673,7 @@ export default function AdminProducts() {
     const [formData, setFormData] = useState({
         name: "", nameAr: "", description: "", descriptionAr: "",
         longDescription: "", longDescriptionAr: "",
-        price: "", discountPrice: "", category: "workstations",
+        price: "", discountPrice: "", category: "",
         stock: "10", tag: "NEW", image: "", gallery: "",
         active: true
     })
@@ -702,7 +702,7 @@ export default function AdminProducts() {
                 longDescriptionAr: editingProduct.longDescriptionAr || "",
                 price: editingProduct.price?.toString() || "",
                 discountPrice: editingProduct.discountPrice?.toString() || "",
-                category: editingProduct.category || "workstations",
+                category: editingProduct.category || "",
                 stock: editingProduct.stock?.toString() || "10",
                 tag: editingProduct.tag || "NEW",
                 image: editingProduct.image || "",
@@ -711,10 +711,19 @@ export default function AdminProducts() {
             })
             setSelectedZones(editingProduct.shippingZones ? JSON.parse(editingProduct.shippingZones) : [])
         } else {
-            setFormData({ name: "", nameAr: "", description: "", descriptionAr: "", longDescription: "", longDescriptionAr: "", price: "", discountPrice: "", category: "workstations", stock: "10", tag: "NEW", image: "", gallery: "", active: true })
+            setFormData({ name: "", nameAr: "", description: "", descriptionAr: "", longDescription: "", longDescriptionAr: "", price: "", discountPrice: "", category: "", stock: "10", tag: "NEW", image: "", gallery: "", active: true })
             setSelectedZones([])
         }
     }, [editingProduct])
+
+    useEffect(() => {
+        if (!categories.length || editingProduct) return
+        setFormData((fd) => {
+            const ok = categories.some((c: any) => c.name === fd.category)
+            if (ok && fd.category) return fd
+            return { ...fd, category: categories[0].name }
+        })
+    }, [categories, editingProduct])
 
     const fetchProducts = async () => {
         try {
@@ -760,10 +769,19 @@ export default function AdminProducts() {
         } catch { toast.error("Error deleting") }
     }
 
+    const resolveCategoryLabel = (slug: string) => {
+        const c = categories.find((x: any) => x.name === slug)
+        if (c) return lang === "ar" ? c.nameAr : c.nameEn
+        return slug || "—"
+    }
+
     const filteredProducts = products.filter((p: any) => {
         const nameMatch = (p.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
                          (p.nameAr || "").toLowerCase().includes(searchTerm.toLowerCase());
-        const categoryMatch = selectedCategory === "all" || p.category === selectedCategory || (p.tag === selectedCategory);
+        const categoryMatch =
+            selectedCategory === "all" ||
+            String(p.category || "").toLowerCase() === String(selectedCategory).toLowerCase() ||
+            p.tag === selectedCategory;
         return nameMatch && categoryMatch;
     });
 
@@ -877,7 +895,7 @@ export default function AdminProducts() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-zinc-400 capitalize">{p.category}</td>
+                                        <td className="px-6 py-4 text-sm text-zinc-300">{resolveCategoryLabel(p.category)}</td>
                                         <td className="px-6 py-4">
                                             <div className="flex flex-col">
                                                 {p.discountPrice ? (
@@ -975,6 +993,11 @@ export default function AdminProducts() {
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Category</label>
                                             <div className="relative">
                                                 <select className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none appearance-none" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
+                                                    {formData.category && !categories.some((c: any) => c.name === formData.category) && (
+                                                        <option value={formData.category}>
+                                                            {formData.category} ({lang === "ar" ? "غير مدرج بالفئات" : "not in category list"})
+                                                        </option>
+                                                    )}
                                                     {categories.map(cat => <option key={cat.id} value={cat.name}>{lang === 'ar' ? cat.nameAr : cat.nameEn}</option>)}
                                                 </select>
                                                 <ChevronDown className="absolute top-5 right-6 w-4 h-4 text-zinc-500 pointer-events-none" />

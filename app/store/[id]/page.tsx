@@ -61,6 +61,14 @@ export default function ProductDetailPage() {
     const [isRelatedLoading, setIsRelatedLoading] = useState(true)
     const [reviewsCount, setReviewsCount] = useState(0)
     const [averageRating, setAverageRating] = useState(0)
+    const [storeCategories, setStoreCategories] = useState<any[]>([])
+
+    useEffect(() => {
+        fetch("/api/categories")
+            .then((r) => r.json())
+            .then((data) => setStoreCategories(Array.isArray(data) ? data : []))
+            .catch(() => setStoreCategories([]))
+    }, [])
 
     useEffect(() => {
         if (product?.image) setMainImage(product.image)
@@ -330,6 +338,13 @@ export default function ProductDetailPage() {
 
     const name = lang === 'ar' ? (product.nameAr || product.name) : product.name
     const description = lang === 'ar' ? (product.descriptionAr || product.description) : product.description
+
+    const categoryTitle = (() => {
+        const slug = (product.category || "").toLowerCase()
+        const row = storeCategories.find((c: any) => String(c.name).toLowerCase() === slug)
+        if (row) return lang === "ar" ? row.nameAr : row.nameEn
+        return CATEGORIES_MAP[slug]?.[lang] || product.category
+    })()
     const longDescription = (lang === 'ar'
         ? (product.longDescriptionAr || product.longDescription)
         : (product.longDescription || product.longDescriptionAr)
@@ -359,7 +374,7 @@ export default function ProductDetailPage() {
                             <div>
                                 <div className="flex items-center justify-between mb-4">
                                     <p className="text-[#0066FF] font-black text-[10px] uppercase tracking-[0.2em]">
-                                        {CATEGORIES_MAP[product.category?.toLowerCase()]?.[lang] || product.category}
+                                        {categoryTitle}
                                     </p>
                                     <div className="flex items-center gap-4 group cursor-pointer" onClick={() => document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' })}>
                                         <div className="flex bg-yellow-500/10 px-2 py-1 rounded-lg mr-1 items-center gap-0.5">
@@ -633,7 +648,12 @@ export default function ProductDetailPage() {
                                             
                                             <div className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'}`}>
                                                 <span className="px-3 py-1 bg-[#0066FF] rounded-full text-[10px] uppercase font-bold text-white shadow-lg">
-                                                    {CATEGORIES_MAP[p.category?.toLowerCase()]?.[lang] || p.category}
+                                                    {(() => {
+                                                        const s = (p.category || "").toLowerCase()
+                                                        const row = storeCategories.find((c: any) => String(c.name).toLowerCase() === s)
+                                                        if (row) return lang === "ar" ? row.nameAr : row.nameEn
+                                                        return CATEGORIES_MAP[s]?.[lang] || p.category
+                                                    })()}
                                                 </span>
                                             </div>
 

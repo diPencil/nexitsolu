@@ -97,7 +97,7 @@ export default function NewProductPage() {
     const [formData, setFormData] = useState({
         name: "", nameAr: "", description: "", descriptionAr: "",
         longDescription: "", longDescriptionAr: "",
-        price: "", discountPrice: "", category: "workstations",
+        price: "", discountPrice: "", category: "",
         stock: "10", tag: "NEW", image: "", gallery: ""
     })
 
@@ -105,6 +105,14 @@ export default function NewProductPage() {
         fetch("/api/admin/shipping").then(r => r.json()).then(setAllZones)
         fetch("/api/admin/categories").then(r => r.json()).then(setCategories)
     }, [])
+
+    useEffect(() => {
+        if (!categories.length) return
+        setFormData((fd) => {
+            if (fd.category && categories.some((c: any) => c.name === fd.category)) return fd
+            return { ...fd, category: categories[0].name }
+        })
+    }, [categories])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -176,7 +184,11 @@ export default function NewProductPage() {
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Category</label>
                                 <select className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none appearance-none font-bold" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
-                                    {categories.length > 0 ? categories.map(cat => <option key={cat.id} value={cat.name}>{lang === 'ar' ? cat.nameAr : cat.nameEn}</option>) : <option value="workstations">Workstations</option>}
+                                    {categories.length > 0 ? (
+                                        categories.map(cat => <option key={cat.id} value={cat.name}>{lang === 'ar' ? cat.nameAr : cat.nameEn}</option>)
+                                    ) : (
+                                        <option value="">{lang === 'ar' ? 'أضف فئة من لوحة المنتجات أولاً' : 'Add a category from Products admin first'}</option>
+                                    )}
                                 </select>
                             </div>
                             <div className="space-y-2">

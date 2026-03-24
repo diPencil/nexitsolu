@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 import { useLanguage } from "@/lib/i18n-context"
-import { ShoppingBag, Laptop, Monitor, Cpu, HardDrive, ArrowLeft, Heart, Share2, Search, Filter, SlidersHorizontal, Bookmark, Package } from "lucide-react"
+import { ShoppingBag, ArrowLeft, Heart, Share2, Search, SlidersHorizontal, Bookmark, Package } from "lucide-react"
 import { NexBotAI } from "@/components/nexbot-ai"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -26,24 +26,15 @@ export default function StorePage() {
     const [showSort, setShowSort] = useState(false)
     const [dbCategories, setDbCategories] = useState<any[]>([])
 
-    const baseCategories = [
-        { id: 'all', name: lang === 'ar' ? 'الكل' : 'All', icon: ShoppingBag },
-        { id: 'laptops', name: lang === 'ar' ? 'أجهزة لابتوب' : 'Laptops', icon: Laptop },
-        { id: 'monitors', name: lang === 'ar' ? 'شاشات' : 'Monitors', icon: Monitor },
-        { id: 'components', name: lang === 'ar' ? 'قطع هاردوير' : 'Components', icon: Cpu },
-        { id: 'accessories', name: lang === 'ar' ? 'ملحقات' : 'Accessories', icon: HardDrive },
-    ]
-
     const safeDbCategories = Array.isArray(dbCategories) ? dbCategories : []
+    // Only "All" + categories created in Admin — no hardcoded store tabs
     const categories = [
-        ...baseCategories,
-        ...safeDbCategories
-            .filter((c: any) => !baseCategories.some(b => b.id === c.name))
-            .map((c: any) => ({
-                id: c.name,
-                name: lang === 'ar' ? c.nameAr : c.nameEn,
-                icon: Package
-            }))
+        { id: "all", name: lang === "ar" ? "الكل" : "All", icon: ShoppingBag },
+        ...safeDbCategories.map((c: any) => ({
+            id: c.name,
+            name: lang === "ar" ? c.nameAr : c.nameEn,
+            icon: Package,
+        })),
     ]
 
     const [products, setProducts] = useState<any[]>([])
@@ -66,7 +57,7 @@ export default function StorePage() {
             .catch(() => setProducts([]))
             .finally(() => setIsLoading(false))
 
-        fetch("/api/admin/categories")
+        fetch("/api/categories")
             .then(async (res) => {
                 const text = await res.text()
                 try {
@@ -188,7 +179,9 @@ export default function StorePage() {
 
     const filteredProducts = products
         .filter(p => {
-            const matchesCat = activeCategory === "all" || p.cat === activeCategory || p.category === activeCategory
+            const pCat = String(p.category || p.cat || "").toLowerCase()
+            const matchesCat =
+                activeCategory === "all" || pCat === String(activeCategory).toLowerCase()
             const name = lang === 'ar' ? (p.nameAr || p.name) : p.name
             const matchesSearch = name.toLowerCase().includes(searchQuery.toLowerCase())
             return matchesCat && matchesSearch

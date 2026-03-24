@@ -79,7 +79,7 @@ export default function Home() {
     }
     const fetchCategories = async () => {
       try {
-        const res = await fetch("/api/admin/categories")
+        const res = await fetch("/api/categories")
         const text = await res.text()
         let data: unknown
         try {
@@ -148,25 +148,24 @@ export default function Home() {
     { key: "hosting_vps", tag: "Cloud", image: "/services/hosting-vps/Cloud-Hosting.jpg", color: "bg-zinc-800", href: "/services/hosting-vps" },
   ];
 
-  const baseTabs = [
-    { id: "all", labelEn: "All", labelAr: "الكل", filter: () => true },
-    { id: "pcs", labelEn: "Workstations", labelAr: "أجهزة", filter: (p: any) => p.category === 'workstations' || p.category === 'pcs' },
-    { id: "laptops", labelEn: "Laptops", labelAr: "لابتوب", filter: (p: any) => p.category === 'laptops' },
-    { id: "accessories", labelEn: "Accessories", labelAr: "ملحقات", filter: (p: any) => p.category === 'accessories' }
-  ]
-
   const safeCategories = Array.isArray(dbCategories) ? dbCategories : []
   const storeTabs = [
-    ...baseTabs,
-    ...safeCategories
-      .filter((c: any) => !baseTabs.some(b => b.id === c.name))
-      .map((c: any) => ({
-        id: c.name,
-        labelEn: c.nameEn,
-        labelAr: c.nameAr,
-        filter: (p: any) => p.category === c.name
-      }))
+    { id: "all", labelEn: "All", labelAr: "الكل", filter: () => true },
+    ...safeCategories.map((c: any) => ({
+      id: c.name,
+      labelEn: c.nameEn,
+      labelAr: c.nameAr,
+      filter: (p: any) =>
+        String(p.category || "").toLowerCase() === String(c.name).toLowerCase(),
+    })),
   ]
+
+  const categoryBadgeLabel = (slug: string | undefined) => {
+    const s = (slug || "").toLowerCase()
+    const row = safeCategories.find((c: any) => String(c.name).toLowerCase() === s)
+    if (row) return lang === "ar" ? row.nameAr : row.nameEn
+    return CATEGORIES_MAP[s]?.[lang] || slug || ""
+  }
 
   return (
     <main dir={lang === "ar" ? "rtl" : "ltr"} className="relative bg-[#050505] text-white selection:bg-[#0066FF] selection:text-white pb-16 md:pb-32 overflow-x-hidden">
@@ -485,7 +484,7 @@ export default function Home() {
                             )}
                             <div className={`absolute top-2 md:top-4 ${lang === 'ar' ? 'right-2 md:right-4' : 'left-2 md:left-4'}`}>
                               <span className="px-2 py-0.5 md:px-3 md:py-1 bg-[#0066FF] rounded-full text-[7px] md:text-[9px] uppercase font-bold text-white shadow-lg">
-                                 {CATEGORIES_MAP[product.category?.toLowerCase()]?.[lang] || product.category}
+                                 {categoryBadgeLabel(product.category)}
                               </span>
                             </div>
                             
