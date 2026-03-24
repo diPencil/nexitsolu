@@ -70,8 +70,10 @@ model Product {
   id            String      @id @default(cuid())
   name          String
   nameAr        String?
-  description   String?
-  descriptionAr String?
+  description       String?
+  descriptionAr     String?
+  longDescription   String?
+  longDescriptionAr String?
   price         Float
   discountPrice Float?
   category      String

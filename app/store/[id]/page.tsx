@@ -6,9 +6,9 @@ import { useSession } from "next-auth/react"
 import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, ShoppingCart, Heart, Share2, ShieldCheck, Truck, RotateCcw, Loader2, Zap, Plus, Minus, Bookmark, MapPin, ChevronDown, MoreVertical, Star, ShoppingBag, Eye, Banknote } from "lucide-react"
+import { ArrowLeft, ArrowRight, ShoppingCart, Heart, Share2, ShieldCheck, Truck, RotateCcw, Loader2, Zap, Plus, Minus, Bookmark, MapPin, ChevronDown, MoreVertical, Star, ShoppingBag, Eye, Banknote, X } from "lucide-react"
 import ReviewsSection from '@/components/ReviewsSection';
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
 
 import {
@@ -56,6 +56,7 @@ export default function ProductDetailPage() {
     const [zones, setZones] = useState<any[]>([])
     const [selectedZone, setSelectedZone] = useState<any>(null)
     const [mainImage, setMainImage] = useState<string>("")
+    const [lightboxUrl, setLightboxUrl] = useState<string | null>(null)
     const [relatedProducts, setRelatedProducts] = useState<any[]>([])
     const [isRelatedLoading, setIsRelatedLoading] = useState(true)
     const [reviewsCount, setReviewsCount] = useState(0)
@@ -68,6 +69,19 @@ export default function ProductDetailPage() {
             fetchReviews()
         }
     }, [product])
+
+    useEffect(() => {
+        if (!lightboxUrl) return
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setLightboxUrl(null)
+        }
+        document.body.style.overflow = "hidden"
+        window.addEventListener("keydown", onKey)
+        return () => {
+            document.body.style.overflow = ""
+            window.removeEventListener("keydown", onKey)
+        }
+    }, [lightboxUrl])
 
     const fetchReviews = async () => {
         try {
@@ -316,6 +330,10 @@ export default function ProductDetailPage() {
 
     const name = lang === 'ar' ? (product.nameAr || product.name) : product.name
     const description = lang === 'ar' ? (product.descriptionAr || product.description) : product.description
+    const longDescription = (lang === 'ar'
+        ? (product.longDescriptionAr || product.longDescription)
+        : (product.longDescription || product.longDescriptionAr)
+    )?.trim() || ""
     const hasDiscount = !!product.discountPrice
 
     // Prepare gallery images
@@ -325,6 +343,7 @@ export default function ProductDetailPage() {
     ].filter(Boolean)
 
     return (
+        <>
         <div className="min-h-screen bg-[#050505] pt-32 pb-20 px-4 md:px-6 text-white" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
             <div className="max-w-7xl mx-auto">
                 <Link href="/store" className="inline-flex items-center text-zinc-500 hover:text-white mb-8 transition-colors text-sm font-medium">
@@ -361,7 +380,7 @@ export default function ProductDetailPage() {
                                 </div>
 
                                 <div className="flex items-start justify-between gap-8">
-                                    <h1 className="text-4xl md:text-6xl font-semibold tracking-tighter leading-[0.9] flex-1">
+                                    <h1 className="text-3xl md:text-5xl font-semibold tracking-tighter leading-tight flex-1">
                                         {name}
                                     </h1>
 
@@ -409,16 +428,24 @@ export default function ProductDetailPage() {
 
                         {/* 2. Images Block */}
                         <div className="space-y-6 lg:col-start-1 lg:row-start-1 lg:row-span-2">
-                            <div className="relative aspect-square rounded-3xl md:rounded-[2.5rem] bg-zinc-950 border border-white/5 overflow-hidden group">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const u = mainImage || product.image
+                                    if (u) setLightboxUrl(u)
+                                }}
+                                className="relative aspect-square w-full rounded-3xl md:rounded-[2.5rem] bg-zinc-950 border border-white/5 overflow-hidden group text-left p-0 cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                                aria-label={lang === 'ar' ? 'عرض الصورة بالحجم الكامل' : 'View full size image'}
+                            >
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066FF]/20 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#0066FF]/30 transition-colors duration-700" />
                                 <Image
                                     src={mainImage || product.image || "/placeholder.svg"}
                                     alt={name}
                                     fill
-                                    className="object-cover p-4 hover:scale-105 transition-transform duration-700 relative z-10"
+                                    className="object-cover p-4 group-hover:scale-105 transition-transform duration-700 relative z-10 pointer-events-none"
                                     priority
                                 />
-                                <div className={`absolute top-6 ${lang === 'ar' ? 'left-6' : 'right-6'} flex gap-2 z-20`}>
+                                <div className={`absolute top-6 ${lang === 'ar' ? 'left-6' : 'right-6'} flex gap-2 z-20 pointer-events-none`}>
                                     <span className="px-4 py-1.5 bg-[#0066FF] rounded-full text-xs font-black uppercase tracking-widest text-white shadow-[0_0_20px_rgba(0,102,255,0.4)]">
                                         {lang === 'ar' && product.tag === 'NEW' ? 'جديد' : (product.tag || 'NEW')}
                                     </span>
@@ -428,7 +455,7 @@ export default function ProductDetailPage() {
                                         </span>
                                     )}
                                 </div>
-                            </div>
+                            </button>
 
                             {galleryImages.length > 0 && (
                                 <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
@@ -548,6 +575,19 @@ export default function ProductDetailPage() {
                         </div>
                     </div>
 
+                    {longDescription && (
+                        <div className={`mt-16 md:mt-20 max-w-4xl mx-auto ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-6 md:p-8">
+                                <h2 className="text-white font-bold text-sm uppercase tracking-widest mb-4">
+                                    {lang === 'ar' ? 'الوصف التفصيلي' : 'Full description'}
+                                </h2>
+                                <div className="text-zinc-300 leading-relaxed whitespace-pre-wrap text-sm md:text-base">
+                                    {longDescription}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Reviews Section */}
                     <div className="mt-20 scroll-mt-32" id="reviews-section">
                         <ReviewsSection productId={product.id} />
@@ -653,5 +693,38 @@ export default function ProductDetailPage() {
             <NexBotAI />
             <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </div>
+
+        {lightboxUrl && (
+            <motion.div
+                role="dialog"
+                aria-modal="true"
+                aria-label={lang === "ar" ? "صورة المنتج" : "Product image"}
+                className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 p-4 md:p-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setLightboxUrl(null)}
+            >
+                <button
+                    type="button"
+                    className="absolute top-4 end-4 z-10 w-12 h-12 rounded-2xl bg-zinc-900/90 border border-white/10 text-white flex items-center justify-center hover:bg-zinc-800 transition-colors"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        setLightboxUrl(null)
+                    }}
+                    aria-label={lang === "ar" ? "إغلاق" : "Close"}
+                >
+                    <X className="w-6 h-6" />
+                </button>
+                {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary product image URLs */}
+                <img
+                    src={lightboxUrl}
+                    alt=""
+                    className="max-h-[85vh] max-w-full w-auto object-contain rounded-lg shadow-2xl"
+                    onClick={(e) => e.stopPropagation()}
+                />
+            </motion.div>
+        )}
+        </>
     )
 }

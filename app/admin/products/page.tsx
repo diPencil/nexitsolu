@@ -672,6 +672,7 @@ export default function AdminProducts() {
 
     const [formData, setFormData] = useState({
         name: "", nameAr: "", description: "", descriptionAr: "",
+        longDescription: "", longDescriptionAr: "",
         price: "", discountPrice: "", category: "workstations",
         stock: "10", tag: "NEW", image: "", gallery: "",
         active: true
@@ -697,6 +698,8 @@ export default function AdminProducts() {
                 nameAr: editingProduct.nameAr || "",
                 description: editingProduct.description || "",
                 descriptionAr: editingProduct.descriptionAr || "",
+                longDescription: editingProduct.longDescription || "",
+                longDescriptionAr: editingProduct.longDescriptionAr || "",
                 price: editingProduct.price?.toString() || "",
                 discountPrice: editingProduct.discountPrice?.toString() || "",
                 category: editingProduct.category || "workstations",
@@ -708,7 +711,7 @@ export default function AdminProducts() {
             })
             setSelectedZones(editingProduct.shippingZones ? JSON.parse(editingProduct.shippingZones) : [])
         } else {
-            setFormData({ name: "", nameAr: "", description: "", descriptionAr: "", price: "", discountPrice: "", category: "workstations", stock: "10", tag: "NEW", image: "", gallery: "", active: true })
+            setFormData({ name: "", nameAr: "", description: "", descriptionAr: "", longDescription: "", longDescriptionAr: "", price: "", discountPrice: "", category: "workstations", stock: "10", tag: "NEW", image: "", gallery: "", active: true })
             setSelectedZones([])
         }
     }, [editingProduct])
@@ -1022,12 +1025,20 @@ export default function AdminProducts() {
                                             <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[80px]" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Description (EN)</label>
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (EN)</label>
                                             <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[100px]" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Description (AR)</label>
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (AR)</label>
                                             <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[100px]" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (EN)</label>
+                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[140px]" value={formData.longDescription} onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (AR)</label>
+                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[140px]" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
                                         </div>
 
                                         {/* ── Visibility Toggle ── */}

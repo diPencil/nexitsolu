@@ -72,6 +72,7 @@ export async function PUT(
         // Safely destructure data needed to update product.
         const { 
             name, nameAr, description, descriptionAr, 
+            longDescription, longDescriptionAr,
             price, discountPrice, category, image, 
             gallery, tag, stock, shippingZones, active 
         } = body;
@@ -83,6 +84,8 @@ export async function PUT(
                 nameAr,
                 description,
                 descriptionAr,
+                longDescription,
+                longDescriptionAr,
                 price: price ? parseFloat(price) : undefined,
                 discountPrice: discountPrice !== undefined ? (discountPrice ? parseFloat(discountPrice) : null) : undefined,
                 category,
