@@ -409,7 +409,7 @@ export default function PurchasesPage() {
             <AnimatePresence>
                 {detailModal && (
                     <div
-                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 backdrop-blur-xl bg-black/80 font-inter"
+                        className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-6 backdrop-blur-xl bg-black/80 font-inter"
                         onClick={() => setDetailModal(null)}
                         role="presentation"
                     >
@@ -419,7 +419,7 @@ export default function PurchasesPage() {
                             exit={{ scale: 0.96, opacity: 0 }}
                             transition={{ duration: 0.2 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-4xl max-h-[88vh] flex flex-col bg-zinc-950 border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden"
+                            className="w-full max-w-4xl max-h-[88vh] flex flex-col bg-zinc-950 border border-white/10 rounded-4xl shadow-2xl overflow-hidden"
                             role="dialog"
                             aria-modal="true"
                             aria-labelledby="purchases-detail-title"
@@ -507,7 +507,7 @@ export default function PurchasesPage() {
                                                     </thead>
                                                     <tbody className="divide-y divide-white/5">
                                                         {purchasesByDate.map((p) => (
-                                                            <tr key={p.id} className="hover:bg-white/[0.03]">
+                                                            <tr key={p.id} className="hover:bg-white/3">
                                                                 <td className="px-4 py-3 font-bold text-white">
                                                                     {lang === "ar" ? p.product?.nameAr || p.product?.name : p.product?.name}
                                                                 </td>
@@ -595,7 +595,7 @@ export default function PurchasesPage() {
                                                         </thead>
                                                         <tbody className="divide-y divide-white/5">
                                                             {purchasesByDate.map((p) => (
-                                                                <tr key={p.id} className="hover:bg-white/[0.03]">
+                                                                <tr key={p.id} className="hover:bg-white/3">
                                                                     <td className="px-4 py-3 font-bold text-white">
                                                                         {lang === "ar" ? p.product?.nameAr || p.product?.name : p.product?.name}
                                                                     </td>
@@ -638,7 +638,7 @@ export default function PurchasesPage() {
                                                     </thead>
                                                     <tbody className="divide-y divide-white/5">
                                                         {productsByStock.map((p) => (
-                                                            <tr key={p.id} className="hover:bg-white/[0.03]">
+                                                            <tr key={p.id} className="hover:bg-white/3">
                                                                 <td className="px-4 py-3 font-bold text-white">
                                                                     {lang === "ar" ? p.nameAr || p.name : p.name}
                                                                 </td>

@@ -577,7 +577,7 @@ export default function ProductDetailPage() {
 
                     {longDescription && (
                         <div className={`mt-16 md:mt-20 max-w-4xl mx-auto ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-                            <div className="rounded-3xl border border-white/5 bg-white/[0.03] p-6 md:p-8">
+                            <div className="rounded-3xl border border-white/5 bg-white/3 p-6 md:p-8">
                                 <h2 className="text-white font-bold text-sm uppercase tracking-widest mb-4">
                                     {lang === 'ar' ? 'الوصف التفصيلي' : 'Full description'}
                                 </h2>
@@ -699,7 +699,7 @@ export default function ProductDetailPage() {
                 role="dialog"
                 aria-modal="true"
                 aria-label={lang === "ar" ? "صورة المنتج" : "Product image"}
-                className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 p-4 md:p-8"
+                className="fixed inset-0 z-200 flex items-center justify-center bg-black/90 p-4 md:p-8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}
@@ -707,7 +707,7 @@ export default function ProductDetailPage() {
             >
                 <button
                     type="button"
-                    className="absolute top-4 end-4 z-10 w-12 h-12 rounded-2xl bg-zinc-900/90 border border-white/10 text-white flex items-center justify-center hover:bg-zinc-800 transition-colors"
+                    className="absolute top-4 inset-e-4 z-10 w-12 h-12 rounded-2xl bg-zinc-900/90 border border-white/10 text-white flex items-center justify-center hover:bg-zinc-800 transition-colors"
                     onClick={(e) => {
                         e.stopPropagation()
                         setLightboxUrl(null)
