@@ -108,7 +108,7 @@ export default function AdminActivityPage() {
 
             <div className="flex flex-col lg:flex-row gap-3 p-4 rounded-2xl bg-zinc-900/50 border border-white/5">
                 <div className="flex-1 relative">
-                    <Search className="absolute top-3 start-3 w-4 h-4 text-zinc-600" />
+                    <Search className="absolute top-3 inset-s-3 w-4 h-4 text-zinc-600" />
                     <input
                         value={queryInput}
                         onChange={(e) => setQueryInput(e.target.value)}
@@ -192,7 +192,7 @@ export default function AdminActivityPage() {
                                 {items.map((row) => (
                                     <tr
                                         key={row.id}
-                                        className="border-b border-white/[0.04] hover:bg-white/[0.02]"
+                                        className="border-b border-white/4 hover:bg-white/2"
                                     >
                                         <td className="px-4 py-3 text-zinc-400 whitespace-nowrap align-top text-xs">
                                             {new Date(
