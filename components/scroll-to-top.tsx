@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowUp } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 export function ScrollToTop() {
     const [isVisible, setIsVisible] = useState(false)
+    const pathname = usePathname()
+    const hiddenOnProfile = pathname?.startsWith("/profile")
 
     useEffect(() => {
         const toggleVisibility = () => {
@@ -26,6 +29,8 @@ export function ScrollToTop() {
             behavior: "smooth",
         })
     }
+
+    if (hiddenOnProfile) return null
 
     return (
         <AnimatePresence>

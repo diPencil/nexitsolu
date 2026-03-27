@@ -2,6 +2,6 @@
 
 import { ProfileDashboardClient } from "@/components/profile/profile-dashboard-client"
 
-export default function ProfileOverviewPage() {
-    return <ProfileDashboardClient />
+export default function ProfileMorePage() {
+    return <ProfileDashboardClient section="more" />
 }
