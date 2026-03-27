@@ -22,6 +22,7 @@ import { toast } from "sonner"
 export default function AdminMessages() {
     const { lang } = useLanguage()
     const { data: session } = useSession()
+    const adminUserId = String((session?.user as any)?.id ?? "")
     const [selectedConversation, setSelectedConversation] = useState<any>(null)
     const [conversations, setConversations] = useState<any[]>([])
     const [messages, setMessages] = useState<any[]>([])
@@ -123,12 +124,22 @@ export default function AdminMessages() {
             })
             if (res.ok) {
                 setInput("")
-                // Message will be added via Pusher
+                // Message will be added via Pusher or next poll
             } else {
-                toast.error(lang === 'ar' ? "فشل الإرسال" : "Failed to send")
+                let detail = lang === 'ar' ? "فشل الإرسال" : "Failed to send"
+                const raw = await res.text()
+                try {
+                    const data = JSON.parse(raw) as { error?: string }
+                    if (data?.error && typeof data.error === "string") detail = data.error
+                    else if (raw && !data?.error) detail = raw.slice(0, 200)
+                } catch {
+                    if (raw) detail = raw.slice(0, 200)
+                }
+                toast.error(detail)
             }
         } catch (error) {
-            console.error("Failed to send")
+            console.error("Failed to send", error)
+            toast.error(lang === 'ar' ? "فشل الإرسال" : "Failed to send")
         } finally {
             setIsSending(false)
         }
@@ -317,7 +328,9 @@ export default function AdminMessages() {
                             ) : (
                                 <>
                                     {messages.map((m, i) => {
-                                        const isMe = m.senderId === (session?.user as any).id
+                                        const isMe =
+                                            Boolean(adminUserId) &&
+                                            String(m.senderId ?? "") === adminUserId
                                         return (
                                             <motion.div 
                                                 key={m.id || i}
@@ -329,6 +342,11 @@ export default function AdminMessages() {
                                                     ? 'bg-[#0066FF] text-white rounded-br-none shadow-lg shadow-blue-500/10' 
                                                     : 'bg-[#111] text-zinc-300 rounded-bl-none border border-white/5'
                                                 }`}>
+                                                    {isMe && (
+                                                        <span className="mb-2 block text-[10px] font-bold uppercase tracking-wide text-white! drop-shadow-sm">
+                                                            {lang === 'ar' ? 'دعم نيكسيت' : 'NexIT Support'}
+                                                        </span>
+                                                    )}
                                                     <p className="whitespace-pre-wrap">{m.content}</p>
                                                     <div className={`flex items-center justify-end mt-2 opacity-50 text-[8px] font-bold ${isMe ? 'text-white' : 'text-zinc-500'}`}>
                                                         {new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

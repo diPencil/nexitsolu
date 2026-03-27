@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { pusherServer } from "@/lib/pusher";
 import {
@@ -36,7 +36,20 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const { content } = await req.json();
+        let body: unknown;
+        try {
+            body = await req.json();
+        } catch {
+            return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+        }
+        const content =
+            typeof (body as { content?: unknown })?.content === "string"
+                ? (body as { content: string }).content.trim()
+                : "";
+        if (!content) {
+            return NextResponse.json({ error: "Message cannot be empty" }, { status: 400 });
+        }
+
         const { id: conversationId } = await params;
         const adminId = (session.user as any).id;
 
@@ -55,7 +68,12 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
                 senderId: adminId,
                 receiverId: conversation.userId,
                 conversationId: conversationId
-            }
+            },
+            include: {
+                sender: { select: { id: true, name: true, role: true } },
+                receiver: { select: { id: true, name: true, role: true } },
+                conversation: true,
+            },
         });
 
         // Update conversation's updatedAt

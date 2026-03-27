@@ -1297,7 +1297,10 @@ export function ProfileDashboardClient({
                                         >
                                             <div className="flex flex-col-reverse gap-4 px-2">
                                                 {messages.map((msg, i) => {
-                                                    const isMine = msg.senderId === (session?.user as any)?.id
+                                                    const uid = String((session?.user as any)?.id ?? "")
+                                                    const isMine =
+                                                        Boolean(uid) &&
+                                                        String(msg.senderId ?? "") === uid
                                                     return (
                                                         <div key={msg.id || i} className={`max-w-[70%] rounded-2xl p-4 shadow-sm ${isMine ? 'bg-[#0066FF] text-white self-end rounded-tr-sm shadow-blue-500/10' : 'bg-zinc-900 text-zinc-300 self-start border border-white/5 rounded-tl-sm shadow-black/20'}`}>
                                                             <p className="text-sm whitespace-pre-wrap">{msg.content}</p>

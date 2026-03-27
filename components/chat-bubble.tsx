@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageCircle, X, Send, User, Loader2, Sparkles, CheckCheck, History, ArrowLeft, Clock, Copy, ThumbsUp, ThumbsDown, Share2 } from "lucide-react"
+import { MessageCircle, X, Send, Loader2, Sparkles, CheckCheck, History, ArrowLeft, Clock } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { pusherClient } from "@/lib/pusher"
 import { useLanguage } from "@/lib/i18n-context"
 import { usePathname } from "next/navigation"
+import { toast } from "sonner"
 
 export function ChatBubble() {
     const { data: session } = useSession()
@@ -22,7 +23,6 @@ export function ChatBubble() {
     const [conversations, setConversations] = useState<any[]>([])
     const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null)
     const [isLoadingConversations, setIsLoadingConversations] = useState(false)
-    const [feedback, setFeedback] = useState<Record<string, 'up' | 'down' | null>>({})
     const scrollRef = useRef<HTMLDivElement>(null)
 
     const fetchConversations = async () => {
@@ -117,16 +117,28 @@ export function ChatBubble() {
 
         setIsLoading(true)
         try {
-            await fetch("/api/messages", {
+            const res = await fetch("/api/messages", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     content: input
                 })
             })
-            setInput("")
+            if (res.ok) {
+                setInput("")
+            } else {
+                const errText = await res.text()
+                const detail =
+                    res.status === 500 && errText.includes("No admin")
+                        ? (lang === "ar"
+                            ? "لا يوجد مسؤول مرتبط بالنظام. أضف حساباً بدور ADMIN."
+                            : "No admin account in the system. Add a user with ADMIN role.")
+                        : errText || (lang === "ar" ? "تعذر إرسال الرسالة" : "Could not send message")
+                toast.error(detail)
+            }
         } catch (error) {
-            console.error("Failed to send")
+            console.error("Failed to send", error)
+            toast.error(lang === "ar" ? "تعذر إرسال الرسالة" : "Could not send message")
         } finally {
             setIsLoading(false)
         }
@@ -139,22 +151,26 @@ export function ChatBubble() {
         !isMounted ||
         !session?.user ||
         pathname?.includes("/nexbot") ||
-        pathname?.startsWith("/profile")
+        pathname?.startsWith("/profile") ||
+        pathname?.startsWith("/admin")
     )
         return null
 
+    const myUserId = String((session.user as any)?.id ?? "")
+    const isViewerAdmin = (session.user as any)?.role === "ADMIN"
+
     return (
-        <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-9999">
+        <div className="fixed bottom-4 right-4 z-9999 md:bottom-5 md:right-5">
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, y: 100, scale: 0.8 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 100, scale: 0.8 }}
-                        className="absolute bottom-16 md:bottom-20 right-0 w-[calc(100vw-32px)] sm:w-[350px] md:w-[400px] h-[450px] md:h-[600px] bg-zinc-950 border border-white/10 rounded-3xl md:rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden backdrop-blur-3xl"
+                        className="absolute bottom-14 right-0 w-[calc(100vw-2rem)] max-w-[min(100vw-2rem,380px)] sm:max-w-[340px] md:bottom-16 md:max-w-[320px] h-[min(420px,58dvh)] md:h-[min(480px,58dvh)] bg-zinc-950 border border-white/10 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-3xl"
                     >
                         {/* Header */}
-                        <div className="p-6 bg-[#0066FF] text-white flex items-center justify-between shrink-0">
+                        <div className="p-4 sm:p-5 bg-[#0066FF] text-white flex items-center justify-between shrink-0">
                             <div className="flex items-center gap-3">
                                 {view === 'chat' && selectedConversationId ? (
                                     <button 
@@ -172,10 +188,10 @@ export function ChatBubble() {
                                     </div>
                                 )}
                                 <div>
-                                    <h3 className="font-bold text-sm">
-                                        {view === 'history' ? (lang === 'ar' ? 'سجل المحادثات' : 'History') : 'NexIT Support'}
+                                    <h3 className="text-sm font-bold text-white">
+                                        {view === 'history' ? (lang === 'ar' ? 'سجل المحادثات' : 'History') : (lang === 'ar' ? 'دعم نيكسيت' : 'NexIT Support')}
                                     </h3>
-                                    <p className="text-[10px] text-white/70 uppercase font-black tracking-widest">{lang === 'ar' ? 'متصل الآن' : 'Always Online'}</p>
+                                    <p className="text-[10px] text-white/80 uppercase font-black tracking-widest">{lang === 'ar' ? 'متصل الآن' : 'Always Online'}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-1">
@@ -255,19 +271,28 @@ export function ChatBubble() {
                             <>
                                 {/* Messages Area */}
                                 <div 
-                                    className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-thin scrollbar-thumb-[#0066FF]/40 hover:scrollbar-thumb-[#0066FF]/60 scrollbar-track-transparent overscroll-contain"
+                                    className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3 scrollbar-thin scrollbar-thumb-[#0066FF]/40 hover:scrollbar-thumb-[#0066FF]/60 scrollbar-track-transparent overscroll-contain"
                                     data-lenis-prevent
                                 >
                                     {messages.map((m, i) => {
-                                        const isMe = m.senderId === (session.user as any).id
+                                        const isMine =
+                                            Boolean(myUserId) &&
+                                            String(m.senderId ?? "") === myUserId
+                                        const isFromAdmin = m.sender?.role === "ADMIN"
+                                        const showNexitSupportLine =
+                                            (!isMine && isFromAdmin) || (isMine && isViewerAdmin)
+                                        const supportLineColor = isViewerAdmin
+                                            ? "text-white"
+                                            : "text-[#0066FF]"
                                         return (
-                                            <div key={m.id || i} className={`flex flex-col gap-2 w-full ${isMe ? 'items-end' : 'items-start'}`}>
-                                                <div className={`max-w-[85%] p-3 md:p-4 rounded-2xl text-xs md:text-sm shadow-md whitespace-pre-wrap ${isMe ? 'bg-[#0066FF] text-white rounded-br-none' : 'bg-zinc-800 text-zinc-200 rounded-bl-none border border-white/5'
+                                            <div key={m.id || i} className={`flex flex-col gap-2 w-full ${isMine ? 'items-end' : 'items-start'}`}>
+                                                <div className={`max-w-[85%] p-3 rounded-2xl text-xs sm:text-sm shadow-md whitespace-pre-wrap ${isMine ? 'bg-[#0066FF] text-white rounded-br-none' : 'bg-zinc-800 text-zinc-200 rounded-bl-none border border-white/5'
                                                     }`}>
-                                                    {!isMe && (
-                                                        <span className="mb-2 block">
-                                                            <span className="text-xs text-[#0066FF] font-bold block">Feliz Oper</span>
-                                                            <span className="text-[10px] text-[#0066FF] font-normal opacity-75 block">Powered by diPencil</span>
+                                                    {showNexitSupportLine && (
+                                                        <span
+                                                            className={`mb-1.5 block text-[10px] font-bold uppercase tracking-wide ${supportLineColor}`}
+                                                        >
+                                                            {lang === "ar" ? "دعم نيكسيت" : "NexIT Support"}
                                                         </span>
                                                     )}
                                                     <p>{m.content}</p>
@@ -275,40 +300,6 @@ export function ChatBubble() {
                                                         {new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                     </span>
                                                 </div>
-                                                {!isMe && (
-                                                    <div className="flex flex-wrap items-center gap-2 md:gap-3 text-zinc-500 max-w-full px-1 w-full" dir="ltr">
-                                                        <div className="flex items-center gap-0.5 shrink-0">
-                                                            <button className="p-1 hover:text-white hover:bg-zinc-800 rounded-md transition-all" title="Copy" onClick={() => navigator.clipboard.writeText(m.content)}>
-                                                                <Copy className="w-3 h-3 md:w-3.5 md:h-3.5" />
-                                                            </button>
-                                                            <button 
-                                                                className={`p-1 rounded-md transition-all ${feedback[m.id || i] === 'up' ? 'text-emerald-500 bg-zinc-800' : 'hover:text-white hover:bg-zinc-800'}`}
-                                                                title="Good Response"
-                                                                onClick={() => setFeedback(prev => ({ ...prev, [m.id || i]: prev[m.id || i] === 'up' ? null : 'up' }))}
-                                                            >
-                                                                <ThumbsUp className={`w-3 h-3 md:w-3.5 md:h-3.5 ${feedback[m.id || i] === 'up' ? 'fill-emerald-500' : ''}`} />
-                                                            </button>
-                                                            <button 
-                                                                className={`p-1 rounded-md transition-all ${feedback[m.id || i] === 'down' ? 'text-red-500 bg-zinc-800' : 'hover:text-white hover:bg-zinc-800'}`}
-                                                                title="Bad Response"
-                                                                onClick={() => setFeedback(prev => ({ ...prev, [m.id || i]: prev[m.id || i] === 'down' ? null : 'down' }))}
-                                                            >
-                                                                <ThumbsDown className={`w-3 h-3 md:w-3.5 md:h-3.5 ${feedback[m.id || i] === 'down' ? 'fill-red-500' : ''}`} />
-                                                            </button>
-                                                            <button className="p-1 hover:text-white hover:bg-zinc-800 rounded-md transition-all" title="Share" onClick={() => {
-                                                                if (navigator.share) {
-                                                                    navigator.share({ title: 'AI Response', text: m.content })
-                                                                }
-                                                            }}>
-                                                                <Share2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
-                                                            </button>
-                                                        </div>
-                                                        <span className="text-[7px] md:text-[8px] font-medium flex items-center gap-1 whitespace-nowrap text-[#0066FF] hover:bg-[#0066FF]/10 hover:border-[#0066FF]/50 px-2 pt-1 pb-1 rounded-full border border-[#0066FF]/30 transition-all cursor-default shrink-0">
-                                                            <Sparkles className="w-2.5 h-2.5" />
-                                                            Creation Using SuperFeliz
-                                                        </span>
-                                                    </div>
-                                                )}
                                             </div>
                                         )
                                     })}
@@ -341,19 +332,19 @@ export function ChatBubble() {
                                         </button>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSend} className="p-6 border-t border-white/5 bg-zinc-900/50 flex gap-3 shrink-0">
+                                    <form onSubmit={handleSend} className="p-4 sm:p-5 border-t border-white/5 bg-zinc-900/50 flex gap-2 sm:gap-3 shrink-0">
                                         <input
                                             value={input}
                                             onChange={(e) => setInput(e.target.value)}
                                             placeholder={lang === 'ar' ? 'اكتب رسالتك...' : "Type your message..."}
-                                            className="flex-1 bg-zinc-950 border border-white/5 rounded-2xl px-4 text-sm text-white focus:border-[#0066FF] outline-none transition-all"
+                                            className="flex-1 min-h-11 bg-zinc-950 border border-white/5 rounded-xl px-3.5 text-sm text-white focus:border-[#0066FF] outline-none transition-all"
                                         />
                                         <button
                                             type="submit"
                                             disabled={isLoading}
-                                            className="w-12 h-12 rounded-2xl bg-[#0066FF] text-white flex items-center justify-center hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50"
+                                            className="h-11 w-11 shrink-0 rounded-xl bg-[#0066FF] text-white flex items-center justify-center hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50"
                                         >
-                                            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+                                            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                                         </button>
                                     </form>
                                 )}
@@ -365,10 +356,12 @@ export function ChatBubble() {
 
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#0066FF] text-white shadow-2xl shadow-blue-500/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all relative z-10"
+                className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full bg-[#0066FF] text-white shadow-lg shadow-blue-500/25 hover:scale-105 active:scale-95 transition-transform md:h-12 md:w-12"
+                aria-expanded={isOpen}
+                aria-label={isOpen ? (lang === "ar" ? "إغلاق الدردشة" : "Close chat") : (lang === "ar" ? "فتح الدردشة" : "Open chat")}
             >
-                {isOpen ? <X className="w-6 h-6 md:w-8 md:h-8" /> : <MessageCircle className="w-6 h-6 md:w-8 md:h-8" />}
-                <div className="absolute -top-0.5 -right-0.5 md:-top-1 md:-right-1 w-3 h-3 md:w-5 md:h-5 bg-red-500 rounded-full border-2 md:border-4 border-black animate-pulse" />
+                {isOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />}
+                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 md:w-3 md:h-3 bg-red-500 rounded-full border-2 border-zinc-950 animate-pulse" />
             </button>
         </div>
     )
