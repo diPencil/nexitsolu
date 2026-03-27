@@ -486,15 +486,17 @@ export default function ProfilePage() {
     )
 
     return (
-        <div className="min-h-screen bg-[#050505] pt-28 pb-10 px-4 md:px-10"             dir={lang === 'ar' ? 'rtl' : 'ltr'}
+        <div
+            className="min-h-screen bg-[#050505] pt-20 sm:pt-24 md:pt-28 pb-8 md:pb-10 px-3 sm:px-4 md:px-10 overflow-x-hidden"
+            dir={lang === 'ar' ? 'rtl' : 'ltr'}
         >
-            <div className="max-w-[1600px] mx-auto w-full">
+            <div className="max-w-[1600px] mx-auto w-full min-w-0">
                 <div className="w-full flex justify-end mb-4"></div>
 
-                <div className="grid md:grid-cols-4 gap-8 items-start mb-20">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 items-start mb-12 md:mb-20">
                     {/* Left: User / Company Info & Navigation */}
-                    <div className="md:col-span-1 sticky top-28">
-                        <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 text-center relative overflow-hidden group flex flex-col min-h-[750px]">
+                    <div className="order-2 md:order-none md:col-span-1 md:sticky md:top-28 w-full min-w-0">
+                        <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-4 sm:p-6 md:p-8 text-center relative overflow-hidden group flex flex-col min-h-0 md:min-h-[750px]">
                             <div className="flex-1">
                                 <div className="absolute inset-0 bg-[#0066FF]/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                                 <div className="w-24 h-24 rounded-full bg-linear-to-br from-[#0066FF] to-purple-600 mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-white shadow-lg shadow-blue-500/20">
@@ -518,7 +520,10 @@ export default function ProfilePage() {
 
                                 {/* Company Menu */}
                                 {isCompany && (
-                                    <div className="space-y-1 mb-6 text-left border-y border-white/10 py-4" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+                                    <div
+                                        className="space-y-1 mb-4 md:mb-6 text-left border-y border-white/10 py-3 md:py-4 max-h-[min(60vh,28rem)] md:max-h-none overflow-y-auto overscroll-contain -mx-1 px-1 md:mx-0 md:px-0 [scrollbar-width:thin]"
+                                        dir={lang === 'ar' ? 'rtl' : 'ltr'}
+                                    >
                                         <button onClick={() => setActiveTab("dashboard")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'dashboard' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
                                                 <LayoutDashboard className={`w-4 h-4 transition-colors ${activeTab === 'dashboard' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
@@ -610,7 +615,10 @@ export default function ProfilePage() {
 
                                 {/* Regular User Menu */}
                                 {!isCompany && (
-                                    <div className="space-y-1 mb-6 text-left border-y border-white/10 py-4" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+                                    <div
+                                        className="space-y-1 mb-4 md:mb-6 text-left border-y border-white/10 py-3 md:py-4 max-h-[min(60vh,28rem)] md:max-h-none overflow-y-auto overscroll-contain -mx-1 px-1 md:mx-0 md:px-0 [scrollbar-width:thin]"
+                                        dir={lang === 'ar' ? 'rtl' : 'ltr'}
+                                    >
                                         <button onClick={() => setActiveTab("dashboard")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'dashboard' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
                                                 <LayoutDashboard className={`w-4 h-4 transition-colors ${activeTab === 'dashboard' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
@@ -701,7 +709,7 @@ export default function ProfilePage() {
                     </div>
 
                     {/* Right: Dynamics Content Area based on Tab */}
-                    <div className="md:col-span-3 flex flex-col min-h-[750px]">
+                    <div className="order-1 md:order-none md:col-span-3 flex flex-col min-h-0 md:min-h-[600px] w-full min-w-0">
                         
                         {/* Profile Completion Warning */}
                         {isCompany && !isProfileComplete && (
@@ -709,7 +717,7 @@ export default function ProfilePage() {
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 onClick={() => setShowUpdateModal(true)}
-                                className="mb-6 p-6 rounded-[2.5rem] bg-red-500/5 border border-red-500/20 flex flex-col md:flex-row md:items-center justify-between gap-6 cursor-pointer hover:bg-red-500/10 transition-all group overflow-hidden relative shrink-0"
+                                className="mb-6 p-4 sm:p-6 rounded-2xl md:rounded-[2.5rem] bg-red-500/5 border border-red-500/20 flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 cursor-pointer hover:bg-red-500/10 transition-all group overflow-hidden relative shrink-0"
                             >
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
                                 <div className="flex items-center gap-5 relative z-10">
@@ -732,10 +740,10 @@ export default function ProfilePage() {
                         {activeTab === "dashboard" && (
                             <div className="space-y-6">
                                 {/* Welcome Card */}
-                                <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group">
+                                <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-6 sm:p-8 md:p-10 relative overflow-hidden group">
                                     <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066FF]/10 rounded-full blur-[80px] group-hover:bg-[#0066FF]/20 transition-all pointer-events-none" />
                                     <div className="relative z-10 text-start">
-                                        <h1 className="text-3xl font-black text-white mb-2">
+                                        <h1 className="text-2xl sm:text-3xl font-black text-white mb-2 break-words">
                                             {lang === 'ar' ? `أهلاً بك، ${session?.user?.name?.split(' ')[0] || 'مستخدمنا'}` : `Welcome back, ${session?.user?.name?.split(' ')[0] || 'User'}`}
                                         </h1>
                                         <p className="text-zinc-500 max-w-lg leading-relaxed">
@@ -746,7 +754,7 @@ export default function ProfilePage() {
 
                                 {/* Stats Grid */}
                                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                                    <div onClick={() => setActiveTab("orders")} className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
+                                    <div onClick={() => setActiveTab("orders")} className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                 <Package className="w-6 h-6" />
@@ -758,7 +766,7 @@ export default function ProfilePage() {
 
                                     {isCompany ? (
                                         <>
-                                            <div onClick={() => setActiveTab("subscriptions")} className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
+                                            <div onClick={() => setActiveTab("subscriptions")} className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
                                                 <div className="flex items-center justify-between mb-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-blue-500/10 text-[#0066FF] flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         <Briefcase className="w-6 h-6" />
@@ -767,7 +775,7 @@ export default function ProfilePage() {
                                                 </div>
                                                 <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'الاشتراكات' : 'Subscriptions'}</p>
                                             </div>
-                                            <div onClick={() => setActiveTab("contracts")} className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
+                                            <div onClick={() => setActiveTab("contracts")} className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
                                                 <div className="flex items-center justify-between mb-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/10 text-[#0066FF] flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         <ShieldCheck className="w-6 h-6" />
@@ -779,7 +787,7 @@ export default function ProfilePage() {
                                         </>
                                     ) : (
                                         <>
-                                            <div onClick={() => setActiveTab("messages")} className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-6 hover:border-purple-500/30 transition-all cursor-pointer group">
+                                            <div onClick={() => setActiveTab("messages")} className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-6 hover:border-purple-500/30 transition-all cursor-pointer group">
                                                 <div className="flex items-center justify-between mb-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         <MessageSquare className="w-6 h-6" />
@@ -788,7 +796,7 @@ export default function ProfilePage() {
                                                 </div>
                                                 <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'الرسائل' : 'Messages'}</p>
                                             </div>
-                                            <div onClick={() => setActiveTab("favorites")} className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-6 hover:border-red-500/30 transition-all cursor-pointer group">
+                                            <div onClick={() => setActiveTab("favorites")} className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-6 hover:border-red-500/30 transition-all cursor-pointer group">
                                                 <div className="flex items-center justify-between mb-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         <Heart className="w-6 h-6" />
@@ -803,8 +811,8 @@ export default function ProfilePage() {
 
                                 {/* Recent Activity / Order */}
                                 {orders.length > 0 && (
-                                    <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 text-start">
-                                        <div className="flex items-center justify-between mb-8">
+                                    <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-6 sm:p-8 md:p-10 text-start">
+                                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8">
                                             <h2 className="text-xl font-bold flex items-center gap-3">
                                                 <div className="p-2 rounded-xl bg-[#0066FF]/10">
                                                     <Clock className="w-5 h-5 text-[#0066FF]" />
@@ -818,8 +826,8 @@ export default function ProfilePage() {
 
                                         <div className="space-y-4">
                                             {orders.slice(0, 2).map((order: any) => (
-                                                <div key={order.id} className="p-5 rounded-3xl bg-white/5 border border-white/5 flex items-center justify-between gap-6 hover:bg-white/10 transition-colors">
-                                                    <div className="flex items-center gap-4">
+                                                <div key={order.id} className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/5 border border-white/5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 hover:bg-white/10 transition-colors min-w-0">
+                                                    <div className="flex items-center gap-4 min-w-0">
                                                         <div className="w-12 h-12 rounded-2xl bg-zinc-900 overflow-hidden shrink-0 border border-white/5">
                                                             {order.items[0]?.product?.images?.[0] ? (
                                                                 <img src={order.items[0].product.images[0]} className="w-full h-full object-cover" />
@@ -832,7 +840,11 @@ export default function ProfilePage() {
                                                              <p className="text-xs text-zinc-500">{new Date(order.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US')}</p>
                                                          </div>
                                                      </div>
-                                                     <div className="flex items-center gap-6">
+                                                     <div className="flex items-center justify-between gap-4 sm:justify-end sm:gap-6 w-full sm:w-auto shrink-0">
+                                                         <div className="text-start sm:text-end sm:hidden">
+                                                             <p className="font-black text-[#0066FF]">{order.total} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
+                                                             <span className="text-[9px] px-2 py-0.5 bg-white/5 rounded-full text-zinc-400 font-bold uppercase tracking-widest">{order.status}</span>
+                                                         </div>
                                                          <div className="text-end hidden sm:block">
                                                              <p className="font-black text-[#0066FF]">{order.total} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
                                                              <span className="text-[9px] px-2 py-0.5 bg-white/5 rounded-full text-zinc-400 font-bold uppercase tracking-widest">{order.status}</span>
@@ -859,7 +871,7 @@ export default function ProfilePage() {
                         )}
                         {/* 1. Subscriptions Tab (Company Only) */}
                         {activeTab === "subscriptions" && isCompany && (
-                            <div className="bg-zinc-950 border border-[#0066FF]/20 rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden h-full">
+                            <div className="bg-zinc-950 border border-[#0066FF]/20 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 relative overflow-hidden h-full min-w-0">
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066FF]/5 rounded-full blur-[80px] pointer-events-none" />
                                 <div className="flex justify-between items-center mb-8">
                                     <h2 className="text-2xl font-bold flex items-center gap-3">
@@ -871,8 +883,8 @@ export default function ProfilePage() {
                                 {subscriptions.length > 0 ? (
                                     <div className="grid gap-4">
                                         {subscriptions.map((sub: any) => (
-                                            <div key={sub.id} className={`p-6 rounded-3xl bg-zinc-900 border ${sub.status === 'ACTIVE' ? 'border-emerald-500/20' : 'border-red-500/20'} flex items-center justify-between group hover:border-[#0066FF]/50 transition-all`}>
-                                                <div className="flex items-center gap-4">
+                                            <div key={sub.id} className={`p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900 border ${sub.status === 'ACTIVE' ? 'border-emerald-500/20' : 'border-red-500/20'} flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between group hover:border-[#0066FF]/50 transition-all min-w-0`}>
+                                                <div className="flex items-center gap-4 min-w-0 text-start">
                                                     <div className={`w-12 h-12 rounded-2xl ${sub.status === 'ACTIVE' ? 'bg-emerald-500/10 text-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.1)]' : 'bg-red-500/10 text-red-500 shadow-[0_0_20px_rgba(239,44,44,0.1)]'} flex items-center justify-center`}>
                                                         <Briefcase className="w-6 h-6" />
                                                     </div>
@@ -898,7 +910,7 @@ export default function ProfilePage() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="text-right">
+                                                <div className="text-start sm:text-end shrink-0 w-full sm:w-auto pt-2 sm:pt-0 border-t border-white/5 sm:border-0">
                                                     <p className={`text-xl font-black ${sub.status === 'ACTIVE' ? 'text-[#0066FF]' : 'text-zinc-600'}`}>{sub.amount} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
                                                     <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded ${sub.status === 'ACTIVE' ? 'bg-[#0066FF]/10 text-[#0066FF]' : 'bg-red-500/5 text-red-500'}`}>
                                                         {sub.type}
@@ -923,7 +935,7 @@ export default function ProfilePage() {
 
                         {/* 1.1 Contracts Tab (Managed IT Requests) */}
                         {activeTab === "contracts" && isCompany && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden h-full">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 min-w-0 relative overflow-hidden h-full">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                     <ShieldCheck className="w-6 h-6 text-[#0066FF]" />
                                     {lang === 'ar' ? 'طلبات Managed IT' : 'Managed IT Requests'}
@@ -982,7 +994,7 @@ export default function ProfilePage() {
 
                         {/* 2. Orders Tab */}
                         {activeTab === "orders" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 h-full">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 min-w-0 h-full">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                     <ShoppingBag className="w-6 h-6 text-[#0066FF]" />
                                     {lang === 'ar' ? (isCompany ? 'مشتريات الشركة من المتجر' : 'طلباتي السابقة') : (isCompany ? 'Company Store Orders' : 'Order History')}
@@ -1059,17 +1071,17 @@ export default function ProfilePage() {
 
                         {/* 3. Messages Tab */}
                         {activeTab === "messages" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 h-[calc(100vh-180px)] min-h-[700px] max-h-[850px] flex flex-col overflow-hidden">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-4 sm:p-6 md:p-10 min-h-0 h-[min(100dvh-10rem,850px)] max-h-[min(100dvh-10rem,850px)] md:h-[calc(100vh-180px)] md:min-h-[520px] md:max-h-[850px] flex flex-col overflow-hidden min-w-0">
                                 {!selectedChat ? (
                                     <>
-                                        <div className="flex items-center justify-between mb-8 shrink-0">
-                                            <h2 className="text-2xl font-bold flex items-center gap-3">
-                                                <div className="p-2 rounded-xl bg-[#0066FF]/10">
-                                                    <MessageSquare className="w-6 h-6 text-[#0066FF]" />
+                                        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 shrink-0">
+                                            <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2 sm:gap-3">
+                                                <div className="p-2 rounded-xl bg-[#0066FF]/10 shrink-0">
+                                                    <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-[#0066FF]" />
                                                 </div>
                                                 {lang === 'ar' ? 'صندوق الوارد' : 'Inbox'}
                                             </h2>
-                                            <div className="flex items-center gap-4">
+                                            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                                                 <button 
                                                     onClick={() => {
                                                         setSelectedConversation(null);
@@ -1078,12 +1090,12 @@ export default function ProfilePage() {
                                                         setIsClosed(false);
                                                         setCloseReason(null);
                                                     }}
-                                                    className="px-5 py-2 rounded-full bg-[#0066FF] hover:bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest transition-all hover:scale-105 flex items-center gap-2 shadow-[0_0_20px_rgba(0,102,255,0.2)]"
+                                                    className="w-full sm:w-auto justify-center px-4 sm:px-5 py-2.5 sm:py-2 rounded-full bg-[#0066FF] hover:bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest transition-all hover:scale-[1.02] sm:hover:scale-105 flex items-center gap-2 shadow-[0_0_20px_rgba(0,102,255,0.2)]"
                                                 >
                                                     <Plus className="w-3.5 h-3.5" />
                                                     {lang === 'ar' ? 'محادثة جديدة' : 'New Chat'}
                                                 </button>
-                                                <span className="text-[10px] uppercase tracking-widest text-zinc-500 font-black hidden sm:block">{conversations.length} {lang === 'ar' ? 'محادثة' : 'Conversations'}</span>
+                                                <span className="text-[10px] uppercase tracking-widest text-zinc-500 font-black hidden sm:inline">{conversations.length} {lang === 'ar' ? 'محادثة' : 'Conversations'}</span>
                                             </div>
                                         </div>
                                         
@@ -1123,7 +1135,7 @@ export default function ProfilePage() {
                                                             setSelectedChat("admin");
                                                             fetchMessages(conv.id);
                                                         }}
-                                                        className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-[#0066FF]/30 transition-all cursor-pointer group flex items-center gap-6"
+                                                        className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white/5 border border-white/5 hover:border-[#0066FF]/30 transition-all cursor-pointer group flex items-center gap-4 sm:gap-6 min-w-0"
                                                     >
                                                         <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center transition-all duration-500 ${conv.status === 'CLOSED' ? 'bg-zinc-800 text-zinc-500' : 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/20 group-hover:bg-[#0066FF] group-hover:text-white'}`}>
                                                             {conv.status === 'CLOSED' ? <CheckCheck className="w-7 h-7" /> : <ShieldCheck className="w-7 h-7" />}
@@ -1251,7 +1263,7 @@ export default function ProfilePage() {
 
                         {/* 4. Track Order Tab */}
                         {activeTab === "track" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 h-full overflow-y-auto">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                     <div className="p-2 rounded-xl bg-[#0066FF]/10">
                                         <Clock className="w-6 h-6 text-[#0066FF]" />
@@ -1264,8 +1276,8 @@ export default function ProfilePage() {
                                         {lang === 'ar' ? 'أدخل رقم الطلب الخاص بك لمتابعة حالة الشحن والتوصيل بشكل مباشر.' : 'Enter your order ID to track shipping and delivery status in real-time.'}
                                     </p>
                                     
-                                    <form onSubmit={handleTrackOrder} className="flex gap-2 mb-10 w-full">
-                                        <div className="relative flex-1">
+                                    <form onSubmit={handleTrackOrder} className="flex flex-col sm:flex-row gap-3 sm:gap-2 mb-10 w-full min-w-0">
+                                        <div className="relative flex-1 min-w-0">
                                             <Search className={`absolute ${lang === 'ar' ? 'right-4' : 'left-4'} top-3.5 w-4 h-4 text-zinc-600`} />
                                             <input 
                                                 type="text" 
@@ -1282,7 +1294,7 @@ export default function ProfilePage() {
                                         <button 
                                             type="submit" 
                                             disabled={isTracking}
-                                            className="px-8 py-3.5 rounded-2xl bg-[#0066FF] hover:bg-blue-600 text-white font-bold transition-all disabled:opacity-50 hover:scale-[1.02]"
+                                            className="w-full sm:w-auto shrink-0 px-6 sm:px-8 py-3.5 rounded-2xl bg-[#0066FF] hover:bg-blue-600 text-white font-bold transition-all disabled:opacity-50 hover:scale-[1.02]"
                                         >
                                             {isTracking ? <Loader2 className="w-5 h-5 animate-spin"/> : (lang === 'ar' ? 'بحث' : 'Track')}
                                         </button>
@@ -1322,7 +1334,7 @@ export default function ProfilePage() {
                                                         />
                                                     </div>
 
-                                                    <div className="flex justify-between relative z-10">
+                                                    <div className="flex justify-between relative z-10 gap-1 overflow-x-auto pb-2 sm:pb-0 sm:overflow-visible -mx-1 px-1 [scrollbar-width:thin]">
                                                         {[
                                                             { id: 'PENDING', label: lang === 'ar' ? 'تم الاستلام' : 'Placed', icon: Package },
                                                             { id: 'PROCESSING', label: lang === 'ar' ? 'قيد التجهيز' : 'Processing', icon: Cpu },
@@ -1373,7 +1385,7 @@ export default function ProfilePage() {
 
                         {/* 5. Support Tab */}
                         {activeTab === "support" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 h-full">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 min-w-0 h-full">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                     <Headset className="w-6 h-6 text-[#0066FF]" />
                                     {lang === 'ar' ? 'الدعم الفني للشركات' : 'Corporate Support'}
@@ -1395,7 +1407,7 @@ export default function ProfilePage() {
 
                         {/* 6. Settings Tab / Change Password */}
                         {activeTab === "settings" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 h-full">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 min-w-0 h-full">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                     <Key className="w-6 h-6 text-[#0066FF]" />
                                     {lang === 'ar' ? 'تغيير كلمة المرور' : 'Change Password'}
@@ -1459,7 +1471,7 @@ export default function ProfilePage() {
 
                         {/* 9. Invoices Tab */}
                         {activeTab === "invoices" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 h-full overflow-y-auto">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                     <div className="p-2 rounded-xl bg-[#0066FF]/10">
                                         <FileText className="w-6 h-6 text-[#0066FF]" />
@@ -1507,7 +1519,7 @@ export default function ProfilePage() {
                         )}
                         {/* 7. Favorites Tab */}
                         {activeTab === "favorites" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 h-full overflow-y-auto">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                     <Heart className="w-6 h-6 text-red-500 fill-red-500" />
                                     {lang === 'ar' ? 'المنتجات المفضلة' : 'My Favorites'}
@@ -1563,7 +1575,7 @@ export default function ProfilePage() {
 
                         {/* 8. Wishlist Tab */}
                         {activeTab === "wishlist" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-10 h-full overflow-y-auto">
+                            <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                     <Bookmark className="w-6 h-6 text-[#0066FF]" />
                                     {lang === 'ar' ? 'قائمة الأماني' : 'My Wishlist'}
@@ -1756,11 +1768,11 @@ export default function ProfilePage() {
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
                             onClick={e => e.stopPropagation()}
-                            className="w-full max-w-2xl bg-zinc-950 border border-white/10 rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
+                            className="w-full max-w-2xl min-w-0 bg-zinc-950 border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90dvh] flex flex-col"
                         >
                             {/* Digital Invoice Layout */}
-                            <div className="p-8 space-y-8 bg-[#0a0a0a] overflow-y-auto flex-1 invoice-print-area">
-                                <div className="flex justify-between items-start">
+                            <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 bg-[#0a0a0a] overflow-y-auto flex-1 invoice-print-area min-w-0">
+                                <div className="flex flex-col gap-6 sm:flex-row sm:justify-between sm:items-start">
                                     <div>
                                         <div className="mb-8 flex flex-col items-start gap-3">
                                             {/* Nexit Logo */}
@@ -1773,10 +1785,10 @@ export default function ProfilePage() {
                                                 priority
                                             />
                                         </div>
-                                        <h2 className="text-4xl font-black mb-1 tracking-tighter text-white">{lang === 'ar' ? 'فاتورة' : 'INVOICE'}</h2>
+                                        <h2 className="text-2xl sm:text-4xl font-black mb-1 tracking-tighter text-white">{lang === 'ar' ? 'فاتورة' : 'INVOICE'}</h2>
                                         <p className="text-[#0066FF] font-mono text-sm tracking-widest">#{viewInvoice.invoiceNo}</p>
                                     </div>
-                                    <div className="text-end space-y-1 mt-4">
+                                    <div className="text-start sm:text-end space-y-1 sm:mt-4">
                                         <p className="text-xs text-zinc-500 uppercase font-bold tracking-widest">{lang === 'ar' ? 'تاريخ الإصدار' : 'Issue Date'}</p>
                                         <p className="text-sm font-medium border-b border-white/5 pb-2 text-white">{new Date(viewInvoice.createdAt).toLocaleDateString()}</p>
                                         
@@ -1789,21 +1801,21 @@ export default function ProfilePage() {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-8 py-8 border-y border-white/5">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 py-6 sm:py-8 border-y border-white/5">
                                     <div>
                                         <p className="text-xs text-zinc-500 uppercase font-bold tracking-widest mb-4">{lang === 'ar' ? 'مقدم من' : 'From'}</p>
                                         <p className="font-bold text-lg text-white">Nexit Solutions</p>
                                         <p className="text-sm text-zinc-400 mt-1">admin@nexitweb.com</p>
                                     </div>
-                                    <div className="text-end">
+                                    <div className="text-start sm:text-end">
                                         <p className="text-xs text-zinc-500 uppercase font-bold tracking-widest mb-4">{lang === 'ar' ? 'إلى عميل' : 'Bill To'}</p>
                                         <p className="font-bold text-lg text-white">{(session?.user as any)?.username || session?.user?.name}</p>
                                         <p className="text-sm text-zinc-400 mt-1">{session?.user?.email}</p>
                                     </div>
                                 </div>
 
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-white/5 text-[10px] uppercase font-bold tracking-widest text-zinc-500">
+                                <div className="space-y-4 min-w-0 overflow-x-auto">
+                                    <div className="flex justify-between items-center bg-zinc-900/50 p-3 sm:p-4 rounded-xl border border-white/5 text-[10px] uppercase font-bold tracking-widest text-zinc-500 min-w-[320px] sm:min-w-0">
                                         <span className="flex-1 text-start">{lang === 'ar' ? 'الوصف' : 'Description'}</span>
                                         <span className="w-20 text-center">{lang === 'ar' ? 'الكمية' : 'Qty'}</span>
                                         <span className="w-24 text-center">{lang === 'ar' ? 'السعر' : 'Price'}</span>

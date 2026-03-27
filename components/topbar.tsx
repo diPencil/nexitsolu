@@ -23,12 +23,19 @@ export function Topbar() {
 
                 <div className="flex items-center justify-center w-full md:w-auto gap-4 md:gap-6">
                     <a href={`mailto:${t("topbar.email")}`} className="flex items-center gap-1.5 md:gap-2 hover:text-white transition-colors">
-                        <Mail className="h-3 w-3" />
-                        <span>{t("topbar.email")}</span>
+                        <Mail className="h-3 w-3 shrink-0" />
+                        <span dir="ltr" className="[unicode-bidi:isolate] normal-case">
+                            {t("topbar.email")}
+                        </span>
                     </a>
-                    <a href={`tel:${t("topbar.phone")}`} className="flex items-center gap-1.5 md:gap-2 hover:text-white transition-colors">
-                        <Phone className="h-3 w-3" />
-                        <span>{t("topbar.phone")}</span>
+                    <a
+                        href={`tel:${String(t("topbar.phone")).replace(/\s/g, "")}`}
+                        className="flex items-center gap-1.5 md:gap-2 hover:text-white transition-colors"
+                    >
+                        <Phone className="h-3 w-3 shrink-0" />
+                        <span dir="ltr" className="[unicode-bidi:isolate]">
+                            {t("topbar.phone")}
+                        </span>
                     </a>
                 </div>
             </div>

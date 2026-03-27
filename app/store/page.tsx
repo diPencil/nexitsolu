@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 import { useLanguage } from "@/lib/i18n-context"
@@ -25,8 +25,16 @@ export default function StorePage() {
     const [sortBy, setSortBy] = useState("default") // 'default' | 'price-low' | 'price-high'
     const [showSort, setShowSort] = useState(false)
     const [dbCategories, setDbCategories] = useState<any[]>([])
+    const storeCategoriesScrollRef = useRef<HTMLDivElement>(null)
 
     const safeDbCategories = Array.isArray(dbCategories) ? dbCategories : []
+
+    /** LTR scrollport + row-reverse (Arabic) so scrollBy({ left }) is reliable. */
+    const scrollCategoryStrip = (el: HTMLDivElement | null, direction: 1 | -1) => {
+        if (!el) return
+        const amount = Math.min(280, Math.max(120, el.clientWidth * 0.85))
+        el.scrollBy({ left: direction * amount, behavior: "smooth" })
+    }
     // Only "All" + categories created in Admin — no hardcoded store tabs
     const categories = [
         { id: "all", name: lang === "ar" ? "الكل" : "All", icon: ShoppingBag },
@@ -300,8 +308,11 @@ export default function StorePage() {
                 <div className="flex flex-col lg:flex-row justify-between items-center mb-12 gap-6 w-full">
                     {/* Categories Tabs */}
                     <div className="flex items-center gap-2 md:gap-4 bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-md w-full lg:w-auto relative">
-                        <div id="store-categories-scroll" className="w-full overflow-x-auto flex items-center scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                            <div className="flex space-x-1 rtl:space-x-reverse min-w-max">
+                        <div
+                            ref={storeCategoriesScrollRef}
+                            className="w-full overflow-x-auto flex items-center scroll-smooth [direction:ltr] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                        >
+                            <div className={`flex gap-1 min-w-max ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
                                 {categories.map((cat) => (
                                     <button
                                         key={cat.id}
@@ -319,23 +330,21 @@ export default function StorePage() {
                         </div>
                         
                         <div className="flex items-center gap-1 md:gap-2 border-s border-white/10 ps-2 md:ps-4 pe-1 md:pe-2 shrink-0">
-                            <button 
-                                onClick={() => {
-                                    const el = document.getElementById('store-categories-scroll')
-                                    if(el) el.scrollBy({ left: lang === 'ar' ? 200 : -200, behavior: 'smooth' })
-                                }}
+                            <button
+                                type="button"
+                                aria-label={lang === "ar" ? "تمرير التصنيفات" : "Scroll categories"}
+                                onClick={() => scrollCategoryStrip(storeCategoriesScrollRef.current, lang === "ar" ? 1 : -1)}
                                 className="p-2 rounded-full hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
                             >
-                                <ChevronLeft className={`w-5 h-5 ${lang === 'ar' ? 'rotate-180' : ''}`} />
+                                <ChevronLeft className={`w-5 h-5 ${lang === "ar" ? "rotate-180" : ""}`} />
                             </button>
-                            <button 
-                                onClick={() => {
-                                    const el = document.getElementById('store-categories-scroll')
-                                    if(el) el.scrollBy({ left: lang === 'ar' ? -200 : 200, behavior: 'smooth' })
-                                }}
+                            <button
+                                type="button"
+                                aria-label={lang === "ar" ? "تمرير التصنيفات" : "Scroll categories"}
+                                onClick={() => scrollCategoryStrip(storeCategoriesScrollRef.current, lang === "ar" ? -1 : 1)}
                                 className="p-2 rounded-full hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
                             >
-                                <ChevronRight className={`w-5 h-5 ${lang === 'ar' ? 'rotate-180' : ''}`} />
+                                <ChevronRight className={`w-5 h-5 ${lang === "ar" ? "rotate-180" : ""}`} />
                             </button>
                         </div>
                     </div>

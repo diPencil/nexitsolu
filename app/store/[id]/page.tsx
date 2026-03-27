@@ -414,7 +414,7 @@ export default function ProductDetailPage() {
                                 </div>
 
                                 <div className="flex items-start justify-between gap-8">
-                                    <h1 className="text-3xl md:text-5xl font-semibold tracking-tighter leading-tight flex-1">
+                                    <h1 className="text-xl md:text-3xl font-semibold tracking-tighter leading-tight flex-1">
                                         {name}
                                     </h1>
 

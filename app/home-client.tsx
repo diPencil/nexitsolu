@@ -39,6 +39,8 @@ export default function Home() {
   const isAr = lang === "ar"
   const journeyRef = useRef<HTMLDivElement>(null)
   const servicesRef = useRef<HTMLDivElement>(null)
+  const homeCategoriesScrollRef = useRef<HTMLDivElement>(null)
+  const [featuredStoreTab, setFeaturedStoreTab] = useState("all")
 
   const scrollJourney = (direction: "left" | "right") => {
     if (journeyRef.current) {
@@ -52,6 +54,13 @@ export default function Home() {
       const scrollAmount = direction === "left" ? -400 : 400
       servicesRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" })
     }
+  }
+
+  /** Horizontal chip strip: LTR scrollport so scrollLeft / scrollBy work; row-reverse keeps Arabic order. */
+  const scrollCategoryStrip = (el: HTMLDivElement | null, direction: 1 | -1) => {
+    if (!el) return
+    const amount = Math.min(280, Math.max(120, el.clientWidth * 0.85))
+    el.scrollBy({ left: direction * amount, behavior: "smooth" })
   }
 
   useEffect(() => {
@@ -397,7 +406,7 @@ export default function Home() {
       <section className="relative z-20 py-16 md:py-24 px-4 md:px-6 lg:px-24 bg-black overflow-hidden border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           {isMounted ? (
-            <Tabs defaultValue="all" className="w-full" dir={lang === "ar" ? "rtl" : "ltr"}>
+            <Tabs value={featuredStoreTab} onValueChange={setFeaturedStoreTab} className="w-full" dir={lang === "ar" ? "rtl" : "ltr"}>
               <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
                 <div className="flex items-center gap-6">
                   <div className="p-3 bg-white/5 rounded-2xl">
@@ -411,8 +420,13 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-center gap-2 md:gap-6 bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-md w-full md:w-auto relative">
-                  <div className="w-full overflow-x-auto flex items-center [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                    <TabsList className="bg-transparent border-none h-auto p-0 flex space-x-1 rtl:space-x-reverse min-w-max">
+                  <div
+                    ref={homeCategoriesScrollRef}
+                    className="w-full overflow-x-auto flex items-center scroll-smooth [direction:ltr] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                  >
+                    <TabsList
+                      className={`bg-transparent border-none h-auto p-0 flex gap-1 min-w-max ${isAr ? "flex-row-reverse" : "flex-row"}`}
+                    >
                       {storeTabs.map(tab => (
                         <TabsTrigger key={`trigger-${tab.id}`} value={tab.id} className="rounded-full px-4 md:px-6 py-2.5 text-xs md:text-sm font-medium data-[state=active]:bg-[#0066FF] data-[state=active]:text-white text-zinc-400 hover:text-white transition-all">
                           {lang === "ar" ? tab.labelAr : tab.labelEn}
@@ -421,30 +435,21 @@ export default function Home() {
                     </TabsList>
                   </div>
                   <div className="flex items-center gap-1 md:gap-2 border-s border-white/10 ps-2 md:ps-4 pe-1 md:pe-2 shrink-0">
-                    <button 
-                      onClick={() => {
-                        // find the active tab and its carousel
-                        const activeTab = document.querySelector('[role="tab"][data-state="active"]')?.getAttribute('value');
-                        if (activeTab) {
-                            const carousel = document.getElementById(`products-carousel-${activeTab}`);
-                            if (carousel) carousel.scrollBy({ left: lang === 'ar' ? 320 : -320, behavior: 'smooth' });
-                        }
-                      }}
+                    <button
+                      type="button"
+                      aria-label={lang === "ar" ? "تمرير التصنيفات" : "Scroll categories"}
+                      onClick={() => scrollCategoryStrip(homeCategoriesScrollRef.current, isAr ? 1 : -1)}
                       className="p-2 rounded-full hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
                     >
-                      <ChevronLeft className={`w-5 h-5 ${lang === 'ar' ? 'rotate-180' : ''}`} />
+                      <ChevronLeft className={`w-5 h-5 ${isAr ? "rotate-180" : ""}`} />
                     </button>
-                    <button 
-                       onClick={() => {
-                        const activeTab = document.querySelector('[role="tab"][data-state="active"]')?.getAttribute('value');
-                        if (activeTab) {
-                            const carousel = document.getElementById(`products-carousel-${activeTab}`);
-                            if (carousel) carousel.scrollBy({ left: lang === 'ar' ? -320 : 320, behavior: 'smooth' });
-                        }
-                      }}
-                       className="p-2 rounded-full hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
+                    <button
+                      type="button"
+                      aria-label={lang === "ar" ? "تمرير التصنيفات" : "Scroll categories"}
+                      onClick={() => scrollCategoryStrip(homeCategoriesScrollRef.current, isAr ? -1 : 1)}
+                      className="p-2 rounded-full hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
                     >
-                      <ChevronRight className={`w-5 h-5 ${lang === 'ar' ? 'rotate-180' : ''}`} />
+                      <ChevronRight className={`w-5 h-5 ${isAr ? "rotate-180" : ""}`} />
                     </button>
                   </div>
                 </div>
