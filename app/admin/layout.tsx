@@ -10,6 +10,7 @@ import {
     ShoppingCart,
     Users,
     MessageCircle,
+    Inbox,
     LogOut,
     Menu,
     X,
@@ -25,7 +26,10 @@ import {
     FileText,
     Truck,
     Warehouse,
-    ScrollText
+    ScrollText,
+    Wallet,
+    Layers,
+    ListOrdered,
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/i18n-context"
@@ -157,6 +161,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             title: lang === 'ar' ? 'الخدمات' : 'Services',
             items: [
                 { name: lang === 'ar' ? 'الاشتراكات' : 'Subscriptions', icon: Briefcase, href: '/admin/subscriptions', count: stats?.totalSubscriptions },
+                { name: lang === 'ar' ? 'خطط الاشتراك' : 'Subscription plans', icon: ListOrdered, href: '/admin/subscription-plans', count: stats?.totalSubscriptionPlans },
+                { name: lang === 'ar' ? 'خدمات الاشتراك' : 'Subscription services', icon: Layers, href: '/admin/subscription-services', count: stats?.totalSubscriptionServices },
                 { name: lang === 'ar' ? 'العقود' : 'Contracts', icon: ShieldCheck, href: '/admin/managed-it', count: stats?.totalManagedIT },
                 { name: lang === 'ar' ? 'الدعم الفني' : 'Tech Support', icon: ShieldCheck, href: '/admin/tech-support', count: stats?.totalTechSupport },
             ]
@@ -166,12 +172,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             items: [
                 { name: lang === 'ar' ? 'الموردين' : 'Suppliers', icon: Truck, href: '/admin/suppliers', count: stats?.totalSuppliers },
                 { name: lang === 'ar' ? 'المشتريات' : 'Purchases', icon: Warehouse, href: '/admin/purchases', count: stats?.totalPurchases },
+                { name: lang === 'ar' ? 'مصروفات خاصة' : 'Internal expenses', icon: Wallet, href: '/admin/internal-expenses', count: stats?.totalInternalExpenses },
             ]
         },
         {
             title: lang === 'ar' ? 'التواصل' : 'Communication',
             items: [
-                { name: lang === 'ar' ? 'تواصل معنا' : 'Contact Us', icon: MessageCircle, href: '/admin/contact-messages', count: stats?.totalContactMessages },
+                { name: lang === 'ar' ? 'تواصل معنا' : 'Contact Us', icon: Inbox, href: '/admin/contact-messages', count: stats?.totalContactMessages },
                 { name: lang === 'ar' ? 'المحادثات' : 'Messages', icon: MessageCircle, href: '/admin/messages', count: stats?.totalConversations },
             ]
         },

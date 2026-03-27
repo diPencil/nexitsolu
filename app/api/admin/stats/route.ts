@@ -18,6 +18,9 @@ export async function GET() {
             quotationCount,
             supplierCount,
             purchaseCount,
+            internalExpenseCount,
+            subscriptionPlanCount,
+            subscriptionServiceCount,
             recentOrders,
             topCustomers,
             revenueAggregate,
@@ -36,6 +39,9 @@ export async function GET() {
             prisma.quotation.count(),
             prisma.supplier.count(),
             prisma.purchase.count(),
+            prisma.internalExpense.count(),
+            prisma.subscriptionPlan.count(),
+            prisma.subscriptionService.count(),
             prisma.order.findMany({
                 take: 8,
                 orderBy: { createdAt: "desc" },
@@ -65,6 +71,8 @@ export async function GET() {
             totalProducts: productCount,
             totalInvoices: invoiceCount,
             totalSubscriptions: subscriptionCount,
+            totalSubscriptionPlans: subscriptionPlanCount,
+            totalSubscriptionServices: subscriptionServiceCount,
             totalManagedIT: managedITCount,
             totalTechSupport: techSupportCount,
             totalContactMessages: contactMessageCount,
@@ -74,6 +82,7 @@ export async function GET() {
             totalQuotations: quotationCount,
             totalSuppliers: supplierCount,
             totalPurchases: purchaseCount,
+            totalInternalExpenses: internalExpenseCount,
         };
 
         return NextResponse.json({ stats, recentOrders, topCustomers });

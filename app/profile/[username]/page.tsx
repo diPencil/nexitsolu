@@ -42,6 +42,10 @@ import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { toast } from "sonner"
 import { pusherClient } from "@/lib/pusher"
+import {
+    getSubscriptionServiceLabel,
+    type SubscriptionServiceCatalogRow,
+} from "@/lib/subscription-services"
 
 export default function ProfilePage() {
     const { data: session, status } = useSession()
@@ -57,6 +61,8 @@ export default function ProfilePage() {
     const [favorites, setFavorites] = useState<any[]>([])
     const [wishlist, setWishlist] = useState<any[]>([])
     const [subscriptions, setSubscriptions] = useState<any[]>([])
+    const [subscriptionServiceCatalog, setSubscriptionServiceCatalog] =
+        useState<SubscriptionServiceCatalogRow[]>([])
     const [managedRequests, setManagedRequests] = useState<any[]>([])
     const [invoices, setInvoices] = useState<any[]>([])
     const [viewInvoice, setViewInvoice] = useState<any>(null)
@@ -121,6 +127,7 @@ export default function ProfilePage() {
             
             if (companyRole) {
                 fetchSubscriptions()
+                fetchSubscriptionServiceCatalog()
                 fetchManagedITRequests()
                 fetchInvoices()
             }
@@ -265,6 +272,18 @@ export default function ProfilePage() {
             }
         } catch (error) {
             console.error("Failed to fetch subscriptions")
+        }
+    }
+
+    const fetchSubscriptionServiceCatalog = async () => {
+        try {
+            const res = await fetch("/api/subscription-services")
+            if (res.ok) {
+                const data = await res.json()
+                setSubscriptionServiceCatalog(Array.isArray(data) ? data : [])
+            }
+        } catch {
+            console.error("Failed to fetch subscription services")
         }
     }
 
@@ -859,6 +878,15 @@ export default function ProfilePage() {
                                                     </div>
                                                     <div>
                                                         <h4 className="font-bold text-lg">{sub.planName}</h4>
+                                                        {sub.serviceKey && (
+                                                            <p className="text-sm text-[#0066FF] font-semibold mt-0.5">
+                                                                {getSubscriptionServiceLabel(
+                                                                    sub.serviceKey,
+                                                                    lang,
+                                                                    subscriptionServiceCatalog
+                                                                )}
+                                                            </p>
+                                                        )}
                                                         <div className="flex items-center gap-2">
                                                             <p className="text-zinc-500 text-sm">
                                                                 {lang === 'ar' ? `ينتهي في: ${new Date(sub.endDate).toLocaleDateString('ar-EG')}` : `Expires: ${new Date(sub.endDate).toLocaleDateString()}`}

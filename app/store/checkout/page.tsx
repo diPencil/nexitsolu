@@ -30,7 +30,14 @@ function CheckoutContent() {
 
     // If buyNow query param is present it holds a JSON product for direct checkout
     const buyNowParam = searchParams.get("buyNow")
-    const buyNowProduct = buyNowParam ? JSON.parse(decodeURIComponent(buyNowParam)) : null
+    let buyNowProduct: any = null
+    if (buyNowParam) {
+        try {
+            buyNowProduct = JSON.parse(decodeURIComponent(buyNowParam))
+        } catch {
+            buyNowProduct = null
+        }
+    }
 
     // Determine which items we are checking out
     const checkoutItems = buyNowProduct ? [{ ...buyNowProduct, quantity: 1 }] : items
@@ -507,7 +514,7 @@ function CheckoutContent() {
                                                 onClick={() => setPaymentType("FULL")}
                                                 className={`p-4 rounded-2xl border text-start transition-all ${paymentType === "FULL" ? 'bg-[#0066FF]/10 border-[#0066FF]' : 'bg-zinc-900 border-zinc-800 hover:border-zinc-700'}`}
                                             >
-                                                <p className="font-black text-white text-lg">{orderTotal.toFixed(2)} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
+                                                <p className="font-black text-white text-lg">{totalWithShipping.toFixed(2)} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
                                                 <p className={`text-xs mt-1 font-bold ${paymentType === "FULL" ? 'text-[#0066FF]' : 'text-zinc-500'}`}>
                                                     {lang === 'ar' ? 'الدفع الكامل' : 'Full Payment'}
                                                 </p>

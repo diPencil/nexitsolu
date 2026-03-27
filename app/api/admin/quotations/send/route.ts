@@ -8,6 +8,12 @@ import {
     sessionUser,
 } from "@/lib/log-business-activity"
 
+function num(v: unknown): number {
+    if (typeof v === "number" && Number.isFinite(v)) return v
+    const n = parseFloat(String(v ?? ""))
+    return Number.isFinite(n) ? n : 0
+}
+
 export async function POST(req: Request) {
     try {
         const session = await getServerSession(authOptions)
@@ -24,6 +30,8 @@ export async function POST(req: Request) {
         if (!q || !q.user) {
             return NextResponse.json({ error: "Quotation or user not found" }, { status: 404 })
         }
+
+        const items = Array.isArray(q.items) ? (q.items as Record<string, unknown>[]) : []
 
         // Prepare email content
         const subject = `New Quotation: ${q.quotationNo} from NexIT Solutions`
@@ -48,34 +56,38 @@ export async function POST(req: Request) {
                         </tr>
                     </thead>
                     <tbody>
-                        ${(q.items as any[]).map((item: any) => `
+                        ${items.map((item) => {
+                            const qty = num(item.quantity)
+                            const price = num(item.price)
+                            const desc = String(item.description ?? "")
+                            return `
                             <tr>
-                                <td style="padding: 12px; border: 1px solid #ddd;">${item.description}</td>
-                                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${item.quantity}</td>
-                                <td style="padding: 12px; border: 1px solid #ddd; text-align: right;">${item.price.toFixed(2)}</td>
-                                <td style="padding: 12px; border: 1px solid #ddd; text-align: right;">${(item.quantity * item.price).toFixed(2)}</td>
-                            </tr>
-                        `).join('')}
+                                <td style="padding: 12px; border: 1px solid #ddd;">${desc}</td>
+                                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${qty}</td>
+                                <td style="padding: 12px; border: 1px solid #ddd; text-align: right;">${price.toFixed(2)}</td>
+                                <td style="padding: 12px; border: 1px solid #ddd; text-align: right;">${(qty * price).toFixed(2)}</td>
+                            </tr>`
+                        }).join("")}
                     </tbody>
                     <tfoot>
-                        ${q.subtotal ? `
+                        ${num(q.subtotal) !== 0 ? `
                         <tr>
                             <td colspan="3" style="padding: 12px; text-align: right; font-weight: bold;">Subtotal:</td>
-                            <td style="padding: 12px; text-align: right;">${q.subtotal.toFixed(2)} EGP</td>
+                            <td style="padding: 12px; text-align: right;">${num(q.subtotal).toFixed(2)} EGP</td>
                         </tr>` : ''}
-                        ${q.discount ? `
+                        ${num(q.discount) !== 0 ? `
                         <tr>
                             <td colspan="3" style="padding: 12px; text-align: right; color: #10b981; font-weight: bold;">Discount:</td>
-                            <td style="padding: 12px; text-align: right; color: #10b981;">- ${q.discount.toFixed(2)} EGP</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981;">- ${num(q.discount).toFixed(2)} EGP</td>
                         </tr>` : ''}
-                        ${q.tax ? `
+                        ${num(q.tax) !== 0 ? `
                         <tr>
                             <td colspan="3" style="padding: 12px; text-align: right; color: #eab308; font-weight: bold;">Tax:</td>
-                            <td style="padding: 12px; text-align: right; color: #eab308;">+ ${((q.subtotal || 0) * q.tax / 100).toFixed(2)} EGP (${q.tax}%)</td>
+                            <td style="padding: 12px; text-align: right; color: #eab308;">+ ${(num(q.subtotal) * num(q.tax) / 100).toFixed(2)} EGP (${num(q.tax)}%)</td>
                         </tr>` : ''}
                         <tr style="background: #0066FF; color: white;">
                             <td colspan="3" style="padding: 12px; text-align: right; font-weight: bold; font-size: 1.2em;">Total:</td>
-                            <td style="padding: 12px; text-align: right; font-weight: bold; font-size: 1.2em;">${q.amount.toFixed(2)} EGP</td>
+                            <td style="padding: 12px; text-align: right; font-weight: bold; font-size: 1.2em;">${num(q.amount).toFixed(2)} EGP</td>
                         </tr>
                     </tfoot>
                 </table>

@@ -5,24 +5,28 @@ import { useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "motion/react"
 import {
     FileText,
-    Search,
     Plus,
     Loader2,
     Eye,
     Trash2,
     X,
-    Calendar,
-    Send,
-    Minus,
-    CheckCircle2,
     Mail,
-    Clock
+    Package,
+    FileDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/i18n-context"
 import { toast } from "sonner"
 import Image from "next/image"
 import { ConfirmDialog } from "@/components/confirm-dialog"
+
+type QuotationLine = {
+    description: string
+    price: number
+    quantity: number
+    productId?: string
+    maxStock?: number
+}
 
 function AdminQuotationsContent() {
     const { lang } = useLanguage()
@@ -46,8 +50,9 @@ function AdminQuotationsContent() {
         discount: 0
     })
 
-    const [quotationItems, setQuotationItems] = useState([
-        { description: "", price: 0, quantity: 1 }
+    const [storeProducts, setStoreProducts] = useState<any[]>([])
+    const [quotationItems, setQuotationItems] = useState<QuotationLine[]>([
+        { description: "", price: 0, quantity: 1 },
     ])
 
     const [confirmAction, setConfirmAction] = useState<{ isOpen: boolean, id: string | null, action: 'delete' | 'status' | null, statusValue?: string }>({ isOpen: false, id: null, action: null })
@@ -63,6 +68,20 @@ function AdminQuotationsContent() {
             setIsModalOpen(true)
         }
     }, [urlUserId, companies])
+
+    useEffect(() => {
+        if (!isModalOpen) return
+        fetch("/api/products")
+            .then((r) => r.json())
+            .then((data) => {
+                if (Array.isArray(data)) setStoreProducts(data)
+            })
+            .catch(() => {})
+    }, [isModalOpen])
+
+    const eligibleStoreProducts = storeProducts.filter(
+        (p) => p.active && Number(p.stock) > 0
+    )
 
     const fetchQuotations = async () => {
         try {
@@ -89,7 +108,47 @@ function AdminQuotationsContent() {
     }
 
     const addItem = () => {
-        setQuotationItems([...quotationItems, { description: "", price: 0, quantity: 1 }])
+        setQuotationItems([
+            ...quotationItems,
+            { description: "", price: 0, quantity: 1 },
+        ])
+    }
+
+    const applyProductToRow = (index: number, productId: string) => {
+        const next = [...quotationItems]
+        if (!productId) {
+            next[index] = {
+                ...next[index],
+                productId: undefined,
+                maxStock: undefined,
+            }
+            setQuotationItems(next)
+            return
+        }
+        const p = storeProducts.find((x) => x.id === productId)
+        if (!p || Number(p.stock) < 1) {
+            toast.error(
+                lang === "ar"
+                    ? "المنتج غير متاح"
+                    : "Product unavailable or out of stock"
+            )
+            return
+        }
+        const unit = p.discountPrice || p.price
+        const desc = lang === "ar" ? p.nameAr || p.name : p.name
+        const q = Math.min(
+            Math.max(1, Number(next[index].quantity) || 1),
+            Number(p.stock)
+        )
+        next[index] = {
+            ...next[index],
+            description: desc,
+            price: unit,
+            quantity: q,
+            productId: p.id,
+            maxStock: Number(p.stock),
+        }
+        setQuotationItems(next)
     }
 
     const removeItem = (index: number) => {
@@ -98,7 +157,20 @@ function AdminQuotationsContent() {
 
     const updateItem = (index: number, field: string, value: string | number) => {
         const newItems = [...quotationItems]
-        newItems[index] = { ...newItems[index], [field]: value }
+        const cur = { ...newItems[index] }
+        if (field === "quantity") {
+            let q = parseInt(String(value), 10)
+            if (!Number.isFinite(q) || q < 1) q = 1
+            if (cur.productId != null && cur.maxStock != null) {
+                q = Math.min(q, cur.maxStock)
+            }
+            cur.quantity = q
+        } else if (field === "price") {
+            cur.price = Number(value)
+        } else if (field === "description") {
+            cur.description = String(value)
+        }
+        newItems[index] = cur
         setQuotationItems(newItems)
     }
 
@@ -118,7 +190,14 @@ function AdminQuotationsContent() {
             return
         }
 
-        if (quotationItems.some(i => !i.description || Number(i.price) < 0 || Number(i.quantity) < 1)) {
+        if (
+            quotationItems.some(
+                (i) =>
+                    !String(i.description).trim() ||
+                    Number(i.price) < 0 ||
+                    Number(i.quantity) < 1
+            )
+        ) {
             toast.error(lang === 'ar' ? "يرجى مراجعة تفاصيل العناصر" : "Please check item details")
             return
         }
@@ -130,7 +209,12 @@ function AdminQuotationsContent() {
                 subtotal,
                 tax: formData.tax,
                 discount: formData.discount,
-                items: quotationItems
+                items: quotationItems.map(({ description, price, quantity, productId }) => ({
+                    description,
+                    price,
+                    quantity,
+                    ...(productId ? { productId } : {}),
+                })),
             }
 
             const res = await fetch("/api/admin/quotations", {
@@ -218,6 +302,36 @@ function AdminQuotationsContent() {
             toast.error("Error sending email")
         } finally {
             setIsSendingMail(null)
+        }
+    }
+
+    const downloadQuotationPdf = async (id: string, quotationNo: string) => {
+        try {
+            const res = await fetch(
+                `/api/admin/quotations/pdf?id=${encodeURIComponent(id)}`
+            )
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}))
+                toast.error(
+                    err.error ||
+                        (lang === "ar"
+                            ? "تعذر تنزيل الملف"
+                            : "PDF download failed")
+                )
+                return
+            }
+            const blob = await res.blob()
+            const url = URL.createObjectURL(blob)
+            const a = document.createElement("a")
+            a.href = url
+            a.download = `Quotation-${quotationNo}.pdf`
+            document.body.appendChild(a)
+            a.click()
+            a.remove()
+            URL.revokeObjectURL(url)
+            toast.success(lang === "ar" ? "تم تنزيل PDF" : "PDF downloaded")
+        } catch {
+            toast.error(lang === "ar" ? "حدث خطأ" : "Download error")
         }
     }
 
@@ -333,6 +447,13 @@ function AdminQuotationsContent() {
                                                     {isSendingMail === q.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Mail className="w-3.5 h-3.5" />}
                                                 </button>
                                                 <button
+                                                    onClick={(e) => { e.stopPropagation(); downloadQuotationPdf(q.id, q.quotationNo); }}
+                                                    title={lang === 'ar' ? 'تنزيل PDF' : 'Download PDF'}
+                                                    className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all"
+                                                >
+                                                    <FileDown className="w-3.5 h-3.5" />
+                                                </button>
+                                                <button
                                                     onClick={(e) => { e.stopPropagation(); setViewQuotation(q); }}
                                                     className="p-2 rounded-lg bg-zinc-900 border border-white/5 text-zinc-500 hover:text-white transition-all"
                                                 >
@@ -366,7 +487,7 @@ function AdminQuotationsContent() {
                         >
                             <div className="sticky top-0 z-10 bg-zinc-950/80 backdrop-blur-md p-6 border-b border-white/5 flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    <Image src="/nexitlogo.png" alt="Nexit" width={100} height={30} className="object-contain" />
+                                    <Image src="/nexit-logo.png" alt="NexIT" width={100} height={32} className="object-contain" />
                                     <div className="h-6 w-px bg-white/10" />
                                     <h3 className="font-bold">{lang === 'ar' ? 'إنشاء عرض سعر جديد' : 'Create New Quotation'}</h3>
                                 </div>
@@ -429,23 +550,93 @@ function AdminQuotationsContent() {
 
                                 {/* Items Section */}
                                 <div className="space-y-4 pt-4 border-t border-white/5">
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                                         <h4 className="text-sm font-bold uppercase tracking-widest text-[#0066FF]">{lang === 'ar' ? 'عناصر العرض' : 'Quotation Items'}</h4>
-                                        <button type="button" onClick={addItem} className="text-xs flex items-center gap-1 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg transition-colors border border-white/5 font-medium"><Plus className="w-3 h-3" /> {lang === 'ar' ? 'إضافة عنصر' : 'Add Item'}</button>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <button type="button" onClick={addItem} className="text-xs flex items-center gap-1 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg transition-colors border border-white/5 font-medium">
+                                                <Plus className="w-3 h-3" /> {lang === 'ar' ? 'سطر يدوي' : 'Add line'}
+                                            </button>
+                                            <span className="text-[10px] text-zinc-600 uppercase hidden sm:inline">{lang === 'ar' ? 'أو' : 'or'}</span>
+                                            <div className="flex items-center gap-1.5 text-xs bg-zinc-900 border border-white/10 rounded-lg px-2 py-1">
+                                                <Package className="w-3.5 h-3.5 text-[#0066FF]" />
+                                                <select
+                                                    defaultValue=""
+                                                    onChange={(e) => {
+                                                        const pid = e.target.value
+                                                        if (!pid) return
+                                                        setQuotationItems((prev) => {
+                                                            const p = storeProducts.find((x) => x.id === pid)
+                                                            if (!p || !p.active || Number(p.stock) < 1) return prev
+                                                            const unit = p.discountPrice || p.price
+                                                            const desc = lang === "ar" ? p.nameAr || p.name : p.name
+                                                            return [
+                                                                ...prev,
+                                                                {
+                                                                    description: desc,
+                                                                    price: unit,
+                                                                    quantity: 1,
+                                                                    productId: p.id,
+                                                                    maxStock: Number(p.stock),
+                                                                },
+                                                            ]
+                                                        })
+                                                        e.target.value = ""
+                                                    }}
+                                                    className="bg-transparent text-zinc-200 text-xs py-1.5 ps-1 pe-6 outline-none cursor-pointer max-w-[200px] sm:max-w-[260px]"
+                                                >
+                                                    <option value="">{lang === 'ar' ? 'إضافة من منتجات المتجر…' : 'Add from store catalog…'}</option>
+                                                    {eligibleStoreProducts.map((p) => (
+                                                        <option key={p.id} value={p.id}>
+                                                            {lang === "ar" ? p.nameAr || p.name : p.name} ({p.stock} {lang === "ar" ? "متوفر" : "avail"})
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <p className="text-[10px] text-zinc-500">
+                                        {lang === 'ar'
+                                            ? 'المنتجات الظاهرة هنا فقط النشطة وبها مخزون. يمكنك دمج أسطر يدوية وأسطر من المتجر.'
+                                            : 'Only active in-stock products are listed. Mix manual lines and store products.'}
+                                    </p>
                                     <div className="space-y-3">
                                         {quotationItems.map((item, index) => (
-                                            <div key={index} className="flex gap-3 items-start bg-zinc-900/50 p-3 rounded-xl border border-white/5">
-                                                <div className="flex-1 space-y-2">
+                                            <div key={index} className="flex flex-col gap-2 sm:flex-row sm:gap-3 sm:items-start bg-zinc-900/50 p-3 rounded-xl border border-white/5">
+                                                <div className="flex-1 space-y-2 min-w-0">
+                                                    <label className="text-[9px] font-bold text-zinc-600 uppercase tracking-wider flex items-center gap-1">
+                                                        <Package className="w-3 h-3 text-zinc-500" />
+                                                        {lang === 'ar' ? 'ربط بمنتج (اختياري)' : 'Link store product (optional)'}
+                                                    </label>
+                                                    <select
+                                                        value={item.productId || ""}
+                                                        onChange={(e) => applyProductToRow(index, e.target.value)}
+                                                        className="w-full bg-zinc-900 border border-white/5 rounded-lg px-3 py-2 text-xs focus:border-[#0066FF] outline-none transition-all"
+                                                    >
+                                                        <option value="">{lang === 'ar' ? '— سطر مخصص / خدمة —' : '— Custom line / service —'}</option>
+                                                        {eligibleStoreProducts.map((p) => (
+                                                            <option key={p.id} value={p.id}>
+                                                                {lang === "ar" ? p.nameAr || p.name : p.name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
                                                     <input type="text" placeholder={lang === 'ar' ? 'وصف المنتج / الخدمة' : 'Service / Product Description'} value={item.description} onChange={(e) => updateItem(index, 'description', e.target.value)} className="w-full bg-zinc-900 border border-white/5 rounded-lg px-3 py-2 text-xs focus:border-[#0066FF] outline-none transition-all" required />
+                                                    {item.productId != null && item.maxStock != null && (
+                                                        <p className="text-[10px] text-zinc-500">
+                                                            {lang === 'ar' ? `الحد الأقصى للكمية: ${item.maxStock}` : `Max quantity: ${item.maxStock}`}
+                                                        </p>
+                                                    )}
                                                 </div>
-                                                <div className="w-24 space-y-2">
-                                                    <input type="number" placeholder={lang === 'ar' ? 'السعر' : 'Price'} value={item.price} onChange={(e) => updateItem(index, 'price', e.target.value)} className="w-full bg-zinc-900 border border-white/5 rounded-lg px-3 py-2 text-xs focus:border-[#0066FF] outline-none transition-all text-center" min={0} required />
+                                                <div className="flex gap-3 sm:contents">
+                                                    <div className="w-24 space-y-2">
+                                                        <label className="text-[9px] font-bold text-zinc-600 uppercase block sm:hidden">{lang === 'ar' ? 'السعر' : 'Price'}</label>
+                                                        <input type="number" placeholder={lang === 'ar' ? 'السعر' : 'Price'} value={item.price} onChange={(e) => updateItem(index, 'price', e.target.value)} className="w-full bg-zinc-900 border border-white/5 rounded-lg px-3 py-2 text-xs focus:border-[#0066FF] outline-none transition-all text-center" min={0} required />
+                                                    </div>
+                                                    <div className="w-20 space-y-2">
+                                                        <label className="text-[9px] font-bold text-zinc-600 uppercase block sm:hidden">{lang === 'ar' ? 'كمية' : 'Qty'}</label>
+                                                        <input type="number" placeholder={lang === 'ar' ? 'الكمية' : 'Qty'} value={item.quantity} onChange={(e) => updateItem(index, 'quantity', e.target.value)} className="w-full bg-zinc-900 border border-white/5 rounded-lg px-3 py-2 text-xs focus:border-[#0066FF] outline-none transition-all text-center" min={1} required />
+                                                    </div>
+                                                    <button type="button" onClick={() => removeItem(index)} disabled={quotationItems.length === 1} className={`p-2 rounded-lg self-end sm:self-start sm:mt-7 border border-transparent transition-colors ${quotationItems.length === 1 ? 'opacity-30 cursor-not-allowed text-zinc-600' : 'text-zinc-500 hover:bg-red-500/10 hover:text-red-500 border-white/5'}`}><Trash2 className="w-4 h-4" /></button>
                                                 </div>
-                                                <div className="w-20 space-y-2">
-                                                    <input type="number" placeholder={lang === 'ar' ? 'الكمية' : 'Qty'} value={item.quantity} onChange={(e) => updateItem(index, 'quantity', e.target.value)} className="w-full bg-zinc-900 border border-white/5 rounded-lg px-3 py-2 text-xs focus:border-[#0066FF] outline-none transition-all text-center" min={1} required />
-                                                </div>
-                                                <button type="button" onClick={() => removeItem(index)} disabled={quotationItems.length === 1} className={`p-2 rounded-lg mt-0.5 border border-transparent transition-colors ${quotationItems.length === 1 ? 'opacity-30 cursor-not-allowed text-zinc-600' : 'text-zinc-500 hover:bg-red-500/10 hover:text-red-500 border-white/5'}`}><Trash2 className="w-4 h-4" /></button>
                                             </div>
                                         ))}
                                     </div>
@@ -501,10 +692,7 @@ function AdminQuotationsContent() {
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <div className="mb-8">
-                                            <div className="relative">
-                                                <Image src="/nexitlogo.png" alt="Nexitweb Logo" width={160} height={50} className="object-contain print:hidden" priority />
-                                                <Image src="/nexit-logo.png" alt="Nexitweb Logo" width={160} height={50} className="object-contain hidden print:block" priority />
-                                            </div>
+                                            <Image src="/nexit-logo.png" alt="NexIT" width={160} height={48} className="object-contain" priority />
                                         </div>
                                         <h2 className="text-4xl font-black mb-1 tracking-tighter">{lang === 'ar' ? 'عرض سعر' : 'QUOTATION'}</h2>
                                         <p className="text-[#0066FF] font-mono text-sm tracking-widest">#{viewQuotation.quotationNo}</p>
@@ -570,8 +758,12 @@ function AdminQuotationsContent() {
                                 <div className="flex items-center gap-3">
                                     <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase border ${statusColors[viewQuotation.status]}`}>{viewQuotation.status}</span>
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="flex flex-wrap gap-2 justify-end">
                                     <button onClick={() => setViewQuotation(null)} className="px-6 py-2.5 rounded-xl border border-white/10 text-zinc-400 hover:text-white transition-all text-sm font-bold">Close</button>
+                                    <button type="button" onClick={() => downloadQuotationPdf(viewQuotation.id, viewQuotation.quotationNo)} className="flex items-center gap-2 border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-emerald-500/20 transition-all">
+                                        <FileDown className="w-4 h-4" />
+                                        {lang === 'ar' ? 'تحميل PDF' : 'Download PDF'}
+                                    </button>
                                     <button onClick={() => sendEmail(viewQuotation.id)} disabled={isSendingMail === viewQuotation.id} className="flex items-center gap-2 bg-[#0066FF] text-white px-8 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-600 transition-all disabled:opacity-50">
                                         {isSendingMail === viewQuotation.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
                                         {lang === 'ar' ? 'إرسال بالبريد' : 'Send via Email'}

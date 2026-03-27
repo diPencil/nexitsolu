@@ -38,6 +38,7 @@ model User {
   quotations        Quotation[]
   quotationRequests QuotationRequest[]
   activityLogs      ActivityLog[]
+  internalExpenses  InternalExpense[]
 }
 
 model ActivityLog {
@@ -203,17 +204,45 @@ model Message {
 }
 
 model Subscription {
+  id         String   @id @default(cuid())
+  userId     String
+  planName   String
+  /** Matches SubscriptionService.key */
+  serviceKey String?
+  amount     Float
+  type       String
+  status     String   @default("ACTIVE")
+  startDate  DateTime @default(now())
+  endDate    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+/** Admin-defined services used when creating subscriptions (NexIT lines + custom). */
+model SubscriptionService {
   id        String   @id @default(cuid())
-  userId    String
-  planName  String
-  amount    Float
-  type      String
-  status    String   @default("ACTIVE")
-  startDate DateTime @default(now())
-  endDate   DateTime
+  key       String   @unique
+  nameEn    String
+  nameAr    String
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
+}
+
+/** Admin-defined plan tiers (Bronze, Gold, …); optional link to one service or all. */
+model SubscriptionPlan {
+  id              String   @id @default(cuid())
+  /** If null, plan appears for every service; else only when that service is selected. */
+  serviceKey      String?
+  nameEn          String
+  nameAr          String
+  suggestedAmount Float?
+  sortOrder       Int      @default(0)
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model ManagedITRequest {
@@ -384,5 +413,21 @@ model Purchase {
 
   supplier     Supplier @relation(fields: [supplierId], references: [id])
   product      Product  @relation(fields: [productId], references: [id])
+}
+
+/// Operational / shared costs (warehouse, transport, etc.) — not tied to suppliers or stock.
+model InternalExpense {
+  id          String   @id @default(cuid())
+  title       String
+  amount      Float
+  spentAt     DateTime @default(now())
+  category    String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([spentAt])
 }
 

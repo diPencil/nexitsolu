@@ -50,6 +50,12 @@ function shouldSkipGenericApiLog(method: string, pathname: string): boolean {
         return true;
     }
     if (
+        path.startsWith("/api/admin/internal-expenses") &&
+        ["POST", "PATCH", "DELETE"].includes(m)
+    ) {
+        return true;
+    }
+    if (
         m === "POST" &&
         /^\/api\/admin\/messages\/[^/]+$/.test(path)
     ) {
