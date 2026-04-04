@@ -29,7 +29,17 @@ export const sendMail = async (to: string, subject: string, html: string) => {
     console.log("Email sent:", info.messageId)
     return { success: true, info }
   } catch (error) {
-    console.error("Error sending mail:", error)
+    const details = error instanceof Error
+      ? {
+          name: error.name,
+          message: error.message,
+          ...(error as any).code ? { code: (error as any).code } : {},
+          ...(error as any).response ? { response: (error as any).response } : {},
+          ...(error as any).command ? { command: (error as any).command } : {},
+        }
+      : error
+
+    console.error("Error sending mail:", details)
     return { success: false, error }
   }
 }

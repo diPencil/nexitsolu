@@ -121,8 +121,12 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: "Quotation sent successfully" })
         } else {
             console.error("Mail send failed:", result.error)
-            const message = result.error instanceof Error ? result.error.message : String(result.error)
-            return NextResponse.json({ error: message || "Failed to send email" }, { status: 500 })
+            const error = result.error as any
+            return NextResponse.json({
+                error: error?.message || String(result.error) || "Failed to send email",
+                code: error?.code || null,
+                response: error?.response || null,
+            }, { status: 500 })
         }
 
     } catch (error: any) {
