@@ -58,7 +58,7 @@ function ZonePicker({ selected, onChange, allZones }: { selected: string[], onCh
                 <span className="text-sm">
                     {selected.length === 0
                         ? <span className="text-muted-foreground">{lang === 'ar' ? 'كل المحافظات (شحن لكل مكان)' : 'All Governorates (Ship Everywhere)'}</span>
-                        : <span className="text-white font-bold">{selected.length} {lang === 'ar' ? 'محافظة محددة' : 'Zones Selected'}</span>}
+                        : <span className="text-foreground font-bold">{selected.length} {lang === 'ar' ? 'محافظة محددة' : 'Zones Selected'}</span>}
                 </span>
                 <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform ${open ? 'rotate-180' : ''}`} />
             </button>
@@ -71,7 +71,7 @@ function ZonePicker({ selected, onChange, allZones }: { selected: string[], onCh
                     <div className="max-h-64 overflow-y-auto p-3 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                         {allZones.map(z => (
                             <button key={z.name} type="button" onClick={() => toggle(z.name)}
-                                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all text-start ${selected.includes(z.name) ? 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/30' : 'text-zinc-400 hover:bg-accent/50 border border-transparent'}`}>
+                                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all text-start ${selected.includes(z.name) ? 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/30' : 'text-muted-foreground hover:bg-accent/50 border border-transparent'}`}>
                                 {selected.includes(z.name) ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4 text-muted-foreground/40" />}
                                 <span className="font-bold truncate">{lang === 'ar' ? z.nameAr : z.nameEn}</span>
                             </button>
@@ -140,7 +140,7 @@ export default function NewProductPage() {
     return (
         <div className="max-w-7xl mx-auto pb-20 space-y-8 px-4 md:px-0">
             <div className="flex items-center justify-between">
-                <Button variant="ghost" className="rounded-2xl gap-2 text-zinc-500 hover:text-white" onClick={() => router.push("/admin/products")}>
+                <Button variant="ghost" className="rounded-2xl gap-2 text-zinc-500 hover:text-foreground" onClick={() => router.push("/admin/products")}>
                     <ArrowLeft className="w-4 h-4" />
                     {lang === 'ar' ? "رجوع" : "Back"}
                 </Button>
@@ -160,11 +160,11 @@ export default function NewProductPage() {
                     <div className="space-y-6">
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Product Title (English)</label>
-                            <input required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-white font-bold transition-all shadow-inner" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                            <input required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-foreground font-bold transition-all shadow-inner" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                         </div>
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Arabic Title</label>
-                            <input required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-end text-white font-bold transition-all shadow-inner" value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} />
+                            <input required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-end text-foreground font-bold transition-all shadow-inner" value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
@@ -251,7 +251,7 @@ export default function NewProductPage() {
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-border flex gap-4">
-                    <Button type="button" variant="ghost" className="h-16 flex-1 rounded-3xl border border-border bg-transparent text-zinc-500 hover:text-white" onClick={() => router.push("/admin/products")}>
+                    <Button type="button" variant="ghost" className="h-16 flex-1 rounded-3xl border border-border bg-transparent text-zinc-500 hover:text-foreground" onClick={() => router.push("/admin/products")}>
                         Discard
                     </Button>
                     <Button disabled={isLoading} type="submit" className="h-16 flex-2 rounded-3xl bg-[#0066FF] hover:bg-blue-600 text-white font-black text-lg gap-3">

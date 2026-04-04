@@ -105,7 +105,7 @@ function ZonePicker({ selected, onChange, allZones }: { selected: string[], onCh
                                     key={z.name}
                                     type="button"
                                     onClick={() => toggle(z.name)}
-                                    className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all text-start ${isSelected ? 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/30' : 'text-zinc-400 hover:bg-accent/50 border border-transparent'}`}
+                                    className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all text-start ${isSelected ? 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/30' : 'text-muted-foreground hover:bg-accent/50 border border-transparent'}`}
                                 >
                                     {isSelected
                                         ? <CheckSquare className="w-4 h-4 shrink-0" />
@@ -255,7 +255,7 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                                                         className="w-full bg-muted border border-border rounded-xl py-2 pl-9 pr-3 text-sm text-foreground focus:border-[#0066FF] outline-none"
                                                     />
                                                 </div>
-                                                <label className="flex items-center gap-2 text-xs text-zinc-400 cursor-pointer">
+                                                <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
                                                     <input
                                                         type="checkbox"
                                                         checked={editActive}
@@ -271,7 +271,7 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                                                     {lang === 'ar' ? 'حفظ' : 'Save'}
                                                 </button>
                                                 <button onClick={() => setEditId(null)}
-                                                    className="flex-1 py-2 rounded-xl bg-muted text-zinc-400 text-xs hover:text-foreground">
+                                                    className="flex-1 py-2 rounded-xl bg-muted text-muted-foreground text-xs hover:text-foreground">
                                                     {lang === 'ar' ? 'إلغاء' : 'Cancel'}
                                                 </button>
                                             </div>
