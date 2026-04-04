@@ -4,27 +4,22 @@ import bcrypt from "bcryptjs";
 
 export async function GET() {
   try {
-    // 1. Check if an admin already exists
-    const adminExists = await prisma.user.findFirst({
-      where: {
-        role: "ADMIN",
-      },
-    });
-
-    if (adminExists) {
-      return NextResponse.json({
-        message: "Admin already exists. No action taken.",
-        user: adminExists.email,
-      });
-    }
-
-    // 2. Create the new admin
+    const email = "admin@nexitsolu.com";
+    const username = "admin";
     const hashedPassword = await bcrypt.hash("Admin@123", 10);
     
-    const newAdmin = await prisma.user.create({
-      data: {
-        email: "admin@nexitsolu.com",
-        username: "admin",
+    const admin = await prisma.user.upsert({
+      where: { email },
+      update: {
+        username,
+        password: hashedPassword,
+        role: "ADMIN",
+        name: "Main Admin",
+        status: "ACTIVE",
+      },
+      create: {
+        email,
+        username,
         password: hashedPassword,
         role: "ADMIN",
         name: "Main Admin",
@@ -35,10 +30,11 @@ export async function GET() {
     return NextResponse.json({
       message: "Admin created successfully!",
       credentials: {
-        email: "admin@nexitsolu.com",
+        email,
         password: "Admin@123"
       },
-      note: "PLEASE DELETE THIS FILE (/app/api/setup-admin/route.ts) IMMEDIATELY AFTER USE!"
+      user: admin.email,
+      note: "Run this once after deploy, then remove or lock down this endpoint."
     });
   } catch (error: any) {
     console.error("Setup Error:", error);
