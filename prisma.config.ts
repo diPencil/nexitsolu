@@ -1,14 +1,6 @@
 import { defineConfig } from "prisma/config";
 
-/**
- * Prisma CLI reads this for migrate/db push. Relative `file:` URL works reliably
- * on Windows; absolute file URLs can fail with some schema-engine builds.
- */
-const raw = process.env["DATABASE_URL"]?.trim();
-const url =
-    raw && raw !== "undefined" && raw !== "null"
-        ? raw
-        : "file:./prisma/dev.db";
+const url = process.env["DATABASE_URL"]?.trim() || "mysql://root:@localhost:3306/nexitsolu";
 
 export default defineConfig({
     schema: "prisma/schema.prisma",

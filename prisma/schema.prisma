@@ -5,7 +5,7 @@ generator client {
 // Prisma 7: put the DB URL in `prisma.config.ts` only — `url` here is invalid for the CLI (P1012).
 // If the editor still flags “url is missing”, reload the window; workspace has `prisma.enableDiagnostics: false` in `.vscode/settings.json` for that false positive.
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
 }
 
 model User {
@@ -71,10 +71,10 @@ model Product {
   id            String      @id @default(cuid())
   name          String
   nameAr        String?
-  description       String?
-  descriptionAr     String?
-  longDescription   String?
-  longDescriptionAr String?
+  description       String?     @db.Text
+  descriptionAr     String?     @db.Text
+  longDescription   String?     @db.LongText
+  longDescriptionAr String?     @db.LongText
   price         Float
   discountPrice Float?
   category      String
@@ -124,12 +124,12 @@ model Order {
   status          OrderStatus @default(PENDING)
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
-  notes           String?
-  orderNumber     String?     @unique
+  notes           String?       @db.Text
+  orderNumber     String?       @unique
   paidAmount      Float?
   paymentMethod   String?
   paymentType     String?
-  shippingAddress String?
+  shippingAddress String?       @db.Text
   shippingCity    String?
   shippingName    String?
   shippingPhone   String?
@@ -196,7 +196,7 @@ model Message {
   senderId       String
   receiverId     String
   conversationId String?
-  content        String
+  content        String         @db.LongText
   createdAt      DateTime     @default(now())
   conversation   Conversation? @relation(fields: [conversationId], references: [id])
   receiver       User         @relation("ReceivedMessages", fields: [receiverId], references: [id])
@@ -268,9 +268,9 @@ model Review {
   userId    String
   productId String
   rating    Int      @default(5)
-  comment   String
-  reply           String?
-  customerReply   String?
+  comment   String              @db.Text
+  reply           String?       @db.Text
+  customerReply   String?       @db.Text
   customerReplyAt DateTime?
   status          String   @default("APPROVED")
   createdAt DateTime @default(now())
@@ -310,7 +310,7 @@ model ContactMessage {
   email     String
   phone     String?
   subject   String?
-  message   String
+  message   String              @db.LongText
   status    String   @default("UNREAD") // UNREAD, READ, REPLIED
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -323,7 +323,7 @@ model TechSupportRequest {
   phone       String?
   whatsapp    String?
   supportType String
-  message     String
+  message     String            @db.LongText
   status      String   @default("PENDING") // PENDING, IN_PROGRESS, RESOLVED, CLOSED
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -338,7 +338,7 @@ model Invoice {
   status      String   @default("PENDING") // PENDING, PAID, CANCELLED
   fileUrl     String?
   dueDate     DateTime?
-  notes       String?
+  notes       String?           @db.Text
   items       Json?
   subtotal    Float?
   discount    Float?
@@ -355,7 +355,7 @@ model Quotation {
   userId      String
   amount      Float
   status      String   @default("PENDING") // PENDING, SENT, APPROVED, REJECTED, EXPIRED
-  notes       String?
+  notes       String?           @db.Text
   items       Json?
   subtotal    Float?
   discount    Float?
@@ -374,7 +374,7 @@ model QuotationRequest {
   phone       String?
   company     String?
   service     String?
-  message     String
+  message     String            @db.LongText
   status      String   @default("PENDING") // PENDING, REVIEWED, QUOTED, CLOSED
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -422,7 +422,7 @@ model InternalExpense {
   amount      Float
   spentAt     DateTime @default(now())
   category    String?
-  notes       String?
+  notes       String?           @db.Text
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   createdById String?

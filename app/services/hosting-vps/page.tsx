@@ -11,6 +11,24 @@ import { Card } from "@/components/ui/card"
 import Link from "next/link"
 import Image from "next/image"
 
+function normalizeFeatureList(value: unknown): string[] {
+    if (Array.isArray(value)) {
+        return value.map((item) => String(item)).filter(Boolean)
+    }
+
+    if (value && typeof value === "object") {
+        return Object.values(value as Record<string, unknown>)
+            .map((item) => String(item))
+            .filter(Boolean)
+    }
+
+    if (typeof value === "string" && value.trim()) {
+        return [value]
+    }
+
+    return []
+}
+
 export default function HostingVPS() {
     const { lang, t } = useLanguage()
 
@@ -18,19 +36,19 @@ export default function HostingVPS() {
         { 
             name: t("services_pages.hosting.plans.starter.name"), 
             price: "2.99", 
-            features: t("services_pages.hosting.plans.starter.features") as unknown as string[], 
+            features: normalizeFeatureList(t("services_pages.hosting.plans.starter.features")), 
             popular: false 
         },
         { 
             name: t("services_pages.hosting.plans.professional.name"), 
             price: "4.99", 
-            features: t("services_pages.hosting.plans.professional.features") as unknown as string[], 
+            features: normalizeFeatureList(t("services_pages.hosting.plans.professional.features")), 
             popular: true 
         },
         { 
             name: t("services_pages.hosting.plans.enterprise.name"), 
             price: "9.99", 
-            features: t("services_pages.hosting.plans.enterprise.features") as unknown as string[], 
+            features: normalizeFeatureList(t("services_pages.hosting.plans.enterprise.features")), 
             popular: false 
         },
     ]
