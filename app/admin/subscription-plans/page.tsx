@@ -358,7 +358,7 @@ export default function AdminSubscriptionPlansPage() {
                                     {lang === "ar" ? "الخدمة (اختياري)" : "Service (optional)"}
                                 </label>
                                 <select
-                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
                                     value={form.serviceKey}
                                     onChange={(e) =>
                                         setForm((f) => ({
@@ -389,7 +389,7 @@ export default function AdminSubscriptionPlansPage() {
                                 </label>
                                 <input
                                     required
-                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
                                     value={form.nameEn}
                                     onChange={(e) =>
                                         setForm((f) => ({
@@ -405,7 +405,7 @@ export default function AdminSubscriptionPlansPage() {
                                 </label>
                                 <input
                                     required
-                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
                                     dir="rtl"
                                     value={form.nameAr}
                                     onChange={(e) =>
@@ -424,7 +424,7 @@ export default function AdminSubscriptionPlansPage() {
                                 </label>
                                 <input
                                     type="number"
-                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
                                     value={form.suggestedAmount}
                                     onChange={(e) =>
                                         setForm((f) => ({
@@ -441,7 +441,7 @@ export default function AdminSubscriptionPlansPage() {
                                     </label>
                                     <input
                                         type="number"
-                                        className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                        className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
                                         value={form.sortOrder}
                                         onChange={(e) =>
                                             setForm((f) => ({
@@ -452,7 +452,7 @@ export default function AdminSubscriptionPlansPage() {
                                     />
                                 </div>
                                 <div className="space-y-1 flex flex-col justify-end">
-                                    <label className="flex items-center gap-2 text-sm text-zinc-300 cursor-pointer">
+                                    <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
                                         <input
                                             type="checkbox"
                                             checked={form.active}
