@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Lock, Mail, User, ArrowRight, Loader2, ShieldCheck } from "lucide-react"
+import { Lock, User, ArrowRight, Loader2, ShieldCheck, Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/i18n-context"
 
@@ -14,6 +14,7 @@ export default function LoginPage() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState({
         identifier: "",
         password: ""
@@ -85,13 +86,21 @@ export default function LoginPage() {
                             <div className="relative">
                                 <Lock className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     required
                                     placeholder={lang === 'ar' ? 'كلمة المرور' : 'Password'}
-                                    className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
+                                    className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-14' : 'pl-12 pr-14'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword((value) => !value)}
+                                    className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'left-4' : 'right-4'} text-zinc-600 hover:text-[#0066FF] transition-colors`}
+                                    aria-label={showPassword ? (lang === 'ar' ? 'إخفاء كلمة المرور' : 'Hide password') : (lang === 'ar' ? 'إظهار كلمة المرور' : 'Show password')}
+                                >
+                                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                </button>
                             </div>
                         </div>
 
@@ -104,7 +113,7 @@ export default function LoginPage() {
                         <Button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full h-14 rounded-2xl bg-[#0066FF] hover:bg-blue-600 text-foreground font-bold text-lg transition-all group shadow-[0_0_30px_rgba(0,102,255,0.2)]"
+                            className="w-full h-14 rounded-2xl bg-[#0066FF] hover:bg-blue-600 text-white font-bold text-lg transition-all group shadow-[0_0_30px_rgba(0,102,255,0.2)]"
                         >
                             {isLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : (
                                 <span className="flex items-center gap-2">

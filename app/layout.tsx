@@ -17,7 +17,10 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono"
 const rubik = Rubik({ subsets: ["arabic", "latin"], variable: "--font-rubik" })
 
 export const viewport: Viewport = {
-  themeColor: "#050505",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f7fa" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f1117" },
+  ],
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,

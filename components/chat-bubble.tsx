@@ -222,7 +222,7 @@ export function ChatBubble() {
                         </div>
 
                         {view === 'history' ? (
-                            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-background/50">
+                            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-background/70">
                                 {isLoadingConversations ? (
                                     <div className="flex items-center justify-center h-full">
                                         <Loader2 className="w-6 h-6 animate-spin text-[#0066FF]" />
@@ -250,7 +250,7 @@ export function ChatBubble() {
                                                         {conv.ticketId}
                                                     </span>
                                                     <span className={`text-[8px] font-bold px-2 py-0.5 rounded-lg uppercase ${
-                                                        conv.status === 'OPEN' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-zinc-500/10 text-zinc-500'
+                                                        conv.status === 'OPEN' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-muted/80 text-muted-foreground'
                                                     }`}>
                                                         {conv.status === 'OPEN' ? (lang === 'ar' ? 'نشط' : 'Active') : (lang === 'ar' ? 'مغلق' : 'Closed')}
                                                     </span>
@@ -258,7 +258,7 @@ export function ChatBubble() {
                                                 <p className="text-xs text-foreground/80 truncate font-medium">
                                                     {conv.messages?.[0]?.content || (lang === 'ar' ? 'لا توجد رسائل' : 'No messages')}
                                                 </p>
-                                                <p className="text-[8px] text-zinc-600 mt-2 uppercase font-black">
+                                                <p className="text-[8px] text-muted-foreground mt-2 uppercase font-black">
                                                     {new Date(conv.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US')}
                                                 </p>
                                             </div>

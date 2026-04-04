@@ -123,7 +123,7 @@ export default function ReviewsSection({
                 {/* Stats & Add Review */}
                 <div className="lg:col-span-1 space-y-8">
                     {/* Overall Rating */}
-                    <div className="bg-[#111111] border border-border rounded-3xl p-6 text-center">
+                    <div className="bg-card border border-border rounded-3xl p-6 text-center shadow-xl">
                         <div className="text-5xl font-black text-foreground mb-2">{averageRating}</div>
                         <div className="flex justify-center gap-1 mb-2">
                             {[1, 2, 3, 4, 5].map(star => (
@@ -139,7 +139,7 @@ export default function ReviewsSection({
                     </div>
 
                     {/* Write Review Form */}
-                    <div className="bg-[#111111] border border-border rounded-3xl p-6">
+                    <div className="bg-card border border-border rounded-3xl p-6 shadow-xl">
                         <h3 className="font-bold mb-4">{lang === 'ar' ? 'أضف تقييمك' : 'Write a Review'}</h3>
                         {session ? (
                             <form onSubmit={handleSubmit} className="space-y-4">
@@ -163,7 +163,7 @@ export default function ReviewsSection({
                                     value={comment}
                                     onChange={(e) => setComment(e.target.value)}
                                     placeholder={lang === 'ar' ? 'شاركنا رأيك في هذا المنتج...' : 'Share your thoughts on this product...'}
-                                    className="w-full bg-black border border-border rounded-xl p-4 text-sm text-foreground focus:border-[#0066FF] focus:outline-none min-h-[120px] resize-y"
+                                    className="w-full bg-background/70 border border-border rounded-xl p-4 text-sm text-foreground focus:border-[#0066FF] focus:outline-none min-h-[120px] resize-y"
                                     required
                                 />
                                 <button
@@ -195,17 +195,17 @@ export default function ReviewsSection({
                     {isLoading ? (
                         <div className="text-center text-muted-foreground py-12">{lang === 'ar' ? 'جاري تحميل التقييمات...' : 'Loading reviews...'}</div>
                     ) : reviews.length === 0 ? (
-                        <div className="bg-[#111111] border border-border rounded-3xl p-12 text-center flex flex-col items-center justify-center">
-                            <MessageCircle className="w-12 h-12 text-zinc-700 mb-4" />
+                        <div className="bg-card border border-border rounded-3xl p-12 text-center flex flex-col items-center justify-center shadow-xl">
+                            <MessageCircle className="w-12 h-12 text-muted-foreground mb-4" />
                             <h3 className="text-lg font-bold text-foreground mb-2">{lang === 'ar' ? 'كن أول من يقيم!' : 'Be the first to review!'}</h3>
-                            <p className="text-sm text-zinc-500">{lang === 'ar' ? 'لم يقم أحد بتقييم هذا المنتج بعد.' : 'No one has reviewed this product yet.'}</p>
+                            <p className="text-sm text-muted-foreground">{lang === 'ar' ? 'لم يقم أحد بتقييم هذا المنتج بعد.' : 'No one has reviewed this product yet.'}</p>
                         </div>
                     ) : (
                         reviews.map((review) => (
-                            <div key={review.id} className="bg-[#111111] border border-border rounded-3xl p-6 transition-all hover:bg-white/2">
+                            <div key={review.id} className="bg-card border border-border rounded-3xl p-6 transition-all hover:bg-background/70 shadow-lg">
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-linear-to-br from-zinc-800 to-zinc-900 flex items-center justify-center text-muted-foreground shrink-0">
+                                        <div className="w-10 h-10 rounded-full bg-bg-secondary flex items-center justify-center text-muted-foreground shrink-0 border border-border">
                                             <User className="w-5 h-5" />
                                         </div>
                                         <div>
@@ -268,7 +268,7 @@ export default function ReviewsSection({
                                                                     <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center">
                                                                         <User className="w-3 h-3 text-zinc-400" />
                                                                     </div>
-                                                                    <span className="font-black text-[10px] uppercase tracking-widest text-zinc-300">{review.user.name || 'Customer'}</span>
+                                                                    <span className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">{review.user.name || 'Customer'}</span>
                                                                 </div>
                                                             )}
                                                         </div>
@@ -290,7 +290,7 @@ export default function ReviewsSection({
                                                         value={customerReplyText[review.id] || ""}
                                                         onChange={(e) => setCustomerReplyText(prev => ({ ...prev, [review.id]: e.target.value }))}
                                                         placeholder={lang === 'ar' ? 'أضف رداً جديداً...' : 'Add a follow-up reply...'}
-                                                        className="w-full bg-black border border-border rounded-2xl px-5 py-3 text-xs text-foreground focus:border-[#0066FF]/50 focus:ring-1 focus:ring-[#0066FF]/20 outline-none transition-all pr-12"
+                                                        className="w-full bg-background/70 border border-border rounded-2xl px-5 py-3 text-xs text-foreground focus:border-[#0066FF]/50 focus:ring-1 focus:ring-[#0066FF]/20 outline-none transition-all pr-12"
                                                         onKeyDown={(e) => e.key === 'Enter' && handleSubmitCustomerReply(review.id)}
                                                     />
                                                     <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 group-focus-within:opacity-100 transition-opacity">

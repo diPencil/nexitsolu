@@ -118,8 +118,8 @@ export default function NexitLand() {
                         priority
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-bg-primary/60 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-10 left-10 p-6 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                        <p className="text-white font-black uppercase tracking-widest text-xs">{lang === 'ar' ? 'رحلة ملهمة' : 'An Inspiring Journey'}</p>
+                    <div className="absolute bottom-10 left-10 p-6 bg-bg-primary/70 backdrop-blur-xl rounded-2xl border border-border-color/60 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 shadow-2xl">
+                        <p className="text-text-primary font-black uppercase tracking-widest text-xs">{lang === 'ar' ? 'رحلة ملهمة' : 'An Inspiring Journey'}</p>
                     </div>
                 </div>
             </PageSection>
@@ -240,9 +240,9 @@ export default function NexitLand() {
                             transition={{ delay: 0.2 }}
                             className="z-20 transform md:scale-110"
                         >
-                            <div className="h-full bg-accent p-10 md:p-14 rounded-[30px] shadow-3xl flex flex-col items-center text-center border border-white/20 relative overflow-hidden group">
-                                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                                <div className="w-20 h-20 rounded-3xl bg-white/20 flex items-center justify-center mb-10 border border-white/30 backdrop-blur-md shadow-2xl">
+                            <div className="h-full bg-accent p-10 md:p-14 rounded-[30px] shadow-3xl flex flex-col items-center text-center border border-white/15 relative overflow-hidden group">
+                                <div className="absolute inset-0 bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                                <div className="w-20 h-20 rounded-3xl bg-foreground/10 flex items-center justify-center mb-10 border border-white/20 backdrop-blur-md shadow-2xl">
                                     <Rocket className="w-10 h-10 text-white" />
                                 </div>
                                 <h3 className="text-3xl font-black mb-6 text-white uppercase tracking-tighter">{t("about_pages.nexit_land.mission_title")}</h3>
@@ -251,7 +251,7 @@ export default function NexitLand() {
                                 </p>
                                 <div className="mt-auto pt-10">
                                     <div className="flex gap-2">
-                                        {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 rounded-full bg-white/40" />)}
+                                        {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 rounded-full bg-white/35" />)}
                                     </div>
                                 </div>
                             </div>

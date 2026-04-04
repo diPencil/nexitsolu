@@ -651,19 +651,24 @@ function AdminInvoicesContent() {
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <div className="mb-8">
-                                            {/* Nexit Logo - White for Screen, Colored for Print */}
-                                            <div className="relative">
+                                            {/* Nexit Logo - light mode uses branded external logo, dark mode keeps the current mark */}
+                                            <div className="relative w-[160px] h-[50px]">
+                                                <img 
+                                                    src="https://nexitsolu.com/nexit-logo.png" 
+                                                    alt="Nexit Solutions Logo" 
+                                                    className="absolute inset-0 w-full h-full object-contain dark:hidden print:hidden"
+                                                />
                                                 <Image 
                                                     src="/nexitlogo.png" 
-                                                    alt="Nexitweb Logo" 
+                                                    alt="Nexit Solutions Logo" 
                                                     width={160} 
                                                     height={50} 
-                                                    className="object-contain print:hidden"
+                                                    className="object-contain hidden dark:block print:hidden"
                                                     priority
                                                 />
                                                 <Image 
                                                     src="/nexit-logo.png" 
-                                                    alt="Nexitweb Logo" 
+                                                    alt="Nexit Solutions Logo" 
                                                     width={160} 
                                                     height={50} 
                                                     className="object-contain hidden print:block"
@@ -771,9 +776,9 @@ function AdminInvoicesContent() {
                                 )}
                             </div>
 
-                            <div className="p-4 bg-muted border-t border-border flex justify-between gap-4 items-center rounded-b-3xl">
-                                <div className="flex items-center gap-3">
-                                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase border ${statusColors[viewInvoice.status]}`}>
+                            <div className="p-2.5 bg-muted border-t border-border flex flex-wrap justify-between gap-2 items-center rounded-b-3xl">
+                                <div className="flex items-center gap-2">
+                                    <span className={`px-2.5 py-0.5 rounded-full text-[8px] font-black tracking-[0.2em] uppercase border ${statusColors[viewInvoice.status]}`}>
                                         {viewInvoice.status}
                                     </span>
                                     
@@ -789,40 +794,40 @@ function AdminInvoicesContent() {
                                                     statusValue: 'PAID'
                                                 })
                                             }}
-                                            className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 transition-colors border border-emerald-500/10"
+                                            className="text-[8px] font-bold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 transition-colors border border-emerald-500/10"
                                         >
                                             {lang === 'ar' ? 'تحديد كمدفوع' : 'Mark as Paid'}
                                         </button>
                                     )}
                                 </div>
 
-                                <div className="flex gap-2">
+                                <div className="flex gap-1 flex-wrap justify-end">
                                     <button 
                                         onClick={() => setViewInvoice(null)}
-                                        className="px-6 py-2.5 rounded-xl border border-border text-zinc-400 hover:text-foreground hover:bg-accent/50 transition-all text-sm font-bold"
+                                        className="px-3 py-1.5 rounded-lg border border-border text-[11px] text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all font-bold"
                                     >
                                         {lang === 'ar' ? 'إغلاق' : 'Close'}
                                     </button>
                                     <button 
                                         onClick={() => downloadPdf(viewInvoice.id, viewInvoice.invoiceNo)}
-                                        className="flex items-center gap-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-emerald-500/20 transition-all"
+                                        className="flex items-center gap-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-lg text-[11px] font-bold hover:bg-emerald-500/20 transition-all"
                                     >
-                                        <FileDown className="w-4 h-4" />
+                                        <FileDown className="w-3 h-3" />
                                         {lang === 'ar' ? 'تحميل PDF' : 'Download PDF'}
                                     </button>
                                     <button 
                                         onClick={() => sendEmail(viewInvoice.id)}
                                         disabled={isSendingMail === viewInvoice.id}
-                                        className="flex items-center gap-2 bg-blue-500/10 text-blue-500 border border-blue-500/20 px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-500/20 transition-all disabled:opacity-50"
+                                        className="flex items-center gap-1 bg-blue-500/10 text-blue-500 border border-blue-500/20 px-3 py-1.5 rounded-lg text-[11px] font-bold hover:bg-blue-500/20 transition-all disabled:opacity-50"
                                     >
-                                        {isSendingMail === viewInvoice.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
+                                        {isSendingMail === viewInvoice.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Mail className="w-3 h-3" />}
                                         {lang === 'ar' ? 'إرسال بالبريد' : 'Send via Email'}
                                     </button>
                                     <button 
                                         onClick={() => window.print()}
-                                        className="flex items-center gap-2 bg-[#0066FF] text-foreground px-8 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
+                                        className="flex items-center gap-1 bg-[#0066FF] text-foreground px-3 py-1.5 rounded-lg text-[11px] font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
                                     >
-                                        <DollarSign className="w-4 h-4" />
+                                        <DollarSign className="w-3 h-3" />
                                         {lang === 'ar' ? 'طباعة' : 'Print PDF'}
                                     </button>
                                 </div>
