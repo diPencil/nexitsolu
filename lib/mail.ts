@@ -9,12 +9,16 @@ function createTransporter() {
     port,
     secure,
     auth: {
+      type: "LOGIN",
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
     tls: {
       rejectUnauthorized: false,
     },
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 15000,
   })
 }
 
