@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { PDFDocument, rgb, PDFFont } from "pdf-lib";
+import { PDFDocument, StandardFonts, rgb, PDFFont } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import fs from "fs";
 import path from "path";
@@ -73,19 +73,36 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: `Font file missing: ${fontPath}` }, { status: 500 });
         }
 
-        const fontBytes = fs.readFileSync(fontPath);
-        const font = await pdfDoc.embedFont(fontBytes);
+        const fallbackFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        const fallbackBoldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-        const fontBold = fs.existsSync(fontBoldPath)
-            ? await pdfDoc.embedFont(fs.readFileSync(fontBoldPath))
-            : font;
+        let font = fallbackFont;
+        try {
+            const fontBytes = fs.readFileSync(fontPath);
+            font = await pdfDoc.embedFont(fontBytes);
+        } catch (error) {
+            console.warn("Falling back to Helvetica for invoice PDF:", error);
+        }
+
+        let fontBold = fallbackBoldFont;
+        if (fs.existsSync(fontBoldPath)) {
+            try {
+                fontBold = await pdfDoc.embedFont(fs.readFileSync(fontBoldPath));
+            } catch (error) {
+                console.warn("Falling back to Helvetica Bold for invoice PDF:", error);
+            }
+        }
         
         const amiriPath = path.join(process.cwd(), "public", "fonts", "Amiri-Regular.ttf");
         let amiriFont: PDFFont | undefined;
         if (fs.existsSync(amiriPath)) {
-            const amiriBytes = fs.readFileSync(amiriPath);
-            amiriFont = await pdfDoc.embedFont(amiriBytes);
-            console.log("Amiri fallback font embedded.");
+            try {
+                const amiriBytes = fs.readFileSync(amiriPath);
+                amiriFont = await pdfDoc.embedFont(amiriBytes);
+                console.log("Amiri fallback font embedded.");
+            } catch (error) {
+                console.warn("Failed to embed Amiri font for invoice PDF:", error);
+            }
         }
         
         console.log("Variable font embedded into Invoice successfully.");
