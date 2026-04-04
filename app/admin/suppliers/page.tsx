@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -101,46 +101,46 @@ export default function SuppliersPage() {
     )
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 w-full">
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <h1 className="text-3xl font-bold mb-2">{lang === 'ar' ? 'الموردين' : 'Suppliers Management'}</h1>
-                    <p className="text-zinc-500">{lang === 'ar' ? 'إدارة قائمة الموردين والشركات الموردة.' : 'Manage your list of suppliers and partners.'}</p>
+                    <p className="text-muted-foreground">{lang === 'ar' ? 'إدارة قائمة الموردين والشركات الموردة.' : 'Manage your list of suppliers and partners.'}</p>
                 </div>
                 <Button
                     onClick={() => { setEditingSupplier(null); setIsModalOpen(true); }}
-                    className="bg-[#0066FF] hover:bg-blue-600 text-white border-none rounded-2xl h-12 px-6 flex items-center gap-2 group font-black shadow-lg shadow-blue-500/20 transition-all font-inter"
+                    className="bg-[#0066FF] hover:bg-blue-600 text-primary-foreground border-none rounded-2xl h-12 px-6 flex items-center gap-2 group font-black shadow-lg shadow-blue-500/20 transition-all font-inter"
                 >
-                    <Plus className="w-5 h-5 text-white transition-transform group-hover:rotate-90" />
+                    <Plus className="w-5 h-5 text-primary-foreground transition-transform group-hover:rotate-90" />
                     {lang === 'ar' ? 'إضافة مورد' : 'Add Supplier'}
                 </Button>
             </div>
 
             {/* Stats Summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="p-6 rounded-3xl bg-zinc-900 border border-white/5 flex items-center gap-4">
+                <div className="p-6 rounded-3xl bg-secondary border border-border flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl bg-blue-600/10 flex items-center justify-center border border-blue-600/20">
                         <Truck className="w-6 h-6 text-blue-500" />
                     </div>
                     <div>
                         <p className="text-2xl font-black">{suppliers.length}</p>
-                        <p className="text-xs text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'إجمالي الموردين' : 'Total Suppliers'}</p>
+                        <p className="text-xs text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'إجمالي الموردين' : 'Total Suppliers'}</p>
                     </div>
                 </div>
             </div>
 
             {/* Table/List */}
-            <div className="bg-zinc-900 border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
-                <div className="p-6 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-zinc-900/50">
+            <div className="bg-secondary border border-border rounded-3xl overflow-hidden shadow-none w-full">
+                <div className="p-6 border-b border-border flex flex-col md:flex-row md:items-center justify-between gap-4 bg-muted/30">
                     <div className="relative flex-1 max-w-md">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <input
                             type="text"
                             placeholder={lang === 'ar' ? "ابحث عن مورد..." : "Search suppliers..."}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-zinc-950 border border-white/10 rounded-2xl py-3 pl-12 pr-4 text-sm focus:border-blue-600 outline-none transition-all"
+                            className="w-full bg-card border-border py-3 pl-12 pr-4 text-sm focus:border-blue-600 outline-none transition-all"
                         />
                     </div>
                 </div>
@@ -148,14 +148,14 @@ export default function SuppliersPage() {
                 <div className="overflow-x-auto">
                     <table className="w-full text-start">
                         <thead>
-                            <tr className="border-b border-white/5 bg-zinc-950/50">
-                                <th className="px-6 py-4 text-start text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'المورد' : 'Supplier'}</th>
-                                <th className="px-6 py-4 text-start text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'بيانات التواصل' : 'Contact Info'}</th>
-                                <th className="px-6 py-4 text-start text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'العنوان' : 'Address'}</th>
-                                <th className="px-6 py-4 text-end text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'إجراءات' : 'Actions'}</th>
+                            <tr className="border-b border-border bg-card/50">
+                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'المورد' : 'Supplier'}</th>
+                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'بيانات التواصل' : 'Contact Info'}</th>
+                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'العنوان' : 'Address'}</th>
+                                <th className="px-6 py-4 text-end text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'إجراءات' : 'Actions'}</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-border">
                             {isLoading ? (
                                 Array(5).fill(0).map((_, i) => (
                                     <tr key={i} className="animate-pulse">
@@ -164,21 +164,21 @@ export default function SuppliersPage() {
                                 ))
                             ) : filteredSuppliers.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="px-6 py-20 text-center text-zinc-500 italic">
+                                    <td colSpan={4} className="px-6 py-20 text-center text-muted-foreground italic">
                                         {lang === 'ar' ? 'لا يوجد موردين بهذا الاسم' : 'No suppliers found'}
                                     </td>
                                 </tr>
                             ) : (
                                 filteredSuppliers.map((s) => (
-                                    <tr key={s.id} className="hover:bg-white/5 transition-colors group">
+                                    <tr key={s.id} className="hover:bg-accent/50 transition-colors group">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-zinc-950 border border-white/10 flex items-center justify-center font-bold text-blue-500 capitalize">
+                                                <div className="w-10 h-10 rounded-xl bg-popover border border-border flex items-center justify-center font-bold text-blue-500 capitalize">
                                                     {s.name[0]}
                                                 </div>
                                                 <div>
-                                                    <p className="font-bold text-white text-sm">{s.name}</p>
-                                                    <p className="text-[10px] text-zinc-500">{s.contact || (lang === 'ar' ? 'مسؤول غير محدد' : 'No contact person')}</p>
+                                                    <p className="font-bold text-foreground text-sm">{s.name}</p>
+                                                    <p className="text-[10px] text-muted-foreground">{s.contact || (lang === 'ar' ? 'مسؤول غير محدد' : 'No contact person')}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -186,18 +186,18 @@ export default function SuppliersPage() {
                                             <div className="space-y-1">
                                                 {s.phone && (
                                                     <p className="text-xs text-zinc-400 flex items-center gap-2">
-                                                        <Phone className="w-3 h-3 text-zinc-600" /> {s.phone}
+                                                        <Phone className="w-3 h-3 text-muted-foreground/60" /> {s.phone}
                                                     </p>
                                                 )}
                                                 {s.email && (
                                                     <p className="text-xs text-zinc-400 flex items-center gap-2">
-                                                        <Mail className="w-3 h-3 text-zinc-600" /> {s.email}
+                                                        <Mail className="w-3 h-3 text-muted-foreground/60" /> {s.email}
                                                     </p>
                                                 )}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <p className="text-xs text-zinc-500 max-w-[200px] truncate flex items-center gap-2">
+                                            <p className="text-xs text-muted-foreground max-w-[200px] truncate flex items-center gap-2">
                                                 <MapPin className="w-3 h-3" /> {s.address || (lang === 'ar' ? 'غير مسجل' : 'N/A')}
                                             </p>
                                         </td>
@@ -205,13 +205,13 @@ export default function SuppliersPage() {
                                             <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button
                                                     onClick={() => { setEditingSupplier(s); setIsModalOpen(true); }}
-                                                    className="p-2 rounded-xl bg-zinc-950 border border-white/10 text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all"
+                                                    className="p-2 rounded-xl bg-popover border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                                                 >
                                                     <Edit className="w-4 h-4" />
                                                 </button>
                                                 <button
                                                     onClick={() => setConfirmDelete({ isOpen: true, id: s.id })}
-                                                    className="p-2 rounded-xl bg-zinc-950 border border-white/10 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                                                    className="p-2 rounded-xl bg-popover border border-border text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
@@ -233,74 +233,74 @@ export default function SuppliersPage() {
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className="w-full max-w-xl bg-zinc-950 border border-white/10 rounded-4xl shadow-2xl overflow-hidden"
+                            className="w-full max-w-xl bg-popover border border-border rounded-4xl shadow-none overflow-hidden"
                         >
                             <form onSubmit={handleSubmit} className="p-8 space-y-6">
                                 <div className="flex items-center justify-between mb-4">
                                     <h2 className="text-2xl font-black">{editingSupplier ? (lang === 'ar' ? 'تعديل مورد' : 'Edit Supplier') : (lang === 'ar' ? 'إضافة مورد جديد' : 'Add New Supplier')}</h2>
-                                    <button type="button" onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-white/5 rounded-xl transition-all">
+                                    <button type="button" onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-accent/50 rounded-xl transition-all">
                                         <X className="w-6 h-6" />
                                     </button>
                                 </div>
 
                                 <div className="space-y-4">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                                        <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
                                             <Briefcase className="w-3 h-3" /> {lang === 'ar' ? 'اسم الشركة / المورد' : 'Supplier Name'}
                                         </label>
                                         <input
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
+                                            className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
                                             placeholder={lang === 'ar' ? "مثال: شركة النصر للاستيراد" : "e.g., Al-Nasr Trading"}
                                         />
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
                                                 <User className="w-3 h-3" /> {lang === 'ar' ? 'اسم المسؤول' : 'Contact Person'}
                                             </label>
                                             <input
                                                 value={formData.contact}
                                                 onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                                                className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
+                                                className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
                                                 <Phone className="w-3 h-3" /> {lang === 'ar' ? 'رقم الهاتف' : 'Phone'}
                                             </label>
                                             <input
                                                 value={formData.phone}
                                                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                                className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
+                                                className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
                                             />
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                                        <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
                                             <Mail className="w-3 h-3" /> {lang === 'ar' ? 'البريد الإلكتروني' : 'Email'}
                                         </label>
                                         <input
                                             type="email"
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
+                                            className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
                                         />
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                                        <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
                                             <MapPin className="w-3 h-3" /> {lang === 'ar' ? 'العنوان' : 'Address'}
                                         </label>
                                         <textarea
                                             value={formData.address}
                                             onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                                             rows={2}
-                                            className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm resize-none"
+                                            className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm resize-none"
                                         />
                                     </div>
                                 </div>
@@ -315,7 +315,7 @@ export default function SuppliersPage() {
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="px-8 rounded-2xl bg-zinc-900 text-zinc-400 hover:text-white transition-all font-bold"
+                                        className="px-8 rounded-2xl bg-secondary text-zinc-400 hover:text-white transition-all font-bold"
                                     >
                                         {lang === 'ar' ? 'إلغاء' : 'Cancel'}
                                     </button>

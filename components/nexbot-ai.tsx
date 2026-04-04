@@ -79,7 +79,7 @@ export function NexBotAI() {
 
     return (
         <section className="relative z-20 container mx-auto px-4 pt-8 pb-16 md:py-24">
-            <div className="relative rounded-4xl md:rounded-[4rem] bg-zinc-950 border border-white/5 hover:border-[#0066FF]/50 hover:shadow-[0_0_80px_rgba(0,102,255,0.15)] transition-all duration-700 p-6 md:py-16 md:px-8 text-center overflow-hidden group">
+            <div className="relative rounded-4xl md:rounded-[4rem] bg-card border border-border hover:border-[#0066FF]/50 hover:shadow-[0_0_80px_rgba(0,102,255,0.15)] transition-all duration-700 p-6 md:py-16 md:px-8 text-center overflow-hidden group">
                 {/* Background Glows */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 group-hover:opacity-30 transition-opacity">
                     <div className="absolute -top-1/2 -left-1/4 w-full h-full bg-[#0066FF] rounded-full blur-[120px]" />
@@ -95,7 +95,7 @@ export function NexBotAI() {
                     {lang === "ar" ? "مساعد" : "Meet Our"} <span className="text-[#0066FF] mx-1 md:mx-2">{lang === "ar" ? "نيكسيت الذكي" : "NexBot AI"}</span>
                 </h2>
 
-                <p className="text-zinc-500 mb-6 md:mb-10 max-w-lg mx-auto text-xs md:text-lg px-2 leading-relaxed relative z-10">
+                <p className="text-muted-foreground mb-6 md:mb-10 max-w-lg mx-auto text-xs md:text-lg px-2 leading-relaxed relative z-10">
                     {lang === "ar"
                         ? "احصل على إجابات فورية حول خدماتنا وتقنياتنا وحلول البنية التحتية."
                         : "Get instant answers about our services, infrastructure solutions, and technology."}
@@ -115,12 +115,12 @@ export function NexBotAI() {
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 placeholder={placeholder}
-                                className={`w-full bg-zinc-900 border border-zinc-800 rounded-full ${lang === "ar" ? "pr-10 md:pr-14 pl-4 md:pl-44" : "pl-10 md:pl-14 pr-4 md:pr-44"} py-4 md:py-6 text-[10px] md:text-lg focus:outline-none focus:border-[#0066FF] transition-all placeholder:text-zinc-600`}
+                                className={`w-full bg-background/80 backdrop-blur-xl border border-border rounded-full ${lang === "ar" ? "pr-10 md:pr-14 pl-4 md:pl-44" : "pl-10 md:pl-14 pr-4 md:pr-44"} py-4 md:py-6 text-[10px] md:text-lg focus:outline-none focus:border-[#0066FF] transition-all placeholder:text-muted-foreground text-foreground`}
                             />
                         </div>
                         <Button 
                             type="submit"
-                            className={`mt-4 md:mt-0 md:absolute ${lang === "ar" ? "md:left-2" : "md:right-2"} md:top-2 bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-full px-8 py-4 md:py-0 h-10 md:h-[calc(100%-16px)] font-black uppercase tracking-widest text-[9px] md:text-xs flex items-center justify-center gap-2 w-full md:w-auto transition-all`}
+                            className={`mt-4 md:mt-0 md:absolute ${lang === "ar" ? "md:left-2" : "md:right-2"} md:top-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-4 md:py-0 h-10 md:h-[calc(100%-16px)] font-black uppercase tracking-widest text-[9px] md:text-xs flex items-center justify-center gap-2 w-full md:w-auto transition-all`}
                         >
                             {lang === "ar" ? "اسأل الآن" : "ASK NOW"}
                             <ArrowUpRight className="w-4 h-4" />
@@ -133,14 +133,14 @@ export function NexBotAI() {
                         <button
                             key={reply.id}
                             onClick={() => handleNavigate(reply.message)}
-                            className="px-3 md:px-5 py-1.5 md:py-2.5 rounded-full bg-zinc-900 border border-white/5 hover:border-[#0066FF]/50 text-zinc-500 hover:text-[#0066FF] transition-all text-[8px] md:text-xs font-bold uppercase tracking-widest"
+                            className="px-3 md:px-5 py-1.5 md:py-2.5 rounded-full bg-secondary border border-border hover:border-[#0066FF]/50 text-muted-foreground hover:text-[#0066FF] transition-all text-[8px] md:text-xs font-bold uppercase tracking-widest"
                         >
                             {reply.label}
                         </button>
                     ))}
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-3 md:gap-10 text-[7px] md:text-[10px] text-zinc-500 font-bold uppercase tracking-widest relative z-10">
+                <div className="flex flex-wrap items-center justify-center gap-3 md:gap-10 text-[7px] md:text-[10px] text-muted-foreground font-bold uppercase tracking-widest relative z-10">
                     <span className="flex items-center gap-1.5 md:gap-2">
                         <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4 text-[#0066FF]" />
                         {lang === "ar" ? "ردود فورية" : "Instant Responses"}
@@ -155,8 +155,8 @@ export function NexBotAI() {
                     </span>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-white/5 flex flex-col items-center justify-center gap-2 text-center text-xs md:text-sm text-zinc-500 font-medium relative z-10">
-                    <div className="mt-2 text-[7px] md:text-[9px] opacity-80 max-w-4xl px-4 leading-relaxed tracking-wider font-bold text-white">
+                <div className="mt-8 pt-6 border-t border-border flex flex-col items-center justify-center gap-2 text-center text-xs md:text-sm text-muted-foreground font-medium relative z-10">
+                    <div className="mt-2 text-[7px] md:text-[9px] opacity-80 max-w-4xl px-4 leading-relaxed tracking-wider font-bold text-foreground">
                         NexBOT Powered by SuperFeliz AI | &quot;Feliz&quot; (proprietary AI agent) of diPencil Studio. All rights reserved by <a href="https://dipencil.com" target="_blank" rel="noopener noreferrer" className="text-[#0066FF] hover:underline decoration-2 underline-offset-4 transition-all">Pencil Company</a> © 2026
                     </div>
                 </div>

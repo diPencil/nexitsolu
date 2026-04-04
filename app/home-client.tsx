@@ -150,11 +150,11 @@ export default function Home() {
   ];
 
   const capabilities = [
-    { key: "it_accelerators", tag: "Infrastructure", image: "/services/it-accelerators/Managed-IT-Operations.jpg", color: "bg-[#0066FF]", href: "/services/it-accelerators" },
+    { key: "it_accelerators", tag: "Infrastructure", image: "/services/it-accelerators/Managed-IT-Operations.jpg", color: "bg-primary", href: "/services/it-accelerators" },
     { key: "digital", tag: "Marketing", image: "/services/digital/Digital-Marketing-Strategy.jpg", color: "bg-purple-600", href: "/services/digital" },
     { key: "software", tag: "Development", image: "/services/software/Custom-Development.jpg", color: "bg-teal-600", href: "/services/software" },
     { key: "hardware", tag: "Enterprise", image: "/services/hardware/Server-&-Workstation-Preparation.jpg", color: "bg-orange-600", href: "/services/hardware" },
-    { key: "hosting_vps", tag: "Cloud", image: "/services/hosting-vps/Cloud-Hosting.jpg", color: "bg-zinc-800", href: "/services/hosting-vps" },
+    { key: "hosting_vps", tag: "Cloud", image: "/services/hosting-vps/Cloud-Hosting.jpg", color: "bg-muted", href: "/services/hosting-vps" },
   ];
 
   const safeCategories = Array.isArray(dbCategories) ? dbCategories : []
@@ -177,7 +177,7 @@ export default function Home() {
   }
 
   return (
-    <main dir={lang === "ar" ? "rtl" : "ltr"} className="relative bg-[#050505] text-white selection:bg-[#0066FF] selection:text-white pb-16 md:pb-32 overflow-x-hidden">
+    <main dir={lang === "ar" ? "rtl" : "ltr"} className="relative bg-background text-foreground selection:bg-primary/80 selection:text-primary-foreground pb-16 md:pb-32 overflow-x-hidden">
       <Script
         src="https://unpkg.com/@splinetool/viewer@1.0.17/build/spline-viewer.js"
         type="module"
@@ -234,14 +234,14 @@ export default function Home() {
             <div className="relative w-14 h-7 bg-linear-to-r from-green-400 to-green-500 rounded-full">
               <div className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform duration-300 ${lang === "ar" ? "left-1" : "right-1"}`} />
             </div>
-            <span className="text-sm text-zinc-300">{t("hero.status")}</span>
+            <span className="text-sm text-muted-foreground">{t("hero.status")}</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-medium mb-8 leading-tight animate-fade-in-up text-balance">
             {t("hero.title")}
           </h1>
 
-          <p className="text-lg md:text-xl text-zinc-400 mb-12 animate-fade-in-up animation-delay-200">
+          <p className="text-lg md:text-xl text-muted-foreground mb-12 animate-fade-in-up animation-delay-200">
             {t("hero.subheading")}
           </p>
 
@@ -249,7 +249,7 @@ export default function Home() {
             <Link href="/contact#contact-form" className="flex-1 sm:flex-none">
               <Button
                 size="lg"
-                className="group bg-[#0066FF] hover:bg-[#0052CC] text-white px-2 sm:px-8 py-0 h-[48px] sm:h-[52px] text-[14px] font-bold sm:font-normal sm:text-base rounded-full transition-all duration-650 hover:scale-[1.02] flex-1 sm:flex-none flex items-center justify-center whitespace-nowrap w-full"
+                className="group bg-primary hover:bg-primary/90 text-primary-foreground px-2 sm:px-8 py-0 h-[48px] sm:h-[52px] text-[14px] font-bold sm:font-normal sm:text-base rounded-full transition-all duration-650 hover:scale-[1.02] flex-1 sm:flex-none flex items-center justify-center whitespace-nowrap w-full"
               >
                 <span className="hidden sm:inline">{t("hero.cta")}</span>
                 <span className="inline sm:hidden whitespace-nowrap">{lang === "ar" ? "استشارة مجانية" : "Consultation"}</span>
@@ -272,60 +272,60 @@ export default function Home() {
       </div>
 
       {/* Trust / Metrics Strip */}
-      <section className="relative z-20 py-12 border-y border-zinc-900 bg-black/50 backdrop-blur-sm">
+      <section className="relative z-20 py-12 border-y border-border bg-card/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="space-y-2">
               <p className="text-4xl font-light text-[#0066FF]">50+</p>
-              <p className="text-[10px] text-zinc-500 uppercase tracking-[0.2em]">{t("trust.metrics.projects")}</p>
+              <p className="text-[10px] text-muted-foreground/70 uppercase tracking-[0.2em]">{t("trust.metrics.projects")}</p>
             </div>
             <div className="space-y-2">
               <p className="text-4xl font-light text-[#0066FF]">10+</p>
-              <p className="text-[10px] text-zinc-500 uppercase tracking-[0.2em]">{t("trust.metrics.years")}</p>
+              <p className="text-[10px] text-muted-foreground/70 uppercase tracking-[0.2em]">{t("trust.metrics.years")}</p>
             </div>
             <div className="space-y-2">
               <p className="text-4xl font-light text-[#0066FF]">100%</p>
-              <p className="text-[10px] text-zinc-500 uppercase tracking-[0.2em]">{t("trust.metrics.clients")}</p>
+              <p className="text-[10px] text-muted-foreground/70 uppercase tracking-[0.2em]">{t("trust.metrics.clients")}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Services Section (Reference Style) */}
-      <section className="relative z-20 py-16 md:py-32 px-6 lg:px-24 bg-[#050505] overflow-hidden">
+      <section className="relative z-20 py-16 md:py-32 px-6 lg:px-24 bg-background overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-8">
             <div className="flex items-center gap-6">
-              <div className="p-3 bg-white/5 rounded-2xl">
+              <div className="p-3 bg-secondary rounded-2xl">
                 <Layout className="w-6 h-6 text-[#0066FF]" />
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-                <h2 className="text-3xl md:text-5xl font-medium text-white tracking-tight">
+                <h2 className="text-3xl md:text-5xl font-medium text-foreground tracking-tight">
                   {lang === "ar" ? "أهم" : "Our"} <span className="text-[#0066FF]">{lang === "ar" ? "الخدمات" : "Services"}</span>
                 </h2>
                 {/* Scroll Controls */}
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => scrollServices(lang === "ar" ? "right" : "left")}
-                    className="p-3 rounded-full border border-white/10 hover:bg-[#0066FF] hover:border-[#0066FF] transition-all group/btn"
+                    className="p-3 rounded-full border border-border hover:bg-primary hover:border-primary transition-all group/btn"
                   >
-                    <ChevronLeft className="w-5 h-5 text-zinc-400 group-hover/btn:text-white" />
+                    <ChevronLeft className="w-5 h-5 text-muted-foreground group-hover/btn:text-primary-foreground" />
                   </button>
                   <button
                     onClick={() => scrollServices(lang === "ar" ? "left" : "right")}
-                    className="p-3 rounded-full border border-white/10 hover:bg-[#0066FF] hover:border-[#0066FF] transition-all group/btn"
+                    className="p-3 rounded-full border border-border hover:bg-primary hover:border-primary transition-all group/btn"
                   >
-                    <ChevronRight className="w-5 h-5 text-zinc-400 group-hover/btn:text-white" />
+                    <ChevronRight className="w-5 h-5 text-muted-foreground group-hover/btn:text-primary-foreground" />
                   </button>
                 </div>
               </div>
             </div>
-            <p className="text-zinc-500 max-w-sm md:text-end text-sm leading-relaxed">
+            <p className="text-muted-foreground/70 max-w-sm md:text-end text-sm leading-relaxed">
               {t("capabilities.description")}
             </p>
           </div>
 
-          <div className="h-px w-full bg-zinc-800/50 mb-10" />
+          <div className="h-px w-full bg-muted/50 mb-10" />
 
           <div
             ref={servicesRef}
@@ -338,20 +338,20 @@ export default function Home() {
                 className="relative group pt-4 md:pt-8 shrink-0 w-[75vw] sm:w-[280px] md:w-[320px] snap-center"
               >
                 {/* Layered Cards Effect behind */}
-                <div className="absolute top-2 left-3 right-3 h-8 md:top-4 md:left-6 md:right-6 md:h-16 bg-white/5 rounded-2xl md:rounded-[32px] -z-10" />
-                <div className="absolute top-4 left-2 right-2 h-8 md:top-7 md:left-4 md:right-4 md:h-16 bg-white/10 rounded-2xl md:rounded-[32px] -z-10" />
+                <div className="absolute top-2 left-3 right-3 h-8 md:top-4 md:left-6 md:right-6 md:h-16 bg-secondary rounded-2xl md:rounded-[32px] -z-10" />
+                <div className="absolute top-4 left-2 right-2 h-8 md:top-7 md:left-4 md:right-4 md:h-16 bg-muted rounded-2xl md:rounded-[32px] -z-10" />
 
                 {/* Main Card */}
-                <div className={`relative rounded-3xl md:rounded-[32px] overflow-hidden ${i === 0 ? "bg-[#000000] border md:bg-[#0066FF] border-[#0066FF]" : "bg-[#111111]"} border border-white/10 shadow-2xl transition-all duration-500 h-full flex flex-col group/main`}>
-                  <div className="p-6 md:p-8 border-b border-white/10 min-h-[100px] md:min-h-[130px] flex flex-col justify-center">
-                    <h3 className="text-lg md:text-xl font-black text-white tracking-tight leading-tight mb-2">{t(`capabilities.cards.${item.key}.title`)}</h3>
-                    <p className={`text-xs md:text-sm ${i === 0 ? "text-white" : "text-zinc-400"} font-medium line-clamp-2 leading-relaxed opacity-80`}>
+                <div className={`relative rounded-3xl md:rounded-[32px] overflow-hidden ${i === 0 ? "bg-card border md:bg-primary border-primary" : "bg-card"} border border-border shadow-2xl transition-all duration-500 h-full flex flex-col group/main`}>
+                  <div className="p-6 md:p-8 border-b border-border min-h-[100px] md:min-h-[130px] flex flex-col justify-center">
+                    <h3 className="text-lg md:text-xl font-black text-foreground tracking-tight leading-tight mb-2">{t(`capabilities.cards.${item.key}.title`)}</h3>
+                    <p className={`text-xs md:text-sm ${i === 0 ? "text-primary-foreground" : "text-muted-foreground"} font-medium line-clamp-2 leading-relaxed opacity-80`}>
                       {t(`capabilities.cards.${item.key}.description`)}
                     </p>
                   </div>
 
                   <div className="relative p-5 md:p-6 grow flex flex-col justify-end">
-                    <div className="relative aspect-video w-full rounded-xl md:rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 shadow-inner">
+                    <div className="relative aspect-video w-full rounded-xl md:rounded-2xl overflow-hidden border border-border bg-muted shadow-inner">
                       <Image
                         src={item.image}
                         alt={item.key}
@@ -362,7 +362,7 @@ export default function Home() {
 
                     {/* Floating Button */}
                     <Link href={item.href || "#"}>
-                      <button className={`absolute bottom-4 md:bottom-6 ${lang === "ar" ? "left-4 md:left-6" : "right-4 md:right-6"} p-2.5 md:p-3.5 rounded-full z-20 shadow-2xl transition-all duration-500 ${i === 0 ? "bg-[#0066FF] md:bg-white text-white md:text-[#0066FF]" : "bg-white/10 text-white backdrop-blur-xl border border-white/10 group-hover/main:bg-[#0066FF] group-hover/main:text-white group-hover/main:border-[#0066FF]"}`}>
+                      <button className={`absolute bottom-4 md:bottom-6 ${lang === "ar" ? "left-4 md:left-6" : "right-4 md:right-6"} p-2.5 md:p-3.5 rounded-full z-20 shadow-2xl transition-all duration-500 ${i === 0 ? "bg-primary md:bg-white text-primary-foreground md:text-[#0066FF]" : "bg-muted text-foreground backdrop-blur-xl border border-border group-hover/main:bg-primary group-hover/main:text-primary-foreground group-hover/main:border-[#0066FF]"}`}>
                         <ArrowUpRight className={`w-4 h-4 md:w-5 md:h-5 ${lang === "ar" ? "-scale-x-100" : ""}`} />
                       </button>
                     </Link>
@@ -377,9 +377,9 @@ export default function Home() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-16 p-6 md:p-8 border border-white/5 bg-white/5 backdrop-blur-sm rounded-4xl flex flex-col xl:flex-row justify-between items-center gap-6"
+            className="mt-16 p-6 md:p-8 border border-border bg-secondary backdrop-blur-sm rounded-4xl flex flex-col xl:flex-row justify-between items-center gap-6"
           >
-            <h3 className="text-xl md:text-2xl font-medium text-white tracking-tight text-center xl:text-start shrink-0">
+            <h3 className="text-xl md:text-2xl font-medium text-foreground tracking-tight text-center xl:text-start shrink-0">
               {lang === "ar" ? "دعنا نلقي نظرة على" : "Let's Have a Look at"} <span className="text-[#0066FF]">{lang === "ar" ? "خدماتنا" : "Our Services"}</span>
             </h3>
             <div className="flex flex-wrap items-center justify-center xl:justify-end gap-2 sm:gap-3 w-full">
@@ -391,7 +391,7 @@ export default function Home() {
                 { name: "Hosting & VPS", href: "/services/hosting-vps" },
               ].map((service, i) => (
                 <Link key={i} href={service.href} className="w-auto flex-auto sm:flex-none">
-                  <Button size="sm" className="w-full bg-white/5 hover:bg-[#0066FF] border border-white/10 hover:border-[#0066FF] text-white px-4 sm:px-6 py-5 md:py-6 rounded-full group transition-all duration-300 text-xs sm:text-sm font-medium">
+                  <Button size="sm" className="w-full bg-secondary hover:bg-[#0066FF] border border-border hover:border-[#0066FF] text-foreground hover:text-primary-foreground px-4 sm:px-6 py-5 md:py-6 rounded-full group transition-all duration-300 text-xs sm:text-sm font-medium">
                     {service.name}
                     <ArrowUpRight className={`ms-1.5 sm:ms-2 w-3 h-3 sm:w-4 sm:h-4 transition-transform ${lang === "ar" ? "group-hover:-translate-x-1 group-hover:-translate-y-1 -scale-x-100" : "group-hover:translate-x-1 group-hover:-translate-y-1"}`} />
                   </Button>
@@ -403,23 +403,23 @@ export default function Home() {
       </section>
 
       {/* Featured Store Section (Reference Style) */}
-      <section className="relative z-20 py-16 md:py-24 px-4 md:px-6 lg:px-24 bg-black overflow-hidden border-y border-white/5">
+      <section className="relative z-20 py-16 md:py-24 px-4 md:px-6 lg:px-24 bg-background overflow-hidden border-y border-border">
         <div className="max-w-7xl mx-auto">
           {isMounted ? (
             <Tabs value={featuredStoreTab} onValueChange={setFeaturedStoreTab} className="w-full" dir={lang === "ar" ? "rtl" : "ltr"}>
               <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
                 <div className="flex items-center gap-6">
-                  <div className="p-3 bg-white/5 rounded-2xl">
+                  <div className="p-3 bg-secondary rounded-2xl">
                     <ShoppingBag className="w-6 h-6 text-[#0066FF]" />
                   </div>
                   <div>
-                    <h2 className="text-2xl md:text-5xl font-medium text-white tracking-tight">
+                    <h2 className="text-2xl md:text-5xl font-medium text-foreground tracking-tight">
                       {lang === "ar" ? "متجر" : "Featured"} <span className="text-[#0066FF]">{lang === "ar" ? "نكسيت" : "Store"}</span>
                     </h2>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 md:gap-6 bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-md w-full md:w-auto relative">
+                <div className="flex items-center gap-2 md:gap-6 bg-secondary p-1 rounded-full border border-border backdrop-blur-md w-full md:w-auto relative">
                   <div
                     ref={homeCategoriesScrollRef}
                     className="w-full overflow-x-auto flex items-center scroll-smooth [direction:ltr] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
@@ -428,18 +428,18 @@ export default function Home() {
                       className={`bg-transparent border-none h-auto p-0 flex gap-1 min-w-max ${isAr ? "flex-row-reverse" : "flex-row"}`}
                     >
                       {storeTabs.map(tab => (
-                        <TabsTrigger key={`trigger-${tab.id}`} value={tab.id} className="rounded-full px-4 md:px-6 py-2.5 text-xs md:text-sm font-medium data-[state=active]:bg-[#0066FF] data-[state=active]:text-white text-zinc-400 hover:text-white transition-all">
+                        <TabsTrigger key={`trigger-${tab.id}`} value={tab.id} className="rounded-full px-4 md:px-6 py-2.5 text-xs md:text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground hover:bg-accent hover:text-foreground transition-all">
                           {lang === "ar" ? tab.labelAr : tab.labelEn}
                         </TabsTrigger>
                       ))}
                     </TabsList>
                   </div>
-                  <div className="flex items-center gap-1 md:gap-2 border-s border-white/10 ps-2 md:ps-4 pe-1 md:pe-2 shrink-0">
+                  <div className="flex items-center gap-1 md:gap-2 border-s border-border ps-2 md:ps-4 pe-1 md:pe-2 shrink-0">
                     <button
                       type="button"
                       aria-label={lang === "ar" ? "تمرير التصنيفات" : "Scroll categories"}
                       onClick={() => scrollCategoryStrip(homeCategoriesScrollRef.current, isAr ? 1 : -1)}
-                      className="p-2 rounded-full hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
+                      className="p-2 rounded-full hover:bg-muted/50 transition-colors text-muted-foreground hover:text-foreground"
                     >
                       <ChevronLeft className={`w-5 h-5 ${isAr ? "rotate-180" : ""}`} />
                     </button>
@@ -447,7 +447,7 @@ export default function Home() {
                       type="button"
                       aria-label={lang === "ar" ? "تمرير التصنيفات" : "Scroll categories"}
                       onClick={() => scrollCategoryStrip(homeCategoriesScrollRef.current, isAr ? -1 : 1)}
-                      className="p-2 rounded-full hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
+                      className="p-2 rounded-full hover:bg-muted/50 transition-colors text-muted-foreground hover:text-foreground"
                     >
                       <ChevronRight className={`w-5 h-5 ${isAr ? "rotate-180" : ""}`} />
                     </button>
@@ -464,10 +464,10 @@ export default function Home() {
                     >
                       {isProductsLoading ? (
                         [1, 2, 3, 4].map((n) => (
-                          <div key={n} className="w-[240px] md:w-[280px] aspect-square bg-zinc-900 animate-pulse rounded-4xl snap-start shrink-0 flex-none" />
+                          <div key={n} className="w-[240px] md:w-[280px] aspect-square bg-card animate-pulse rounded-4xl snap-start shrink-0 flex-none" />
                         ))
                       ) : products.filter(tab.filter).length === 0 ? (
-                        <div className="w-full py-20 text-center text-zinc-500">
+                        <div className="w-full py-20 text-center text-muted-foreground/70">
                           {lang === 'ar' ? 'لا توجد منتجات حالياً' : 'No products found'}
                         </div>
                       ) : products.filter(tab.filter).map((product, i) => (
@@ -477,28 +477,28 @@ export default function Home() {
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.3, delay: i * 0.1 }}
-                          className="w-[240px] md:w-[280px] group relative bg-[#111111] rounded-2xl md:rounded-4xl overflow-hidden border border-white/5 hover:border-[#0066FF]/30 transition-all duration-500 flex flex-col snap-start shrink-0 flex-none"
+                          className="w-[240px] md:w-[280px] group relative bg-card rounded-2xl md:rounded-4xl overflow-hidden border border-border hover:border-[#0066FF]/30 transition-all duration-500 flex flex-col snap-start shrink-0 flex-none"
                         >
                           <Link href={`/store/${product.id}`} className="relative aspect-square w-full overflow-hidden block">
                             {product.image ? (
                               <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80 group-hover:opacity-100" />
                             ) : (
-                              <div className="absolute inset-0 bg-zinc-900 flex items-center justify-center">
+                              <div className="absolute inset-0 bg-card flex items-center justify-center">
                                 <ShoppingBag className="w-12 h-12 text-zinc-800" />
                               </div>
                             )}
                             <div className={`absolute top-2 md:top-4 ${lang === 'ar' ? 'right-2 md:right-4' : 'left-2 md:left-4'}`}>
-                              <span className="px-2 py-0.5 md:px-3 md:py-1 bg-[#0066FF] rounded-full text-[7px] md:text-[9px] uppercase font-bold text-white shadow-lg">
+                              <span className="px-2 py-0.5 md:px-3 md:py-1 bg-primary rounded-full text-[7px] md:text-[9px] uppercase font-bold text-primary-foreground shadow-lg">
                                  {categoryBadgeLabel(product.category)}
                               </span>
                             </div>
                             
                             {/* Action Overlays similar to store page */}
                             <div className={`absolute top-2 md:top-4 ${lang === "ar" ? "left-2 md:left-4" : "right-2 md:right-4"} flex flex-col gap-2 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300`}>
-                                <button className="p-1.5 md:p-2 backdrop-blur-md border bg-black/40 border-white/10 text-white hover:bg-[#0066FF] hover:border-[#0066FF] rounded-full transition-all">
+                                <button className="p-1.5 md:p-2 backdrop-blur-md border bg-card/80 border-border text-foreground hover:bg-primary hover:border-primary hover:text-primary-foreground rounded-full transition-all">
                                     <Heart className="w-3 h-3 md:w-3.5 md:h-3.5" />
                                 </button>
-                                <button className="p-1.5 md:p-2 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-[#0066FF] hover:border-[#0066FF] transition-all">
+                                <button className="p-1.5 md:p-2 bg-card/80 backdrop-blur-md border border-border rounded-full text-foreground hover:bg-[#0066FF] hover:border-[#0066FF] hover:text-primary-foreground transition-all">
                                     <Share2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
                                 </button>
                             </div>
@@ -507,7 +507,7 @@ export default function Home() {
                           <div className={`p-3 md:p-5 flex flex-col grow justify-between ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                             <div>
                                 <Link href={`/store/${product.id}`}>
-                                    <h3 className="text-sm md:text-base font-medium text-white mb-2 line-clamp-1 hover:text-[#0066FF] transition-colors">
+                                    <h3 className="text-sm md:text-base font-medium text-foreground mb-2 line-clamp-1 hover:text-[#0066FF] transition-colors">
                                         {lang === "ar" ? product.nameAr || product.name : product.name}
                                     </h3>
                                 </Link>
@@ -515,19 +515,19 @@ export default function Home() {
 
                             <div className="flex flex-col mt-3 gap-3">
                               <div className="flex items-center gap-2">
-                                <span className="text-lg md:text-xl font-bold text-white tracking-tight">{product.discountPrice || product.price} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>
+                                <span className="text-lg md:text-xl font-bold text-foreground tracking-tight">{product.discountPrice || product.price} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>
                                 {product.discountPrice && (
-                                    <span className="text-xs md:text-sm text-zinc-500 line-through">{product.price} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>
+                                    <span className="text-xs md:text-sm text-muted-foreground/70 line-through">{product.price} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>
                                 )}
                               </div>
                               <div className="flex items-center gap-2 w-full">
                                 <Link href={`/store/${product.id}`} className="flex-1">
-                                  <Button size="sm" variant="outline" className="w-full rounded-full border-zinc-800 h-8 md:h-9 text-[11px] md:text-xs hover:bg-white hover:border-white hover:text-[#0066FF] dark:hover:bg-white dark:hover:text-[#0066FF] transition-all">
+                                  <Button size="sm" variant="outline" className="w-full rounded-full border-border h-8 md:h-9 text-[11px] md:text-xs hover:bg-white hover:border-white hover:text-[#0066FF] dark:hover:bg-white dark:hover:text-[#0066FF] transition-all">
                                     {lang === "ar" ? "عرض" : "View"}
                                   </Button>
                                 </Link>
                                 <Link href={`/store/checkout?buyNow=${encodeURIComponent(JSON.stringify(product))}`} className="flex-1">
-                                  <Button size="sm" className="w-full rounded-full bg-[#0066FF] h-8 md:h-9 text-[11px] md:text-xs text-white hover:bg-white hover:text-[#0066FF] dark:text-white dark:hover:bg-white dark:hover:text-[#0066FF] transition-all">
+                                  <Button size="sm" className="w-full rounded-full bg-[#0066FF] h-8 md:h-9 text-[11px] md:text-xs text-primary-foreground hover:bg-white hover:text-[#0066FF] dark:text-primary-foreground dark:hover:bg-white dark:hover:text-[#0066FF] transition-all">
                                     {lang === "ar" ? "شراء" : "Buy"}
                                   </Button>
                                 </Link>
@@ -545,14 +545,14 @@ export default function Home() {
             <div className="w-full space-y-12">
               <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="flex items-center gap-6">
-                  <div className="w-12 h-12 bg-white/5 rounded-2xl animate-pulse" />
-                  <div className="w-48 h-10 bg-white/5 rounded-xl animate-pulse" />
+                  <div className="w-12 h-12 bg-secondary rounded-2xl animate-pulse" />
+                  <div className="w-48 h-10 bg-secondary rounded-xl animate-pulse" />
                 </div>
-                <div className="w-64 h-12 bg-white/5 rounded-full animate-pulse" />
+                <div className="w-64 h-12 bg-secondary rounded-full animate-pulse" />
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
                 {[1, 2, 3, 4].map((n) => (
-                  <div key={n} className="aspect-square bg-white/5 animate-pulse rounded-4xl" />
+                  <div key={n} className="aspect-square bg-secondary animate-pulse rounded-4xl" />
                 ))}
               </div>
             </div>
@@ -561,8 +561,8 @@ export default function Home() {
           <div className="mt-16 flex justify-center">
             <div className="flex gap-2">
               <div className="w-8 h-1 bg-[#0066FF] rounded-full" />
-              <div className="w-2 h-1 bg-zinc-800 rounded-full" />
-              <div className="w-2 h-1 bg-zinc-800 rounded-full" />
+              <div className="w-2 h-1 bg-muted rounded-full" />
+              <div className="w-2 h-1 bg-muted rounded-full" />
             </div>
           </div>
 
@@ -571,13 +571,13 @@ export default function Home() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-16 p-6 md:p-8 border border-white/5 bg-white/5 backdrop-blur-sm rounded-4xl flex flex-col md:flex-row justify-between items-center gap-6"
+            className="mt-16 p-6 md:p-8 border border-border bg-secondary backdrop-blur-sm rounded-4xl flex flex-col md:flex-row justify-between items-center gap-6"
           >
-            <h3 className="text-xl md:text-2xl font-medium text-white tracking-tight text-center md:text-start">
+            <h3 className="text-xl md:text-2xl font-medium text-foreground tracking-tight text-center md:text-start">
               {lang === "ar" ? "دعنا نلقي نظرة على" : "Let's Have a Look at"} <span className="text-[#0066FF]">{lang === "ar" ? "متجرنا" : "Our Store"}</span>
             </h3>
             <Link href="/store" className="w-full md:w-auto">
-              <Button size="lg" className="w-full md:w-auto bg-[#0066FF] hover:bg-[#0052CC] text-white px-8 py-6 rounded-full group transition-all duration-300">
+              <Button size="lg" className="w-full md:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 rounded-full group transition-all duration-300">
                 {lang === "ar" ? "رؤية المزيد" : "See More"}
                 <ArrowUpRight className="ms-2 w-4 h-4 transition-transform group-hover:-translate-y-1 rtl:group-hover:-translate-x-1 ltr:group-hover:translate-x-1" />
               </Button>
@@ -589,7 +589,7 @@ export default function Home() {
 
 
       {/* Why Hire Me Section (Reference: Why You Hire Me) */}
-      <section className="relative z-20 py-16 md:py-32 px-4 md:px-6 lg:px-24 bg-[#080808]/40 overflow-hidden">
+      <section className="relative z-20 py-16 md:py-32 px-4 md:px-6 lg:px-24 bg-card/40 overflow-hidden">
         <div className="flex flex-col lg:flex-row items-center gap-12 md:gap-20">
           <div className="relative w-full max-w-sm md:max-w-md lg:w-1/2 mx-auto">
 
@@ -599,13 +599,13 @@ export default function Home() {
               transition={{ repeat: Infinity, duration: 3, repeatType: "reverse", ease: "easeInOut" }}
               className="absolute top-10 -right-4 md:right-10 z-20 bg-[#0066FF] p-3 md:p-4 rounded-xl md:rounded-2xl shadow-[0_0_30px_rgba(0,102,255,0.4)]"
             >
-              <ShieldCheck className="w-6 h-6 md:w-8 md:h-8 text-white" />
+              <ShieldCheck className="w-6 h-6 md:w-8 md:h-8 text-primary-foreground" />
             </motion.div>
 
             <motion.div
               animate={{ y: [15, -15] }}
               transition={{ repeat: Infinity, duration: 3.5, repeatType: "reverse", ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-10 md:bottom-20 -left-4 md:left-4 z-20 bg-zinc-900 border border-white/10 p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl"
+              className="absolute bottom-10 md:bottom-20 -left-4 md:left-4 z-20 bg-card border border-border p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl"
             >
               <Server className="w-8 h-8 md:w-10 md:h-10 text-[#0066FF]" />
             </motion.div>
@@ -615,10 +615,10 @@ export default function Home() {
               transition={{ repeat: Infinity, duration: 4, repeatType: "reverse", ease: "easeInOut" }}
               className="absolute top-1/2 -left-4 md:-left-6 z-20 bg-white p-2 md:p-3 rounded-full shadow-xl"
             >
-              <Cloud className="w-5 h-5 md:w-6 md:h-6 text-black" />
+              <Cloud className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
             </motion.div>
 
-            <div className="relative z-10 w-full aspect-square rounded-full overflow-hidden border-4 md:border-8 border-zinc-900 shadow-2xl group">
+            <div className="relative z-10 w-full aspect-square rounded-full overflow-hidden border-4 md:border-8 border-border shadow-2xl group">
               <Image src="/The-Nexit-Story.jpg" alt="The Nexit Story" fill className="object-cover group-hover:scale-110 transition-transform duration-1000" />
               <div className="absolute inset-0 bg-linear-to-tr from-[#0066FF]/20 to-transparent mix-blend-overlay"></div>
             </div>
@@ -635,18 +635,18 @@ export default function Home() {
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-medium mb-6 md:mb-8 leading-tight">
               {lang === "ar" ? "شريكك في " : "Your Partner in "} <span className="text-[#0066FF]">{lang === "ar" ? "التحول الرقمي" : "Digital Transformation"}</span>
             </h2>
-            <p className="text-zinc-500 text-sm md:text-lg mb-10 md:mb-12 leading-relaxed">
+            <p className="text-muted-foreground/70 text-sm md:text-lg mb-10 md:mb-12 leading-relaxed">
               {t("why_us.description")}
             </p>
 
             <div className="grid grid-cols-2 gap-6 md:gap-10 mb-10 md:mb-12">
               <div className="flex flex-col items-center lg:items-start">
-                <p className="text-3xl md:text-4xl font-light text-white mb-2">50+</p>
-                <p className="text-[9px] md:text-[10px] text-zinc-500 font-bold uppercase tracking-widest">{t("why_us.metrics.projects")}</p>
+                <p className="text-3xl md:text-4xl font-light text-foreground mb-2">50+</p>
+                <p className="text-[9px] md:text-[10px] text-muted-foreground/70 font-bold uppercase tracking-widest">{t("why_us.metrics.projects")}</p>
               </div>
               <div className="flex flex-col items-center lg:items-start">
-                <p className="text-3xl md:text-4xl font-light text-white mb-2">10+</p>
-                <p className="text-[9px] md:text-[10px] text-zinc-500 font-bold uppercase tracking-widest">{t("why_us.metrics.experience")}</p>
+                <p className="text-3xl md:text-4xl font-light text-foreground mb-2">10+</p>
+                <p className="text-[9px] md:text-[10px] text-muted-foreground/70 font-bold uppercase tracking-widest">{t("why_us.metrics.experience")}</p>
               </div>
             </div>
 
@@ -655,13 +655,13 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="mt-8 p-6 md:p-8 border border-white/5 bg-white/5 backdrop-blur-sm rounded-4xl flex flex-col md:flex-row justify-between items-center gap-6"
+              className="mt-8 p-6 md:p-8 border border-border bg-secondary backdrop-blur-sm rounded-4xl flex flex-col md:flex-row justify-between items-center gap-6"
             >
-              <h3 className="text-xl font-medium text-white tracking-tight text-center md:text-start lg:text-lg xl:text-xl">
+              <h3 className="text-xl font-medium text-foreground tracking-tight text-center md:text-start lg:text-lg xl:text-xl">
                 {lang === "ar" ? "تعرف أكثر على" : "Learn More About"} <span className="text-[#0066FF]">{lang === "ar" ? "هوية نكسيت" : "Nexit Identity"}</span>
               </h3>
               <Link href="/nexit-land/" className="w-full md:w-auto">
-                <Button size="lg" className="w-full md:w-auto bg-[#0066FF] hover:bg-[#0052CC] text-white px-8 py-5 rounded-full group transition-all duration-300">
+                <Button size="lg" className="w-full md:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-5 rounded-full group transition-all duration-300">
                   {lang === "ar" ? "عن الشركة" : "About Company"}
                   <ArrowUpRight className={`ms-2 w-4 h-4 transition-transform group-hover:-translate-y-1 ${lang === "ar" ? "-scale-x-100 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
                 </Button>
@@ -675,7 +675,7 @@ export default function Home() {
       <div className="relative z-20 bg-[#0066FF] py-6 overflow-hidden -rotate-2 -mx-10 shadow-2xl">
         <div className="flex gap-20 animate-marquee whitespace-nowrap">
           {[...techIcons, ...techIcons, ...techIcons].map((item, i) => (
-            <div key={i} className="flex items-center gap-4 text-white font-black text-2xl uppercase tracking-[0.2em] italic">
+            <div key={i} className="flex items-center gap-4 text-foreground font-black text-2xl uppercase tracking-[0.2em] italic">
               <span>{lang === "ar" ? item.arName : item.name}</span>
               <Star className="fill-white w-6 h-6" />
             </div>
@@ -709,15 +709,15 @@ export default function Home() {
           <div className="flex md:hidden items-center justify-center gap-4 mt-6">
             <button
               onClick={() => scrollJourney(lang === "ar" ? "right" : "left")}
-              className="p-3 rounded-full border border-zinc-800 hover:bg-white/10 transition-colors"
+              className="p-3 rounded-full border border-border hover:bg-muted transition-colors"
             >
-              <ChevronLeft className="w-5 h-5 text-white" />
+              <ChevronLeft className="w-5 h-5 text-foreground" />
             </button>
             <button
               onClick={() => scrollJourney(lang === "ar" ? "left" : "right")}
-              className="p-3 rounded-full border border-zinc-800 hover:bg-white/10 transition-colors"
+              className="p-3 rounded-full border border-border hover:bg-muted transition-colors"
             >
-              <ChevronRight className="w-5 h-5 text-white" />
+              <ChevronRight className="w-5 h-5 text-foreground" />
             </button>
           </div>
         </div>
@@ -727,9 +727,9 @@ export default function Home() {
           className="max-w-4xl mx-auto flex flex-row md:flex-col gap-6 md:gap-16 relative overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {/* Vertical Line on Desktop */}
-          <div className="absolute left-[50%] top-0 bottom-0 w-px bg-zinc-800 hidden md:block" />
+          <div className="absolute left-[50%] top-0 bottom-0 w-px bg-muted hidden md:block" />
           {/* Horizontal Line on Mobile */}
-          <div className="absolute left-0 right-0 top-[64px] h-px bg-zinc-800 block md:hidden pointer-events-none" />
+          <div className="absolute left-0 right-0 top-[64px] h-px bg-muted block md:hidden pointer-events-none" />
 
           {(t("experience.items") as unknown as any[]).map((exp, i) => (
             <motion.div
@@ -739,15 +739,15 @@ export default function Home() {
               className={`flex flex-col md:flex-row items-center gap-4 md:gap-10 shrink-0 md:shrink w-[85vw] sm:w-[320px] md:w-full snap-center ${i % 2 !== 0 ? "md:flex-row-reverse" : ""}`}
             >
               <div className={`w-full md:flex-1 text-center flex items-end md:items-center justify-center h-[40px] md:h-auto ${i % 2 !== 0 ? "md:justify-start" : "md:justify-end"}`}>
-                <p className={`text-lg font-bold text-[#0066FF] md:text-white ${i % 2 !== 0 ? "md:text-start" : "md:text-end"}`}>{exp.date}</p>
+                <p className={`text-lg font-bold text-[#0066FF] md:text-foreground ${i % 2 !== 0 ? "md:text-start" : "md:text-end"}`}>{exp.date}</p>
               </div>
 
               {/* Dot */}
-              <div className="z-10 w-4 h-4 rounded-full bg-[#0066FF] border-4 border-black ring-4 ring-zinc-900 shrink-0" />
+              <div className="z-10 w-4 h-4 rounded-full bg-[#0066FF] border-4 border-border ring-4 ring-primary/10 shrink-0" />
 
               <div className={`w-full md:flex-1 px-4 md:px-0 text-center ${i % 2 !== 0 ? "md:text-end" : "md:text-start"}`}>
                 <h3 className={`text-lg md:text-xl font-bold mb-2 md:mb-3`}>{exp.role}</h3>
-                <p className={`text-zinc-500 text-xs md:text-sm leading-relaxed`}>{exp.description}</p>
+                <p className={`text-muted-foreground/70 text-xs md:text-sm leading-relaxed`}>{exp.description}</p>
               </div>
             </motion.div>
           ))}
@@ -758,16 +758,16 @@ export default function Home() {
       <section className="relative z-20 pt-16 md:pt-32 pb-8 md:pb-16 px-4 md:px-6 lg:px-24">
         <div className="flex flex-col md:flex-row justify-between items-center mb-12 md:mb-24 gap-6 md:gap-8">
           <div className="flex items-center gap-6">
-            <div className="p-3 bg-white/5 rounded-2xl">
+            <div className="p-3 bg-secondary rounded-2xl">
               <Star className="w-6 h-6 text-[#0066FF]" />
             </div>
             <div>
-              <h2 className="text-2xl md:text-5xl font-medium text-white tracking-tight">
+              <h2 className="text-2xl md:text-5xl font-medium text-foreground tracking-tight">
                 {lang === "ar" ? "قصص" : "Our"} <span className="text-[#0066FF]">{lang === "ar" ? "نجاحنا" : "Success Stories"}</span>
               </h2>
             </div>
           </div>
-          <Link href="/resources/case-studies" className="hidden md:flex items-center justify-center border-zinc-800 rounded-full p-4 h-14 w-14 hover:bg-white/10">
+          <Link href="/resources/case-studies" className="hidden md:flex items-center justify-center border-border rounded-full p-4 h-14 w-14 hover:bg-muted">
             <ArrowRight className={`${lang === "ar" ? "rotate-180" : ""}`} />
           </Link>
         </div>
@@ -777,7 +777,7 @@ export default function Home() {
             <Link
               key={i}
               href={`/resources/case-studies/${project.slug}`}
-              className="relative group rounded-2xl md:rounded-3xl overflow-hidden bg-zinc-900 aspect-square shadow-2xl cursor-pointer border border-white/5 hover:border-[#0066FF]/30 transition-all"
+              className="relative group rounded-2xl md:rounded-3xl overflow-hidden bg-card aspect-square shadow-2xl cursor-pointer border border-border hover:border-[#0066FF]/30 transition-all"
             >
               <Image
                 src={project.logo}
@@ -785,20 +785,20 @@ export default function Home() {
                 fill
                 className="object-cover group-hover:scale-110 transition-all duration-1000 opacity-90 group-hover:opacity-100"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-linear-to-t from-card/80 via-transparent to-transparent opacity-90 transition-opacity duration-500" />
 
               {/* Top Right Action Button */}
               <div className={`absolute top-3 md:top-6 ${lang === "ar" ? "left-3 md:left-6" : "right-3 md:right-6"} opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 z-10`}>
-                <div className="p-2 md:p-3 rounded-full bg-white text-black shadow-2xl hover:scale-110 active:scale-95 transition-transform">
+                <div className="p-2 md:p-3 rounded-full bg-primary text-primary-foreground shadow-2xl hover:scale-110 active:scale-95 transition-transform">
                   <ArrowUpRight className={`w-3 h-3 md:w-4 md:h-4 ${lang === "ar" ? "-scale-x-100" : ""}`} />
                 </div>
               </div>
 
               <div className={`absolute bottom-3 md:bottom-8 ${lang === "ar" ? "right-3 md:right-8 text-right" : "left-3 md:left-8 text-left"} ${lang === "ar" ? "left-3 md:left-8" : "right-3 md:right-8"} z-10`}>
-                <span className={`bg-[#0066FF] text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[7px] md:text-[9px] uppercase font-black mb-1.5 md:mb-3 inline-block shadow-lg`}>
+                <span className={`bg-primary text-primary-foreground px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[7px] md:text-[9px] uppercase font-black mb-1.5 md:mb-3 inline-block shadow-lg`}>
                   {project.cat}
                 </span>
-                <h3 className="text-xs sm:text-sm md:text-xl lg:text-2xl font-black text-white leading-tight md:leading-snug">
+                <h3 className="text-xs sm:text-sm md:text-xl lg:text-2xl font-black text-foreground leading-tight md:leading-snug">
                   {project.partner}
                 </h3>
               </div>
@@ -811,13 +811,13 @@ export default function Home() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-8 p-6 md:p-8 border border-white/5 bg-white/5 backdrop-blur-sm rounded-4xl flex md:hidden flex-col items-center gap-6"
+          className="mt-8 p-6 md:p-8 border border-border bg-secondary backdrop-blur-sm rounded-4xl flex md:hidden flex-col items-center gap-6"
         >
-          <h3 className="text-xl font-medium text-white tracking-tight text-center">
+          <h3 className="text-xl font-medium text-foreground tracking-tight text-center">
             {lang === "ar" ? "دعنا نلقي نظرة على" : "Let's Have a Look at"} <span className="text-[#0066FF]">{lang === "ar" ? "أعمالنا" : "Our Projects"}</span>
           </h3>
           <Link href="/resources/case-studies" className="w-full">
-            <Button size="lg" className="w-full bg-[#0066FF] hover:bg-[#0052CC] text-white px-8 py-6 rounded-full group transition-all duration-300">
+            <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 rounded-full group transition-all duration-300">
               {lang === "ar" ? "رؤية المزيد" : "See More"}
               <ArrowUpRight className={`ms-2 w-4 h-4 transition-transform group-hover:-translate-y-1 ${lang === "ar" ? "-scale-x-100 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
             </Button>
@@ -826,14 +826,14 @@ export default function Home() {
       </section>
 
       {/* Client Logos Marquee */}
-      <section className="relative z-20 py-20 bg-black border-y border-white/5 overflow-hidden">
+      <section className="relative z-20 py-20 bg-background border-y border-border overflow-hidden">
         <div className="text-center mb-12">
-          <p className="text-zinc-500 uppercase tracking-widest text-xs font-bold">{lang === "ar" ? "شركاء النجاح الموثوق بهم" : "Trusted by industry leaders"}</p>
+          <p className="text-muted-foreground/70 uppercase tracking-widest text-xs font-bold">{lang === "ar" ? "شركاء النجاح الموثوق بهم" : "Trusted by industry leaders"}</p>
         </div>
 
         {/* Shadow Overlays for fade effect */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
 
         <div className="flex gap-32 animate-marquee whitespace-nowrap opacity-60 hover:opacity-100 transition-opacity duration-500">
           {[
@@ -885,7 +885,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials (Reference: Testimonials) */}
-      <section className="relative z-20 py-16 md:py-32 px-4 md:px-6 lg:px-24 bg-[#080808]/60 text-center overflow-hidden">
+      <section className="relative z-20 py-16 md:py-32 px-4 md:px-6 lg:px-24 bg-card/60 text-center overflow-hidden">
         {/* Animated Background Quote Icon */}
         <div className="absolute top-20 left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none -translate-y-12">
           <motion.div
@@ -900,7 +900,7 @@ export default function Home() {
               ease: "easeInOut"
             }}
           >
-            <Quote className="w-40 h-40 md:w-64 md:h-64 text-white/3 fill-white/3" />
+            <Quote className="w-40 h-40 md:w-64 md:h-64 text-muted-foreground/10 fill-muted-foreground/10" />
           </motion.div>
         </div>
 
@@ -908,7 +908,7 @@ export default function Home() {
           <h2 className="text-2xl md:text-6xl font-medium mb-4 md:mb-6">
             {lang === "ar" ? "آراء " : "Partner "} <span className="text-[#0066FF]">{lang === "ar" ? "شركائنا" : "Feedback"}</span>
           </h2>
-          <p className="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
             {t("testimonials.description")}
           </p>
         </div>
@@ -956,14 +956,14 @@ export default function Home() {
                   {[...displayTestimonials, ...displayTestimonials].map((testimonial, i) => (
                     <div
                       key={i}
-                      className="p-8 rounded-4xl bg-[#111111] border border-white/10 shadow-xl hover:border-[#0066FF]/30 transition-colors"
+                      className="p-8 rounded-4xl bg-card border border-border shadow-xl hover:border-[#0066FF]/30 transition-colors"
                     >
-                      <p className="text-sm md:text-base text-zinc-300 leading-relaxed mb-8">
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-8">
                         {testimonial.text}
                       </p>
                       <div>
-                        <p className="font-bold text-white text-base">{testimonial.name}</p>
-                        <p className="text-xs text-zinc-500">{testimonial.role}</p>
+                        <p className="font-bold text-foreground text-base">{testimonial.name}</p>
+                        <p className="text-xs text-muted-foreground/70">{testimonial.role}</p>
                       </div>
                     </div>
                   ))}
@@ -978,16 +978,16 @@ export default function Home() {
       <section className="relative z-20 py-16 md:py-32 px-4 md:px-6 lg:px-24">
         <div className="flex flex-col md:flex-row justify-between items-center mb-12 md:mb-24 gap-6 md:gap-8">
           <div className="flex items-center gap-6">
-            <div className="p-3 bg-white/5 rounded-2xl">
+            <div className="p-3 bg-secondary rounded-2xl">
               <Star className="w-6 h-6 text-[#0066FF]" />
             </div>
             <div>
-              <h2 className="text-2xl md:text-5xl font-medium text-white tracking-tight">
+              <h2 className="text-2xl md:text-5xl font-medium text-foreground tracking-tight">
                 {lang === "ar" ? "أحدث" : "Latest"} <span className="text-[#0066FF]">{lang === "ar" ? "المقالات" : "Insights"}</span>
               </h2>
             </div>
           </div>
-          <Link href="/resources/tech-insights" className="hidden md:block text-xs font-black uppercase tracking-widest border-b border-white hover:text-zinc-400 transition-colors">
+          <Link href="/resources/tech-insights" className="hidden md:block text-xs font-black uppercase tracking-widest border-b border-white hover:text-muted-foreground transition-colors">
             {isAr ? "جميع المقالات" : "View All Insights"}
           </Link>
         </div>
@@ -996,19 +996,19 @@ export default function Home() {
           {Object.values(ARTICLES_CONTENT).slice(0, 4).map((article, i) => (
             <Link key={i} href={`/resources/tech-insights/${article.slug}`} className="group block">
               <motion.div whileHover={{ y: -10 }}>
-                <div className="relative aspect-square rounded-2xl md:rounded-4xl overflow-hidden mb-3 md:mb-8 border border-white/5 bg-zinc-900 shadow-xl group-hover:border-[#0066FF]/30 transition-all">
+                <div className="relative aspect-square rounded-2xl md:rounded-4xl overflow-hidden mb-3 md:mb-8 border border-border bg-card shadow-xl group-hover:border-[#0066FF]/30 transition-all">
                   <Image src={article.image} alt={isAr ? article.title_ar : article.title_en} fill className="object-cover group-hover:scale-110 transition-transform duration-1000 opacity-90 group-hover:opacity-100" />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-90 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-linear-to-t from-card/80 via-transparent to-transparent opacity-90 transition-opacity duration-500" />
                   <div className="absolute top-3 md:top-6 left-3 md:left-6 flex flex-col gap-2 z-10">
-                    <span className="bg-[#0066FF] text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[7px] md:text-[9px] uppercase font-bold w-fit shadow-lg">{article.cat}</span>
+                    <span className="bg-primary text-primary-foreground px-2 md:px-3 py-0.5 md:py-1 rounded-full text-[7px] md:text-[9px] uppercase font-bold w-fit shadow-lg">{article.cat}</span>
                   </div>
                   <div className={`absolute bottom-3 md:bottom-6 z-10 ${lang === "ar" ? "left-3 md:left-6" : "right-3 md:right-6"}`}>
-                    <div className="p-2 md:p-3 rounded-full bg-white text-black shadow-2xl group-hover:bg-[#0066FF] group-hover:text-white transition-colors">
+                    <div className="p-2 md:p-3 rounded-full bg-primary text-primary-foreground shadow-2xl group-hover:bg-primary/90 transition-colors">
                       <ArrowUpRight className={`w-3 h-3 md:w-4 md:h-4 ${lang === "ar" ? "-scale-x-100" : ""}`} />
                     </div>
                   </div>
                 </div>
-                <p className="text-[8px] md:text-[10px] text-zinc-500 uppercase font-black tracking-widest mb-1.5 md:mb-4">{article.date} • {article.readTime}</p>
+                <p className="text-[8px] md:text-[10px] text-muted-foreground/70 uppercase font-black tracking-widest mb-1.5 md:mb-4">{article.date} • {article.readTime}</p>
                 <h3 className={`text-xs sm:text-sm md:text-xl font-bold group-hover:text-[#0066FF] transition-colors leading-tight md:leading-tight line-clamp-2 ${lang === "ar" ? "text-right" : "text-left"}`}>
                   {isAr ? article.title_ar : article.title_en}
                 </h3>
@@ -1022,13 +1022,13 @@ export default function Home() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-8 p-6 md:p-8 border border-white/5 bg-white/5 backdrop-blur-sm rounded-4xl flex md:hidden flex-col items-center gap-6"
+          className="mt-8 p-6 md:p-8 border border-border bg-secondary backdrop-blur-sm rounded-4xl flex md:hidden flex-col items-center gap-6"
         >
-          <h3 className="text-xl font-medium text-white tracking-tight text-center">
+          <h3 className="text-xl font-medium text-foreground tracking-tight text-center">
             {lang === "ar" ? "دعنا نلقي نظرة على" : "Let's Have a Look at"} <span className="text-[#0066FF]">{lang === "ar" ? "مقالاتنا" : "Our Articles"}</span>
           </h3>
           <Link href="/resources/tech-insights" className="w-full">
-            <Button size="lg" className="w-full bg-[#0066FF] hover:bg-[#0052CC] text-white px-8 py-6 rounded-full group transition-all duration-300">
+            <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 rounded-full group transition-all duration-300">
               {lang === "ar" ? "رؤية المزيد" : "See More"}
               <ArrowUpRight className={`ms-2 w-4 h-4 transition-transform group-hover:-translate-y-1 ${lang === "ar" ? "-scale-x-100 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
             </Button>

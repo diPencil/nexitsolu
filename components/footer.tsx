@@ -23,14 +23,14 @@ export function Footer() {
 
     if (isAuthPage) {
         return (
-            <footer className={`bg-black py-6 px-6 border-t border-zinc-900/50 ${pathname?.startsWith('/nexbot') ? 'hidden md:block' : ''}`}>
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-zinc-600 uppercase tracking-[0.2em]">
+            <footer className={`bg-background border-t border-border py-6 px-6 ${pathname?.startsWith('/nexbot') ? 'hidden md:block' : ''}`}>
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
                     <div>{lang === 'ar' ? 'نيكسيت سوليوشنز © ٢٠٢٦ - جميع الحقوق محفوظة' : `Nexit Solutions © ${new Date().getFullYear()} — Engineering Excellence. All Rights Reserved.`}</div>
                     <a 
                         href="https://dipencil.com/" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="hover:text-[#0066FF] transition-colors"
+                        className="hover:text-primary transition-colors"
                     >
                         {lang === "ar" ? "NexIT Solutions مدعوم بواسطة بنسل استوديو" : "NexIT Solutions Powered by Pencil Studio"}
                     </a>
@@ -40,26 +40,27 @@ export function Footer() {
     }
 
     return (
-        <footer className="bg-black border-t border-zinc-900 pt-20 pb-10 px-6">
+        <footer className="bg-background border-t border-border pt-20 pb-10 px-6">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
                     {/* Column 1: About */}
                     <div className="space-y-6">
-                        <Image src="/nexitlogo.png" alt="Nexit Logo" width={130} height={30} className="h-8 w-auto object-contain brightness-110" />
-                        <p className="text-zinc-400 text-sm leading-relaxed max-w-xs">
+                        <Image src="/nexit-logo.png" alt="Nexit Logo" width={130} height={30} className="h-8 w-auto object-contain dark:hidden" />
+                        <Image src="/nexitlogo.png" alt="Nexit Logo" width={130} height={30} className="h-8 w-auto object-contain brightness-110 hidden dark:block" />
+                        <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
                             {t("footer.description")}
                         </p>
                         <div className="flex gap-4">
-                            <a href="https://www.linkedin.com/company/nexitsolucom" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 transition-all text-zinc-400 hover:text-white">
+                            <a href="https://www.linkedin.com/company/nexitsolucom" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-border hover:border-primary/50 hover:bg-accent transition-all text-muted-foreground hover:text-foreground">
                                 <Linkedin className="h-4 w-4" />
                             </a>
-                            <a href="https://www.facebook.com/nexitsolucom/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 transition-all text-zinc-400 hover:text-white">
+                            <a href="https://www.facebook.com/nexitsolucom/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-border hover:border-primary/50 hover:bg-accent transition-all text-muted-foreground hover:text-foreground">
                                 <Facebook className="h-4 w-4" />
                             </a>
-                            <a href="https://www.instagram.com/nexitsolucom/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 transition-all text-zinc-400 hover:text-white">
+                            <a href="https://www.instagram.com/nexitsolucom/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-border hover:border-primary/50 hover:bg-accent transition-all text-muted-foreground hover:text-foreground">
                                 <Instagram className="h-4 w-4" />
                             </a>
-                            <a href="https://api.whatsapp.com/send/?phone=201031620990" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 transition-all text-zinc-400 hover:text-white">
+                            <a href="https://api.whatsapp.com/send/?phone=201031620990" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-border hover:border-primary/50 hover:bg-accent transition-all text-muted-foreground hover:text-foreground">
                                 <WhatsAppIcon className="h-4 w-4" />
                             </a>
                         </div>
@@ -67,9 +68,9 @@ export function Footer() {
                             href="https://dipencil.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 pt-1 text-[11px] text-zinc-500 hover:text-[#0066FF] transition-colors"
+                            className="flex items-center gap-1.5 pt-1 text-[11px] text-muted-foreground hover:text-primary transition-colors"
                         >
-                            <HeartHandshake className="w-3.5 h-3.5 text-[#0066FF]" />
+                            <HeartHandshake className="w-3.5 h-3.5 text-primary" />
                             <span>
                                 {lang === "ar" ? "NexIT Solutions مدعوم بواسطة بنسل استوديو" : "NexIT Solutions Powered by Pencil Studio"}
                             </span>
@@ -78,57 +79,57 @@ export function Footer() {
 
                     {/* Column 2: Quick Links */}
                     <div className="space-y-6">
-                        <h4 className="text-white font-semibold uppercase tracking-wider text-xs">{t("footer.columns.links")}</h4>
+                        <h4 className="text-foreground font-semibold uppercase tracking-wider text-xs">{t("footer.columns.links")}</h4>
                         <ul className="space-y-1">
-                            <li><Link href="/" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "الرئيسية" : "Home"}</Link></li>
-                            <li><Link href="/about/nexit-land" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "من نحن" : "About Nexit"}</Link></li>
-                            <li><Link href="/about/team" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "فريقنا" : "Our Team"}</Link></li>
-                            <li><Link href="/about/partners" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "شركاؤنا" : "Partners"}</Link></li>
-                            <li><Link href="/resources/case-studies" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "دراسات الحالة" : "Case Studies"}</Link></li>
-                            <li><Link href="/contact" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "تواصل معنا" : "Contact Us"}</Link></li>
+                            <li><Link href="/" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "الرئيسية" : "Home"}</Link></li>
+                            <li><Link href="/about/nexit-land" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "من نحن" : "About Nexit"}</Link></li>
+                            <li><Link href="/about/team" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "فريقنا" : "Our Team"}</Link></li>
+                            <li><Link href="/about/partners" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "شركاؤنا" : "Partners"}</Link></li>
+                            <li><Link href="/resources/case-studies" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "دراسات الحالة" : "Case Studies"}</Link></li>
+                            <li><Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "تواصل معنا" : "Contact Us"}</Link></li>
                         </ul>
                     </div>
 
                     {/* Column 3: Services */}
                     <div className="space-y-6">
-                        <h4 className="text-white font-semibold uppercase tracking-wider text-xs">{t("footer.columns.services_footer")}</h4>
+                        <h4 className="text-foreground font-semibold uppercase tracking-wider text-xs">{t("footer.columns.services_footer")}</h4>
                         <ul className="space-y-1">
-                            <li><Link href="/services/it-accelerators" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "خدمات IT" : "IT Accelerators"}</Link></li>
-                            <li><Link href="/services/digital" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "الخدمات الرقمية" : "Digital Services"}</Link></li>
-                            <li><Link href="/services/software" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "تطوير البرمجيات" : "Software Development"}</Link></li>
-                            <li><Link href="/services/hardware" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "الأجهزة والحلول" : "Hardware Solutions"}</Link></li>
-                            <li><Link href="/services/hosting-vps" className="text-zinc-500 hover:text-[#0066FF] transition-colors text-sm">{lang === "ar" ? "الاستضافة وVPS" : "Hosting & VPS"}</Link></li>
+                            <li><Link href="/services/it-accelerators" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "خدمات IT" : "IT Accelerators"}</Link></li>
+                            <li><Link href="/services/digital" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "الخدمات الرقمية" : "Digital Services"}</Link></li>
+                            <li><Link href="/services/software" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "تطوير البرمجيات" : "Software Development"}</Link></li>
+                            <li><Link href="/services/hardware" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "الأجهزة والحلول" : "Hardware Solutions"}</Link></li>
+                            <li><Link href="/services/hosting-vps" className="text-muted-foreground hover:text-primary transition-colors text-sm">{lang === "ar" ? "الاستضافة وVPS" : "Hosting & VPS"}</Link></li>
                         </ul>
                     </div>
 
                     {/* Column 4: Newsletter + Contact */}
                     <div className="space-y-6">
-                        <h4 className="text-white font-semibold uppercase tracking-wider text-xs">{t("footer.newsletter.title")}</h4>
+                        <h4 className="text-foreground font-semibold uppercase tracking-wider text-xs">{t("footer.newsletter.title")}</h4>
                         <div className="relative group">
                             <input
                                 type="email"
                                 placeholder={t("footer.newsletter.placeholder")}
-                                className="w-full bg-zinc-900/50 border border-zinc-800 rounded-full py-3 px-6 text-sm text-white focus:outline-none focus:border-[#0066FF] transition-colors"
+                                className="w-full bg-input/50 border border-border rounded-full py-3 px-6 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
                                 style={{ borderRadius: "9999px" }}
                                 dir={lang === "ar" ? "rtl" : "ltr"}
                             />
-                            <button className={`absolute top-1/2 -translate-y-1/2 p-2 bg-[#0066FF] rounded-full text-white hover:bg-blue-600 transition-all ${lang === "ar" ? "left-1.5" : "right-1.5"}`}>
+                            <button className={`absolute top-1/2 -translate-y-1/2 p-2 bg-primary rounded-full text-primary-foreground hover:bg-primary/90 transition-all ${lang === "ar" ? "left-1.5" : "right-1.5"}`}>
                                 <ArrowRight className={`h-4 w-4 ${lang === "ar" ? "rotate-180" : ""}`} />
                             </button>
                         </div>
-                        <p className="text-[10px] text-zinc-600 uppercase tracking-widest">{t("footer.rights")} &copy; {new Date().getFullYear()}</p>
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{t("footer.rights")} &copy; {new Date().getFullYear()}</p>
 
                         {/* Quick Contact Icons */}
-                        <div className="space-y-3 pt-2 border-t border-zinc-900">
-                            <h4 className="text-white font-semibold uppercase tracking-wider text-xs">{lang === "ar" ? "تواصل سريع" : "Quick Contact"}</h4>
+                        <div className="space-y-3 pt-2 border-t border-border">
+                            <h4 className="text-foreground font-semibold uppercase tracking-wider text-xs">{lang === "ar" ? "تواصل سريع" : "Quick Contact"}</h4>
                             <div className="flex items-center gap-3">
-                                <a href="mailto:info@nexitsolu.com" title="info@nexitsolu.com" className="p-2 rounded-full border border-zinc-800 hover:border-[#0066FF] hover:bg-[#0066FF]/10 transition-all text-zinc-400 hover:text-white">
+                                <a href="mailto:info@nexitsolu.com" title="info@nexitsolu.com" className="p-2 rounded-full border border-border hover:border-primary hover:bg-primary/10 transition-all text-muted-foreground hover:text-primary">
                                     <Mail className="w-4 h-4" />
                                 </a>
-                                <a href="tel:+201031620990" title={lang === "ar" ? "فرع الغردقة: +201031620990" : "Hurghada Branch: +201031620990"} className="p-2 rounded-full border border-zinc-800 hover:border-[#0066FF] hover:bg-[#0066FF]/10 transition-all text-zinc-400 hover:text-white">
+                                <a href="tel:+201031620990" title={lang === "ar" ? "فرع الغردقة: +201031620990" : "Hurghada Branch: +201031620990"} className="p-2 rounded-full border border-border hover:border-primary hover:bg-primary/10 transition-all text-muted-foreground hover:text-primary">
                                     <Phone className="w-4 h-4" />
                                 </a>
-                                <a href="/contact" title={lang === "ar" ? "فروع القاهرة والغردقة" : "Cairo & Hurghada Branches"} className="p-2 rounded-full border border-zinc-800 hover:border-[#0066FF] hover:bg-[#0066FF]/10 transition-all text-zinc-400 hover:text-white">
+                                <a href="/contact" title={lang === "ar" ? "فروع القاهرة والغردقة" : "Cairo & Hurghada Branches"} className="p-2 rounded-full border border-border hover:border-primary hover:bg-primary/10 transition-all text-muted-foreground hover:text-primary">
                                     <MapPin className="w-4 h-4" />
                                 </a>
                             </div>
@@ -136,16 +137,15 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="pt-10 border-t border-zinc-900/50 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-zinc-600 uppercase tracking-[0.2em]">
+                <div className="pt-10 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
                     <div>Nexit Solutions — Engineering Excellence</div>
                     <div className="flex flex-wrap gap-x-8 gap-y-4 justify-center md:justify-end">
-                        <Link href="/privacy" className="hover:text-white transition-colors">{lang === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy'}</Link>
-                        <Link href="/terms" className="hover:text-white transition-colors">{lang === 'ar' ? 'شروط الخدمة' : 'Terms of Service'}</Link>
+                        <Link href="/privacy" className="hover:text-foreground transition-colors">{lang === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy'}</Link>
+                        <Link href="/terms" className="hover:text-foreground transition-colors">{lang === 'ar' ? 'شروط الخدمة' : 'Terms of Service'}</Link>
                     </div>
                 </div>
             </div>
         </footer>
     )
 }
-
 

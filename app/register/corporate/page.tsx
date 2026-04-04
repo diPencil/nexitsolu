@@ -65,7 +65,7 @@ export default function CorporateRegisterPage() {
     ]
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center p-6 lg:p-12 relative overflow-hidden" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+        <div className="min-h-screen bg-background flex items-center justify-center p-6 lg:p-12 relative overflow-hidden" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
             {/* Background Effects */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-[#0066FF]/10 rounded-full blur-[100px]" />
@@ -77,15 +77,15 @@ export default function CorporateRegisterPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="w-full max-w-2xl relative z-10"
             >
-                <div className="bg-zinc-950 border border-white/5 rounded-[2.5rem] p-8 md:p-12 shadow-2xl backdrop-blur-xl">
+                <div className="bg-card border border-border rounded-[2.5rem] p-8 md:p-12 shadow-2xl backdrop-blur-xl">
                     <div className="text-center mb-10">
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#0066FF]/10 text-[#0066FF] mb-6">
                             <Building2 className="w-8 h-8" />
                         </div>
-                        <h1 className="text-3xl font-bold text-white mb-2">
+                        <h1 className="text-3xl font-bold text-foreground mb-2">
                             {lang === 'ar' ? 'تسجيل الشركات' : 'Corporate Registration'}
                         </h1>
-                        <p className="text-zinc-500 text-sm">
+                        <p className="text-muted-foreground text-sm">
                             {lang === 'ar' ? 'انضم لشركائنا واحصل على خدمات ودعم تقني مخصص لشركتك' : 'Join our partners and get customized enterprise tech support'}
                         </p>
                     </div>
@@ -98,7 +98,7 @@ export default function CorporateRegisterPage() {
                                 type="text"
                                 required
                                 placeholder={lang === 'ar' ? 'اسم الشركة' : 'Company Name'}
-                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                 value={formData.username}
                                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                             />
@@ -111,7 +111,7 @@ export default function CorporateRegisterPage() {
                                 type="text"
                                 required
                                 placeholder={lang === 'ar' ? 'اسم صاحب الحساب' : 'Account Owner Name'}
-                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             />
@@ -122,11 +122,11 @@ export default function CorporateRegisterPage() {
                             <Briefcase className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
                             <select
                                 required
-                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-white focus:border-[#0066FF] outline-none transition-all appearance-none cursor-pointer`}
+                                className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all appearance-none cursor-pointer`}
                                 value={formData.position}
                                 onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                             >
-                                <option value="" disabled className="text-zinc-500">
+                                <option value="" disabled className="text-muted-foreground">
                                     {lang === 'ar' ? 'المنصب في الشركة' : 'Your Position'}
                                 </option>
                                 <option value="Owner">{lang === 'ar' ? 'صاحب الشركة' : 'Company Owner'}</option>
@@ -143,7 +143,7 @@ export default function CorporateRegisterPage() {
                                 type="email"
                                 required
                                 placeholder={lang === 'ar' ? 'إيميل الشركة' : 'Company Email'}
-                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             />
@@ -156,7 +156,7 @@ export default function CorporateRegisterPage() {
                                 type="tel"
                                 required
                                 placeholder={lang === 'ar' ? 'رقم الخاص بالشركة' : 'Company Phone'}
-                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                 value={formData.phone}
                                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                             />
@@ -169,7 +169,7 @@ export default function CorporateRegisterPage() {
                                 type="tel"
                                 required
                                 placeholder={lang === 'ar' ? 'رقم الواتساب الخاص بالشركة' : 'Company WhatsApp Number'}
-                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                 value={formData.whatsapp}
                                 onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                             />
@@ -177,14 +177,14 @@ export default function CorporateRegisterPage() {
 
                         {/* Governorate */}
                         <div className="relative w-full">
-                            <MapPin className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600 z-10 pointer-events-none`} />
+                            <MapPin className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground/80 z-10 pointer-events-none`} />
                             <select
                                 required
-                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-white focus:border-[#0066FF] outline-none transition-all appearance-none cursor-pointer relative z-0`}
+                                className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all appearance-none cursor-pointer relative z-0`}
                                 value={formData.governorate}
                                 onChange={(e) => setFormData({ ...formData, governorate: e.target.value })}
                             >
-                                <option value="" disabled className="text-zinc-500">
+                                <option value="" disabled className="text-muted-foreground">
                                     {lang === 'ar' ? 'اختار المحافظة' : 'Select Governorate'}
                                 </option>
                                 {governorates.map((gov) => (
@@ -202,7 +202,7 @@ export default function CorporateRegisterPage() {
                                 type="password"
                                 required
                                 placeholder={lang === 'ar' ? 'كلمة المرور' : 'Password'}
-                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             />
@@ -212,7 +212,7 @@ export default function CorporateRegisterPage() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="md:col-span-2 w-full py-4 rounded-2xl bg-[#0066FF] text-white font-bold hover:bg-blue-600 transition-all flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
+                            className="md:col-span-2 w-full py-4 rounded-2xl bg-primary text-primary-foreground font-bold hover:bg-blue-600 transition-all flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
                         >
                             {isLoading ? (
                                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -225,7 +225,7 @@ export default function CorporateRegisterPage() {
                         </button>
                     </form>
 
-                    <div className="mt-8 text-center text-sm text-zinc-500">
+                    <div className="mt-8 text-center text-sm text-muted-foreground">
                         {lang === 'ar' ? 'لديك حساب بالفعل؟' : 'Already have an account?'}
                         <Link href="/login" className="text-[#0066FF] hover:underline mx-1">
                             {lang === 'ar' ? 'تسجيل الدخول' : 'Login'}

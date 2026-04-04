@@ -43,7 +43,7 @@ const CATEGORIES_MAP: Record<string, any> = {
 }
 
 export default function ProductDetailPage() {
-    const { lang } = useLanguage()
+    const { lang, t } = useLanguage()
     const { data: session, status } = useSession()
     const params = useParams()
     const router = useRouter()
@@ -194,7 +194,7 @@ export default function ProductDetailPage() {
                     .catch(e => console.error("Stats update failed:", e));
                 }
             } catch (error) {
-                toast.error(lang === 'ar' ? 'حدث خطأ في جلب المنتج' : 'Failed to load product')
+                toast.error(t("store.fetch_error"))
             } finally {
                 setIsLoading(false)
             }
@@ -248,7 +248,7 @@ export default function ProductDetailPage() {
             if (res.ok) {
                 const data = await res.json()
                 setIsFavorite(data.status === 'added')
-                toast.success(data.status === 'added' ? (lang === 'ar' ? 'تمت الإضافة للمفضلة' : 'Added to favorites') : (lang === 'ar' ? 'تم الحذف من المفضلة' : 'Removed from favorites'))
+                toast.success(data.status === 'added' ? t("store.added_to_favorites") : t("store.removed_from_favorites"))
             }
         } catch (error) {}
     }
@@ -267,7 +267,7 @@ export default function ProductDetailPage() {
             if (res.ok) {
                 const data = await res.json()
                 setIsWishlisted(data.status === 'added')
-                toast.success(data.status === 'added' ? (lang === 'ar' ? 'تمت الإضافة لقائمة الأمنيات' : 'Added to wishlist') : (lang === 'ar' ? 'تم الحذف من قائمة الأمنيات' : 'Removed from wishlist'))
+                toast.success(data.status === 'added' ? t("store.added_to_wishlist") : t("store.removed_from_wishlist"))
             }
         } catch (error) {}
     }
@@ -276,7 +276,7 @@ export default function ProductDetailPage() {
         const url = window.location.href
         try {
             await navigator.clipboard.writeText(url)
-            toast.success(lang === 'ar' ? 'تم نسخ الرابط الحافظة!' : 'Link copied to clipboard!')
+            toast.success(t("store.link_copied"))
             
             // Increment share count
             if (product?.id) {
@@ -294,7 +294,7 @@ export default function ProductDetailPage() {
                 .catch(e => console.error("Share stats update failed:", e));
             }
         } catch (err) {
-            toast.error(lang === 'ar' ? 'حدث خطأ أثناء النسخ' : 'Failed to copy link')
+            toast.error(t("store.copy_failed"))
         }
     }
 
@@ -313,7 +313,7 @@ export default function ProductDetailPage() {
             image: product.image,
             stock: product.stock || 99
         }, qty)
-        toast.success(lang === 'ar' ? 'تمت إضافة المنتج للسلة' : 'Added to cart!')
+        toast.success(t("store.add_to_cart_success"))
     }
 
     const handleBuyNow = () => {
@@ -334,7 +334,7 @@ export default function ProductDetailPage() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-black pt-32 flex items-center justify-center">
+            <div className="min-h-screen bg-background pt-32 flex items-center justify-center">
                 <Loader2 className="w-10 h-10 animate-spin text-[#0066FF]" />
             </div>
         )
@@ -342,9 +342,9 @@ export default function ProductDetailPage() {
 
     if (!product) {
         return (
-            <div className="min-h-screen bg-black pt-32 text-center text-white">
-                <h1 className="text-2xl font-bold">{lang === 'ar' ? 'المنتج غير موجود' : 'Product Not Found'}</h1>
-                <Link href="/store" className="text-[#0066FF] mt-4 inline-block">{lang === 'ar' ? 'العودة للمتجر' : 'Back to Store'}</Link>
+            <div className="min-h-screen bg-background pt-32 text-center text-foreground">
+                <h1 className="text-2xl font-bold">{t("store.product_not_found")}</h1>
+                <Link href="/store" className="text-[#0066FF] mt-4 inline-block">{t("store.back_to_store")}</Link>
             </div>
         )
     }
@@ -372,11 +372,11 @@ export default function ProductDetailPage() {
 
     return (
         <>
-        <div className="min-h-screen bg-[#050505] pt-32 pb-20 px-4 md:px-6 text-white" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+        <div className="min-h-screen bg-background pt-32 pb-20 px-4 md:px-6 text-foreground" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
             <div className="max-w-7xl mx-auto">
-                <Link href="/store" className="inline-flex items-center text-zinc-500 hover:text-white mb-8 transition-colors text-sm font-medium">
+                <Link href="/store" className="inline-flex items-center text-muted-foreground/70 hover:text-foreground mb-8 transition-colors text-sm font-medium">
                     {lang === 'ar' ? <ArrowRight className="w-4 h-4 ml-2" /> : <ArrowLeft className="w-4 h-4 mr-2" />}
-                    {lang === 'ar' ? 'العودة للمتجر' : 'Back to Store'}
+                    {t("store.back_to_store")}
                 </Link>
 
                     {/* Main Product Layout */}
@@ -401,14 +401,14 @@ export default function ProductDetailPage() {
                                                 <Star key={star} className={`w-2.5 h-2.5 ${star <= averageRating ? 'fill-yellow-500 text-yellow-500' : 'text-zinc-700'}`} />
                                             ))}
                                         </div>
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-white transition-colors">
-                                            {lang === 'ar' ? 'التقييمات' : 'Reviews'}
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-primary-foreground transition-colors">
+                                            {t("store.reviews")}
                                             <span className="ml-1 text-[#0066FF]">({reviewsCount})</span>
                                         </span>
-                                        <div className="h-4 w-px bg-white/10 hidden sm:block" />
-                                        <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                                        <div className="h-4 w-px bg-muted hidden sm:block" />
+                                        <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">
                                             <Eye className="w-3 h-3 text-orange-500" />
-                                            <span>{product.views || 0} {lang === 'ar' ? 'مشاهدة' : 'Views'}</span>
+                                            <span>{product.views || 0} {t("store.views")}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -419,28 +419,28 @@ export default function ProductDetailPage() {
                                     </h1>
 
                                     <div className="flex items-center gap-2 shrink-0">
-                                        <button onClick={() => setIsCartOpen(true)} className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:border-[#0066FF] hover:text-[#0066FF] transition-all relative group/cart">
+                                        <button onClick={() => setIsCartOpen(true)} className="w-12 h-12 rounded-2xl bg-card border border-border flex items-center justify-center text-muted-foreground hover:border-[#0066FF] hover:text-[#0066FF] transition-all relative group/cart">
                                             <ShoppingCart className="w-5 h-5" />
-                                            {cartItem && <span className="absolute top-3 right-3 w-2 h-2 bg-[#0066FF] rounded-full border-2 border-zinc-900" />}
+                                            {cartItem && <span className="absolute top-3 right-3 w-2 h-2 bg-[#0066FF] rounded-full border-2 border-border" />}
                                         </button>
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
-                                                <button className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all">
+                                                <button className="w-12 h-12 rounded-2xl bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-all">
                                                     <MoreVertical className="w-5 h-5" />
                                                 </button>
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent align={lang === 'ar' ? "start" : "end"} className="w-56 bg-zinc-900 border-white/10 rounded-2xl p-2">
-                                                <DropdownMenuItem onClick={toggleFavorite} className={`rounded-xl p-3 flex items-center gap-3 cursor-pointer ${isFavorite ? 'text-red-500 bg-red-500/10' : 'text-zinc-400 hover:text-white'}`}>
+                                            <DropdownMenuContent align={lang === 'ar' ? "start" : "end"} className="w-56 bg-card border-border rounded-2xl p-2">
+                                                <DropdownMenuItem onClick={toggleFavorite} className={`rounded-xl p-3 flex items-center gap-3 cursor-pointer ${isFavorite ? 'text-red-500 bg-red-500/10' : 'text-muted-foreground hover:text-foreground'}`}>
                                                     <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
-                                                    <span className="font-bold text-sm">{lang === 'ar' ? 'أضف للمفضلة' : 'Add to Favorite'}</span>
+                                                    <span className="font-bold text-sm">{t("store.add_to_favorite")}</span>
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={toggleWishlist} className={`rounded-xl p-3 flex items-center gap-3 cursor-pointer ${isWishlisted ? 'text-blue-500 bg-blue-500/10' : 'text-zinc-400 hover:text-white'}`}>
+                                                <DropdownMenuItem onClick={toggleWishlist} className={`rounded-xl p-3 flex items-center gap-3 cursor-pointer ${isWishlisted ? 'text-blue-500 bg-blue-500/10' : 'text-muted-foreground hover:text-foreground'}`}>
                                                     <Bookmark className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
-                                                    <span className="font-bold text-sm">{lang === 'ar' ? 'قائمة الأمنيات' : 'Wishlist'}</span>
+                                                    <span className="font-bold text-sm">{t("store.wishlist")}</span>
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={handleShare} className="rounded-xl p-3 flex items-center gap-3 text-zinc-400 hover:text-white cursor-pointer">
+                                                <DropdownMenuItem onClick={handleShare} className="rounded-xl p-3 flex items-center gap-3 text-muted-foreground hover:text-foreground cursor-pointer">
                                                     <Share2 className="w-4 h-4" />
-                                                    <span className="font-bold text-sm">{lang === 'ar' ? 'مشاركة المنتج' : 'Share Product'}</span>
+                                                    <span className="font-bold text-sm">{t("store.share_product")}</span>
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
@@ -449,12 +449,12 @@ export default function ProductDetailPage() {
                             </div>
 
                             <div className={`flex items-baseline gap-4 pt-2 ${lang === 'ar' ? 'justify-start' : 'justify-start'}`}>
-                                <span className="text-4xl md:text-5xl font-medium text-white tracking-tight">
-                                    {(product.discountPrice || product.price) + (selectedZone?.price || 0)} {lang === 'ar' ? 'ج.م' : 'EGP'}
+                                <span className="text-4xl md:text-5xl font-medium text-foreground tracking-tight">
+                                    {(product.discountPrice || product.price) + (selectedZone?.price || 0)} {t("store.currency")}
                                 </span>
                                 {hasDiscount && (
                                     <span className="text-xl text-zinc-600 line-through">
-                                        {product.price + (selectedZone?.price || 0)} {lang === 'ar' ? 'ج.م' : 'EGP'}
+                                        {product.price + (selectedZone?.price || 0)} {t("store.currency")}
                                     </span>
                                 )}
                             </div>
@@ -468,10 +468,10 @@ export default function ProductDetailPage() {
                                     const u = mainImage || product.image
                                     if (u) setLightboxUrl(u)
                                 }}
-                                className="relative aspect-square w-full rounded-3xl md:rounded-[2.5rem] bg-zinc-950 border border-white/5 overflow-hidden group text-left p-0 cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                                className="relative aspect-square w-full rounded-3xl md:rounded-[2.5rem] bg-card border border-border overflow-hidden group text-left p-0 cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
                                 aria-label={lang === 'ar' ? 'عرض الصورة بالحجم الكامل' : 'View full size image'}
                             >
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066FF]/20 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#0066FF]/30 transition-colors duration-700" />
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#0066FF]/30 transition-colors duration-700" />
                                 <Image
                                     src={mainImage || product.image || "/placeholder.svg"}
                                     alt={name}
@@ -480,12 +480,12 @@ export default function ProductDetailPage() {
                                     priority
                                 />
                                 <div className={`absolute top-6 ${lang === 'ar' ? 'left-6' : 'right-6'} flex gap-2 z-20 pointer-events-none`}>
-                                    <span className="px-4 py-1.5 bg-[#0066FF] rounded-full text-xs font-black uppercase tracking-widest text-white shadow-[0_0_20px_rgba(0,102,255,0.4)]">
-                                        {lang === 'ar' && product.tag === 'NEW' ? 'جديد' : (product.tag || 'NEW')}
+                                    <span className="px-4 py-1.5 bg-[#0066FF] rounded-full text-xs font-black uppercase tracking-widest text-foreground shadow-[0_0_20px_rgba(0,102,255,0.4)]">
+                                        {lang === 'ar' && product.tag === 'NEW' ? t("store.tags.new") : (t(`store.tags.${(product.tag || 'NEW').toLowerCase()}`) || (product.tag || 'NEW'))}
                                     </span>
                                     {hasDiscount && (
-                                        <span className="px-4 py-1.5 bg-red-500 rounded-full text-xs font-black uppercase tracking-widest text-white shadow-[0_0_20px_rgba(239,68,68,0.4)]">
-                                            {lang === 'ar' ? 'عرض خاص' : 'SALE'}
+                                        <span className="px-4 py-1.5 bg-red-500 rounded-full text-xs font-black uppercase tracking-widest text-foreground shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+                                            {t("store.tags.sale")}
                                         </span>
                                     )}
                                 </div>
@@ -497,7 +497,7 @@ export default function ProductDetailPage() {
                                         <button
                                             key={i}
                                             onClick={() => setMainImage(img)}
-                                            className={`relative w-24 h-24 rounded-2xl bg-zinc-950 border overflow-hidden shrink-0 transition-all ${mainImage === img ? 'border-[#0066FF] ring-2 ring-[#0066FF]/20 scale-95' : 'border-white/5 opacity-50 hover:opacity-100 hover:border-white/20'}`}
+                                            className={`relative w-24 h-24 rounded-2xl bg-card border overflow-hidden shrink-0 transition-all ${mainImage === img ? 'border-[#0066FF] ring-2 ring-[#0066FF]/20 scale-95' : 'border-border opacity-50 hover:opacity-100 hover:border-white/20'}`}
                                         >
                                             <Image src={img} alt={`${name} ${i}`} fill className="object-cover p-2" />
                                         </button>
@@ -508,31 +508,31 @@ export default function ProductDetailPage() {
 
                         {/* 3. Details Block (Description, Features, Buy) */}
                         <div className={`flex flex-col space-y-6 lg:col-start-2 lg:row-start-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-                            <div className="prose prose-invert max-w-none text-zinc-400 leading-relaxed bg-white/5 p-6 rounded-3xl border border-white/5 w-full">
-                                <h3 className="text-white font-bold mb-2 text-sm uppercase tracking-widest">
-                                    {lang === 'ar' ? 'الوصف' : 'Description'}
+                            <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed bg-secondary p-6 rounded-3xl border border-border w-full">
+                                <h3 className="text-foreground font-bold mb-2 text-sm uppercase tracking-widest">
+                                    {t("store.description")}
                                 </h3>
-                                <p>{description || (lang === 'ar' ? 'لا يوجد وصف متاح.' : 'No description available for this product.')}</p>
+                                <p>{description || t("store.no_description")}</p>
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 {[
-                                    { icon: ShieldCheck, title: lang === 'ar' ? 'ضمان أصلي' : 'Original Warranty' },
-                                    { icon: Truck, title: lang === 'ar' ? 'شحن سريع' : 'Fast Delivery' },
-                                    { icon: RotateCcw, title: lang === 'ar' ? 'إرجاع في ١٤ يوم' : '14-Days Return' },
+                                    { icon: ShieldCheck, title: t("store.features.warranty") },
+                                    { icon: Truck, title: t("store.features.delivery") },
+                                    { icon: RotateCcw, title: t("store.features.returns") },
                                 ].map((f, i) => (
-                                    <div key={i} className={`flex items-center gap-3 p-4 rounded-2xl bg-zinc-950 border border-zinc-900 text-zinc-300 ${lang === 'ar' ? 'flex-row' : ''}`}>
+                                    <div key={i} className={`flex items-center gap-3 p-4 rounded-2xl bg-card border border-border text-muted-foreground ${lang === 'ar' ? 'flex-row' : ''}`}>
                                         <f.icon className="w-5 h-5 text-[#0066FF]" />
                                         <span className="text-sm font-bold">{f.title}</span>
                                     </div>
                                 ))}
                                 
                                 <div className="relative group/ship">
-                                    <div className={`flex items-center gap-3 p-4 rounded-2xl bg-zinc-950 border transition-all ${selectedZone ? 'border-[#0066FF]/50 ring-1 ring-[#0066FF]/20' : 'border-zinc-900'}`}>
-                                        <MapPin className={`w-5 h-5 ${selectedZone ? 'text-[#0066FF]' : 'text-zinc-500'}`} />
+                                    <div className={`flex items-center gap-3 p-4 rounded-2xl bg-card border transition-all ${selectedZone ? 'border-primary/50 ring-1 ring-primary/20' : 'border-border'}`}>
+                                        <MapPin className={`w-5 h-5 ${selectedZone ? 'text-[#0066FF]' : 'text-muted-foreground/70'}`} />
                                         <div className="flex-1 min-w-0">
                                             <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest leading-none mb-1">
-                                                {lang === 'ar' ? 'منطقة الشحن' : 'Shipping Zone'}
+                                                {t("store.shipping_zone")}
                                             </p>
                                             <select 
                                                 onChange={(e) => {
@@ -541,18 +541,18 @@ export default function ProductDetailPage() {
                                                     if (zone) localStorage.setItem('nexit_shipping_city', zone.name)
                                                     else localStorage.removeItem('nexit_shipping_city')
                                                 }}
-                                                className={`w-full bg-transparent text-sm font-black text-white focus:outline-none appearance-none cursor-pointer ${lang === 'ar' ? 'pl-4' : 'pr-4'}`}
+                                                className={`w-full bg-transparent text-sm font-black text-foreground focus:outline-none appearance-none cursor-pointer ${lang === 'ar' ? 'pl-4' : 'pr-4'}`}
                                                 value={selectedZone?.name || ""}
                                             >
-                                                <option value="" className="bg-zinc-950 text-zinc-500">{lang === 'ar' ? 'اختر المحافظة...' : 'Select Governorate...'}</option>
+                                                <option value="" className="bg-card text-muted-foreground/70">{t("store.select_governorate")}</option>
                                                 {zones.map(z => (
-                                                    <option key={z.name} value={z.name} className="bg-zinc-950 text-white">
-                                                        {lang === 'ar' ? z.nameAr : z.nameEn} ({z.price} {lang === 'ar' ? 'ج.م' : 'EGP'})
+                                                    <option key={z.name} value={z.name} className="bg-card text-foreground">
+                                                        {lang === 'ar' ? z.nameAr : z.nameEn} ({z.price} {t("store.currency")})
                                                     </option>
                                                 ))}
                                             </select>
                                         </div>
-                                        <ChevronDown className="w-3.5 h-3.5 text-zinc-500 group-hover/ship:translate-y-0.5 transition-transform" />
+                                        <ChevronDown className="w-3.5 h-3.5 text-muted-foreground/70 group-hover/ship:translate-y-0.5 transition-transform" />
                                     </div>
                                 </div>
                             </div>
@@ -563,21 +563,21 @@ export default function ProductDetailPage() {
                                       <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${product.stock > 0 ? 'bg-green-400' : 'bg-red-400'}`}></span>
                                       <span className={`relative inline-flex rounded-full h-3 w-3 ${product.stock > 0 ? 'bg-green-500' : 'bg-red-500'}`}></span>
                                     </span>
-                                    <span className="text-sm font-bold text-zinc-300">
+                                    <span className="text-sm font-bold text-muted-foreground">
                                         {product.stock > 0 
-                                            ? (lang === 'ar' ? `${product.stock} متوفر في المخزن` : `${product.stock} Items in Stock`) 
-                                            : (lang === 'ar' ? 'نفذت الكمية' : 'Out of Stock')}
+                                            ? `${product.stock} ${t("store.items_in_stock")}` 
+                                            : t("store.out_of_stock")}
                                     </span>
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <p className="text-sm font-bold text-zinc-400">{lang === 'ar' ? 'الكمية:' : 'Quantity:'}</p>
-                                    <div className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
-                                        <button onClick={() => setQty(q => Math.max(1, q - 1))} className="w-9 h-9 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all">
+                                    <p className="text-sm font-bold text-muted-foreground">{t("store.quantity")}</p>
+                                    <div className="flex items-center gap-1 bg-card border border-border rounded-xl overflow-hidden">
+                                        <button onClick={() => setQty(q => Math.max(1, q - 1))} className="w-9 h-9 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-all">
                                             <Minus className="w-3.5 h-3.5" />
                                         </button>
-                                        <span className="w-10 text-center text-sm font-bold text-white">{qty}</span>
-                                        <button onClick={() => setQty(q => Math.min(product.stock || 99, q + 1))} className="w-9 h-9 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all">
+                                        <span className="w-10 text-center text-sm font-bold text-foreground">{qty}</span>
+                                        <button onClick={() => setQty(q => Math.min(product.stock || 99, q + 1))} className="w-9 h-9 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-all">
                                             <Plus className="w-3.5 h-3.5" />
                                         </button>
                                     </div>
@@ -587,22 +587,22 @@ export default function ProductDetailPage() {
                                     <Button
                                         onClick={handleBuyNow}
                                         disabled={product.stock === 0}
-                                        className="flex-1 h-13 rounded-2xl bg-[#0066FF] text-white hover:bg-white hover:text-[#0066FF] dark:text-white dark:hover:bg-white dark:hover:text-[#0066FF] font-black text-base shadow-[0_0_40px_rgba(0,102,255,0.3)] transition-all"
+                                        className="flex-1 h-13 rounded-2xl bg-primary text-primary-foreground hover:bg-white hover:text-[#0066FF] dark:text-foreground dark:hover:bg-white dark:hover:text-[#0066FF] font-black text-base shadow-[0_0_40px_rgba(0,102,255,0.3)] transition-all"
                                     >
                                         <Zap className={`w-5 h-5 ${lang === 'ar' ? 'ml-2' : 'mr-2'}`} fill="currentColor" />
-                                        {lang === 'ar' ? 'اشتري الآن' : 'Buy Now'}
+                                        {t("store.buy_now")}
                                     </Button>
 
                                     <Button
                                         onClick={handleAddToCart}
                                         disabled={product.stock === 0}
                                         variant="outline"
-                                        className="flex-1 h-13 rounded-2xl border-zinc-700 text-white hover:bg-white hover:border-white hover:text-[#0066FF] dark:hover:bg-white dark:hover:text-[#0066FF] font-bold text-base transition-all"
+                                        className="flex-1 h-13 rounded-2xl border-border text-foreground hover:bg-white hover:border-white hover:text-[#0066FF] dark:hover:bg-white dark:hover:text-[#0066FF] font-bold text-base transition-all"
                                     >
                                         <ShoppingCart className={`w-5 h-5 ${lang === 'ar' ? 'ml-2' : 'mr-2'}`} />
                                         {cartItem
-                                            ? (lang === 'ar' ? `في السلة (${cartItem.quantity})` : `In Cart (${cartItem.quantity})`)
-                                            : (lang === 'ar' ? 'أضف للسلة' : 'Add to Cart')}
+                                            ? `${t("store.in_cart")} (${cartItem.quantity})`
+                                            : t("store.add_to_cart")}
                                     </Button>
                                 </div>
                             </div>
@@ -614,9 +614,9 @@ export default function ProductDetailPage() {
                         id="product-extra-section"
                     >
                         <div
-                            className="flex w-full rounded-2xl border border-white/10 bg-zinc-950/60 p-1 gap-1"
+                            className="flex w-full rounded-2xl border border-border bg-card/60 p-1 gap-1"
                             role="tablist"
-                            aria-label={lang === "ar" ? "الوصف والتقييمات" : "Description and reviews"}
+                            aria-label={t("store.description_and_reviews")}
                         >
                             <button
                                 type="button"
@@ -628,11 +628,11 @@ export default function ProductDetailPage() {
                                 }}
                                 className={`flex-1 min-w-0 rounded-xl py-3 px-3 sm:px-5 text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all ${
                                     extraTab === "description"
-                                        ? "bg-[#0066FF] text-white shadow-lg shadow-[#0066FF]/20"
-                                        : "text-zinc-400 hover:text-white hover:bg-white/5"
+                                        ? "bg-primary text-primary-foreground shadow-lg shadow-[#0066FF]/20"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                                 }`}
                             >
-                                {lang === "ar" ? "الوصف الكامل" : "Full description"}
+                                {t("store.full_description")}
                             </button>
                             <button
                                 type="button"
@@ -644,28 +644,26 @@ export default function ProductDetailPage() {
                                 }}
                                 className={`flex-1 min-w-0 rounded-xl py-3 px-3 sm:px-5 text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all ${
                                     extraTab === "reviews"
-                                        ? "bg-[#0066FF] text-white shadow-lg shadow-[#0066FF]/20"
-                                        : "text-zinc-400 hover:text-white hover:bg-white/5"
+                                        ? "bg-primary text-primary-foreground shadow-lg shadow-[#0066FF]/20"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                                 }`}
                             >
-                                {lang === "ar" ? `التقييمات (${reviewsCount})` : `Reviews (${reviewsCount})`}
+                                {t("store.reviews")} ({reviewsCount})
                             </button>
                         </div>
 
                         {extraTab === "description" && (
                             <div
-                                className={`rounded-3xl border border-white/5 bg-white/3 p-6 md:p-8 ${lang === "ar" ? "text-right" : "text-left"}`}
+                                className={`rounded-3xl border border-border bg-white/3 p-6 md:p-8 ${lang === "ar" ? "text-right" : "text-left"}`}
                                 role="tabpanel"
                             >
                                 {longDescription ? (
-                                    <div className="text-zinc-300 leading-relaxed whitespace-pre-wrap text-sm md:text-base">
+                                    <div className="text-muted-foreground leading-relaxed whitespace-pre-wrap text-sm md:text-base">
                                         {longDescription}
                                     </div>
                                 ) : (
-                                    <p className="text-zinc-500 text-center py-10 text-sm">
-                                        {lang === "ar"
-                                            ? "لا يوجد وصف تفصيلي لهذا المنتج بعد."
-                                            : "No full description for this product yet."}
+                                    <p className="text-muted-foreground/70 text-center py-10 text-sm">
+                                        {t("store.no_full_description")}
                                     </p>
                                 )}
                             </div>
@@ -686,8 +684,8 @@ export default function ProductDetailPage() {
                                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-[#0066FF]/10 flex items-center justify-center border border-[#0066FF]/20 shrink-0">
                                         <ShoppingBag className="w-5 h-5 md:w-6 md:h-6 text-[#0066FF]" />
                                     </div>
-                                    <h2 className="text-xl md:text-4xl font-black text-white">
-                                        {lang === 'ar' ? 'قد يعجبك أيضاً' : 'You Might Also Like'}
+                                    <h2 className="text-xl md:text-4xl font-black text-foreground">
+                                        {t("store.you_might_also_like")}
                                     </h2>
                                 </div>
                             </div>
@@ -700,7 +698,7 @@ export default function ProductDetailPage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.5, delay: i * 0.1 }}
-                                        className="group relative bg-[#0a0a0a] rounded-2xl md:rounded-3xl overflow-hidden border border-white/5 hover:border-[#0066FF]/30 transition-all duration-500 flex flex-col"
+                                        className="group relative bg-card rounded-2xl md:rounded-3xl overflow-hidden border border-border hover:border-[#0066FF]/30 transition-all duration-500 flex flex-col"
                                     >
                                         <Link href={`/store/${p.id}`} className="relative aspect-square w-full overflow-hidden block">
                                             {p.image ? (
@@ -711,13 +709,13 @@ export default function ProductDetailPage() {
                                                     className="object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80 group-hover:opacity-100" 
                                                 />
                                             ) : (
-                                                <div className="absolute inset-0 bg-zinc-900 flex items-center justify-center">
+                                                <div className="absolute inset-0 bg-card flex items-center justify-center">
                                                     <ShoppingBag className="w-12 h-12 text-zinc-800" />
                                                 </div>
                                             )}
                                             
                                             <div className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'}`}>
-                                                <span className="px-3 py-1 bg-[#0066FF] rounded-full text-[10px] uppercase font-bold text-white shadow-lg">
+                                                <span className="px-3 py-1 bg-[#0066FF] rounded-full text-[10px] uppercase font-bold text-foreground shadow-lg">
                                                     {(() => {
                                                         const s = (p.category || "").toLowerCase()
                                                         const row = storeCategories.find((c: any) => String(c.name).toLowerCase() === s)
@@ -728,10 +726,10 @@ export default function ProductDetailPage() {
                                             </div>
 
                                             <div className={`absolute top-4 ${lang === "ar" ? "left-4" : "right-4"} flex flex-col gap-2 opacity-0 group-hover:opacity-100 translate-y-[-10px] group-hover:translate-y-0 transition-all duration-300`}>
-                                                <button className="p-2 backdrop-blur-md border bg-black/40 border-white/10 text-white hover:bg-[#0066FF] hover:border-[#0066FF] rounded-full transition-all">
+                                                <button className="p-2 backdrop-blur-md border bg-card/80 border-border text-foreground hover:bg-[#0066FF] hover:border-[#0066FF] rounded-full transition-all">
                                                     <Heart className="w-4 h-4" />
                                                 </button>
-                                                <button className="p-2 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-[#0066FF] hover:border-[#0066FF] transition-all">
+                                                <button className="p-2 bg-card/80 backdrop-blur-md border border-border rounded-full text-foreground hover:bg-[#0066FF] hover:border-[#0066FF] transition-all">
                                                     <Share2 className="w-4 h-4" />
                                                 </button>
                                             </div>
@@ -740,35 +738,35 @@ export default function ProductDetailPage() {
                                         <div className={`p-3 md:p-6 flex flex-col grow justify-between ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                                             <div>
                                                 <Link href={`/store/${p.id}`}>
-                                                    <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2 line-clamp-1 hover:text-[#0066FF] transition-colors">
+                                                    <h3 className="text-sm md:text-base font-bold text-foreground mb-1 md:mb-2 line-clamp-1 hover:text-[#0066FF] transition-colors">
                                                         {lang === "ar" ? p.nameAr || p.name : p.name}
                                                     </h3>
                                                 </Link>
-                                                <p className="text-zinc-500 text-[10px] md:text-xs line-clamp-2 mb-2 md:mb-4 h-7 md:h-8">
+                                                <p className="text-muted-foreground/70 text-[10px] md:text-xs line-clamp-2 mb-2 md:mb-4 h-7 md:h-8">
                                                     {lang === 'ar' ? p.descriptionAr || p.description : p.description}
                                                 </p>
                                             </div>
 
                                             <div className="flex flex-col gap-2 md:gap-4">
                                                 <div className="flex flex-wrap items-center gap-1 md:gap-3">
-                                                    <span className="text-base md:text-xl font-black text-white">
-                                                        {p.discountPrice || p.price} {lang === 'ar' ? 'ج.م' : 'EGP'}
+                                                    <span className="text-base md:text-xl font-black text-foreground">
+                                                        {p.discountPrice || p.price} {t("store.currency")}
                                                     </span>
                                                     {p.discountPrice && (
-                                                        <span className="text-[10px] md:text-sm text-zinc-500 line-through font-medium">
+                                                        <span className="text-[10px] md:text-sm text-muted-foreground/70 line-through font-medium">
                                                             {p.price}
                                                         </span>
                                                     )}
                                                 </div>
                                                 <div className="flex gap-1 md:gap-2">
                                                     <Link href={`/store/${p.id}`} className="flex-1">
-                                                        <Button variant="outline" className="w-full rounded-lg md:rounded-xl border-zinc-800 h-8 md:h-10 text-[8px] md:text-[10px] font-black hover:bg-white hover:border-white hover:text-[#0066FF] transition-all px-0">
-                                                            {lang === "ar" ? "عرض" : "VIEW"}
+                                                        <Button variant="outline" className="w-full rounded-lg md:rounded-xl border-border h-8 md:h-10 text-[8px] md:text-[10px] font-black hover:bg-white hover:border-white hover:text-[#0066FF] transition-all px-0">
+                                                            {t("store.view")}
                                                         </Button>
                                                     </Link>
                                                     <Link href={`/store/checkout?buyNow=${encodeURIComponent(JSON.stringify(p))}`} className="flex-1">
                                                         <Button className="w-full rounded-lg md:rounded-xl bg-[#0066FF] h-8 md:h-10 text-[8px] md:text-[10px] font-black hover:bg-white hover:text-[#0066FF] transition-all px-0">
-                                                            {lang === "ar" ? "شراء" : "BUY"}
+                                                            {t("store.buy")}
                                                         </Button>
                                                     </Link>
                                                 </div>
@@ -797,7 +795,7 @@ export default function ProductDetailPage() {
             >
                 <button
                     type="button"
-                    className="absolute top-4 inset-e-4 z-10 w-12 h-12 rounded-2xl bg-zinc-900/90 border border-white/10 text-white flex items-center justify-center hover:bg-zinc-800 transition-colors"
+                    className="absolute top-4 inset-e-4 z-10 w-12 h-12 rounded-2xl bg-card/90 border border-border text-foreground flex items-center justify-center hover:bg-muted transition-colors"
                     onClick={(e) => {
                         e.stopPropagation()
                         setLightboxUrl(null)

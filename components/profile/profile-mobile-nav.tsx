@@ -64,7 +64,7 @@ export function ProfileMobileNav({ username }: { username: string }) {
 
     return (
         <nav
-            className="md:hidden fixed bottom-0 inset-x-0 z-50 border-t border-white/10 bg-zinc-950/95 backdrop-blur-xl pb-[env(safe-area-inset-bottom,0px)]"
+            className="md:hidden fixed bottom-0 inset-x-0 z-50 border-t border-border bg-background/95 backdrop-blur-xl pb-[env(safe-area-inset-bottom,0px)]"
             aria-label={lang === "ar" ? "تنقّل الحساب" : "Account navigation"}
         >
             <div
@@ -79,7 +79,7 @@ export function ProfileMobileNav({ username }: { username: string }) {
                         href={href}
                         className={cn(
                             "flex flex-1 flex-col items-center justify-center gap-0.5 py-1.5 sm:py-2 px-0.5 text-[9px] sm:text-[10px] font-bold transition-colors min-w-0",
-                            active ? "text-[#0066FF]" : "text-zinc-500 active:text-white"
+                            active ? "text-primary" : "text-muted-foreground active:text-foreground"
                         )}
                     >
                         <Icon className={cn("w-5 h-5 shrink-0", active && "text-[#0066FF]")} />

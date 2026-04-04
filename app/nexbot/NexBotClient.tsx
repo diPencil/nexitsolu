@@ -226,7 +226,7 @@ export default function NexBotClient() {
     }
 
     return (
-        <main dir={lang === "ar" ? "rtl" : "ltr"} className={`bg-[#050505] text-white flex-1 w-full flex flex-col min-h-[calc(100dvh-160px)] ${messages.length === 0 ? 'justify-start pt-32 md:pt-40 pb-0' : 'pb-0 pt-2 md:pt-4'}`}>
+        <main dir={lang === "ar" ? "rtl" : "ltr"} className={`bg-background text-foreground flex-1 w-full flex flex-col min-h-[calc(100dvh-160px)] ${messages.length === 0 ? 'justify-start pt-32 md:pt-40 pb-0' : 'pb-0 pt-2 md:pt-4'}`}>
             <AnimatePresence mode="wait">
                 {messages.length === 0 ? (
                     /* Hero Section */
@@ -238,7 +238,7 @@ export default function NexBotClient() {
                         transition={{ duration: 0.5 }}
                         className="relative z-20 container mx-auto px-4 pt-4 pb-0 md:pt-8 md:pb-0 flex-1 flex flex-col justify-center"
                     >
-                        <div className="relative rounded-4xl md:rounded-[4rem] bg-zinc-950 border border-white/5 hover:border-[#0066FF]/20 transition-all duration-700 p-6 md:p-12 mb-0 text-center overflow-hidden group shadow-2xl">
+                        <div className="relative rounded-4xl md:rounded-[4rem] bg-card border border-border hover:border-[#0066FF]/20 transition-all duration-700 p-6 md:p-12 mb-0 text-center overflow-hidden group shadow-2xl">
                             <div className="absolute inset-0 bg-linear-to-b from-[#0066FF]/5 to-transparent pointer-events-none" />
                             
                             <div className="flex items-center justify-center gap-2 mb-6 text-[#0066FF] font-bold uppercase tracking-widest text-[10px] md:text-xs">
@@ -252,7 +252,7 @@ export default function NexBotClient() {
                                 </div>
                             </h1>
 
-                            <p className="text-zinc-500 mb-10 max-w-5xl mx-auto text-base md:text-lg px-2">
+                            <p className="text-muted-foreground mb-10 max-w-5xl mx-auto text-base md:text-lg px-2">
                                 {lang === "ar"
                                     ? "احصل على إجابات فورية حول خدماتنا وتقنياتنا وحلول البنية التحتية."
                                     : "Get instant answers about our services, infrastructure solutions, and technology."}
@@ -272,13 +272,13 @@ export default function NexBotClient() {
                                             value={inputValue}
                                             onChange={(e) => setInputValue(e.target.value)}
                                             placeholder={phrases[0]}
-                                            className={`w-full bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-full ${lang === "ar" ? "pr-14 pl-4 md:pl-44" : "pl-14 pr-4 md:pr-44"} py-5 md:py-7 text-sm md:text-xl focus:outline-none focus:border-[#0066FF] transition-all placeholder:text-zinc-600 shadow-2xl`}
+                                            className={`w-full bg-secondary/50 backdrop-blur-xl border border-border rounded-full ${lang === "ar" ? "pr-14 pl-4 md:pl-44" : "pl-14 pr-4 md:pr-44"} py-5 md:py-7 text-sm md:text-xl focus:outline-none focus:border-[#0066FF] transition-all placeholder:text-muted-foreground shadow-2xl`}
                                         />
                                     </div>
                                     <Button 
                                         type="submit"
                                         disabled={isLoading}
-                                        className={`mt-4 md:mt-0 md:absolute ${lang === "ar" ? "md:left-2.5" : "md:right-2.5"} md:top-2.5 bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-full px-10 py-5 md:py-0 h-14 md:h-[calc(100%-20px)] font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 w-full md:w-auto transition-all shadow-lg`}
+                                        className={`mt-4 md:mt-0 md:absolute ${lang === "ar" ? "md:left-2.5" : "md:right-2.5"} md:top-2.5  rounded-full px-10 py-5 md:py-0 h-14 md:h-[calc(100%-20px)] font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 w-full md:w-auto transition-all shadow-lg`}
                                     >
                                         {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (lang === "ar" ? "اسأل الآن" : "ASK NOW")}
                                         <ArrowUpRight className="w-5 h-5" />
@@ -291,14 +291,14 @@ export default function NexBotClient() {
                                     <button
                                         key={reply.id}
                                         onClick={() => handleSendMessage(reply.message)}
-                                        className="px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-[#0066FF]/50 text-zinc-400 hover:text-[#0066FF] transition-all text-xs font-bold uppercase tracking-widest backdrop-blur-sm"
+                                        className="px-6 py-3 rounded-full bg-accent/50 border border-border hover:border-[#0066FF]/50 text-muted-foreground hover:text-[#0066FF] transition-all text-xs font-bold uppercase tracking-widest backdrop-blur-sm"
                                     >
                                         {reply.label}
                                     </button>
                                 ))}
                             </div>
 
-                            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-[9px] md:text-[11px] text-zinc-500 font-bold uppercase tracking-widest">
+                            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-[9px] md:text-[11px] text-muted-foreground font-bold uppercase tracking-widest">
                                 <span className="flex items-center gap-2">
                                     <CheckCircle2 className="w-4 h-4 text-[#0066FF]" />
                                     {lang === "ar" ? "ردود فورية" : "Instant Responses"}
@@ -313,8 +313,8 @@ export default function NexBotClient() {
                                 </span>
                             </div>
 
-                            <div className="mt-8 pt-6 border-t border-white/5 flex flex-col items-center justify-center gap-2 text-center text-xs md:text-sm text-zinc-500 font-medium">
-                                <div className="mt-2 text-[9px] md:text-[11px] opacity-80 max-w-4xl px-4 leading-relaxed tracking-wider font-bold text-white">
+                            <div className="mt-8 pt-6 border-t border-border flex flex-col items-center justify-center gap-2 text-center text-xs md:text-sm text-muted-foreground font-medium">
+                                <div className="mt-2 text-[9px] md:text-[11px] opacity-80 max-w-4xl px-4 leading-relaxed tracking-wider font-bold text-foreground">
                                     NexBOT Powered by SuperFeliz AI | &quot;Feliz&quot; (proprietary AI agent) of diPencil Studio. All rights reserved by <a href="https://dipencil.com" target="_blank" rel="noopener noreferrer" className="text-[#0066FF] hover:underline decoration-2 underline-offset-4 transition-all">Pencil Company</a> © 2026
                                 </div>
                             </div>
@@ -326,16 +326,16 @@ export default function NexBotClient() {
                         key="chat-header"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="sticky top-0 z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/5 py-4 mb-10"
+                        className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border py-4 mb-10"
                     >
                         <div className="container mx-auto px-4 flex items-center justify-between">
                             <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-xl bg-[#0066FF] text-white flex items-center justify-center shadow-lg shadow-[#0066FF]/20">
+                                <div className="w-10 h-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20">
                                     <Bot className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h2 className="text-white font-bold text-sm md:text-lg">{lang === "ar" ? "نيكسيت الذكي - تم التطوير بواسطة SuperFeliz AI" : "NexBot - by SuperFeliz AI"}</h2>
-                                    <p className="text-[8px] md:text-[10px] text-zinc-500 font-medium uppercase tracking-widest">
+                                    <h2 className="text-foreground font-bold text-sm md:text-lg">{lang === "ar" ? "نيكسيت الذكي - تم التطوير بواسطة SuperFeliz AI" : "NexBot - by SuperFeliz AI"}</h2>
+                                    <p className="text-[8px] md:text-[10px] text-muted-foreground font-medium uppercase tracking-widest">
                                         {lang === "ar" ? "مساعدك التقني الذكي" : "Your intelligent AI assistant"}
                                     </p>
                                 </div>
@@ -343,7 +343,7 @@ export default function NexBotClient() {
                             <Button
                                 onClick={resetChat}
                                 variant="ghost"
-                                className="text-zinc-400 hover:text-white hover:bg-zinc-900 border border-white/5 rounded-full flex items-center gap-2 text-[10px] md:text-sm font-bold uppercase tracking-widest px-4 py-2"
+                                className="text-muted-foreground hover:text-foreground hover:bg-muted border border-border rounded-full flex items-center gap-2 text-[10px] md:text-sm font-bold uppercase tracking-widest px-4 py-2"
                             >
                                 <RefreshCcw className="w-3 h-3 md:w-4 md:h-4" />
                                 <span>{lang === "ar" ? "محادثة جديدة" : "New Chat"}</span>
@@ -364,14 +364,14 @@ export default function NexBotClient() {
                             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                         >
                             <div className={`flex gap-4 max-w-[90%] md:max-w-[80%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl shrink-0 flex items-center justify-center shadow-lg ${msg.role === 'user' ? 'bg-zinc-800 text-zinc-400' : 'bg-[#0066FF] text-white'}`}>
+                                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl shrink-0 flex items-center justify-center shadow-lg ${msg.role === 'user' ? 'bg-muted text-muted-foreground' : 'bg-primary text-primary-foreground'}`}>
                                     {msg.role === 'user' ? <User className="w-5 h-5 md:w-6 md:h-6" /> : <Bot className="w-5 h-5 md:w-6 md:h-6" />}
                                 </div>
                                 <div className="flex flex-col gap-2 w-full max-w-[calc(100%-3rem)] md:max-w-[calc(100%-4rem)]">
                                     <div className={`p-5 md:p-8 rounded-3xl text-sm md:text-lg leading-relaxed shadow-xl whitespace-pre-wrap ${
-                                        msg.role === 'user' 
-                                        ? 'bg-[#0066FF] text-white rounded-tr-none' 
-                                        : 'bg-zinc-900 border border-white/5 text-zinc-300 rounded-tl-none'
+                                        msg.role === 'user'
+                                        ? 'bg-primary text-primary-foreground rounded-tr-none'
+                                        : 'bg-secondary border border-border text-foreground rounded-tl-none'
                                     }`}>
                                         {msg.role === 'bot' && (
                                             <span className="mb-2 md:mb-3 block">
@@ -383,25 +383,25 @@ export default function NexBotClient() {
                                     </div>
                                     {msg.role === 'bot' && (
                                         <div className="flex flex-wrap items-center gap-3 md:gap-4 mt-1 md:mt-2 px-1 w-full" dir="ltr">
-                                            <div className="flex items-center gap-0.5 md:gap-1.5 text-zinc-500 shrink-0">
-                                                <button className="p-1.5 md:p-2 hover:text-white hover:bg-zinc-800 rounded-lg transition-all" title="Copy" onClick={() => navigator.clipboard.writeText(msg.content)}>
+                                            <div className="flex items-center gap-0.5 md:gap-1.5 text-muted-foreground shrink-0">
+                                                <button className="p-1.5 md:p-2 hover:text-foreground hover:bg-muted rounded-lg transition-all" title="Copy" onClick={() => navigator.clipboard.writeText(msg.content)}>
                                                     <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
                                                 </button>
-                                                <button 
-                                                    className={`p-1.5 md:p-2 rounded-lg transition-all ${feedback[i] === 'up' ? 'text-emerald-500 bg-zinc-800' : 'hover:text-white hover:bg-zinc-800'}`}
+                                                <button
+                                                    className={`p-1.5 md:p-2 rounded-lg transition-all ${feedback[i] === 'up' ? 'text-emerald-500 bg-muted' : 'hover:text-foreground hover:bg-muted'}`}
                                                     title="Good Response"
                                                     onClick={() => setFeedback(prev => ({ ...prev, [i]: prev[i] === 'up' ? null : 'up' }))}
                                                 >
                                                     <ThumbsUp className={`w-3.5 h-3.5 md:w-4 md:h-4 ${feedback[i] === 'up' ? 'fill-emerald-500' : ''}`} />
                                                 </button>
-                                                <button 
-                                                    className={`p-1.5 md:p-2 rounded-lg transition-all ${feedback[i] === 'down' ? 'text-red-500 bg-zinc-800' : 'hover:text-white hover:bg-zinc-800'}`}
+                                                <button
+                                                    className={`p-1.5 md:p-2 rounded-lg transition-all ${feedback[i] === 'down' ? 'text-red-500 bg-muted' : 'hover:text-foreground hover:bg-muted'}`}
                                                     title="Bad Response"
                                                     onClick={() => setFeedback(prev => ({ ...prev, [i]: prev[i] === 'down' ? null : 'down' }))}
                                                 >
                                                     <ThumbsDown className={`w-3.5 h-3.5 md:w-4 md:h-4 ${feedback[i] === 'down' ? 'fill-red-500' : ''}`} />
                                                 </button>
-                                                <button className="p-1.5 md:p-2 hover:text-white hover:bg-zinc-800 rounded-lg transition-all" title="Share" onClick={() => {
+                                                <button className="p-1.5 md:p-2 hover:text-foreground hover:bg-muted rounded-lg transition-all" title="Share" onClick={() => {
                                                     if (navigator.share) {
                                                         navigator.share({ title: 'AI Response', text: msg.content })
                                                     }
@@ -409,7 +409,7 @@ export default function NexBotClient() {
                                                     <Share2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
                                                 </button>
                                             </div>
-                                            <span className="text-[7px] md:text-[9px] font-medium flex items-center gap-1 md:gap-1.5 whitespace-nowrap text-[#0066FF] hover:bg-[#0066FF]/10 hover:border-[#0066FF]/50 px-2.5 md:px-3 py-1 md:py-1.5 rounded-full border border-[#0066FF]/30 transition-all cursor-default shrink-0">
+                                            <span className="text-[7px] md:text-[9px] font-medium flex items-center gap-1 md:gap-1.5 whitespace-nowrap text-[#0066FF] hover:bg-primary/10 hover:border-[#0066FF]/50 px-2.5 md:px-3 py-1 md:py-1.5 rounded-full border border-[#0066FF]/30 transition-all cursor-default shrink-0">
                                                 <Sparkles className="w-2.5 h-2.5 md:w-3 md:h-3" />
                                                 Creation Using SuperFeliz
                                             </span>
@@ -423,14 +423,14 @@ export default function NexBotClient() {
                     {isLoading && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
                             <div className="flex gap-4 max-w-[80%]">
-                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-[#0066FF] text-white flex items-center justify-center shadow-lg">
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-lg">
                                     <Bot className="w-6 h-6" />
                                 </div>
-                                <div className="p-8 rounded-3xl bg-zinc-900 border border-white/5 text-zinc-300 rounded-tl-none">
+                                <div className="p-8 rounded-3xl bg-card border border-border text-muted-foreground rounded-tl-none">
                                     <div className="flex gap-2">
-                                        <div className="w-2 h-2 bg-[#0066FF] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                                        <div className="w-2 h-2 bg-[#0066FF] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                                        <div className="w-2 h-2 bg-[#0066FF] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                                     </div>
                                 </div>
                             </div>
@@ -442,7 +442,7 @@ export default function NexBotClient() {
             </section>
             {/* Persistent Bottom Input Section */}
             {messages.length > 0 && (
-                <div className="fixed bottom-0 left-0 w-full z-100 bg-linear-to-t from-[#050505] via-[#050505] to-transparent pt-2 pb-2 md:pt-3 md:pb-6">
+                <div className="fixed bottom-0 left-0 w-full z-100 bg-linear-to-t from-background via-background to-transparent pt-2 pb-2 md:pt-3 md:pb-6">
                     <div className="container mx-auto px-4 max-w-4xl">
                         <form 
                             onSubmit={(e) => { e.preventDefault(); handleSendMessage(inputValue); }}
@@ -456,12 +456,12 @@ export default function NexBotClient() {
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 placeholder={lang === "ar" ? "اكتب رسالتك هنا..." : "Type your message here..."}
-                                className={`w-full bg-zinc-900/80 backdrop-blur-2xl border border-white/10 rounded-full ${lang === "ar" ? "pr-14 pl-20" : "pl-14 pr-20"} py-5 md:py-6 text-sm md:text-lg focus:outline-none focus:border-[#0066FF]/50 transition-all placeholder:text-zinc-600 shadow-2xl focus:shadow-[#0066FF]/10`}
+                                className={`w-full bg-background/80 backdrop-blur-2xl border border-border rounded-full ${lang === "ar" ? "pr-14 pl-20" : "pl-14 pr-20"} py-5 md:py-6 text-sm md:text-lg focus:outline-none focus:border-[#0066FF]/50 transition-all placeholder:text-muted-foreground shadow-2xl focus:shadow-[#0066FF]/10`}
                             />
                             <button 
                                 type="submit"
                                 disabled={isLoading || !inputValue.trim()}
-                                className={`absolute ${lang === "ar" ? "left-2" : "right-2"} top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-full flex items-center justify-center transition-all shadow-lg active:scale-90 disabled:opacity-50 disabled:scale-100`}
+                                className={`absolute ${lang === "ar" ? "left-2" : "right-2"} top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full flex items-center justify-center transition-all shadow-lg active:scale-90 disabled:opacity-50 disabled:scale-100`}
                             >
                                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5 md:w-6 md:h-6" />}
                             </button>

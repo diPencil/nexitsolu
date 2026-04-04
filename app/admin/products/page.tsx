@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
@@ -72,25 +72,25 @@ function ZonePicker({ selected, onChange, allZones }: { selected: string[], onCh
             <button
                 type="button"
                 onClick={() => setOpen(o => !o)}
-                className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 text-start flex items-center justify-between focus:border-[#0066FF] outline-none transition-all"
+                className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 text-start flex items-center justify-between focus:border-[#0066FF] outline-none transition-all"
             >
                 <span className="text-sm">
                     {selected.length === 0
-                        ? <span className="text-zinc-500">{lang === 'ar' ? 'كل المحافظات (شحن لكل مكان)' : 'All Governorates (Ship Everywhere)'}</span>
-                        : <span className="text-white font-bold">{selected.length} {lang === 'ar' ? 'محافظة محددة' : 'Zones Selected'}</span>}
+                        ? <span className="text-muted-foreground">{lang === 'ar' ? 'كل المحافظات (شحن لكل مكان)' : 'All Governorates (Ship Everywhere)'}</span>
+                        : <span className="text-foreground font-bold">{selected.length} {lang === 'ar' ? 'محافظة محددة' : 'Zones Selected'}</span>}
                 </span>
-                <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform ${open ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${open ? 'rotate-180' : ''}`} />
             </button>
 
             {open && (
-                <div className="absolute top-full mt-2 left-0 right-0 z-50 bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+                <div className="absolute top-full mt-2 left-0 right-0 z-50 bg-popover border border-border rounded-2xl shadow-none overflow-hidden">
                     {/* Select All / Clear */}
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-zinc-900/50">
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/30">
                         <button type="button" onClick={() => onChange(allZones.map(z => z.name))}
                             className="text-xs font-bold text-[#0066FF] hover:underline">
                             {lang === 'ar' ? 'تحديد الكل' : 'Select All'}
                         </button>
-                        <span className="text-xs text-zinc-600">{selected.length} / {allZones.length}</span>
+                        <span className="text-xs text-muted-foreground/60">{selected.length} / {allZones.length}</span>
                         <button type="button" onClick={() => onChange([])}
                             className="text-xs font-bold text-red-400 hover:underline">
                             {lang === 'ar' ? 'مسح الكل' : 'Clear All'}
@@ -105,22 +105,22 @@ function ZonePicker({ selected, onChange, allZones }: { selected: string[], onCh
                                     key={z.name}
                                     type="button"
                                     onClick={() => toggle(z.name)}
-                                    className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all text-start ${isSelected ? 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/30' : 'text-zinc-400 hover:bg-white/5 border border-transparent'}`}
+                                    className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all text-start ${isSelected ? 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/30' : 'text-zinc-400 hover:bg-accent/50 border border-transparent'}`}
                                 >
                                     {isSelected
                                         ? <CheckSquare className="w-4 h-4 shrink-0" />
-                                        : <Square className="w-4 h-4 shrink-0 text-zinc-700" />}
+                                        : <Square className="w-4 h-4 shrink-0 text-muted-foreground/40" />}
                                     <div className="min-w-0">
                                         <p className="font-bold truncate">{lang === 'ar' ? z.nameAr : z.nameEn || z.name}</p>
-                                        {z.price > 0 && <p className="text-[10px] text-zinc-500">{z.price} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>}
+                                        {z.price > 0 && <p className="text-[10px] text-muted-foreground">{z.price} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>}
                                     </div>
                                 </button>
                             )
                         })}
                     </div>
-                    <div className="px-4 py-3 border-t border-white/5 bg-zinc-900/30">
+                    <div className="px-4 py-3 border-t border-border bg-muted/20">
                         <button type="button" onClick={() => setOpen(false)}
-                            className="w-full text-sm font-bold text-white bg-[#0066FF] hover:bg-blue-500 py-2 rounded-xl transition-all">
+                            className="w-full text-sm font-bold text-foreground bg-[#0066FF] hover:bg-blue-500 py-2 rounded-xl transition-all">
                             {lang === 'ar' ? 'تم ✓' : 'Done ✓'}
                         </button>
                     </div>
@@ -191,15 +191,15 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="w-full max-w-3xl bg-zinc-950 border border-white/10 rounded-4xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+                className="w-full max-w-3xl bg-popover border border-border rounded-4xl shadow-none overflow-hidden max-h-[90vh] flex flex-col"
             >
                 {/* Header */}
-                <div className="p-6 border-b border-white/5 flex items-center justify-between bg-zinc-900/50 shrink-0">
+                <div className="p-6 border-b border-border flex items-center justify-between bg-muted/30 shrink-0">
                     <div>
                         <h2 className="text-xl font-bold flex items-center gap-2">
                             <Truck className="w-5 h-5 text-[#0066FF]" /> {lang === 'ar' ? 'إدارة مناطق الشحن' : 'Shipping Management'}
                         </h2>
-                        <p className="text-xs text-zinc-500 mt-1">{lang === 'ar' ? 'حدد سعر الشحن لكل محافظة' : 'Set shipping price for each governorate'}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{lang === 'ar' ? 'حدد سعر الشحن لكل محافظة' : 'Set shipping price for each governorate'}</p>
                     </div>
                     <div className="flex items-center gap-3">
                         {zones.length < EG_GOVERNORATES.length && (
@@ -212,7 +212,7 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                                 {lang === 'ar' ? 'إضافة كل محافظات مصر' : 'Add All Egypt Zones'}
                             </button>
                         )}
-                        <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-xl transition-all">
+                        <button onClick={onClose} className="p-2 hover:bg-accent/50 rounded-xl transition-all">
                             <X className="w-5 h-5" />
                         </button>
                     </div>
@@ -226,12 +226,12 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                         </div>
                     ) : zones.length === 0 ? (
                         <div className="text-center py-20">
-                            <MapPin className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
-                            <p className="text-zinc-500 mb-4">{lang === 'ar' ? 'لا توجد مناطق شحن. أضف محافظات مصر بضغطة واحدة!' : 'No shipping zones found. Add Egypt governorates with one click!'}</p>
+                            <MapPin className="w-12 h-12 text-muted-foreground/40 mx-auto mb-4" />
+                            <p className="text-muted-foreground mb-4">{lang === 'ar' ? 'لا توجد مناطق شحن. أضف محافظات مصر بضغطة واحدة!' : 'No shipping zones found. Add Egypt governorates with one click!'}</p>
                             <button
                                 onClick={handleSeed}
                                 disabled={seeding}
-                                className="px-6 py-3 rounded-2xl bg-[#0066FF] text-white font-bold text-sm hover:bg-blue-500 transition-all flex items-center gap-2 mx-auto"
+                                className="px-6 py-3 rounded-2xl bg-[#0066FF] text-foreground font-bold text-sm hover:bg-blue-500 transition-all flex items-center gap-2 mx-auto"
                             >
                                 {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Globe className="w-4 h-4" />}
                                 {lang === 'ar' ? 'إضافة 27 محافظة دفعة واحدة' : 'Add 27 Zones At Once'}
@@ -240,19 +240,19 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                     ) : (
                         <div className="grid sm:grid-cols-2 gap-3">
                             {zones.map(z => (
-                                <div key={z.id} className={`p-4 rounded-2xl border transition-all ${z.isActive ? 'bg-zinc-900 border-white/5' : 'bg-zinc-950 border-white/5 opacity-50'}`}>
+                                <div key={z.id} className={`p-4 rounded-2xl border transition-all ${z.isActive ? 'bg-muted border-border/50' : 'bg-card border-border opacity-50'}`}>
                                     {editId === z.id ? (
                                         <div className="space-y-3">
-                                            <p className="font-bold text-white text-sm">{lang === 'ar' ? z.nameAr : z.nameEn} — {lang === 'ar' ? z.nameEn : z.nameAr}</p>
+                                            <p className="font-bold text-foreground text-sm">{lang === 'ar' ? z.nameAr : z.nameEn} — {lang === 'ar' ? z.nameEn : z.nameAr}</p>
                                             <div className="flex items-center gap-3">
                                                 <div className="relative flex-1">
-                                                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                                                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                                     <input
                                                         type="number"
                                                         value={editPrice}
                                                         onChange={e => setEditPrice(e.target.value)}
                                                         placeholder={lang === 'ar' ? "سعر الشحن (ج.م)" : "Shipping Price (EGP)"}
-                                                        className="w-full bg-zinc-800 border border-white/10 rounded-xl py-2 pl-9 pr-3 text-sm text-white focus:border-[#0066FF] outline-none"
+                                                        className="w-full bg-muted border border-border rounded-xl py-2 pl-9 pr-3 text-sm text-foreground focus:border-[#0066FF] outline-none"
                                                     />
                                                 </div>
                                                 <label className="flex items-center gap-2 text-xs text-zinc-400 cursor-pointer">
@@ -267,11 +267,11 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                                             </div>
                                             <div className="flex gap-2">
                                                 <button onClick={() => handleSaveZone(z.id)}
-                                                    className="flex-1 py-2 rounded-xl bg-[#0066FF] text-white text-xs font-bold hover:bg-blue-500">
+                                                    className="flex-1 py-2 rounded-xl bg-[#0066FF] text-foreground text-xs font-bold hover:bg-blue-500">
                                                     {lang === 'ar' ? 'حفظ' : 'Save'}
                                                 </button>
                                                 <button onClick={() => setEditId(null)}
-                                                    className="flex-1 py-2 rounded-xl bg-zinc-800 text-zinc-400 text-xs hover:text-white">
+                                                    className="flex-1 py-2 rounded-xl bg-muted text-zinc-400 text-xs hover:text-foreground">
                                                     {lang === 'ar' ? 'إلغاء' : 'Cancel'}
                                                 </button>
                                             </div>
@@ -279,8 +279,8 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                                     ) : (
                                         <div className="flex items-center justify-between">
                                             <div>
-                                                <p className="font-bold text-white text-sm">{lang === 'ar' ? z.nameAr : z.nameEn}</p>
-                                                <p className="text-xs text-zinc-500">{lang === 'ar' ? z.nameEn : z.nameAr}</p>
+                                                <p className="font-bold text-foreground text-sm">{lang === 'ar' ? z.nameAr : z.nameEn}</p>
+                                                <p className="text-xs text-muted-foreground">{lang === 'ar' ? z.nameEn : z.nameAr}</p>
                                                 <p className={`text-sm font-black mt-1 ${z.price > 0 ? 'text-[#0066FF]' : 'text-green-400'}`}>
                                                     {z.price > 0 ? `${z.price} ${lang === 'ar' ? 'ج.م' : 'EGP'}` : (lang === 'ar' ? 'مجاني' : 'Free')}
                                                 </p>
@@ -288,13 +288,13 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
                                             <div className="flex items-center gap-2">
                                                 <button
                                                     onClick={() => { setEditId(z.id); setEditPrice(z.price.toString()); setEditActive(z.isActive) }}
-                                                    className="p-2 rounded-xl bg-zinc-800 border border-white/5 text-zinc-500 hover:text-white hover:bg-zinc-700 transition-all"
+                                                    className="p-2 rounded-xl bg-muted border border-border text-muted-foreground hover:text-foreground hover:bg-zinc-700 transition-all"
                                                 >
                                                     <Edit className="w-3.5 h-3.5" />
                                                 </button>
                                                 <button
                                                     onClick={() => setConfirmDelete({ isOpen: true, id: z.id })}
-                                                    className="p-2 rounded-xl bg-zinc-800 border border-white/5 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                                                    className="p-2 rounded-xl bg-muted border border-border text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all"
                                                 >
                                                     <Trash2 className="w-3.5 h-3.5" />
                                                 </button>
@@ -352,10 +352,10 @@ function ProductDetailModal({ product: initialProduct, onClose, lang }: { produc
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="w-full max-w-5xl bg-zinc-950 border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+                className="w-full max-w-5xl bg-popover border border-border rounded-[2.5rem] shadow-none overflow-hidden max-h-[90vh] flex flex-col"
             >
                 {/* Header */}
-                <div className="p-6 border-b border-white/5 flex items-center justify-between bg-zinc-900/50 shrink-0">
+                <div className="p-6 border-b border-border flex items-center justify-between bg-muted/30 shrink-0">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/10 flex items-center justify-center border border-[#0066FF]/20">
                             <BarChart3 className="w-6 h-6 text-[#0066FF]" />
@@ -365,7 +365,7 @@ function ProductDetailModal({ product: initialProduct, onClose, lang }: { produc
                             <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">{product.category} • ID: {product.id}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="p-3 hover:bg-white/5 rounded-2xl transition-all">
+                    <button onClick={onClose} className="p-3 hover:bg-accent/50 rounded-2xl transition-all">
                         <X className="w-6 h-6" />
                     </button>
                 </div>
@@ -374,9 +374,9 @@ function ProductDetailModal({ product: initialProduct, onClose, lang }: { produc
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
                         {/* Left: Images & Gallery */}
                         <div className="space-y-6">
-                            <div className="aspect-4/3 rounded-3xl bg-zinc-900 border border-white/5 overflow-hidden group relative">
+                            <div className="aspect-4/3 rounded-3xl bg-secondary border border-border overflow-hidden group relative">
                                 <img src={activeImage} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                                <div className="absolute top-4 right-4 px-4 py-2 bg-black/60 backdrop-blur-md rounded-xl border border-white/10 text-[10px] font-black uppercase tracking-widest text-[#0066FF]">
+                                <div className="absolute top-4 right-4 px-4 py-2 bg-black/60 backdrop-blur-md rounded-xl border border-border text-[10px] font-black uppercase tracking-widest text-[#0066FF]">
                                     {product.tag || 'NexIT Premium'}
                                 </div>
                             </div>
@@ -387,7 +387,7 @@ function ProductDetailModal({ product: initialProduct, onClose, lang }: { produc
                                         <button 
                                             key={i} 
                                             onClick={() => setActiveImage(img)}
-                                            className={`w-20 h-20 rounded-2xl border-2 transition-all shrink-0 overflow-hidden ${activeImage === img ? 'border-[#0066FF] scale-105 shadow-lg shadow-[#0066FF]/20' : 'border-white/5 opacity-50 hover:opacity-100'}`}
+                                            className={`w-20 h-20 rounded-2xl border-2 transition-all shrink-0 overflow-hidden ${activeImage === img ? 'border-[#0066FF] scale-105 shadow-lg shadow-[#0066FF]/20' : 'border-border/60 opacity-50 hover:opacity-100'}`}
                                         >
                                             <img src={img} className="w-full h-full object-cover" />
                                         </button>
@@ -397,21 +397,21 @@ function ProductDetailModal({ product: initialProduct, onClose, lang }: { produc
 
                             {/* Stats Grid */}
                             <div className="grid grid-cols-3 gap-4 pt-4">
-                                <div className="p-5 rounded-3xl bg-zinc-900/50 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-[#0066FF]/30 transition-all">
+                                <div className="p-5 rounded-3xl bg-muted/30 border border-border flex flex-col items-center justify-center text-center group hover:border-[#0066FF]/30 transition-all">
                                     <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center mb-3">
                                         <Eye className="w-5 h-5 text-orange-500" />
                                     </div>
                                     <p className="text-2xl font-black text-white">{product.views || 0}</p>
                                     <p className="text-[9px] text-zinc-500 uppercase tracking-widest mt-1">{lang === 'ar' ? 'مشاهدة' : 'Views'}</p>
                                 </div>
-                                <div className="p-5 rounded-3xl bg-zinc-900/50 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-[#0066FF]/30 transition-all">
+                                <div className="p-5 rounded-3xl bg-muted/30 border border-border flex flex-col items-center justify-center text-center group hover:border-[#0066FF]/30 transition-all">
                                     <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mb-3">
                                         <Share2 className="w-5 h-5 text-blue-500" />
                                     </div>
                                     <p className="text-2xl font-black text-white">{product.shares || 0}</p>
                                     <p className="text-[9px] text-zinc-500 uppercase tracking-widest mt-1">{lang === 'ar' ? 'مشاركة' : 'Shares'}</p>
                                 </div>
-                                <div className="p-5 rounded-3xl bg-zinc-900/50 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-[#0066FF]/30 transition-all">
+                                <div className="p-5 rounded-3xl bg-muted/30 border border-border flex flex-col items-center justify-center text-center group hover:border-[#0066FF]/30 transition-all">
                                     <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-3">
                                         <ShoppingBag className="w-5 h-5 text-emerald-500" />
                                     </div>
@@ -427,19 +427,19 @@ function ProductDetailModal({ product: initialProduct, onClose, lang }: { produc
                                 <h3 className="text-3xl font-black text-white mb-2">{lang === 'ar' ? product.nameAr || product.name : product.name}</h3>
                                 <div className="flex items-center gap-4">
                                     <p className="text-2xl font-black text-[#0066FF]">{product.discountPrice || product.price} EGP</p>
-                                    {product.discountPrice && <p className="text-lg text-zinc-600 line-through">{product.price} EGP</p>}
+                                    {product.discountPrice && <p className="text-lg text-muted-foreground/60 line-through">{product.price} EGP</p>}
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="p-4 rounded-2xl bg-zinc-900/30 border border-white/5">
+                                <div className="p-4 rounded-2xl bg-muted/20 border border-border">
                                     <div className="flex items-center gap-3 mb-2">
                                         <TrendingUp className="w-4 h-4 text-emerald-500" />
                                         <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'إجمالي المبيعات' : 'Total Units Sold'}</p>
                                     </div>
                                     <p className="text-xl font-black">{product.totalUnitsSold || 0} {lang === 'ar' ? 'قطعة' : 'Units'}</p>
                                 </div>
-                                <div className="p-4 rounded-2xl bg-zinc-900/30 border border-white/5">
+                                <div className="p-4 rounded-2xl bg-muted/20 border border-border">
                                     <div className="flex items-center gap-3 mb-2">
                                         <Package className="w-4 h-4 text-orange-500" />
                                         <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'المخزون المتوفر' : 'Current Stock'}</p>
@@ -458,31 +458,31 @@ function ProductDetailModal({ product: initialProduct, onClose, lang }: { produc
 
                             {/* Retention & Interest */}
                             <div className="space-y-4">
-                                <h4 className="text-[10px] font-black text-zinc-600 uppercase tracking-widest flex items-center gap-2">
+                                <h4 className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest flex items-center gap-2">
                                     <TrendingUp className="w-3 h-3" /> User Interest Tracking
                                 </h4>
                                 <div className="grid grid-cols-3 gap-3">
-                                    <div className="p-4 rounded-2xl bg-zinc-900 border border-white/5 flex flex-col items-center">
+                                    <div className="p-4 rounded-2xl bg-secondary border border-border flex flex-col items-center">
                                         <Heart className="w-5 h-5 text-red-500 mb-2" />
                                         <p className="text-lg font-black">{product.favoriteCount || 0}</p>
-                                        <p className="text-[8px] text-zinc-600 uppercase">{lang === 'ar' ? 'مفضلة' : 'Favorites'}</p>
+                                        <p className="text-[8px] text-muted-foreground/60 uppercase">{lang === 'ar' ? 'مفضلة' : 'Favorites'}</p>
                                     </div>
-                                    <div className="p-4 rounded-2xl bg-zinc-900 border border-white/5 flex flex-col items-center">
+                                    <div className="p-4 rounded-2xl bg-secondary border border-border flex flex-col items-center">
                                         <List className="w-5 h-5 text-purple-500 mb-2" />
                                         <p className="text-lg font-black">{product.wishlistCount || 0}</p>
-                                        <p className="text-[8px] text-zinc-600 uppercase">{lang === 'ar' ? 'قائمة الأمنيات' : 'Wishlist'}</p>
+                                        <p className="text-[8px] text-muted-foreground/60 uppercase">{lang === 'ar' ? 'قائمة الأمنيات' : 'Wishlist'}</p>
                                     </div>
-                                    <div className="p-4 rounded-2xl bg-zinc-900 border border-white/5 flex flex-col items-center">
+                                    <div className="p-4 rounded-2xl bg-secondary border border-border flex flex-col items-center">
                                         <Star className="w-5 h-5 text-yellow-500 mb-2" />
                                         <p className="text-lg font-black">{product.reviewCount || 0}</p>
-                                        <p className="text-[8px] text-zinc-600 uppercase">{lang === 'ar' ? 'تقييم' : 'Reviews'}</p>
+                                        <p className="text-[8px] text-muted-foreground/60 uppercase">{lang === 'ar' ? 'تقييم' : 'Reviews'}</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="space-y-4">
-                                <h4 className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">{lang === 'ar' ? 'وصف المنتج' : 'Description'}</h4>
-                                <div className={`p-6 rounded-3xl bg-zinc-900/50 border border-white/5 text-sm text-zinc-400 leading-relaxed max-h-[200px] overflow-y-auto ${lang === 'ar' ? 'text-end' : 'text-start'}`}>
+                                <h4 className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">{lang === 'ar' ? 'وصف المنتج' : 'Description'}</h4>
+                                <div className={`p-6 rounded-3xl bg-muted/30 border border-border text-sm text-zinc-400 leading-relaxed max-h-[200px] overflow-y-auto ${lang === 'ar' ? 'text-end' : 'text-start'}`}>
                                     {lang === 'ar' ? product.descriptionAr || product.description : product.description}
                                 </div>
                             </div>
@@ -490,8 +490,8 @@ function ProductDetailModal({ product: initialProduct, onClose, lang }: { produc
                     </div>
                 </div>
 
-                <div className="p-6 border-t border-white/5 bg-zinc-900/50 flex justify-end shrink-0">
-                    <Button onClick={onClose} className="px-8 h-12 rounded-2xl bg-zinc-800 text-white font-bold hover:bg-zinc-700">
+                <div className="p-6 border-t border-border bg-muted/30 flex justify-end shrink-0">
+                    <Button onClick={onClose} className="px-8 h-12 rounded-2xl bg-muted text-white font-bold hover:bg-zinc-700">
                         {lang === 'ar' ? 'إغلاق' : 'Close'}
                     </Button>
                 </div>
@@ -554,10 +554,10 @@ function CategoriesModal({ onClose }: { onClose: () => void }) {
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="w-full max-w-2xl bg-zinc-950 border border-white/10 rounded-4xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+                className="w-full max-w-2xl bg-popover border border-border rounded-4xl shadow-none overflow-hidden max-h-[90vh] flex flex-col"
             >
                 {/* Header */}
-                <div className="p-6 border-b border-white/5 flex items-center justify-between bg-zinc-900/50 shrink-0">
+                <div className="p-6 border-b border-border flex items-center justify-between bg-muted/30 shrink-0">
                     <div>
                         <h2 className="text-xl font-bold flex items-center gap-2">
                             <Tags className="w-5 h-5 text-purple-500" /> {lang === 'ar' ? 'إدارة الفئات' : 'Categories Management'}
@@ -571,7 +571,7 @@ function CategoriesModal({ onClose }: { onClose: () => void }) {
                         >
                             <Plus className="w-5 h-5" />
                         </button>
-                        <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-xl transition-all">
+                        <button onClick={onClose} className="p-2 hover:bg-accent/50 rounded-xl transition-all">
                             <X className="w-5 h-5" />
                         </button>
                     </div>
@@ -580,28 +580,28 @@ function CategoriesModal({ onClose }: { onClose: () => void }) {
                 {/* Content */}
                 <div className="overflow-y-auto flex-1 p-6">
                     {(isAddOpen || editId) && (
-                        <div className="mb-6 p-4 rounded-2xl bg-zinc-900/50 border border-white/10 space-y-4">
+                        <div className="mb-6 p-4 rounded-2xl bg-muted/30 border border-border space-y-4">
                             <h3 className="text-sm font-bold">{editId ? (lang === 'ar' ? 'تعديل قائمة' : 'Edit Category') : (lang === 'ar' ? 'إضافة قائمة جديدة' : 'Add New Category')}</h3>
                             <div className="space-y-3">
                                 <div>
                                     <label className="text-xs text-zinc-500 mb-1 block">Slug (e.g. workstations)</label>
-                                    <input value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full bg-zinc-950 border border-white/10 rounded-xl py-2 px-3 text-sm focus:border-[#0066FF] outline-none" />
+                                    <input value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full bg-popover border border-border rounded-xl py-2 px-3 text-sm focus:border-[#0066FF] outline-none" />
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
                                         <label className="text-xs text-zinc-500 mb-1 block">Name (EN)</label>
-                                        <input value={formData.nameEn} onChange={e => setFormData({ ...formData, nameEn: e.target.value })} className="w-full bg-zinc-950 border border-white/10 rounded-xl py-2 px-3 text-sm focus:border-[#0066FF] outline-none" />
+                                        <input value={formData.nameEn} onChange={e => setFormData({ ...formData, nameEn: e.target.value })} className="w-full bg-popover border border-border rounded-xl py-2 px-3 text-sm focus:border-[#0066FF] outline-none" />
                                     </div>
                                     <div>
                                         <label className="text-xs text-zinc-500 mb-1 block">الاسم (AR)</label>
-                                        <input value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} className="w-full bg-zinc-950 border border-white/10 rounded-xl py-2 px-3 text-sm focus:border-[#0066FF] outline-none text-end" />
+                                        <input value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} className="w-full bg-popover border border-border rounded-xl py-2 px-3 text-sm focus:border-[#0066FF] outline-none text-end" />
                                     </div>
                                 </div>
                                 <div className="flex gap-2 pt-2">
                                     <button onClick={handleSave} className="flex-1 py-2 rounded-xl bg-[#0066FF] text-white text-xs font-bold hover:bg-blue-500">
                                         {lang === 'ar' ? 'حفظ' : 'Save'}
                                     </button>
-                                    <button onClick={() => { setIsAddOpen(false); setEditId(null) }} className="flex-1 py-2 rounded-xl bg-zinc-800 text-zinc-400 text-xs hover:text-white">
+                                    <button onClick={() => { setIsAddOpen(false); setEditId(null) }} className="flex-1 py-2 rounded-xl bg-muted text-zinc-400 text-xs hover:text-white">
                                         {lang === 'ar' ? 'إلغاء' : 'Cancel'}
                                     </button>
                                 </div>
@@ -615,22 +615,22 @@ function CategoriesModal({ onClose }: { onClose: () => void }) {
                         </div>
                     ) : categories.length === 0 && !isAddOpen ? (
                         <div className="text-center py-20">
-                            <Tags className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
+                            <Tags className="w-12 h-12 text-muted-foreground/40 mx-auto mb-4" />
                             <p className="text-zinc-500">{lang === 'ar' ? 'لا توجد فئات حالياً.' : 'No categories found.'}</p>
                         </div>
                     ) : (
                         <div className="space-y-2">
                             {categories.map(c => (
-                                <div key={c.id} className="flex items-center justify-between p-4 rounded-2xl bg-zinc-900 border border-white/5">
+                                <div key={c.id} className="flex items-center justify-between p-4 rounded-2xl bg-secondary border border-border">
                                     <div>
                                         <p className="font-bold text-white text-sm">{lang === 'ar' ? c.nameAr : c.nameEn}</p>
                                         <p className="text-xs text-zinc-500 font-mono mt-1">/{c.name}</p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <button onClick={() => { setEditId(c.id); setFormData({ name: c.name, nameAr: c.nameAr, nameEn: c.nameEn }); setIsAddOpen(false); }} className="p-2 rounded-xl bg-zinc-800 border border-white/5 text-zinc-500 hover:text-white hover:bg-zinc-700 transition-all">
+                                        <button onClick={() => { setEditId(c.id); setFormData({ name: c.name, nameAr: c.nameAr, nameEn: c.nameEn }); setIsAddOpen(false); }} className="p-2 rounded-xl bg-muted border border-border text-zinc-500 hover:text-white hover:bg-zinc-700 transition-all">
                                             <Edit className="w-3.5 h-3.5" />
                                         </button>
-                                        <button onClick={() => setConfirmDelete({ isOpen: true, id: c.id })} className="p-2 rounded-xl bg-zinc-800 border border-white/5 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all">
+                                        <button onClick={() => setConfirmDelete({ isOpen: true, id: c.id })} className="p-2 rounded-xl bg-muted border border-border text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all">
                                             <Trash2 className="w-3.5 h-3.5" />
                                         </button>
                                     </div>
@@ -793,7 +793,7 @@ export default function AdminProducts() {
                     <p className="text-zinc-500">{lang === 'ar' ? 'أضف أو عدل منتجات المتجر.' : 'Add or edit store products.'}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="hidden sm:flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl">
+                    <div className="hidden sm:flex items-center gap-2 bg-white/5 border border-border px-4 py-2 rounded-2xl">
                         <Package className="w-4 h-4 text-[#0066FF]" />
                         <span className="text-sm font-bold">{products.length}</span>
                         <span className="text-xs text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'منتج' : 'products'}</span>
@@ -831,19 +831,19 @@ export default function AdminProducts() {
             {/* Toolbar */}
             <div className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">
-                    <Search className={`absolute top-3.5 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                    <Search className={`absolute top-3.5 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground/60`} />
                     <input
                         type="text"
                         placeholder={lang === 'ar' ? 'ابحث عن منتج...' : 'Search products...'}
-                        className={`w-full bg-zinc-950 border border-white/5 rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-sm focus:border-[#0066FF] outline-none transition-all`}
+                        className={`w-full bg-card border border-border rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-sm focus:border-[#0066FF] outline-none transition-all`}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
                 <div className="relative">
-                    <Filter className={`absolute top-3.5 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-zinc-600`} />
+                    <Filter className={`absolute top-3.5 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-muted-foreground/60`} />
                     <select
-                        className={`bg-zinc-950 border border-white/5 rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-sm focus:border-[#0066FF] outline-none transition-all appearance-none min-w-[160px] text-zinc-400 cursor-pointer`}
+                        className={`bg-card border border-border rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-sm focus:border-[#0066FF] outline-none transition-all appearance-none min-w-[160px] text-zinc-400 cursor-pointer`}
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
                     >
@@ -854,25 +854,25 @@ export default function AdminProducts() {
                             </option>
                         ))}
                     </select>
-                    <ChevronDown className={`absolute top-4 ${lang === 'ar' ? 'left-4' : 'right-4'} w-4 h-4 text-zinc-600 pointer-events-none`} />
+                    <ChevronDown className={`absolute top-4 ${lang === 'ar' ? 'left-4' : 'right-4'} w-4 h-4 text-muted-foreground/60 pointer-events-none`} />
                 </div>
             </div>
 
             {/* Products table */}
-            <div className="bg-zinc-950 border border-white/5 rounded-4xl overflow-hidden shadow-2xl">
+            <div className="bg-card border border-border rounded-4xl overflow-hidden shadow-none">
                 <div className="overflow-x-auto">
                     <table className="w-full text-start">
                         <thead>
-                            <tr className="border-b border-white/5 bg-zinc-900/50">
-                                <th className="px-6 py-5 text-zinc-500 text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'المنتج' : 'Product'}</th>
-                                <th className="px-6 py-5 text-zinc-500 text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'الفئة' : 'Category'}</th>
-                                <th className="px-6 py-5 text-zinc-500 text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'السعر' : 'Price'}</th>
-                                <th className="px-6 py-5 text-zinc-500 text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'الشحن' : 'Shipping'}</th>
-                                <th className="px-6 py-5 text-zinc-500 text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'المخزون' : 'Stock'}</th>
-                                <th className="px-6 py-5 text-zinc-500 text-xs font-bold uppercase tracking-widest text-end">{lang === 'ar' ? 'إجراءات' : 'Actions'}</th>
+                            <tr className="border-b border-border bg-muted/30">
+                                <th className="px-6 py-5 text-muted-foreground text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'المنتج' : 'Product'}</th>
+                                <th className="px-6 py-5 text-muted-foreground text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'الفئة' : 'Category'}</th>
+                                <th className="px-6 py-5 text-muted-foreground text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'السعر' : 'Price'}</th>
+                                <th className="px-6 py-5 text-muted-foreground text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'الشحن' : 'Shipping'}</th>
+                                <th className="px-6 py-5 text-muted-foreground text-xs font-bold uppercase tracking-widest text-start">{lang === 'ar' ? 'المخزون' : 'Stock'}</th>
+                                <th className="px-6 py-5 text-muted-foreground text-xs font-bold uppercase tracking-widest text-end">{lang === 'ar' ? 'إجراءات' : 'Actions'}</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-border">
                             {isLoading ? (
                                 <tr><td colSpan={6} className="px-6 py-20 text-center">
                                     <Loader2 className="w-10 h-10 animate-spin text-[#0066FF] mx-auto" />
@@ -880,11 +880,11 @@ export default function AdminProducts() {
                             ) : filteredProducts.length > 0 ? filteredProducts.map((p: any) => {
                                 const zones = p.shippingZones ? JSON.parse(p.shippingZones) : []
                                 return (
-                                    <tr key={p.id} className="hover:bg-white/5 transition-all group">
+                                    <tr key={p.id} className="hover:bg-accent/50 transition-all group">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-xl bg-zinc-900 flex items-center justify-center overflow-hidden border border-white/10 shrink-0">
-                                                    {p.image ? <img src={p.image} className="w-full h-full object-cover" /> : <Package className="w-5 h-5 text-zinc-700" />}
+                                                <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center overflow-hidden border border-border shrink-0">
+                                                    {p.image ? <img src={p.image} className="w-full h-full object-cover" /> : <Package className="w-5 h-5 text-muted-foreground/40" />}
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-sm truncate max-w-[200px]">{lang === 'ar' ? p.nameAr || p.name : p.name}</p>
@@ -918,17 +918,17 @@ export default function AdminProducts() {
                                         <td className="px-6 py-4 text-end">
                                             <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button onClick={() => setViewingProduct(p)}
-                                                    className="p-2 rounded-xl bg-zinc-900 border border-white/5 text-zinc-500 hover:text-[#0066FF] hover:bg-[#0066FF]/10 transition-all"
+                                                    className="p-2 rounded-xl bg-secondary border border-border text-zinc-500 hover:text-[#0066FF] hover:bg-[#0066FF]/10 transition-all"
                                                     title={lang === 'ar' ? 'عرض التفاصيل' : 'View Details'}
                                                 >
                                                     <Eye className="w-4 h-4" />
                                                 </button>
                                                 <button onClick={() => { setEditingProduct(p); setIsAddModalOpen(true) }}
-                                                    className="p-2 rounded-xl bg-zinc-900 border border-white/5 text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all">
+                                                    className="p-2 rounded-xl bg-secondary border border-border text-zinc-500 hover:text-white hover:bg-muted transition-all">
                                                     <Edit className="w-4 h-4" />
                                                 </button>
                                                 <button onClick={() => setConfirmDelete({ isOpen: true, id: p.id })}
-                                                    className="p-2 rounded-xl bg-zinc-900 border border-white/5 text-zinc-500 hover:text-red-500 hover:bg-red-500/10 transition-all">
+                                                    className="p-2 rounded-xl bg-secondary border border-border text-zinc-500 hover:text-red-500 hover:bg-red-500/10 transition-all">
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
                                             </div>
@@ -955,14 +955,14 @@ export default function AdminProducts() {
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className="w-full max-w-6xl bg-zinc-950 border border-white/10 rounded-4xl shadow-2xl overflow-hidden my-auto"
+                            className="w-full max-w-6xl bg-popover border border-border rounded-4xl shadow-none overflow-hidden my-auto"
                         >
-                            <div className="p-8 border-b border-white/5 flex items-center justify-between bg-zinc-900/50">
+                            <div className="p-8 border-b border-border flex items-center justify-between bg-muted/30">
                                 <div>
                                     <h2 className="text-2xl font-bold">{editingProduct ? (lang === 'ar' ? 'تعديل المنتج' : 'Edit Product') : (lang === 'ar' ? 'إضافة منتج جديد' : 'Add New Product')}</h2>
                                     <p className="text-xs text-zinc-500 mt-1">{lang === 'ar' ? 'أكمل بيانات المنتج بدقة.' : 'Fill in the product details correctly.'}</p>
                                 </div>
-                                <button onClick={() => { setIsAddModalOpen(false); setEditingProduct(null) }} className="p-3 hover:bg-white/5 rounded-2xl transition-all">
+                                <button onClick={() => { setIsAddModalOpen(false); setEditingProduct(null) }} className="p-3 hover:bg-accent/50 rounded-2xl transition-all">
                                     <X className="w-6 h-6" />
                                 </button>
                             </div>
@@ -973,26 +973,26 @@ export default function AdminProducts() {
                                     <div className="space-y-6">
                                         <div className="space-y-2">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Product Name (EN)</label>
-                                            <input required className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-white font-medium" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                                            <input required className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-white font-medium" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Product Name (AR)</label>
-                                            <input required className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end text-white font-medium" value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} />
+                                            <input required className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end text-white font-medium" value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} />
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">
                                                 <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? "السعر (ج.م)" : "Price (EGP)"}</label>
-                                                <input type="number" step="0.01" required className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} />
+                                                <input type="number" step="0.01" required className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? "سعر الخصم (ج.م)" : "Discount Price (EGP)"}</label>
-                                                <input type="number" step="0.01" className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.discountPrice} onChange={e => setFormData({ ...formData, discountPrice: e.target.value })} />
+                                                <input type="number" step="0.01" className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.discountPrice} onChange={e => setFormData({ ...formData, discountPrice: e.target.value })} />
                                             </div>
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Category</label>
                                             <div className="relative">
-                                                <select className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none appearance-none" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
+                                                <select className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none appearance-none" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
                                                     {formData.category && !categories.some((c: any) => c.name === formData.category) && (
                                                         <option value={formData.category}>
                                                             {formData.category} ({lang === "ar" ? "غير مدرج بالفئات" : "not in category list"})
@@ -1006,11 +1006,11 @@ export default function AdminProducts() {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">
                                                 <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Stock</label>
-                                                <input type="number" required className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.stock} onChange={e => setFormData({ ...formData, stock: e.target.value })} />
+                                                <input type="number" required className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.stock} onChange={e => setFormData({ ...formData, stock: e.target.value })} />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Tag</label>
-                                                <input className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.tag} placeholder="NEW, SALE, etc." onChange={e => setFormData({ ...formData, tag: e.target.value })} />
+                                                <input className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.tag} placeholder="NEW, SALE, etc." onChange={e => setFormData({ ...formData, tag: e.target.value })} />
                                             </div>
                                         </div>
                                     </div>
@@ -1020,13 +1020,13 @@ export default function AdminProducts() {
                                         <div className="space-y-2">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Main Image URL</label>
                                             <div className="flex gap-4 items-center">
-                                                <input className="flex-1 bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.image} placeholder="https://..." onChange={e => setFormData({ ...formData, image: e.target.value })} />
-                                                {formData.image && <div className="w-14 h-14 rounded-2xl bg-zinc-900 border border-white/5 overflow-hidden shrink-0"><img src={formData.image} className="w-full h-full object-cover" /></div>}
+                                                <input className="flex-1 bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none" value={formData.image} placeholder="https://..." onChange={e => setFormData({ ...formData, image: e.target.value })} />
+                                                {formData.image && <div className="w-14 h-14 rounded-2xl bg-secondary border border-border overflow-hidden shrink-0"><img src={formData.image} className="w-full h-full object-cover" /></div>}
                                             </div>
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Gallery URLs (comma separated)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[80px]" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
+                                            <textarea className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[80px]" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
                                         </div>
 
                                         {/* ── Shipping Zones ── */}
@@ -1036,22 +1036,22 @@ export default function AdminProducts() {
                                                 Shipping Zones
                                             </label>
                                             {allZones.length === 0 ? (
-                                                <div className="flex items-center gap-3 p-4 rounded-2xl bg-zinc-900 border border-white/5 text-sm text-zinc-500">
-                                                    <Truck className="w-4 h-4 text-zinc-700" />
+                                                <div className="flex items-center gap-3 p-4 rounded-2xl bg-secondary border border-border text-sm text-zinc-500">
+                                                    <Truck className="w-4 h-4 text-muted-foreground/40" />
                                                     أضف مناطق الشحن أولاً من زر "Shipping"
                                                 </div>
                                             ) : (
                                                 <ZonePicker allZones={allZones} selected={selectedZones} onChange={setSelectedZones} />
                                             )}
-                                            <p className="text-[10px] text-zinc-600">
+                                            <p className="text-[10px] text-muted-foreground/60">
                                                 {selectedZones.length === 0 ? '⚡ فارغ = يشحن لجميع المحافظات تلقائياً' : `✓ ${selectedZones.length} محافظة محددة`}
                                             </p>
                                         </div>
 
                                         {/* ── Visibility Toggle ── */}
-                                        <div className="p-6 rounded-3xl bg-zinc-900/50 border border-white/5 flex items-center justify-between">
+                                        <div className="p-6 rounded-3xl bg-muted/30 border border-border flex items-center justify-between">
                                             <div className="flex items-center gap-3">
-                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${formData.active ? 'bg-green-500/10 text-green-500' : 'bg-zinc-800 text-zinc-500'}`}>
+                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${formData.active ? 'bg-green-500/10 text-green-500' : 'bg-muted text-zinc-500'}`}>
                                                     {formData.active ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
                                                 </div>
                                                 <div>
@@ -1070,30 +1070,30 @@ export default function AdminProducts() {
                                     </div>
                                 </div>
 
-                                <div className="mt-8 pt-8 border-t border-white/5 space-y-6">
+                                <div className="mt-8 pt-8 border-t border-border space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2 min-w-0">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (EN)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[120px]" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                                            <textarea className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[120px]" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
                                         </div>
                                         <div className="space-y-2 min-w-0">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Short description (AR)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[120px]" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
+                                            <textarea className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[120px]" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2 min-w-0">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (EN)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[180px]" value={formData.longDescription} onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
+                                            <textarea className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none min-h-[180px]" value={formData.longDescription} onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
                                         </div>
                                         <div className="space-y-2 min-w-0">
                                             <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Long description (AR)</label>
-                                            <textarea className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[180px]" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
+                                            <textarea className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-[#0066FF] outline-none text-end min-h-[180px]" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="flex gap-4 pt-6 border-t border-white/5">
+                                <div className="flex gap-4 pt-6 border-t border-border">
                                     <Button type="button" onClick={() => { setIsAddModalOpen(false); setEditingProduct(null) }}
                                         className="flex-1 h-16 rounded-4xl border border-zinc-800 text-zinc-500 hover:text-white transition-all bg-transparent font-bold">
                                         Cancel

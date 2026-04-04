@@ -10,7 +10,7 @@ type Translations = typeof en
 interface LanguageContextProps {
     lang: Language
     setLang: (lang: Language) => void
-    t: (key: string) => any
+    t: (key: string, variables?: Record<string, any>) => any
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined)
@@ -42,8 +42,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"
     }, [lang])
 
-    const t = (path: string) => {
-        return path.split(".").reduce((obj: any, key) => obj?.[key], dictionaries[lang]) || path
+    const t = (path: string, variables?: Record<string, any>) => {
+        let value = path.split(".").reduce((obj: any, key) => obj?.[key], dictionaries[lang]) || path
+        if (typeof value === "string" && variables) {
+            Object.entries(variables).forEach(([key, val]) => {
+                value = value.split(`{{${key}}}`).join(String(val))
+            })
+        }
+        return value
     }
 
     return (

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
@@ -268,7 +268,7 @@ export default function AdminSubscriptionPlansPage() {
                     <Loader2 className="w-8 h-8 animate-spin text-[#0066FF]" />
                 </div>
             ) : rows.length === 0 ? (
-                <div className="py-16 text-center text-zinc-500 border border-white/5 rounded-3xl">
+                <div className="py-16 text-center text-zinc-500 border border-border rounded-3xl">
                     {lang === "ar" ? "لا توجد خطط بعد" : "No plans yet"}
                 </div>
             ) : (
@@ -279,10 +279,10 @@ export default function AdminSubscriptionPlansPage() {
                             initial={{ opacity: 0, y: 6 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.03 }}
-                            className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-2xl bg-zinc-950 border border-white/10"
+                            className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-2xl bg-card border border-border"
                         >
                             <div className="flex-1 min-w-0">
-                                <p className="font-bold text-white">
+                                <p className="font-bold text-foreground">
                                     {lang === "ar" ? r.nameAr : r.nameEn}
                                 </p>
                                 <p className="text-xs text-zinc-500 mt-1">
@@ -297,7 +297,7 @@ export default function AdminSubscriptionPlansPage() {
                                     </span>
                                 )}
                             </div>
-                            <div className="text-xs text-zinc-500">
+                            <div className="text-xs text-muted-foreground">
                                 #{r.sortOrder}
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
@@ -306,7 +306,7 @@ export default function AdminSubscriptionPlansPage() {
                                     variant="outline"
                                     size="sm"
                                     onClick={() => openEdit(r)}
-                                    className="border-white/15 rounded-xl"
+                                    className="border-border rounded-xl"
                                     title={lang === "ar" ? "تعديل" : "Edit"}
                                 >
                                     <Pencil className="w-4 h-4" />
@@ -316,7 +316,7 @@ export default function AdminSubscriptionPlansPage() {
                                     variant="outline"
                                     size="sm"
                                     onClick={() => openDeleteDialog(r)}
-                                    className="border-white/15 rounded-xl text-zinc-400 hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/10"
+                                    className="border-border rounded-xl text-muted-foreground hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/10"
                                     title={lang === "ar" ? "حذف" : "Delete"}
                                 >
                                     <Trash2 className="w-4 h-4" />
@@ -332,9 +332,9 @@ export default function AdminSubscriptionPlansPage() {
                     <motion.div
                         initial={{ scale: 0.98, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="w-full max-w-md bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto"
+                        className="w-full max-w-md bg-card border border-border rounded-2xl shadow-none overflow-hidden max-h-[92vh] overflow-y-auto"
                     >
-                        <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between sticky top-0 bg-zinc-950">
+                        <div className="px-4 py-3 border-b border-border flex items-center justify-between sticky top-0 bg-card">
                             <h2 className="font-bold">
                                 {editingId
                                     ? lang === "ar"
@@ -347,7 +347,7 @@ export default function AdminSubscriptionPlansPage() {
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className="p-2 rounded-lg hover:bg-white/5"
+                                className="p-2 rounded-lg hover:bg-accent/50"
                             >
                                 <X className="w-4 h-4" />
                             </button>
@@ -358,7 +358,7 @@ export default function AdminSubscriptionPlansPage() {
                                     {lang === "ar" ? "الخدمة (اختياري)" : "Service (optional)"}
                                 </label>
                                 <select
-                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
                                     value={form.serviceKey}
                                     onChange={(e) =>
                                         setForm((f) => ({
@@ -389,7 +389,7 @@ export default function AdminSubscriptionPlansPage() {
                                 </label>
                                 <input
                                     required
-                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
                                     value={form.nameEn}
                                     onChange={(e) =>
                                         setForm((f) => ({
@@ -405,7 +405,7 @@ export default function AdminSubscriptionPlansPage() {
                                 </label>
                                 <input
                                     required
-                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
                                     dir="rtl"
                                     value={form.nameAr}
                                     onChange={(e) =>
@@ -424,7 +424,7 @@ export default function AdminSubscriptionPlansPage() {
                                 </label>
                                 <input
                                     type="number"
-                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
                                     value={form.suggestedAmount}
                                     onChange={(e) =>
                                         setForm((f) => ({
@@ -441,7 +441,7 @@ export default function AdminSubscriptionPlansPage() {
                                     </label>
                                     <input
                                         type="number"
-                                        className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                        className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
                                         value={form.sortOrder}
                                         onChange={(e) =>
                                             setForm((f) => ({
@@ -462,7 +462,7 @@ export default function AdminSubscriptionPlansPage() {
                                                     active: e.target.checked,
                                                 }))
                                             }
-                                            className="rounded border-white/20"
+                                            className="rounded border-border"
                                         />
                                         {lang === "ar" ? "نشطة" : "Active"}
                                     </label>
@@ -472,7 +472,7 @@ export default function AdminSubscriptionPlansPage() {
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="flex-1 rounded-xl border-white/15"
+                                    className="flex-1 rounded-xl border-border"
                                     onClick={() => setIsModalOpen(false)}
                                 >
                                     {lang === "ar" ? "إلغاء" : "Cancel"}

@@ -7,7 +7,8 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { NexBotAI } from "@/components/nexbot-ai"
-import { Wrench, ArrowRight } from "lucide-react"
+import { Wrench, ArrowRight, Star, Heart, Lightbulb } from "lucide-react"
+import { Card } from "@/components/ui/card"
 
 export default function Team() {
     const { lang, t } = useLanguage()
@@ -19,106 +20,157 @@ export default function Team() {
         { key: "support", image: "/Support-&-Success-Ambassadors.jpg" },
     ]
 
+    const cultureTags = [
+        { label: t("about_pages.team.culture_tags.creative"), icon: Lightbulb },
+        { label: t("about_pages.team.culture_tags.passion"), icon: Star },
+        { label: t("about_pages.team.culture_tags.spirit"), icon: Heart },
+    ]
+
+    const coreValues = [
+        { 
+            title: t("about_pages.team.values.innovation.title"), 
+            desc: t("about_pages.team.values.innovation.desc"), 
+            icon: Lightbulb 
+        },
+        { 
+            title: t("about_pages.team.values.quality.title"), 
+            desc: t("about_pages.team.values.quality.desc"), 
+            icon: Star 
+        },
+        { 
+            title: t("about_pages.team.values.collaboration.title"), 
+            desc: t("about_pages.team.values.collaboration.desc"), 
+            icon: Heart 
+        },
+    ]
+
     return (
-        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-[#050505] min-h-screen">
+        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-bg-primary min-h-screen text-text-primary">
             <PageHero
                 title={t("about_pages.team.hero_title")}
                 subtitle={t("about_pages.team.hero_subtitle")}
             />
 
             {/* Culture Section */}
-            <PageSection title={t("about_pages.team.culture_title")} columns={2}>
-                <div className="flex flex-col justify-center">
-                    <p className="text-xl text-zinc-400 leading-relaxed italic border-l-4 border-[#0066FF] ps-6 py-4">
-                        {t("about_pages.team.culture_content")}
-                    </p>
+            <PageSection title={t("about_pages.team.culture_title")} columns={2} className="py-40">
+                <div className="flex flex-col justify-center pe-0 lg:pe-20 space-y-10">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="relative"
+                    >
+                        <div className="absolute top-0 left-0 bottom-0 w-2 bg-accent rounded-full opacity-30 hidden md:block" />
+                        <p className="text-2xl md:text-3xl text-text-primary leading-relaxed md:ps-12 py-4 font-black tracking-tight italic opacity-95">
+                            &quot;{t("about_pages.team.culture_content")}&quot;
+                        </p>
+                    </motion.div>
+                    
+                    <div className="flex flex-wrap gap-4 md:ps-12">
+                         {cultureTags.map((item, i) => (
+                            <div key={i} className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-bg-secondary border border-border-color shadow-xl hover:border-accent/40 transition-colors">
+                                <item.icon className="w-5 h-5 text-accent" />
+                                <span className="font-black text-sm uppercase tracking-widest opacity-80">{item.label}</span>
+                            </div>
+                         ))}
+                    </div>
                 </div>
-                <div className="relative aspect-video rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
+                <div className="relative aspect-video lg:aspect-auto h-full min-h-[500px] rounded-[50px] overflow-hidden border border-border-color shadow-3xl group">
                     <Image
                         src="/expert-team.png"
                         alt="Team Culture"
                         fill
-                        className="object-cover"
+                        className="object-cover grayscale hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 opacity-90 group-hover:opacity-100"
                     />
+                    <div className="absolute inset-0 bg-linear-to-t from-bg-primary/60 via-transparent to-transparent pointer-events-none" />
                 </div>
             </PageSection>
 
             {/* Departments Grid */}
-            <PageSection>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <PageSection className="bg-bg-secondary/20 border-y border-border-color py-40">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
                     {departments.map((dept, i) => (
                         <motion.div
                             key={dept.key}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
-                            whileHover={{ y: -10 }}
-                            className="group relative h-[450px] rounded-4xl overflow-hidden border border-white/5 bg-zinc-900 shadow-2xl cursor-pointer"
                         >
-                            <Image
-                                src={dept.image}
-                                alt={dept.key}
-                                fill
-                                className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-1000"
-                            />
-                            <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+                            <Card className="group relative h-[600px] rounded-[40px] overflow-hidden border-border-color bg-bg-secondary shadow-2xl cursor-pointer">
+                                <Image
+                                    src={dept.image}
+                                    alt={dept.key}
+                                    fill
+                                    className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-1000"
+                                />
+                                <div className="absolute inset-0 bg-linear-to-t from-bg-primary via-bg-primary/20 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-700" />
 
-                            {/* Decorative Top Line */}
-                            <div className="absolute top-0 left-8 right-8 h-1 bg-linear-to-r from-transparent via-[#0066FF] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                                {/* Decorative Top Line */}
+                                <div className="absolute top-0 left-12 right-12 h-1.5 bg-accent opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-full shadow-[0_0_15px_rgba(0,102,255,0.8)]" />
 
-                            <div className="absolute bottom-8 left-8 right-8 flex flex-col items-center text-center">
-                                <h3 className="text-xl md:text-2xl font-bold text-white mb-4 group-hover:-translate-y-2 transition-transform duration-500">
-                                    {(t("about_pages.team.departments") as any)[dept.key]}
-                                </h3>
-                                <div className="w-12 h-1 bg-[#0066FF] rounded-full group-hover:w-full transition-all duration-700" />
-                            </div>
+                                <div className="absolute bottom-12 left-12 right-12 flex flex-col items-center text-center">
+                                    <h3 className="text-2xl md:text-3xl font-black text-text-primary mb-6 group-hover:-translate-y-2 transition-transform duration-500 tracking-tighter">
+                                        {(t("about_pages.team.departments") as any)[dept.key]}
+                                    </h3>
+                                    <div className="w-16 h-1.5 bg-accent rounded-full group-hover:w-full transition-all duration-1000 shadow-[0_0_10px_rgba(0,102,255,0.4)]" />
+                                </div>
+                            </Card>
                         </motion.div>
                     ))}
                 </div>
             </PageSection>
 
             {/* Core Values Section */}
-            <PageSection title={lang === "ar" ? "قيمنا الأساسية" : "Our Core Values"} className="bg-white/3 border-y border-white/5">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {[
-                        { title: lang === "ar" ? "الابتكار" : "Innovation", desc: lang === "ar" ? "نبحث دائماً عن حلول غير تقليدية لتحديات معقدة." : "Always looking for unconventional solutions to complex challenges." },
-                        { title: lang === "ar" ? "الجودة" : "Quality", desc: lang === "ar" ? "لا نتنازل أبداً عن أعلى معايير الجودة في كل مشاريعنا." : "Never compromising on the highest quality standards in all projects." },
-                        { title: lang === "ar" ? "التعاون" : "Collaboration", desc: lang === "ar" ? "نؤمن بأن العمل الجماعي هو مفتاح النجاح المبهر." : "Believing that teamwork is the key to stunning success." },
-                    ].map((val, i) => (
-                        <div key={i} className="p-10 rounded-4xl bg-[#080808] border border-white/5 hover:border-[#0066FF]/50 transition-all duration-500 text-center group">
-                            <h3 className="text-2xl font-bold text-[#0066FF] mb-4 group-hover:scale-110 transition-transform duration-500">{val.title}</h3>
-                            <p className="text-zinc-400 leading-relaxed text-lg">{val.desc}</p>
-                        </div>
+            <PageSection title={t("about_pages.team.values_title")} className="py-40">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                    {coreValues.map((val, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1 }}
+                        >
+                            <Card className="p-14 md:p-20 border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 text-center group h-full shadow-3xl backdrop-blur-sm relative overflow-hidden">
+                                <div className="absolute -top-10 -right-10 w-24 h-24 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/10 transition-colors pointer-events-none" />
+                                <div className="w-20 h-20 rounded-3xl bg-bg-primary flex items-center justify-center mx-auto mb-10 group-hover:bg-accent group-hover:text-white transition-all duration-500 border border-border-color shadow-xl">
+                                    <val.icon className="w-10 h-10 text-accent group-hover:text-white transition-colors" />
+                                </div>
+                                <h3 className="text-3xl font-black text-text-primary mb-6 group-hover:text-accent transition-colors tracking-tighter uppercase">{val.title}</h3>
+                                <p className="text-text-secondary leading-relaxed text-lg font-medium opacity-80 group-hover:opacity-100 transition-opacity">{val.desc}</p>
+                            </Card>
+                        </motion.div>
                     ))}
                 </div>
             </PageSection>
 
             {/* Support CTA Section */}
-            <section className="py-32 bg-linear-to-b from-[#050505] to-[#0A0A0A] border-t border-white/5 text-center relative overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(0,102,255,0.05),transparent_70%)] pointer-events-none" />
+            <section className="py-40 bg-bg-secondary/20 border-t border-border-color text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,102,255,0.08),transparent_70%)] pointer-events-none" />
+                <div className="absolute inset-0 bg-accent/3 blur-[140px] pointer-events-none" />
 
-                <div className="max-w-3xl mx-auto px-6 relative z-10">
+                <div className="max-w-4xl mx-auto px-10 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="w-20 h-20 rounded-3xl bg-[#0066FF]/10 flex items-center justify-center mx-auto mb-8 border border-[#0066FF]/20"
+                        viewport={{ once: true }}
+                        className="w-24 h-24 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-12 border border-accent/20 shadow-2xl group transition-all duration-700"
                     >
-                        <Wrench className="w-10 h-10 text-[#0066FF]" />
+                        <Wrench className="w-12 h-12 text-accent" />
                     </motion.div>
-                    <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tight">
-                        {lang === "ar" ? "تواجه تحديات تقنية؟" : "Facing Tech Challenges?"}
+                    <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tighter text-text-primary leading-tight">
+                        {t("about_pages.team.cta_title")}
                     </h2>
-                    <p className="text-zinc-400 text-lg md:text-xl mb-12 leading-relaxed">
-                        {lang === "ar"
-                            ? "فريقنا المتخصص جاهز لتقديم الدعم الفني الفوري والحلول المبتكرة لضمان استمرارية أعمالك ونموها."
-                            : "Our specialist team is ready to provide immediate technical support and innovative solutions to ensure your business continuity and growth."}
+                    <p className="text-text-secondary text-xl md:text-2xl mb-16 leading-relaxed max-w-3xl mx-auto font-medium opacity-80">
+                        {t("about_pages.team.cta_subtitle")}
                     </p>
                     <Link
                         href="/about/tech-support"
-                        className="inline-flex items-center gap-3 px-12 py-5 bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-2xl font-black transition-all hover:scale-105 shadow-xl shadow-[#0066FF]/25 group"
+                        className="inline-flex items-center gap-6 px-14 py-6 bg-accent hover:bg-accent/90 text-white rounded-4xl font-black transition-all hover:scale-105 shadow-3xl shadow-accent/20 group uppercase tracking-widest text-sm"
                     >
-                        {lang === "ar" ? "اطلب الدعم الفني الآن" : "Request Tech Support Now"}
-                        <ArrowRight className={`w-5 h-5 transition-transform group-hover:translate-x-2 ${lang === "ar" ? "rotate-180 group-hover:-translate-x-2" : ""}`} />
+                        {t("about_pages.team.cta_button")}
+                        <ArrowRight className={`w-6 h-6 transition-transform group-hover:translate-x-3 ${lang === "ar" ? "rotate-180 group-hover:-translate-x-3" : ""}`} />
                     </Link>
                 </div>
             </section>

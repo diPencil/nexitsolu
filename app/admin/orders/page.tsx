@@ -50,6 +50,15 @@ export default function AdminOrders() {
         CANCELLED: 'bg-red-500/10 text-red-500 border-red-500/20',
     }
 
+    const statusLabels: Record<string, { ar: string, en: string }> = {
+        ALL: { ar: 'الكل', en: 'All' },
+        PENDING: { ar: 'قيد الانتظار', en: 'Pending' },
+        PROCESSING: { ar: 'قيد التجهيز', en: 'Processing' },
+        SHIPPED: { ar: 'تم الشحن', en: 'Shipped' },
+        DELIVERED: { ar: 'تم التسليم', en: 'Delivered' },
+        CANCELLED: { ar: 'ملغى', en: 'Cancelled' },
+    }
+
     const statusFilters = ['ALL', 'PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED']
     const filteredOrders = filter === 'ALL' ? orders : orders.filter(o => o.status === filter)
 
@@ -59,13 +68,13 @@ export default function AdminOrders() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <h1 className="text-3xl font-bold mb-2">{lang === 'ar' ? 'إدارة الطلبات' : 'Orders Management'}</h1>
-                    <p className="text-zinc-500">{lang === 'ar' ? 'تابع وأدر طلبات العملاء.' : 'Track and manage customer orders.'}</p>
+                    <p className="text-muted-foreground">{lang === 'ar' ? 'تابع وأدر طلبات العملاء.' : 'Track and manage customer orders.'}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="hidden sm:flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl">
+                    <div className="hidden sm:flex items-center gap-2 bg-white/5 border border-border px-4 py-2 rounded-2xl">
                         <ShoppingCart className="w-4 h-4 text-[#0066FF]" />
                         <span className="text-sm font-bold">{orders.length}</span>
-                        <span className="text-xs text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'طلب' : 'orders'}</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'طلب' : 'orders'}</span>
                     </div>
                 </div>
             </div>
@@ -77,11 +86,11 @@ export default function AdminOrders() {
                         key={s}
                         onClick={() => setFilter(s)}
                         className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${filter === s
-                                ? 'bg-[#0066FF] text-white'
-                                : 'bg-zinc-900 text-zinc-500 hover:text-white border border-white/5'
+                                ? 'bg-[#0066FF] text-primary-foreground'
+                                : 'bg-secondary text-muted-foreground hover:text-foreground border border-border'
                             }`}
                     >
-                        {s === 'ALL' ? (lang === 'ar' ? 'الكل' : 'All') : s}
+                        {statusLabels[s]?.[lang] || s}
                         {s !== 'ALL' && (
                             <span className="ml-1.5 opacity-60">({orders.filter(o => o.status === s).length})</span>
                         )}
@@ -90,38 +99,38 @@ export default function AdminOrders() {
             </div>
 
             {/* Orders Table */}
-            <div className="bg-zinc-950 border border-white/5 rounded-2xl overflow-hidden">
+            <div className="bg-card border border-border rounded-2xl shadow-none overflow-hidden">
                 {isLoading ? (
                     <div className="py-20 text-center">
                         <Loader2 className="w-8 h-8 animate-spin text-[#0066FF] mx-auto" />
                     </div>
                 ) : filteredOrders.length === 0 ? (
                     <div className="py-20 text-center">
-                        <ShoppingCart className="w-10 h-10 text-zinc-800 mx-auto mb-3" />
-                        <p className="text-sm text-zinc-600">{lang === 'ar' ? 'لا توجد طلبات' : 'No orders found'}</p>
+                        <ShoppingCart className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+                        <p className="text-sm text-muted-foreground">{lang === 'ar' ? 'لا توجد طلبات' : 'No orders found'}</p>
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
-                                <tr className="border-b border-white/5 bg-zinc-900/30">
-                                    <th className="px-6 py-4 text-zinc-600 text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'رقم الطلب' : 'Order ID'}</th>
-                                    <th className="px-6 py-4 text-zinc-600 text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'العميل' : 'Customer'}</th>
-                                    <th className="px-6 py-4 text-zinc-600 text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'المنتجات' : 'Items'}</th>
-                                    <th className="px-6 py-4 text-zinc-600 text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'المبلغ' : 'Total'}</th>
-                                    <th className="px-6 py-4 text-zinc-600 text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'الحالة' : 'Status'}</th>
-                                    <th className="px-6 py-4 text-zinc-600 text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'التاريخ' : 'Date'}</th>
-                                    <th className="px-6 py-4 text-zinc-600 text-[10px] font-bold uppercase tracking-wider text-end">{lang === 'ar' ? 'عرض' : 'View'}</th>
+                                <tr className="border-b border-border bg-muted/50">
+                                    <th className="px-6 py-4 text-muted-foreground text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'رقم الطلب' : 'Order ID'}</th>
+                                    <th className="px-6 py-4 text-muted-foreground text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'العميل' : 'Customer'}</th>
+                                    <th className="px-6 py-4 text-muted-foreground text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'المنتجات' : 'Items'}</th>
+                                    <th className="px-6 py-4 text-muted-foreground text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'المبلغ' : 'Total'}</th>
+                                    <th className="px-6 py-4 text-muted-foreground text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'الحالة' : 'Status'}</th>
+                                    <th className="px-6 py-4 text-muted-foreground text-[10px] font-bold uppercase tracking-wider text-start">{lang === 'ar' ? 'التاريخ' : 'Date'}</th>
+                                    <th className="px-6 py-4 text-muted-foreground text-[10px] font-bold uppercase tracking-wider text-end">{lang === 'ar' ? 'عرض' : 'View'}</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-border">
                                 {filteredOrders.map((order, i) => (
                                     <motion.tr
                                         key={order.id}
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         transition={{ delay: i * 0.03 }}
-                                        className="hover:bg-white/2 transition-all"
+                                        className="hover:bg-muted/50 transition-all"
                                     >
                                         <td className="px-6 py-4">
                                             <span className="text-xs font-mono font-bold text-[#0066FF]">#{order.id.slice(-6).toUpperCase()}</span>
@@ -129,7 +138,7 @@ export default function AdminOrders() {
                                         <td className="px-6 py-4">
                                             <div>
                                                 <p className="text-sm font-medium">{order.user?.name || 'N/A'}</p>
-                                                <p className="text-[10px] text-zinc-600">{order.user?.email}</p>
+                                                <p className="text-[10px] text-muted-foreground">{order.user?.email}</p>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
@@ -140,16 +149,16 @@ export default function AdminOrders() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className={`text-[10px] px-2.5 py-1 rounded-md border font-bold ${statusColors[order.status] || statusColors.PENDING}`}>
-                                                {order.status}
+                                                {statusLabels[order.status]?.[lang] || order.status}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="text-xs text-zinc-500">{new Date(order.createdAt).toLocaleDateString()}</span>
+                                            <span className="text-xs text-muted-foreground">{new Date(order.createdAt).toLocaleDateString()}</span>
                                         </td>
                                         <td className="px-6 py-4 text-end">
                                             <button
                                                 onClick={() => setSelectedOrder(order)}
-                                                className="p-2 rounded-lg bg-zinc-900 border border-white/5 text-zinc-500 hover:text-white transition-all"
+                                                className="p-2 rounded-lg bg-muted border border-border text-muted-foreground hover:text-foreground transition-all"
                                             >
                                                 <Eye className="w-3.5 h-3.5" />
                                             </button>
@@ -164,31 +173,31 @@ export default function AdminOrders() {
 
             {/* Order Detail Modal */}
             {selectedOrder && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-xl bg-black/80" onClick={() => setSelectedOrder(null)}>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/50" onClick={() => setSelectedOrder(null)}>
                     <motion.div
                         initial={{ scale: 0.95, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         onClick={e => e.stopPropagation()}
-                        className="w-full max-w-lg bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden"
+                        className="w-full max-w-lg bg-card border border-border rounded-2xl shadow-none overflow-hidden"
                     >
-                        <div className="p-6 border-b border-white/5 flex items-center justify-between">
+                        <div className="p-6 border-b border-border flex items-center justify-between">
                             <div>
                                 <h3 className="font-bold">{lang === 'ar' ? 'الطلب' : 'Order'} #{selectedOrder.id.slice(-6).toUpperCase()}</h3>
-                                <p className="text-xs text-zinc-500">{new Date(selectedOrder.createdAt).toLocaleString()}</p>
+                                <p className="text-xs text-muted-foreground">{new Date(selectedOrder.createdAt).toLocaleString()}</p>
                             </div>
-                            <button onClick={() => setSelectedOrder(null)} className="p-2 hover:bg-white/5 rounded-lg"><X className="w-4 h-4" /></button>
+                            <button onClick={() => setSelectedOrder(null)} className="p-2 hover:bg-accent/50 rounded-lg"><X className="w-4 h-4" /></button>
                         </div>
                         <div className="p-6 space-y-4">
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'العميل' : 'Customer'}</span>
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'العميل' : 'Customer'}</span>
                                 <span className="text-sm font-medium">{selectedOrder.user?.name || 'N/A'}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'البريد الإلكتروني' : 'Email'}</span>
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'البريد الإلكتروني' : 'Email'}</span>
                                 <span className="text-sm">{selectedOrder.user?.email}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'الحالة' : 'Status'}</span>
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'الحالة' : 'Status'}</span>
                                 <select 
                                     className={`text-[10px] px-2.5 py-1 rounded-md border font-bold bg-transparent outline-none cursor-pointer ${statusColors[selectedOrder.status]}`}
                                     value={selectedOrder.status}
@@ -201,59 +210,59 @@ export default function AdminOrders() {
                                     }}
                                 >
                                     {Object.keys(statusColors).map(s => (
-                                        <option key={s} value={s} className="bg-zinc-950 text-white">{s}</option>
+                                        <option key={s} value={s} className="bg-background text-foreground">{statusLabels[s]?.[lang] || s}</option>
                                     ))}
                                 </select>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'كود التتبع' : 'Tracking Code'}</span>
-                                <span className="text-[10px] font-mono select-all bg-white/5 px-2 py-1 rounded border border-white/5">{selectedOrder.id}</span>
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'كود التتبع' : 'Tracking Code'}</span>
+                                <span className="text-[10px] font-mono select-all bg-white/5 px-2 py-1 rounded border border-border">{selectedOrder.id}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'طريقة الدفع' : 'Payment Method'}</span>
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'طريقة الدفع' : 'Payment Method'}</span>
                                 <span className="text-sm font-bold text-[#0066FF] capitalize">{selectedOrder.paymentMethod ? selectedOrder.paymentMethod.replace(/_/g, ' ') : 'N/A'}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'نوع الدفع' : 'Payment Type'}</span>
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'نوع الدفع' : 'Payment Type'}</span>
                                 <span className="text-sm font-bold">{selectedOrder.paymentType === 'DEPOSIT' ? (lang === 'ar' ? 'عربون 30%' : '30% Deposit') : (lang === 'ar' ? 'دفع كامل' : 'Full Payment')}</span>
                             </div>
                             {selectedOrder.transactionId && (
                                 <div className="flex justify-between items-center">
-                                    <span className="text-sm text-zinc-500">{lang === 'ar' ? 'رقم العملية' : 'Transaction ID'}</span>
-                                    <span className="text-xs font-mono select-all bg-white/5 px-2 py-1 rounded border border-white/5">{selectedOrder.transactionId}</span>
+                                    <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'رقم العملية' : 'Transaction ID'}</span>
+                                    <span className="text-xs font-mono select-all bg-white/5 px-2 py-1 rounded border border-border">{selectedOrder.transactionId}</span>
                                 </div>
                             )}
                             {selectedOrder.senderPhone && (
                                 <div className="flex justify-between items-center">
-                                    <span className="text-sm text-zinc-500">{lang === 'ar' ? 'رقم المحول' : 'Sender Phone'}</span>
-                                    <span className="text-sm font-bold text-white">{selectedOrder.senderPhone}</span>
+                                    <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'رقم المحول' : 'Sender Phone'}</span>
+                                    <span className="text-sm font-bold text-foreground">{selectedOrder.senderPhone}</span>
                                 </div>
                             )}
-                            <div className="flex justify-between items-start pt-3 border-t border-white/5">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'بيانات الشحن' : 'Shipping Info'}</span>
+                            <div className="flex justify-between items-start pt-3 border-t border-border">
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'بيانات الشحن' : 'Shipping Info'}</span>
                                 <div className="text-end">
-                                    <p className="text-sm font-bold text-white">{selectedOrder.shippingName || 'N/A'}</p>
-                                    <p className="text-xs text-zinc-400">{selectedOrder.shippingPhone}</p>
+                                    <p className="text-sm font-bold text-foreground">{selectedOrder.shippingName || 'N/A'}</p>
+                                    <p className="text-xs text-muted-foreground">{selectedOrder.shippingPhone}</p>
                                     <p className="text-xs text-zinc-400 max-w-[200px] truncate">{selectedOrder.shippingCity} - {selectedOrder.shippingAddress}</p>
                                 </div>
                             </div>
-                            <div className="flex justify-between items-center pt-3 border-t border-white/5">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'الإجمالي' : 'Total'}</span>
+                            <div className="flex justify-between items-center pt-3 border-t border-border">
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'الإجمالي' : 'Total'}</span>
                                  <span className="text-base font-bold text-[#0066FF]">{selectedOrder.total} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-zinc-500">{lang === 'ar' ? 'المدفوع إلكترونياً' : 'Paid Amount'}</span>
+                                <span className="text-sm text-muted-foreground">{lang === 'ar' ? 'المدفوع إلكترونياً' : 'Paid Amount'}</span>
                                  <span className="text-sm font-bold text-emerald-500">{selectedOrder.paidAmount || selectedOrder.total} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>
                             </div>
-                            <div className="border-t border-white/5 pt-4">
-                                <p className="text-xs text-zinc-500 font-bold mb-3 uppercase">{lang === 'ar' ? 'المنتجات' : 'Items'}</p>
+                            <div className="border-t border-border pt-4">
+                                <p className="text-xs text-muted-foreground font-bold mb-3 uppercase">{lang === 'ar' ? 'المنتجات' : 'Items'}</p>
                                 {selectedOrder.items?.map((item: any) => (
                                     <div key={item.id} className="flex items-center justify-between py-2">
                                         <div className="flex items-center gap-2">
-                                            <Package className="w-4 h-4 text-zinc-600" />
+                                            <Package className="w-4 h-4 text-muted-foreground/60" />
                                             <span className="text-sm">{lang === 'ar' ? item.product?.nameAr || item.product?.name : item.product?.name || 'Product'}</span>
                                         </div>
-                                         <span className="text-xs text-zinc-500">{item.quantity} × {item.price} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>
+                                         <span className="text-xs text-muted-foreground">{item.quantity} × {item.price} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>
                                     </div>
                                 ))}
                             </div>

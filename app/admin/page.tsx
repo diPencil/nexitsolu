@@ -107,14 +107,14 @@ export default function AdminDashboard() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: i * 0.08 }}
-                        className="relative p-5 rounded-2xl bg-zinc-950 border border-white/10 hover:border-[#0066FF]/40 transition-all group overflow-hidden"
+                        className="relative p-5 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all group overflow-hidden"
                     >
                         {/* Blue Glow Influence - Matching Reference Image */}
-                        <div className="absolute -right-14 -top-14 w-40 h-40 bg-[#0066FF]/20 blur-[70px] rounded-full pointer-events-none group-hover:bg-[#0066FF]/35 transition-all" />
+                        <div className="absolute -right-14 -top-14 w-40 h-40 bg-primary/10 blur-[70px] rounded-full pointer-events-none group-hover:bg-primary/20 transition-all" />
                         
                         <div className="relative z-10">
                             <div className="flex justify-between items-start mb-4">
-                                <div className={`p-2.5 rounded-xl ${stat.bgColor} ${stat.textColor} border border-white/5 shadow-inner group-hover:scale-110 transition-transform`}>
+                                <div className={`p-2.5 rounded-xl ${stat.bgColor} ${stat.textColor} border border-border shadow-xs group-hover:scale-110 transition-transform`}>
                                     <stat.icon className="w-4 h-4" />
                                 </div>
                                 <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-500 bg-emerald-500/5 px-2 py-0.5 rounded-full border border-emerald-500/10">
@@ -125,44 +125,44 @@ export default function AdminDashboard() {
                             
                             <div>
                                 <p className="text-zinc-500 text-xs mb-1">{stat.label}</p>
-                                <p className="text-xl font-bold text-white group-hover:text-[#0066FF] transition-all">{stat.value}</p>
+                                <p className="text-xl font-bold text-foreground group-hover:text-primary transition-all">{stat.value}</p>
                             </div>
                         </div>
 
                         {/* Double Border Effect */}
-                        <div className="absolute inset-px border border-white/5 rounded-[0.95rem] pointer-events-none" />
+                        <div className="absolute inset-px border border-border/50 rounded-[0.95rem] pointer-events-none" />
                     </motion.div>
                 ))}
             </div>
 
             <div className="grid lg:grid-cols-3 gap-6">
                 {/* Recent Orders */}
-                <div className="lg:col-span-2 rounded-2xl bg-zinc-950 border border-white/10 overflow-hidden relative group">
+                <div className="lg:col-span-2 rounded-2xl bg-card border border-border overflow-hidden relative group">
                     {/* Blue Glow Influence */}
-                    <div className="absolute -right-24 -top-24 w-80 h-80 bg-[#0066FF]/10 blur-[120px] rounded-full pointer-events-none group-hover:bg-[#0066FF]/15 transition-all" />
+                    <div className="absolute -right-24 -top-24 w-80 h-80 bg-primary/5 blur-[120px] rounded-full pointer-events-none group-hover:bg-primary/10 transition-all" />
                     
                     {/* Double Border Effect */}
-                    <div className="absolute inset-px border border-white/5 rounded-[0.95rem] pointer-events-none z-20" />
+                    <div className="absolute inset-px border border-border/50 rounded-[0.95rem] pointer-events-none z-20" />
 
                     <div className="relative z-10">
-                        <div className="p-6 flex items-center justify-between border-b border-white/5">
+                        <div className="p-6 flex items-center justify-between border-b border-border">
                         <h2 className="text-base font-bold flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-zinc-500" />
+                            <Clock className="w-4 h-4 text-muted-foreground" />
                             {lang === 'ar' ? 'أحدث الطلبات' : 'Recent Orders'}
                         </h2>
-                        <a href="/admin/orders" className="text-xs text-[#0066FF] font-bold hover:underline">{lang === 'ar' ? 'عرض الكل' : 'View All'}</a>
+                        <a href="/admin/orders" className="text-xs text-primary font-bold hover:underline">{lang === 'ar' ? 'عرض الكل' : 'View All'}</a>
                     </div>
 
-                    <div className="divide-y divide-white/5">
+                    <div className="divide-y divide-border">
                         {data?.recentOrders?.length > 0 ? data.recentOrders.map((order: any) => (
-                            <div key={order.id} className="flex items-center justify-between px-6 py-4 hover:bg-white/2 transition-all">
+                            <div key={order.id} className="flex items-center justify-between px-6 py-4 hover:bg-accent/50 transition-all">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-9 h-9 rounded-lg bg-[#0066FF]/10 text-[#0066FF] flex items-center justify-center font-bold text-[10px]">
+                                    <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px]">
                                         #{order.id.slice(-4).toUpperCase()}
                                     </div>
                                     <div>
                                         <p className="text-sm font-medium">{order.user?.name || 'Customer'}</p>
-                                        <p className="text-[10px] text-zinc-600">
+                                        <p className="text-[10px] text-muted-foreground/60">
                                             {new Date(order.createdAt).toLocaleDateString()} • {order.items?.length || 0} {lang === 'ar' ? 'قطع' : 'items'}
                                         </p>
                                     </div>
@@ -178,8 +178,8 @@ export default function AdminDashboard() {
                             </div>
                         )) : (
                             <div className="px-6 py-16 text-center">
-                                <ShoppingCart className="w-8 h-8 text-zinc-800 mx-auto mb-3" />
-                                <p className="text-sm text-zinc-600">{lang === 'ar' ? 'لا توجد طلبات بعد' : 'No orders yet'}</p>
+                                <ShoppingCart className="w-8 h-8 text-muted mx-auto mb-3" />
+                                <p className="text-sm text-muted-foreground/60">{lang === 'ar' ? 'لا توجد طلبات بعد' : 'No orders yet'}</p>
                             </div>
                         )}
                     </div>
@@ -187,40 +187,40 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Top Customers */}
-                <div className="rounded-2xl bg-zinc-950 border border-white/10 overflow-hidden relative group">
+                <div className="rounded-2xl bg-card border border-border overflow-hidden relative group">
                     {/* Blue Glow Influence */}
-                    <div className="absolute -right-24 -top-24 w-80 h-80 bg-[#0066FF]/10 blur-[120px] rounded-full pointer-events-none group-hover:bg-[#0066FF]/15 transition-all" />
+                    <div className="absolute -right-24 -top-24 w-80 h-80 bg-primary/5 blur-[120px] rounded-full pointer-events-none group-hover:bg-primary/10 transition-all" />
                     
                     {/* Double Border Effect */}
-                    <div className="absolute inset-px border border-white/5 rounded-[0.95rem] pointer-events-none z-20" />
+                    <div className="absolute inset-px border border-border/50 rounded-[0.95rem] pointer-events-none z-20" />
 
                     <div className="relative z-10">
-                        <div className="p-6 border-b border-white/5">
+                        <div className="p-6 border-b border-border">
                         <h2 className="text-base font-bold flex items-center gap-2">
-                            <Users className="w-4 h-4 text-zinc-500" />
+                            <Users className="w-4 h-4 text-muted-foreground" />
                             {lang === 'ar' ? 'أعلى العملاء' : 'Top Customers'}
                         </h2>
                     </div>
 
-                    <div className="divide-y divide-white/5">
+                    <div className="divide-y divide-border">
                         {data?.topCustomers?.length > 0 ? data.topCustomers.map((customer: any, i: number) => (
                             <div key={customer.id} className="flex items-center gap-3 px-6 py-4">
-                                <div className="w-9 h-9 rounded-full bg-linear-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center font-bold text-xs text-white border border-white/5">
+                                <div className="w-9 h-9 rounded-full bg-linear-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center font-bold text-xs text-foreground border border-border">
                                     {customer.name?.[0]?.toUpperCase() || '#'}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium truncate">{customer.name || 'User'}</p>
-                                    <p className="text-[10px] text-zinc-600 truncate">{customer.email}</p>
+                                    <p className="text-[10px] text-muted-foreground/60 truncate">{customer.email}</p>
                                 </div>
-                                <div className="flex items-center gap-1 text-[10px] font-bold text-zinc-500 bg-zinc-900 px-2 py-1 rounded-md">
+                                <div className="flex items-center gap-1 text-[10px] font-bold text-muted-foreground bg-accent/20 px-2 py-1 rounded-md">
                                     <ShoppingCart className="w-3 h-3" />
                                     {customer._count?.orders || 0}
                                 </div>
                             </div>
                         )) : (
                             <div className="px-6 py-16 text-center">
-                                <Users className="w-8 h-8 text-zinc-800 mx-auto mb-3" />
-                                <p className="text-sm text-zinc-600">{lang === 'ar' ? 'لا يوجد عملاء بعد' : 'No customers yet'}</p>
+                                <Users className="w-8 h-8 text-muted mx-auto mb-3" />
+                                <p className="text-sm text-muted-foreground/60">{lang === 'ar' ? 'لا يوجد عملاء بعد' : 'No customers yet'}</p>
                             </div>
                         )}
                     </div>
@@ -246,8 +246,8 @@ export default function AdminDashboard() {
                         transition={{ delay: 0.2 + i * 0.05 }}
                         className={`p-4 rounded-xl bg-linear-to-br ${action.color} border transition-all flex flex-col items-center gap-2 text-center group shadow-xs`}
                     >
-                        <action.icon className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />
-                        <span className="text-[10px] font-bold text-zinc-500 group-hover:text-white transition-colors truncate w-full">{action.label}</span>
+                        <action.icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        <span className="text-[10px] font-bold text-muted-foreground group-hover:text-primary transition-colors truncate w-full">{action.label}</span>
                     </motion.a>
                 ))}
             </div>

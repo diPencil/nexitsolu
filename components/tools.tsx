@@ -48,18 +48,18 @@ const Integrations = () => {
     <section className="py-32 relative z-20">
       <div className="container mx-auto px-6 lg:px-12">
         <h2 className="mb-4 text-4xl md:text-5xl lg:text-6xl font-light text-balance">Integrations</h2>
-        <p className="text-lg md:text-xl text-zinc-400 mb-12">Connect with the tools and platforms you already use.</p>
+        <p className="text-lg md:text-xl text-muted-foreground mb-12">Connect with the tools and platforms you already use.</p>
         <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
           {integrations.map((integration, i) => (
             <li key={i}>
-              <Card className="p-6 bg-zinc-900/50 border-zinc-800 hover:border-zinc-700 transition-colors">
+              <Card className="p-6 bg-secondary/50 border-zinc-800 hover:border-zinc-700 transition-colors">
                 <img
                   src={integration.image || "/placeholder.svg"}
                   alt={integration.title}
                   className="w-14 h-14 object-contain"
                 />
                 <h3 className="mb-2 mt-4 text-lg font-medium text-white">{integration.title}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">{integration.description}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">{integration.description}</p>
               </Card>
             </li>
           ))}

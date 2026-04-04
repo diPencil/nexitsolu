@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, rgb, PDFFont } from "pdf-lib";
+import fontkit from "@pdf-lib/fontkit";
 import fs from "fs";
 import path from "path";
+const arabicReshaper = require("arabic-reshaper");
 
 type ItemRow = {
     description?: string;
@@ -14,12 +16,28 @@ type ItemRow = {
 
 const PAGE_W = 595;
 const PAGE_H = 842;
-const MARGIN_X = 50;
-const MIN_Y = 56;
+const MARGIN_X = 40;
+const MIN_Y = 50;
 
 function asItems(raw: unknown): ItemRow[] {
     if (!raw || !Array.isArray(raw)) return [];
     return raw as ItemRow[];
+}
+
+/** 
+ * Arabic rendering helper: Reshapes letters and reverses string for RTL.
+ */
+function processArabic(text: string): string {
+    if (!text) return "";
+    // Check if contains Arabic characters
+    if (!/[\u0600-\u06FF]/.test(text)) return text;
+    
+    try {
+        const reshaped = arabicReshaper.convertArabic(text);
+        return reshaped.split("").reverse().join("");
+    } catch {
+        return text;
+    }
 }
 
 export async function GET(req: NextRequest) {
@@ -43,23 +61,63 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: "Not found" }, { status: 404 });
         }
 
+        console.log("Starting PDF generation for ID:", id);
         const pdfDoc = await PDFDocument.create();
+        pdfDoc.registerFontkit(fontkit);
         let page = pdfDoc.addPage([PAGE_W, PAGE_H]);
-        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-        const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+        
+        const lang = req.nextUrl.searchParams.get("lang") || "en";
+        const fontPath = path.join(process.cwd(), "public", "fonts", "Rubik-Variable.ttf");
+        
+        if (!fs.existsSync(fontPath)) {
+            return NextResponse.json({ error: `Font file missing: ${fontPath}` }, { status: 500 });
+        }
 
-        /** Baseline Y (PDF origin bottom-left; larger Y = higher on page). */
-        let y = PAGE_H - 52;
+        const fontBytes = fs.readFileSync(fontPath);
+        const font = await pdfDoc.embedFont(fontBytes);
+        const fontBold = font; 
+        
+        const amiriPath = path.join(process.cwd(), "public", "fonts", "Amiri-Regular.ttf");
+        let amiriFont: PDFFont | undefined;
+        if (fs.existsSync(amiriPath)) {
+            const amiriBytes = fs.readFileSync(amiriPath);
+            amiriFont = await pdfDoc.embedFont(amiriBytes);
+            console.log("Amiri fallback font embedded.");
+        }
+        
+        console.log("Variable font embedded successfully.");
+
+        let y = PAGE_H - 40;
 
         const newPage = () => {
             page = pdfDoc.addPage([PAGE_W, PAGE_H]);
-            y = PAGE_H - 52;
+            y = PAGE_H - 40;
         };
 
         const ensureY = (step: number) => {
             if (y - step < MIN_Y) newPage();
         };
 
+        const hasArabic = (text: string) => /[\u0600-\u06FF]/.test(text);
+
+        const drawText = (text: string, x: number, size: number, f = font, color = rgb(0.1, 0.1, 0.1)) => {
+            const isAr = hasArabic(String(text));
+            const processed = processArabic(String(text));
+            // Use Amiri for Arabic, provided font for English (usually Rubik)
+            const activeFont = isAr && amiriFont ? amiriFont : f;
+            page.drawText(processed, { x, y, size, font: activeFont, color });
+        };
+
+        const drawLine = (yPos: number) => {
+            page.drawLine({
+                start: { x: MARGIN_X, y: yPos },
+                end: { x: PAGE_W - MARGIN_X, y: yPos },
+                thickness: 0.5,
+                color: rgb(0.85, 0.85, 0.85),
+            });
+        };
+
+        // Header Section
         const publicDir = path.join(process.cwd(), "public");
         const logoPath = ["nexit-logo.png", "nexitlogo.png"]
             .map((f) => path.join(publicDir, f))
@@ -69,132 +127,159 @@ export async function GET(req: NextRequest) {
             try {
                 const pngBytes = fs.readFileSync(logoPath);
                 const png = await pdfDoc.embedPng(pngBytes);
-                const imgH = 38;
+                const imgH = 34;
                 const scale = imgH / png.height;
                 const imgW = png.width * scale;
-                ensureY(imgH + 16);
-                page.drawImage(png, {
-                    x: MARGIN_X,
-                    y: y - imgH,
-                    width: imgW,
-                    height: imgH,
-                });
-                y = y - imgH - 16;
-            } catch {
-                /* optional logo */
-            }
+                page.drawImage(png, { x: MARGIN_X, y: y - imgH, width: imgW, height: imgH });
+                y -= imgH + 20;
+            } catch {}
         }
 
-        const drawBold = (text: string, size: number, color = rgb(0, 0, 0)) => {
-            ensureY(size + 10);
-            page.drawText(text, {
-                x: MARGIN_X,
-                y,
-                size,
-                font: fontBold,
-                color,
-            });
-            y -= size + 10;
+        // Company Details (Left) vs Metadata (Right)
+        const leftX = MARGIN_X;
+        const rightX = PAGE_W - MARGIN_X - 160;
+        const subSize = 9;
+
+        // Title on Right - ALIGNED with rightX
+        const titleY = y + 54; 
+        const titleText = lang === 'ar' ? 'عرض سعر' : 'QUOTATION';
+        page.drawText(processArabic(titleText), { x: rightX, y: titleY, size: 24, font: fontBold, color: rgb(0, 0, 0) });
+
+        // Left side address updated
+        drawText("Nexit Solutions Ltd - Engineering Excellence.", leftX, subSize + 1, fontBold);
+        y -= 12;
+        drawText("Operational Zone - Nationwide Coverage", leftX, subSize);
+        y -= 12;
+        drawText("Cairo, Hurghada & Global", leftX, subSize);
+        y -= 12;
+        drawText("Contact: sales@nexitsolu.com", leftX, subSize);
+
+        // Right side metadata
+        let metadataY = titleY - 32; 
+        const drawMeta = (label: string, value: string, bold = false) => {
+            const labelText = processArabic(label);
+            const valText = processArabic(value);
+            page.drawText(`${labelText} # ${valText}`, { x: rightX, y: metadataY, size: 9, font: bold ? fontBold : font, color: rgb(0.2, 0.2, 0.2) });
+            metadataY -= 14;
         };
 
-        const draw = (
-            text: string,
-            size: number,
-            color = rgb(0.15, 0.15, 0.15)
-        ) => {
-            ensureY(size + 8);
-            page.drawText(text, {
-                x: MARGIN_X,
-                y,
-                size,
-                font,
-                color,
-            });
-            y -= size + 6;
-        };
-
-        drawBold("QUOTATION", 18, rgb(0, 0, 0));
-        draw(`#${q.quotationNo}`, 11, rgb(0, 0.25, 0.95));
-        y -= 6;
-
-        drawBold("From", 9, rgb(0.35, 0.35, 0.35));
-        draw("NexIT Solutions", 11);
-        draw("sales@nexitsolu.com", 10, rgb(0.35, 0.35, 0.35));
-        y -= 8;
-
-        drawBold("Bill to", 9, rgb(0.35, 0.35, 0.35));
-        const clientName = q.user?.name || "Client";
-        const clientEmail = q.user?.email || "";
-        draw(clientName, 11);
-        if (clientEmail) draw(clientEmail, 10, rgb(0.35, 0.35, 0.35));
-        y -= 8;
-
-        draw(
-            `Issue date: ${new Date(q.createdAt).toLocaleDateString()}`,
-            10,
-            rgb(0.35, 0.35, 0.35)
-        );
+        drawMeta(lang === 'ar' ? 'عرض سعر' : 'Quotation', q.quotationNo, true);
+        drawMeta(lang === 'ar' ? 'تاريخ الإصدار' : 'Created On', new Date(q.createdAt).toLocaleDateString("en-US", { month: 'short', day: '2-digit', year: 'numeric' }));
+        drawMeta(lang === 'ar' ? 'الإجمالي التقديري' : 'Total Estimate', `${Number(q.amount).toFixed(2)} EGP`);
         if (q.validUntil) {
-            draw(
-                `Valid until: ${new Date(q.validUntil).toLocaleDateString()}`,
-                10,
-                rgb(0.75, 0.2, 0.2)
-            );
+            drawMeta(lang === 'ar' ? 'صالح حتى' : 'Valid Until', new Date(q.validUntil).toLocaleDateString("en-US", { month: 'short', day: '2-digit', year: 'numeric' }));
         }
+
+        // Status Badge
+        const statusColor = q.status === "APPROVED" ? rgb(0.1, 0.6, 0.1) : q.status === "REJECTED" ? rgb(0.8, 0.1, 0.1) : rgb(0.6, 0.4, 0.1);
+        page.drawText(processArabic(q.status || "PENDING"), { x: rightX, y: metadataY, size: 10, font: fontBold, color: statusColor });
+
+        y = Math.min(y, metadataY) - 40;
+
+        // BILLED TO
+        drawText("QUOTED FOR", leftX, 10, fontBold);
+        y -= 14;
+        drawText(q.user?.name || "Target Prospect", leftX, 10);
+        y -= 12;
+        if (q.user?.governorate) {
+            drawText(q.user.governorate, leftX, 9);
+            y -= 12;
+        }
+        drawText(q.user?.email || "", leftX, 9, font, rgb(0.4, 0.4, 0.4));
+        y -= 12;
+        if (q.user?.phone) {
+            drawText(q.user.phone, leftX, 9, font, rgb(0.4, 0.4, 0.4));
+            y -= 12;
+        }
+
+        y -= 30;
+
+        // Table Headers
+        drawLine(y + 10);
+        const col1 = leftX;
+        const col2 = PAGE_W - MARGIN_X - 220; // Price
+        const col3 = PAGE_W - MARGIN_X - 140; // Qty
+        const col4 = PAGE_W - MARGIN_X - 60;  // Amount
+        
+        drawText("DESCRIPTION", col1, 8, fontBold, rgb(0.3, 0.3, 0.3));
+        drawText("UNIT PRICE", col2, 8, fontBold, rgb(0.3, 0.3, 0.3));
+        drawText("QTY", col3, 8, fontBold, rgb(0.3, 0.3, 0.3));
+        drawText("TOTAL", col4, 8, fontBold, rgb(0.3, 0.3, 0.3));
+        
+        y -= 15;
+        drawLine(y + 10);
         y -= 10;
 
-        drawBold("Line items", 10, rgb(0.35, 0.35, 0.35));
+        // Items
         const items = asItems(q.items);
         for (const row of items) {
-            const desc = String(row.description || "").slice(0, 220);
+            ensureY(40);
+            const desc = String(row.description || "");
             const qty = Number(row.quantity) || 0;
             const price = Number(row.price) || 0;
-            const lineTotal = qty * price;
-            draw(
-                `• ${desc}  |  Qty ${qty} × ${price.toFixed(2)} = ${lineTotal.toFixed(2)} EGP`,
-                9
-            );
+            const total = qty * price;
+
+            drawText(desc, col1, 10, fontBold);
+            drawText(`${price.toFixed(2)}`, col2, 9);
+            drawText(`${qty}`, col3, 9);
+            drawText(`${total.toFixed(2)}`, col4, 10, fontBold);
+            
+            y -= 18;
+            drawLine(y + 8);
+            y -= 15;
         }
+
         if (items.length === 0) {
-            draw("(No line items)", 9, rgb(0.5, 0.5, 0.5));
+            drawText("No items proposed", col1, 9, font, rgb(0.5, 0.5, 0.5));
+            y -= 20;
         }
-        y -= 8;
+
+        // Totals summary
+        ensureY(100);
+        y -= 10;
+        const summaryX = PAGE_W - MARGIN_X - 160;
+        const valX = PAGE_W - MARGIN_X - 40;
+
+        const drawTotalRow = (label: string, value: string, isBold = false) => {
+            page.drawText(processArabic(label), { x: summaryX, y, size: 9, font: isBold ? fontBold : font });
+            const valText = processArabic(value);
+            const valWidth = font.widthOfTextAtSize(valText, 9);
+            page.drawText(valText, { x: valX - valWidth + 40, y, size: 9, font: isBold ? fontBold : font });
+            y -= 16;
+        };
 
         if (q.subtotal != null) {
-            draw(`Subtotal: ${Number(q.subtotal).toFixed(2)} EGP`, 10);
+            drawTotalRow(lang === 'ar' ? 'المجموع الفرعي' : 'Subtotal', `${Number(q.subtotal).toFixed(2)} EGP`);
+        }
+        if (q.tax && Number(q.tax) > 0) {
+            const taxAmt = (Number(q.subtotal || 0) * Number(q.tax)) / 100;
+            drawTotalRow(lang === 'ar' ? `الضريبة (${q.tax}%)` : `VAT @ ${q.tax}%`, `${taxAmt.toFixed(2)} EGP`);
         }
         if (q.discount && Number(q.discount) > 0) {
-            draw(
-                `Discount: -${Number(q.discount).toFixed(2)} EGP`,
-                10,
-                rgb(0.1, 0.55, 0.35)
-            );
+            drawTotalRow(lang === 'ar' ? 'الخصم' : 'Discount', `-${Number(q.discount).toFixed(2)} EGP`);
         }
-        if (q.tax && Number(q.tax) > 0 && q.subtotal != null) {
-            const taxAmt = (Number(q.subtotal) * Number(q.tax)) / 100;
-            draw(
-                `Tax (${Number(q.tax)}%): +${taxAmt.toFixed(2)} EGP`,
-                10,
-                rgb(0.65, 0.45, 0.1)
-            );
-        }
-        y -= 6;
-        drawBold(
-            `Total: ${Number(q.amount).toFixed(2)} EGP`,
-            13,
-            rgb(0, 0.25, 0.95)
-        );
-        draw(`Status: ${q.status}`, 9, rgb(0.4, 0.4, 0.4));
 
+        y -= 5;
+        drawLine(y + 10);
+        y -= 5;
+        drawTotalRow(lang === 'ar' ? 'الإجمالي النهائي' : 'Grand Total', `${Number(q.amount).toFixed(2)} EGP`, true);
+
+        // Footer terms
+        y = MIN_Y + 50;
         if (q.notes) {
+            drawText("Terms & Conditions:", MARGIN_X, 8, fontBold);
             y -= 10;
-            drawBold("Notes", 9, rgb(0.35, 0.35, 0.35));
-            const notes = String(q.notes).slice(0, 500);
-            const chunk = 85;
-            for (let i = 0; i < notes.length; i += chunk) {
-                draw(notes.slice(i, i + chunk), 9, rgb(0.3, 0.3, 0.3));
-            }
+            const notes = String(q.notes).slice(0, 300);
+            drawText(notes, MARGIN_X, 8, font, rgb(0.4, 0.4, 0.4));
         }
+
+        y = MIN_Y;
+        drawText("This is a non-binding quotation valid until the expiration date.", MARGIN_X, 8, font, rgb(0.5, 0.5, 0.5));
+        const dateStr = new Date().toLocaleString();
+        const footerText = `Nexit - Generated on ${dateStr}`;
+        const processedFooter = processArabic(footerText);
+        const fw = font.widthOfTextAtSize(processedFooter, 7);
+        page.drawText(processedFooter, { x: PAGE_W - MARGIN_X - fw, y, size: 7, font, color: rgb(0.6, 0.6, 0.6) });
 
         const pdfBytes = await pdfDoc.save();
         const filename = `Quotation-${q.quotationNo.replace(/[^\w.-]+/g, "_")}.pdf`;
@@ -207,10 +292,7 @@ export async function GET(req: NextRequest) {
             },
         });
     } catch (e) {
-        console.error("Quotation PDF error:", e);
-        return NextResponse.json(
-            { error: "Failed to generate PDF" },
-            { status: 500 }
-        );
+        console.error("Quotation PDF generation error details:", e);
+        return NextResponse.json({ error: "Failed to generate PDF: " + (e instanceof Error ? e.message : String(e)) }, { status: 500 });
     }
 }

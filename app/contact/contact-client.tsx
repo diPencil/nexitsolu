@@ -2,11 +2,17 @@
 
 import { useLanguage } from "@/lib/i18n-context"
 import { PageHero } from "@/components/page-hero"
+import { PageSection } from "@/components/page-section"
 import { NexBotAI } from "@/components/nexbot-ai"
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Send, Clock, Globe } from "lucide-react"
+import { Mail, Phone, MapPin, Send, Clock, Globe, ArrowUpRight, Zap, ShieldCheck, Headphones, MessageSquare } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import Link from "next/link"
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor">
@@ -15,13 +21,16 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 );
 
 export default function ContactPage() {
-    const { lang } = useLanguage()
+    const { lang, t } = useLanguage()
+    const isAr = lang === "ar"
 
     const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" })
     const [sent, setSent] = useState(false)
+    const [submitting, setSubmitting] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setSubmitting(true)
         try {
             const res = await fetch("/api/contact", {
                 method: "POST",
@@ -31,11 +40,14 @@ export default function ContactPage() {
 
             if (res.ok) {
                 setSent(true)
+                toast.success(lang === "ar" ? "تم إرسال رسالتك بنجاح!" : "Message sent successfully!")
             } else {
                 toast.error(lang === "ar" ? "حدث خطأ أثناء الإرسال" : "Failed to send message");
             }
         } catch (error) {
             toast.error(lang === "ar" ? "حدث خطأ غير متوقع" : "An unexpected error occurred");
+        } finally {
+            setSubmitting(false)
         }
     }
 
@@ -45,295 +57,231 @@ export default function ContactPage() {
         href?: string;
     }
 
-    interface ContactInfoItem {
+    interface ContactItem {
         icon: any;
         title: string;
         items: ContactSubItem[];
-        color: string;
-        bg: string;
+        accent: string;
     }
 
-    const contactInfo: ContactInfoItem[] = [
+    const contactInfo: ContactItem[] = [
         {
             icon: Phone,
-            title: lang === "ar" ? "اتصل بنا" : "Call Us",
+            title: lang === "ar" ? "اتصل بنا" : "Call Center",
             items: [
-                {
-                    label: lang === "ar" ? "فرع الغردقة" : "Hurghada Branch",
-                    value: "+201031620990",
-                    href: "tel:+201031620990"
-                },
-                {
-                    label: lang === "ar" ? "فرع القاهرة" : "Cairo Branch",
-                    value: "+201003778273",
-                    href: "tel:+201003778273"
-                }
+                { label: lang === "ar" ? "فرع الغردقة" : "Hurghada HQ", value: "+201031620990", href: "tel:+201031620990" },
+                { label: lang === "ar" ? "فرع القاهرة" : "Cairo Office", value: "+201003778273", href: "tel:+201003778273" }
             ],
-            color: "text-emerald-400",
-            bg: "bg-emerald-400/10",
+            accent: "accent"
         },
         {
             icon: Mail,
-            title: lang === "ar" ? "راسلنا" : "Email Us",
+            title: lang === "ar" ? "راسلنا" : "Electronic Mail",
             items: [
                 { label: "info@nexitsolu.com", href: "mailto:info@nexitsolu.com" },
                 { label: "sales@nexitsolu.com", href: "mailto:sales@nexitsolu.com" }
             ],
-            color: "text-blue-400",
-            bg: "bg-blue-400/10",
+            accent: "blue-500"
         },
         {
             icon: MapPin,
-            title: lang === "ar" ? "نطاق الخدمة" : "Service Coverage",
+            title: lang === "ar" ? "نطاق الخدمة" : "Operational Zone",
             items: [
-                { label: lang === "ar" ? "تغطية شاملة لجميع المحافظات" : "Nationwide Coverage" },
-                { label: lang === "ar" ? "القاهرة، الغردقة، وكافة المدن." : "Cairo, Hurghada & all cities." }
+                { label: lang === "ar" ? "تغطية شاملة للمحافظات" : "Nationwide Coverage" },
+                { label: lang === "ar" ? "القاهرة، الغردقة، وكافة المدن" : "Cairo, Hurghada & Global" }
             ],
-            color: "text-rose-400",
-            bg: "bg-rose-400/10",
+            accent: "emerald-500"
         },
         {
             icon: Clock,
-            title: lang === "ar" ? "ساعات العمل" : "Working Hours",
+            title: lang === "ar" ? "ساعات العمل" : "Live Availability",
             items: [
                 { label: lang === "ar" ? "على مدار الأسبوع" : "7 Days a week" },
-                { label: lang === "ar" ? "24 ساعة يومياً" : "24 Hours daily" }
+                { label: lang === "ar" ? "24 ساعة يومياً" : "24/7 Deployment" }
             ],
-            color: "text-amber-400",
-            bg: "bg-amber-400/10",
+            accent: "amber-500"
         },
     ]
 
     return (
-        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-[#050505] min-h-screen overflow-hidden">
+        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-bg-primary min-h-screen text-text-primary overflow-hidden">
             <PageHero
-                title={lang === "ar" ? "تواصل معنا" : "Contact Us"}
-                subtitle={lang === "ar" ? "نحن هنا للإجابة على كل استفساراتك ومساعدتك في أي وقت." : "We're here to answer all your questions and help you at any time."}
+                title={lang === "ar" ? "تواصل مع الخبراء" : "Contact the Core"}
+                subtitle={lang === "ar" ? "نحن هنا للإجابة على كل استفساراتك ومساعدتك في بناء مستقبلك الرقمي." : "Initialize a direct link to our expert consultants and start your digital evolution."}
             />
 
-            {/* Contact Cards */}
-            <section className="py-16 border-b border-white/5">
-                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Tactical Contact Hub */}
+            <PageSection className="pb-32!">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 pt-16">
                     {contactInfo.map((item, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
-                            whileHover={{ y: -6 }}
-                            className="group p-8 rounded-4xl bg-[#080808] border border-white/5 hover:border-white/10 hover:bg-[#111] transition-all duration-500 shadow-xl"
                         >
-                            <div className={`w-14 h-14 ${item.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500`}>
-                                <item.icon className={`w-7 h-7 ${item.color}`} />
-                            </div>
-                            <h3 className="text-white font-bold text-lg mb-3">{item.title}</h3>
-                            <div className="space-y-2">
-                                {item.items.map((subItem, j) => (
-                                    <div key={j} className="text-sm leading-relaxed">
-                                        {'href' in subItem ? (
-                                            <a
-                                                href={subItem.href}
-                                                className={`group/link flex ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'} items-center justify-start gap-2 hover:opacity-80 transition-opacity`}
-                                                dir="ltr"
-                                            >
-                                                <span className="text-[#0066FF] font-bold whitespace-nowrap order-2">
-                                                    {subItem.label}
-                                                </span>
-                                                {'value' in subItem && subItem.value && (
-                                                    <span className="text-zinc-400 font-medium order-1" dir="ltr">{subItem.value}</span>
-                                                )}
-                                            </a>
-                                        ) : (
-                                            <p className="text-zinc-400">{subItem.label}</p>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
+                            <Card className="group p-10 rounded-[3rem] bg-bg-secondary/20 border-2 border-border-color hover:border-accent/40 transition-all duration-700 shadow-2xl hover:shadow-4xl relative overflow-hidden h-full">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+                                
+                                <div className={`w-16 h-16 rounded-2xl bg-bg-primary border-2 border-border-color flex items-center justify-center mb-8 group-hover:bg-accent group-hover:text-white transition-all duration-700 shadow-xl group-hover:scale-110 group-hover:-rotate-12`}>
+                                    <item.icon className="w-8 h-8 text-accent group-hover:text-white transition-colors" />
+                                </div>
+                                
+                                <h3 className="text-xl font-black text-text-primary mb-6 uppercase tracking-tighter group-hover:text-accent transition-colors">{item.title}</h3>
+                                
+                                <div className="space-y-4">
+                                    {item.items.map((subItem, j) => (
+                                        <div key={j} className="text-sm font-bold tracking-tight">
+                                            {'href' in subItem ? (
+                                                <a
+                                                    href={subItem.href}
+                                                    className="group/link flex flex-col items-start gap-1 hover:opacity-80 transition-opacity"
+                                                >
+                                                    <span className="text-text-secondary opacity-60 text-[10px] uppercase tracking-widest">{subItem.label}</span>
+                                                    <span className="text-accent text-lg font-black tracking-tighter" dir="ltr">
+                                                        {subItem.value || subItem.label}
+                                                    </span>
+                                                </a>
+                                            ) : (
+                                                <div className="flex flex-col items-start gap-1">
+                                                    <span className="text-text-secondary opacity-60 text-[10px] uppercase tracking-widest">{subItem.label}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </Card>
                         </motion.div>
                     ))}
                 </div>
-            </section>
+            </PageSection>
 
-            {/* Form + Side Info */}
-            <section id="contact-form" className="py-24 max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-
-                    {/* Form */}
+            {/* Strategic Information Split */}
+            <PageSection className="bg-bg-secondary/30 border-y border-border-color py-40!" columns={2}>
+                 {/* Communication Side */}
+                 <div className="flex flex-col justify-center order-2 lg:order-1 lg:pe-24 space-y-12">
                     <motion.div
-                        initial={{ opacity: 0, x: lang === "ar" ? 40 : -40 }}
+                        initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.7 }}
-                        className="relative p-10 md:p-14 rounded-4xl bg-[#080808] border border-white/5 shadow-2xl"
+                        viewport={{ once: true }}
                     >
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066FF]/5 rounded-full blur-3xl pointer-events-none" />
-
-                        {sent ? (
-                            <div className="flex flex-col items-center justify-center h-64 text-center">
-                                <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mb-6">
-                                    <Send className="w-10 h-10 text-emerald-400" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-white mb-3">
-                                    {lang === "ar" ? "تم إرسال رسالتك!" : "Message Sent!"}
-                                </h3>
-                                <p className="text-zinc-400">
-                                    {lang === "ar" ? "سيتواصل معك فريقنا قريباً." : "Our team will get back to you soon."}
-                                </p>
-                            </div>
-                        ) : (
-                            <>
-                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                                    {lang === "ar" ? "أرسل لنا رسالة" : "Send Us a Message"}
-                                </h2>
-                                <p className="text-zinc-400 mb-10">
-                                    {lang === "ar" ? "املأ النموذج وسنرد عليك في أقرب وقت." : "Fill the form and we'll reply as soon as possible."}
-                                </p>
-
-                                <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="block text-zinc-400 text-sm font-medium mb-2">
-                                                {lang === "ar" ? "الاسم الكامل" : "Full Name"} <span className="text-[#0066FF]">*</span>
-                                            </label>
-                                            <input
-                                                required
-                                                type="text"
-                                                value={form.name}
-                                                onChange={e => setForm({ ...form, name: e.target.value })}
-                                                placeholder={lang === "ar" ? "محمد أحمد" : "John Doe"}
-                                                className="w-full bg-[#0e0e0e] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-zinc-600 focus:border-[#0066FF] transition-colors text-sm"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-zinc-400 text-sm font-medium mb-2">
-                                                {lang === "ar" ? "البريد الإلكتروني" : "Email Address"} <span className="text-[#0066FF]">*</span>
-                                            </label>
-                                            <input
-                                                required
-                                                type="email"
-                                                value={form.email}
-                                                onChange={e => setForm({ ...form, email: e.target.value })}
-                                                placeholder="example@company.com"
-                                                className="w-full bg-[#0e0e0e] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-zinc-600 focus:border-[#0066FF] transition-colors text-sm"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="block text-zinc-400 text-sm font-medium mb-2">
-                                                {lang === "ar" ? "رقم الهاتف" : "Phone Number"}
-                                            </label>
-                                            <input
-                                                type="tel"
-                                                value={form.phone}
-                                                onChange={e => setForm({ ...form, phone: e.target.value })}
-                                                placeholder="+20 103 162 0990"
-                                                className="w-full bg-[#0e0e0e] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-zinc-600 focus:border-[#0066FF] transition-colors text-sm"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-zinc-400 text-sm font-medium mb-2">
-                                                {lang === "ar" ? "موضوع الرسالة" : "Subject"}
-                                            </label>
-                                            <input
-                                                type="text"
-                                                value={form.subject}
-                                                onChange={e => setForm({ ...form, subject: e.target.value })}
-                                                placeholder={lang === "ar" ? "استفسار تقني" : "Technical inquiry"}
-                                                className="w-full bg-[#0e0e0e] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-zinc-600 focus:border-[#0066FF] transition-colors text-sm"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-zinc-400 text-sm font-medium mb-2">
-                                            {lang === "ar" ? "رسالتك" : "Your Message"} <span className="text-[#0066FF]">*</span>
-                                        </label>
-                                        <textarea
-                                            required
-                                            rows={5}
-                                            value={form.message}
-                                            onChange={e => setForm({ ...form, message: e.target.value })}
-                                            placeholder={lang === "ar" ? "اكتب رسالتك هنا..." : "Write your message here..."}
-                                            className="w-full bg-[#0e0e0e] border border-white/10 rounded-xl px-5 py-4 text-white placeholder-zinc-600 focus:border-[#0066FF] transition-colors text-sm resize-none"
-                                        />
-                                    </div>
-
-                                    <button
-                                        type="submit"
-                                        className="w-full flex items-center justify-center gap-3 bg-[#0066FF] hover:bg-blue-500 text-white font-bold py-5 rounded-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,102,255,0.4)] hover:scale-[1.02] active:scale-95 text-base"
-                                    >
-                                        <Send className="w-5 h-5" />
-                                        {lang === "ar" ? "إرسال الرسالة" : "Send Message"}
-                                    </button>
-                                </form>
-                            </>
-                        )}
-                    </motion.div>
-
-                    {/* Side Info */}
-                    <motion.div
-                        initial={{ opacity: 0, x: lang === "ar" ? -40 : 40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.7, delay: 0.1 }}
-                        className="flex flex-col gap-8"
-                    >
-                        <div>
-                            <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#0066FF]/10 border border-[#0066FF]/20 rounded-full text-[#0066FF] text-sm font-bold mb-6">
-                                <Globe className="w-4 h-4" />
-                                {lang === "ar" ? "نخدمك في كل مكان" : "We serve you everywhere"}
-                            </span>
-                            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
-                                {lang === "ar" ? "دعنا نبني " : "Let's build "}
-                                <span className="text-transparent bg-clip-text bg-linear-to-r from-[#0066FF] to-cyan-400">
-                                    {lang === "ar" ? "مستقبلك الرقمي" : "your digital future"}
-                                </span>
-                            </h2>
-                            <p className="text-zinc-400 text-lg leading-relaxed">
-                                {lang === "ar"
-                                    ? "فريق نكسيت يضم خبراء متخصصين مستعدون للإجابة على كل أسئلتك وتقديم أفضل الحلول التقنية المناسبة لمشروعك."
-                                    : "The Nexit team includes specialized experts ready to answer all your questions and provide the best technical solutions suitable for your project."}
-                            </p>
+                        <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-black tracking-[0.3em] uppercase mb-10 shadow-xl">
+                            <Globe className="w-4 h-4" />
+                            {lang === "ar" ? "نخدمك في كل مكان" : "Global Reach Core"}
                         </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-text-primary mb-12 tracking-tighter leading-[0.95] uppercase">
+                            {lang === "ar" ? "دعنا نبني " : "Let's build "}<br/>
+                            <span className="text-accent">{lang === "ar" ? "مستقبلك الرقمي" : "your digital future"}</span>
+                        </h2>
+                        <p className="text-xl md:text-2xl text-text-secondary leading-relaxed mb-16 max-w-2xl font-medium opacity-80">
+                            {lang === "ar"
+                                ? "فريق نكسيت يضم خبراء متخصصين مستعدون للإجابة على كل أسئلتك وتقديم أفضل الحلول التقنية المناسبة لمشروعك."
+                                : "The Nexit engine is manned by domain specialists ready to decode your technical requirements and deploy the optimal enterprise-grade solutions."}
+                        </p>
 
-                        {/* Quick Actions */}
-                        <div className="space-y-4">
-                            <a href="mailto:info@nexitsolu.com" className="group flex items-center gap-5 p-6 rounded-3xl bg-[#080808] border border-white/5 hover:border-[#0066FF]/30 hover:bg-[#111] transition-all duration-500">
-                                <div className="p-3 bg-blue-400/10 rounded-2xl">
-                                    <Mail className="w-6 h-6 text-blue-400" />
-                                </div>
-                                <div>
-                                    <p className="text-white font-bold">{lang === "ar" ? "أرسل بريداً إلكترونياً" : "Send an Email"}</p>
-                                    <p className="text-zinc-500 text-sm">info@nexitsolu.com</p>
-                                </div>
-                                <span className={`${lang === "ar" ? "mr-auto rotate-180" : "ml-auto"} text-zinc-600 group-hover:text-[#0066FF] transition-colors text-xl`}>→</span>
-                            </a>
-
-                            <a href="tel:+201031620990" className="group flex items-center gap-5 p-6 rounded-3xl bg-[#080808] border border-white/5 hover:border-emerald-400/30 hover:bg-[#111] transition-all duration-500">
-                                <div className="p-3 bg-emerald-400/10 rounded-2xl">
-                                    <Phone className="w-6 h-6 text-emerald-400" />
-                                </div>
-                                <div className="flex flex-col items-start">
-                                    <p className="text-white font-bold">{lang === "ar" ? "فرع الغردقة" : "Hurghada Branch"}</p>
-                                    <p className="text-zinc-500 text-sm" dir="ltr">+20 103 162 0990</p>
-                                </div>
-                                <span className={`${lang === "ar" ? "mr-auto rotate-180" : "ml-auto"} text-zinc-600 group-hover:text-emerald-400 transition-colors text-xl`}>→</span>
-                            </a>
-
-                            <a href="https://wa.me/201031620990" target="_blank" className="group flex items-center gap-5 p-6 rounded-3xl bg-[#080808] border border-white/5 hover:border-rose-400/30 hover:bg-[#111] transition-all duration-500">
-                                <div className="p-3 bg-rose-400/10 rounded-2xl">
-                                    <WhatsAppIcon className="w-6 h-6 text-emerald-400" />
-                                </div>
-                                <div>
-                                    <p className="text-white font-bold">{lang === "ar" ? "تواصل عبر واتساب" : "Chat on WhatsApp"}</p>
-                                    <p className="text-zinc-500 text-sm">{lang === "ar" ? "فرع الغردقة" : "Hurghada Branch"}</p>
-                                </div>
-                                <span className={`${lang === "ar" ? "mr-auto rotate-180" : "ml-auto"} text-zinc-600 group-hover:text-rose-400 transition-colors text-xl`}>→</span>
-                            </a>
+                        <div className="space-y-6">
+                            {[
+                                { icon: Mail, label: lang === 'ar' ? "أرسل بريداً إلكترونياً" : "Direct Transmission", val: "info@nexitsolu.com", href: "mailto:info@nexitsolu.com" },
+                                { icon: MessageSquare, label: lang === 'ar' ? "تواصل عبر واتساب" : "WhatsApp Priority", val: "+201031620990", href: "https://wa.me/201031620990" }
+                            ].map((action, idx) => (
+                                <Link key={idx} href={action.href} className="group/action block">
+                                    <div className="flex items-center gap-6 p-8 rounded-4xl bg-bg-primary border-2 border-border-color group-hover/action:border-accent transition-all duration-700 shadow-2xl">
+                                        <div className="w-14 h-14 rounded-2xl bg-accent/5 flex items-center justify-center text-accent group-hover/action:bg-accent group-hover/action:text-white transition-all duration-700">
+                                            <action.icon className="w-6 h-6" />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-text-secondary opacity-60">{action.label}</span>
+                                            <span className="text-xl font-black text-text-primary tracking-tighter" dir="ltr">{action.val}</span>
+                                        </div>
+                                        <ArrowUpRight className="ms-auto w-6 h-6 text-text-secondary opacity-20 group-hover/action:text-accent group-hover/action:opacity-100 group-hover/action:translate-x-1 group-hover/action:-translate-y-1 transition-all" />
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                     </motion.div>
                 </div>
-            </section>
+
+                {/* Secure Form Side */}
+                <div className="relative order-1 lg:order-2">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                    >
+                        <Card className="p-10 md:p-14 lg:p-16 border-2 border-border-color bg-bg-secondary/40 backdrop-blur-3xl shadow-4xl relative overflow-hidden rounded-[4rem] group ring-8 ring-bg-primary/50">
+                            <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
+                            
+                            {sent ? (
+                                <div className="text-center py-24 space-y-10 flex flex-col items-center">
+                                    <motion.div 
+                                        initial={{ scale: 0.5, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        className="w-32 h-32 bg-emerald-500/10 rounded-[2.5rem] flex items-center justify-center mx-auto border-2 border-emerald-500/20 shadow-4xl relative"
+                                    >
+                                        <Send className="w-16 h-16 text-emerald-500 relative z-10" />
+                                    </motion.div>
+                                    <div className="space-y-4">
+                                        <h3 className="text-4xl font-black text-text-primary tracking-tighter uppercase">
+                                            {isAr ? "تم الإرسال بنجاح!" : "Signal Locked!"}
+                                        </h3>
+                                        <p className="text-text-secondary text-xl font-medium max-w-sm mx-auto leading-relaxed">
+                                            {isAr ? "سيتواصل معك فريقنا في أقرب وقت ممكن." : "Your data has been successfully transmitted. A consultant will reach out shortly."}
+                                        </p>
+                                    </div>
+                                    <Button onClick={() => setSent(false)} className="bg-accent text-white rounded-2xl px-12 py-8 font-black text-sm uppercase tracking-widest shadow-2xl">
+                                        {isAr ? "إرسال رسالة أخرى" : "New Transmission"}
+                                    </Button>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="mb-14 space-y-4">
+                                        <span className="text-accent text-[10px] font-black tracking-[0.4em] uppercase">{isAr ? "تواصل معي" : "Secure Inbound Channel"}</span>
+                                        <h2 className="text-4xl lg:text-5xl font-black text-text-primary tracking-tighter uppercase leading-none">
+                                            {isAr ? "أرسل رسالة" : "Send Intel"}
+                                        </h2>
+                                    </div>
+
+                                    <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+                                        <div className="grid md:grid-cols-2 gap-8">
+                                            <div className="space-y-3">
+                                                <label className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] px-2">{isAr ? "الاسم" : "Full Name"} <span className="text-accent">*</span></label>
+                                                <Input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Agent Name..." className="bg-bg-primary border-2 border-border-color rounded-2xl h-16 px-6 text-lg font-bold focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all" />
+                                            </div>
+                                            <div className="space-y-3">
+                                                <label className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] px-2">{isAr ? "البريد الإلكتروني" : "Comm Link"} <span className="text-accent">*</span></label>
+                                                <Input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="email@nexus.com" className="bg-bg-primary border-2 border-border-color rounded-2xl h-16 px-6 text-lg font-bold focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all" />
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] px-2">{isAr ? "الموضوع" : "Mission Objective"}</label>
+                                            <Input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} placeholder="Technical inquiry..." className="bg-bg-primary border-2 border-border-color rounded-2xl h-16 px-6 text-lg font-bold focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all" />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] px-2">{isAr ? "الرسالة" : "Diagnostic Text"} <span className="text-accent">*</span></label>
+                                            <Textarea
+                                                required
+                                                rows={5}
+                                                value={form.message}
+                                                onChange={e => setForm({ ...form, message: e.target.value })}
+                                                placeholder={isAr ? "كيف يمكننا مساعدتك؟" : "Describe your project scale and goals..."}
+                                                className="bg-bg-primary border-2 border-border-color rounded-3xl min-h-[180px] p-6 text-lg font-bold focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all resize-none"
+                                            />
+                                        </div>
+
+                                        <Button disabled={submitting} type="submit" className="w-full bg-accent hover:bg-accent/90 text-white rounded-3xl py-10 text-sm font-black uppercase tracking-[0.4em] transition-all shadow-4xl shadow-accent/20 group disabled:opacity-50 active:scale-[0.98]">
+                                            {submitting ? (isAr ? "جاري الإرسال..." : "Transmitting...") : (isAr ? "إرسال الرسالة" : "Blast Transmission")}
+                                            {!submitting && <Send className={`ms-4 w-6 h-6 transition-transform group-hover:translate-x-3 group-hover:-translate-y-3 ${isAr ? "rotate-180" : ""}`} />}
+                                        </Button>
+                                    </form>
+                                </>
+                            )}
+                        </Card>
+                    </motion.div>
+                </div>
+            </PageSection>
 
             <NexBotAI />
         </main>

@@ -3,9 +3,11 @@
         "contact": "Contact",
         "learn_more": "Learn More",
         "resources": "Resources",
+        "services": "Services",
         "tools": "Tools",
         "request_consultation": "Request Consultation",
-        "request_consultation_mobile": "Consultation"
+        "request_consultation_mobile": "Consultation",
+        "hours": "Hours"
     },
     "nav": {
         "services": "Services",
@@ -13,7 +15,100 @@
         "about": "About",
         "team": "Team",
         "solutions": "Solutions",
-        "store": "Store"
+        "store": "Store",
+        "nexit_land": "Nexit Land",
+        "partners": "Partners",
+        "tech_support": "Tech Support",
+        "contact": "Contact",
+        "industries_solutions": "Industries & Solutions",
+        "it_infrastructure": "IT Infrastructure",
+        "advanced_infrastructure": "Advanced Infrastructure",
+        "tech_insights": "Tech Insights",
+        "it_accelerators": "IT Accelerators",
+        "digital": "Digital",
+        "software": "Software",
+        "hardware": "Hardware",
+        "hosting_vps": "Hosting & VPS",
+        "request_quote": "Request a Quote",
+        "api_integrations": "API Integrations",
+        "cms_plugins": "CMS Plugins",
+        "payment_gateways": "Payment Gateways",
+        "nexit_store": "NexIT Store",
+        "back_to_store": "Back to Store",
+        "enterprise_support": "Enterprise Support"
+    },
+    "store": {
+        "back_home": "Back to Home",
+        "special_offers": "Special Offers",
+        "hero_title": "Nexit Supply Store",
+        "hero_desc": "A comprehensive store for professional computer supplies and tech devices with top quality and warranty.",
+        "original_hardware": "Original Hardware",
+        "certified_warranty": "Certified Warranty",
+        "tech_support": "Technical Support",
+        "join_community": "Join our tech community",
+        "login": "Login",
+        "register": "Register",
+        "admin_dashboard": "Admin Dashboard",
+        "view_profile": "View Profile",
+        "my_account": "My Account",
+        "all_categories": "All",
+        "scroll_categories": "Scroll categories",
+        "search_placeholder": "Search products...",
+        "sorting": {
+            "default": "Default",
+            "price_low": "Price: Low to High",
+            "price_high": "Price: High to Low"
+        },
+        "view_product": "View",
+        "buy_now": "Buy",
+        "no_products": "No products found",
+        "no_products_desc": "Try searching for something else or change category.",
+        "link_copied": "Link copied to clipboard!",
+        "copy_failed": "Failed to copy link",
+        "tags": {
+            "new": "NEW",
+            "sale": "SALE",
+            "hot": "HOT",
+            "offer": "OFFER",
+            "best": "BEST",
+            "limited": "LIMITED"
+        },
+        "back_to_store": "Back to Store",
+        "reviews": "Reviews",
+        "views": "Views",
+        "add_to_favorite": "Add to Favorite",
+        "wishlist": "Wishlist",
+        "share_product": "Share Product",
+        "currency": "EGP",
+        "description": "Description",
+        "no_description": "No description available for this product.",
+        "shipping_zone": "Shipping Zone",
+        "select_governorate": "Select Governorate...",
+        "items_in_stock": "Items in Stock",
+        "out_of_stock": "Out of Stock",
+        "quantity": "Quantity:",
+        "in_cart": "In Cart",
+        "add_to_cart": "Add to Cart",
+        "full_description": "Full description",
+        "no_full_description": "No full description for this product yet.",
+        "you_might_also_like": "You Might Also Like",
+        "view": "VIEW",
+        "buy": "BUY",
+        "product_not_found": "Product Not Found",
+        "fetch_error": "Failed to load product",
+        "added_to_favorites": "Added to favorites",
+        "removed_from_favorites": "Removed from favorites",
+        "added_to_wishlist": "Added to wishlist",
+        "removed_from_wishlist": "Removed from wishlist",
+        "add_to_cart_success": "Added to cart!",
+        "view_original_image": "View full size image",
+        "description_and_reviews": "Description and reviews",
+        "description_placeholder": "Professional hardware designed for extreme performance.",
+        "features": {
+            "warranty": "Original Warranty",
+            "delivery": "Fast Delivery",
+            "returns": "14-Days Return"
+        }
     },
     "hero": {
         "status": "Currently open for digital transformation partnerships.",
@@ -280,7 +375,15 @@
                 "Guaranteed international compatibility and reliability",
                 "Full compliance with global safety standards",
                 "Strategic consulting for future growth"
-            ]
+            ],
+            "standards": {
+                "title": "Global Standards",
+                "desc": "We ensure our solutions comply with international security and quality standards to meet your expectations at the highest levels."
+            },
+            "deployment": {
+                "title": "Rapid Deployment",
+                "desc": "Thanks to our strong partnerships, we provide rapid and direct access to required resources and technologies to accelerate your business growth."
+            }
         },
         "tech_support": {
             "hero_title": "Expert Technical Support",
@@ -295,7 +398,9 @@
                 "consulting": "Strategic IT Consulting"
             },
             "form_title": "Submit Support Request",
-            "form_placeholder": "Explain the issue you're facing..."
+            "form_placeholder": "Explain the issue you're facing...",
+            "email_support_note": "Or reach out directly:",
+            "email_support_email": "support@nexitsolu.com"
         },
         "team": {
             "hero_title": "Team Nexit: Egyptian Talent with a Global Spirit",
@@ -307,7 +412,30 @@
                 "infra": "Infrastructure Engineers",
                 "design": "Creatives & Designers",
                 "support": "Support & Success Ambassadors"
-            }
+            },
+            "culture_tags": {
+                "creative": "Creative Environment",
+                "passion": "Passion for Excellence",
+                "spirit": "Team Spirit"
+            },
+            "values_title": "Our Core Values",
+            "values": {
+                "innovation": {
+                    "title": "Innovation",
+                    "desc": "Always looking for unconventional solutions to complex challenges."
+                },
+                "quality": {
+                    "title": "Quality",
+                    "desc": "Never compromising on the highest quality standards in all projects."
+                },
+                "collaboration": {
+                    "title": "Collaboration",
+                    "desc": "Believing that teamwork is the key to stunning success."
+                }
+            },
+            "cta_title": "Facing Tech Challenges?",
+            "cta_subtitle": "Our specialist team is ready to provide immediate technical support and innovative solutions to ensure your business continuity and growth.",
+            "cta_button": "Request Tech Support Now"
         }
     },
     "resources_pages": {
@@ -427,23 +555,134 @@
             ]
         }
     },
+    "terms_pages": {
+        "hero_title": "Operational Charter",
+        "hero_subtitle": "The legal framework governing our enterprise technical deployments and global service delivery.",
+        "last_updated": "Last updated: March 2026 — All legal compliance inquiries should be directed to",
+        "compliance_tag": "Legal Compliance Core",
+        "sections": {
+            "acceptance": {
+                "title": "Acceptance of Terms",
+                "body": "By using Nexit Solutions' website or services, you agree to be bound by these Terms and Conditions. If you do not agree to any of these terms, please stop using our platform immediately."
+            },
+            "scope": {
+                "title": "Scope of Services",
+                "body": "We provide comprehensive technology services including: software development, infrastructure solutions, cybersecurity, hosting, and system integrations. All services are governed by pre-agreed Service Level Agreements (SLAs)."
+            },
+            "liability": {
+                "title": "Liability & Indemnification",
+                "body": "Nexit Solutions is not liable for indirect or incidental damages arising from the use of our services. You agree to indemnify the company for any claims arising from your violation of these terms."
+            },
+            "prohibited": {
+                "title": "Prohibited Uses",
+                "body": "It is prohibited to use our services for illegal purposes, disseminating harmful content, infringing intellectual property rights of any party, or any activity conflicting with applicable local and international laws."
+            },
+            "modifications": {
+                "title": "Modifications to Terms",
+                "body": "Nexit Solutions reserves the right to modify these terms at any time. You will be notified of material changes via email or a prominent notice on the website 30 days before they take effect."
+            },
+            "governing_law": {
+                "title": "Governing Law",
+                "body": "These terms shall be governed and interpreted in accordance with the laws of the Arab Republic of Egypt. Both parties agree that the competent courts in Cairo shall be the exclusive venue for resolving any disputes."
+            }
+        }
+    },
     "tools_pages": {
         "api": {
             "hero_title": "System Integration & API",
             "hero_subtitle": "Don't let your systems work in isolation; we connect everything to everything.",
-            "content": "We have expertise in connecting various accounting, administrative systems, and mobile applications through secure and efficient APIs."
+            "content": "We have expertise in connecting various accounting, administrative systems, and mobile applications through secure and efficient APIs.",
+            "quote": "We don’t just connect systems, we “unify” software mentalities to function as a single brain.",
+            "capabilities_title": "Advanced API Capabilities",
+            "features": {
+                "erp_crm": {
+                    "title": "ERP & CRM Integration",
+                    "desc": "Secure continuous data flow between your ERP and CRM systems, accelerating decision accuracy."
+                },
+                "payment_gateways": {
+                    "title": "Payment Gateways",
+                    "desc": "Seamless and reliable integration with global and local payment gateways without compromising secure user experience."
+                },
+                "mobile_sync": {
+                    "title": "Mobile App Sync",
+                    "desc": "Let your devices and apps communicate instantly to work as one ecosystem through fast and lightweight APIs."
+                },
+                "cloud_ai": {
+                    "title": "Cloud & AI Services",
+                    "desc": "Expand your services' capabilities easily connecting to advanced external cloud services and 3rd party software."
+                }
+            },
+            "view_details": "View Technical Details",
+            "architecture": {
+                "tag": "Integrated Architecture",
+                "title": "Real-time ",
+                "subtitle": "Sync",
+                "content": "We build a flexible API integration infrastructure allowing your disparate systems to speak the same language at incredible speeds. We adhere to top security standards using modern encryption to protect cross-platform data flows.",
+                "mapping": "Seamless Data Mapping",
+                "auth": "Secure Authentication (OAuth 2.0 & JWT)",
+                "throughput": "High-Throughput Processing"
+            }
         },
         "cms": {
             "hero_title": "Custom CMS Plugins & Systems",
             "hero_subtitle": "Turn your ordinary website into a powerful business tool through custom plugins.",
-            "content": "Whether you use WordPress, Magento, or custom solutions, we design the plugin that gives you exactly the functionality you need."
+            "content": "Whether you use WordPress, Magento, or custom solutions, we design the plugin that gives you exactly the functionality you need.",
+            "quote": "We take your platform far beyond off-the-shelf templates.",
+            "platforms_title": "Platforms We Support & Develop",
+            "platforms": {
+                "wordpress_desc": "Developing custom plugins and themes to meet your specific needs and improve performance.",
+                "ecommerce_desc": "Integrated e-commerce solutions with extensions to boost sales and manage inventory smartly.",
+                "custom_desc": "Building a tailor-made CMS from scratch, designed specifically to fit your workflow and data structure.",
+                "headless_desc": "Decoupling front-end from back-end to deliver blazing speed and unmatched UX across all devices."
+            },
+            "benefits": {
+                "tag": "Tailored Solutions",
+                "title": "Why do you need a ",
+                "subtitle": "custom plugin?",
+                "perf": "Lightweight & fast performance based only on what you need.",
+                "security": "Higher security by avoiding public open-source vulnerabilities.",
+                "integration": "Direct integration with your other internal systems without middleware."
+            }
         },
         "payments": {
             "hero_title": "Electronic Payment Gateways",
             "hero_subtitle": "Accept payments from anywhere in Egypt and the Gulf with ease and security.",
-            "egypt_gateways": "Egyptian Payment Gateways",
-            "gulf_gateways": "Gulf Payment Gateways",
-            "content": "We support integration with Fawry, Paymob, Tabby, Tamara, Moyasar, and other leading gateways."
+            "egypt_gateways_label": "Egyptian Payment Gateways",
+            "gulf_gateways_label": "Gulf Payment Gateways",
+            "content": "We support integration with Fawry, Paymob, Tabby, Tamara, Moyasar, and other leading gateways.",
+            "tagline": {
+                "first": "We make every transaction a ",
+                "second": "seamless & secure experience"
+            },
+            "egy_gateways": {
+                "paymob": "Comprehensive solutions for cards, e-wallets, and installment plans.",
+                "fawry": "The largest e-payment network in Egypt suitable for all sectors.",
+                "cowpay": "Seamless payment and collection facilities for startups and stores.",
+                "accept": "Secure and direct digital payment with high acceptance for bank cards.",
+                "fawaterk": "A leading platform for managing invoices and electronic payments with ease and security.",
+                "kashier": "Integrated payment gateway helping businesses accept online payments quickly.",
+                "opay": "A global digital financial services provider offering innovative solutions for merchants and users.",
+                "valu": "The leading 'Buy Now, Pay Later' platform, enhancing customer purchasing power."
+            },
+            "gulf_gateways": {
+                "tabby": "The leader in 'Buy Now, Pay Later' solutions in the Gulf region.",
+                "tamara": "Flexible payment options to boost sales and loyalty in KSA & UAE.",
+                "moyasar": "Reliable Saudi gateway supporting Mada, Apple Pay, and more.",
+                "stcpay": "Integrated digital wallet for transfers and payments inside & outside KSA."
+            },
+            "security": {
+                "title": "Bank-Grade Supreme Security",
+                "desc": "We implement the highest PCI-DSS data encryption standards and Zero-Trust architectures to ensure bulletproof protection of financial information."
+            },
+            "integration": {
+                "tag": "Smart Rapid Integration",
+                "title": "Seamless ",
+                "subtitle": "Connectivity!",
+                "desc": "We provide comprehensive, well-documented APIs allowing you to integrate payment systems into your platform in record time, offering robust Sandbox environments before going live.",
+                "native": "Native & embedded in-app checkout experience",
+                "fraud": "Automated fraud prevention & detection",
+                "settlements": "Instant financial settlements & revenue reports"
+            }
         }
     },
     "services_pages": {
@@ -456,6 +695,17 @@
             "video": "Professional Video Production",
             "motion": "3D Motion Graphics & Animation",
             "marketing": "Digital Marketing Strategy",
+            "graphic_design_desc": "We create a unique visual identity that expresses your brand values and creates an unforgettable impression.",
+            "social_media_desc": "We professionally manage your presence on social media platforms, from strategy building to audience engagement.",
+            "ux_ui_desc": "We design smooth user interfaces focused on ease of use, providing an exceptional digital experience.",
+            "video_desc": "Professional video production that tells your success story and reaches your target audience with the highest quality.",
+            "motion_desc": "We transform complex ideas into attractive and easy-to-understand motion graphics using advanced 3D techniques.",
+            "marketing_desc": "We plan and execute comprehensive marketing strategies that ensure your brand growth and increase conversion rates.",
+            "impact": {
+                "title": "Creative Engine",
+                "subtitle": "Artistic vision, professional execution, stunning results.",
+                "tag": "Design Excellence"
+            },
             "graphic_design_details": {
                 "hero_title": "Graphic Design & Visual Identity",
                 "hero_subtitle": "Crafting iconic brands and stunning visuals that demand attention.",
@@ -470,7 +720,8 @@
                     "visual_art_desc": "Unique hand-drawn and digital illustrations that bring a personal touch to your brand.",
                     "brand_guide_title": "Brand Guidelines",
                     "brand_guide_desc": "Comprehensive style guides to ensure consistency across all your brand touchpoints."
-                }
+                },
+                "badge": "Boundless Creativity"
             },
             "social_media_details": {
                 "hero_title": "Social Media Management",
@@ -486,7 +737,8 @@
                     "social_strategy_desc": "Data-driven plans to grow your reach, increase engagement, and drive conversions.",
                     "analytics_title": "Performance Tracking",
                     "analytics_desc": "Monthly reports documenting growth and engagement metrics to optimize our approach."
-                }
+                },
+                "badge": "Authentic Social Connection"
             },
             "ux_ui_details": {
                 "hero_title": "UX-UI Design Pilot",
@@ -502,7 +754,8 @@
                     "prototyping_desc": "Interactive mockups that allow you to test and refine the experience before development.",
                     "user_research_title": "User-Centric Research",
                     "user_research_desc": "In-depth research to understand your users' needs and pain points."
-                }
+                },
+                "badge": "Frictionless UI/UX"
             },
             "video_details": {
                 "hero_title": "Professional Video Production",
@@ -518,7 +771,8 @@
                     "post_prod_desc": "Expert editing, color grading, and sound design to give your videos a premium finish.",
                     "scripting_title": "Concept & Scripting",
                     "scripting_desc": "Creative conceptualization and scriptwriting to ensure your video has a clear, compelling narrative."
-                }
+                },
+                "badge": "Cinematic Quality"
             },
             "motion_details": {
                 "hero_title": "3D Motion Graphics & Animation",
@@ -534,7 +788,8 @@
                     "logo_anim_desc": "Dynamic animations for your brand assets to increase recognition and polish your presence.",
                     "ui_motion_title": "UI Motion Design",
                     "ui_motion_desc": "Smooth, purposeful interface animations that enhance usability and user experience."
-                }
+                },
+                "badge": "Advanced Motion Tech"
             },
             "marketing_details": {
                 "hero_title": "Digital Marketing Strategy",
@@ -550,7 +805,8 @@
                     "content_strat_desc": "Creating valuable, relevant content that attracts and retains a clearly defined audience.",
                     "analytics_title": "Performance Analytics",
                     "analytics_desc": "Detailed tracking and reporting to measure ROI and continuously optimize your marketing spend."
-                }
+                },
+                "badge": "Results-Driven Growth"
             }
         },
         "software": {
@@ -562,6 +818,23 @@
             "custom": "Custom Application & Platform Development",
             "hrm": "Human Resource Management (HRM)",
             "bms": "Business Management System (BMS)",
+            "erp_desc": "Integrated systems to connect all departments, from HR to sales, ensuring seamless data flow.",
+            "crm_desc": "Custom software to manage interactions with customers and build effective marketing strategies.",
+            "automation_desc": "System designed to eliminate repetitive manual tasks and boost team efficiency.",
+            "custom_desc": "Developing software from scratch to fit your organization's unique workflow.",
+            "hrm_desc": "Comprehensive system to manage all HR operations—from recruitment to payroll—in one smart platform.",
+            "bms_desc": "Unified business management system providing a complete, real-time overview of all operations.",
+            "impact": {
+                "tag": "Software Engineering",
+                "title": "Tailored Cloud Core",
+                "subtitle": "Global Nodes & Innovations",
+                "content": "We engineer enterprise-grade solutions from the ground up to fit your singular operational landscape, whether legacy migration or greenfield cloud-native platforms.",
+                "badges": {
+                    "mobile": "Mobile Systems",
+                    "cloud": "Cloud Data Architecture",
+                    "bpa": "Custom BPA Solutions"
+                }
+            },
             "erp_details": {
                 "hero_title": "Enterprise Resource Planning (ERP)",
                 "hero_subtitle": "Streamline your entire business operations with a unified, intelligent ERP system.",
@@ -576,7 +849,8 @@
                     "supply_desc": "Optimize inventory levels and manage supplier relationships effectively.",
                     "analytics_title": "Real-time Analytics",
                     "analytics_desc": "Gain actionable insights with live dashboards and predictive reporting."
-                }
+                },
+                "badge": "Secure & Scalable Solutions"
             },
             "crm_details": {
                 "hero_title": "Customer Relationship Management (CRM)",
@@ -592,7 +866,8 @@
                     "marketing_desc": "Personalized email campaigns and automated lead nurturing based on behavior.",
                     "support_title": "Customer Support Suite",
                     "support_desc": "Integrated ticketing and support tools to ensure high customer satisfaction."
-                }
+                },
+                "badge": "Boost Customer Loyalty"
             },
             "automation_details": {
                 "hero_title": "Business Process Automation (BPA)",
@@ -608,7 +883,8 @@
                     "rpa_desc": "Software bots that handle repetitive data entry and document processing.",
                     "reporting_title": "Automated Reporting",
                     "reporting_desc": "Receive scheduled, detailed reports on operational performance without manual effort."
-                }
+                },
+                "badge": "Smart Automation for the Future"
             },
             "custom_details": {
                 "hero_title": "Custom Application & Platform Development",
@@ -624,7 +900,8 @@
                     "backend_desc": "Robust server-side architectures designed to handle high loads and complex data.",
                     "api_title": "Custom API Development",
                     "api_desc": "Build and document secure APIs to power your ecosystem or integrate with third parties."
-                }
+                },
+                "badge": "Accelerate Digital Transformation"
             },
             "hrm_details": {
                 "hero_title": "Human Resource Management (HRM)",
@@ -640,7 +917,8 @@
                     "performance_desc": "Set goals, run evaluations, and track employee growth over time.",
                     "attendance_title": "Attendance & Leave",
                     "attendance_desc": "Real-time tracking of working hours, shifts, and easy leave request management."
-                }
+                },
+                "badge": "Smart People Management"
             },
             "bms_details": {
                 "hero_title": "Business Management System (BMS)",
@@ -656,8 +934,115 @@
                     "finance_desc": "Monitor budgets, invoices, and cash flow with real-time reporting.",
                     "collab_title": "Team Collaboration",
                     "collab_desc": "Integrated communication and document sharing to keep teams aligned."
-                }
+                },
+                "badge": "Total Business Control"
             }
+        },
+        "managed_it": {
+            "hero_tag": "Corporate Portal (B2B)",
+            "hero_title": "Managed ",
+            "hero_title_accent": "IT Experts",
+            "hero_title_suffix": "For Global Scale",
+            "hero_subtitle": "Your dedicated IT department. Scale your support team based on your business needs with our professional managed services.",
+            "badges": {
+                "plans": "Enterprise Plans",
+                "dashboard": "Private Dashboard",
+                "iso": "ISO Certified"
+            },
+            "back_to_home": "Back to Home",
+            "auth": {
+                "admin_panel": "Admin Panel",
+                "my_dashboard": "My Dashboard",
+                "secure_access": "Secure Access",
+                "private_access": "Private Access",
+                "company_login": "Company Login",
+                "register_now": "Register Now"
+            },
+            "advantage_title": "The NexIT Advantage",
+            "advantages": {
+                "cost": {
+                    "title": "Cost Optimized",
+                    "desc": "Elite talent at a fraction of recruiting costs."
+                },
+                "response": {
+                    "title": "Response SLA",
+                    "desc": "Guaranteed speed for all technical emergencies."
+                },
+                "certified": {
+                    "title": "Certified Talent",
+                    "desc": "Direct access to ISO-certified infrastructure experts."
+                }
+            },
+            "iso_badge": "Security Standard",
+            "form": {
+                "phase": "Phase {{step}} of 4",
+                "phases": {
+                    "1": "Service Scope",
+                    "2": "Support Model",
+                    "3": "Scheduling",
+                    "4": "Company Data"
+                },
+                "services": {
+                    "infra": "Infrastructure Management",
+                    "cyber": "Cybersecurity Support",
+                    "helpdesk": "Employee Helpdesk",
+                    "cloud": "Cloud Management",
+                    "network": "Network Administration",
+                    "maintenance": "Software Maintenance"
+                },
+                "models": {
+                    "remote": {
+                        "title": "Global Remote Support",
+                        "desc": "24/7 proactive remote monitoring and incident response."
+                    },
+                    "part_time": {
+                        "title": "Hybrid On-site Support",
+                        "desc": "Scheduled expert technicians visiting your facility weekly."
+                    },
+                    "full_time": {
+                        "title": "Resident Full-Time Force",
+                        "desc": "Permanent expert presence embedded in your daily operations."
+                    }
+                },
+                "scheduling": {
+                    "weekly": "Weekly Schedule (Days)",
+                    "monthly": "Monthly Commitment (Days)",
+                    "daily_ops": "Daily Operational Hours",
+                    "support_hours": "Support Hours per Day",
+                    "full_response": "Full Response",
+                    "custom_placeholder": "Custom (e.g. 9AM-6PM)..."
+                },
+                "company_data": {
+                    "name": "Company Name",
+                    "industry": "Industry Focus",
+                    "contact_name": "Contact Authority Name",
+                    "email": "Business Email",
+                    "phone": "Phone Line",
+                    "placeholder_name": "e.g. Global Logistics Inc",
+                    "placeholder_industry": "e.g. Healthcare, Tech, Shipping",
+                    "placeholder_contact": "Enter designated contact name"
+                },
+                "success": {
+                    "title": "Request Received!",
+                    "desc": "Our enterprise specialists are reviewing your scope. One of our account managers will contact you within 24 business hours.",
+                    "return_home": "Return Home",
+                    "new_quote": "New Quote"
+                },
+                "footer": {
+                    "back": "Phase Back",
+                    "next": "Next Phase",
+                    "submitting": "Deploying...",
+                    "confirm": "Confirm & Deploy"
+                }
+            },
+            "locked": {
+                "title": "Enterprise Locked",
+                "desc": "Advanced contracting and managed IT service deployments are exclusive to verified B2B entities. Your current clearance level does not permit access.",
+                "warning": "Switch to a Corporate Account or proceed as a Guest (requires fresh business validation) to initialize Managed Services.",
+                "help": "Administrative Assistance Required?",
+                "consult": "Consult with Enterprise Relations Team"
+            },
+            "error_login": "Failed to submit. Ensure you are logged in as a Company."
         },
         "hosting": {
             "hero_title": "Hosting & VPS Services",
@@ -689,7 +1074,8 @@
                     "ssl_cert_desc": "Protect your visitors' data and boost your SEO with industry-standard SSL encryption.",
                     "pro_config_title": "Expert Configuration",
                     "pro_config_desc": "We handle the technical setup, DNS configuration, and server optimization for you."
-                }
+                },
+                "badge": "Ultimate Speed & Security"
             },
             "email_details": {
                 "hero_title": "Business Email Services",
@@ -705,7 +1091,8 @@
                     "sync_desc": "Access your email, contacts, and calendars across all your devices (desktop, mobile, tablet).",
                     "security_title": "Enterprise Security",
                     "security_desc": "Encrypted communication and multi-factor authentication to keep your business data private."
-                }
+                },
+                "badge": "Professional Communication"
             },
             "migration_details": {
                 "hero_title": "Hosting & Site Migration",
@@ -721,7 +1108,8 @@
                     "zero_downtime_desc": "Our migration process is designed to keep your site live and accessible throughout the entire move.",
                     "post_mig_title": "Post-Migration Testing",
                     "post_mig_desc": "Rigorous testing after the move to ensure everything is working perfectly on your new hosting environment."
-                }
+                },
+                "badge": "Seamless Transition"
             },
             "vps_details": {
                 "hero_title": "Virtual Private Servers (VPS)",
@@ -737,7 +1125,8 @@
                     "enhanced_security_desc": "Complete isolation of your data with custom firewalls and advanced DDoS protection.",
                     "easy_scaling_title": "Easy Scaling",
                     "easy_scaling_desc": "Upgrade your server resources with a single click as your project needs grow."
-                }
+                },
+                "badge": "100% Stable Performance"
             },
             "cloud_details": {
                 "hero_title": "Cloud Hosting Solutions",
@@ -753,7 +1142,8 @@
                     "pay_as_you_grow_desc": "Flexible pricing models that fit your budget and grow with your profits.",
                     "managed_services_title": "Full Management",
                     "managed_services_desc": "Our experts handle the complex technical aspects so you can focus on running your business."
-                }
+                },
+                "badge": "Infinite Cloud Flexibility"
             },
             "dedicated_details": {
                 "hero_title": "Dedicated Server Hosting",
@@ -769,7 +1159,8 @@
                     "unmatched_security_desc": "A completely isolated physical environment gives you absolute control over data encryption and protection.",
                     "priority_support_title": "Priority Technical Support",
                     "priority_support_desc": "A dedicated team of engineers available 24/7 to resolve any emergency immediately."
-                }
+                },
+                "badge": "Fully Dedicated Infrastructure"
             }
         },
         "accelerators": {
@@ -780,6 +1171,22 @@
             "consulting": "IT Consulting Services",
             "managed_it": "Managed IT Operations",
             "cloud_transformation": "Cloud Transformation",
+            "automation_desc": "Leverage AI to transform operational challenges into growth opportunities.",
+            "analytics_desc": "Turn raw data into actionable insights that drive smarter decisions.",
+            "bi_desc": "Transform complex business data into strategic vision and competitive advantage.",
+            "consulting_desc": "Expert guidance to navigate the complex landscape of modern technology.",
+            "managed_it_desc": "Proactive monitoring and maintenance of your entire IT infrastructure.",
+            "cloud_transformation_desc": "Modernize your infrastructure for the era of flexibility and scale.",
+            "impact": {
+                "tag": "Velocity Engine",
+                "title": "Modern IT Accelerators",
+                "subtitle": "& Scale Points",
+                "content": "Our accelerators bridge the gap between technological potential and real-world results through AI and automation.",
+                "badges": {
+                    "ai": "AI Integrated",
+                    "enterprise": "Enterprise Grade"
+                }
+            },
             "automation_details": {
                 "hero_title": "Process Automation & AI",
                 "hero_subtitle": "Leverage AI to transform operational challenges into growth opportunities.",
@@ -794,7 +1201,8 @@
                     "scalable_desc": "Build automated systems that grow seamlessly with your business expansion.",
                     "innovation_title": "Continuous Innovation",
                     "innovation_desc": "Stay ahead with automation that evolves alongside the latest tech trends."
-                }
+                },
+                "badge": "Advanced AI Integration"
             },
             "analytics_details": {
                 "hero_title": "Data Analytics & Insights",
@@ -810,7 +1218,8 @@
                     "predictive_desc": "Use historical data to forecast future trends and customer behavior.",
                     "reporting_title": "Custom Insight Reports",
                     "reporting_desc": "Detailed analysis reports tailored to different departments and stakeholders."
-                }
+                },
+                "badge": "Data-Driven Decisions"
             },
             "bi_details": {
                 "hero_title": "Business Intelligence (BI)",
@@ -826,7 +1235,8 @@
                     "customer_desc": "Understand purchasing patterns and customer journeys to optimize engagement.",
                     "reporting_title": "Executive Level Reporting",
                     "reporting_desc": "High-level summary reports designed for CEOs and decision-makers."
-                }
+                },
+                "badge": "Clear Strategic Vision"
             },
             "consulting_details": {
                 "hero_title": "IT Consulting Services",
@@ -842,7 +1252,8 @@
                     "compliance_desc": "Ensure your technology meets industry standards and data protection regulations.",
                     "transformation_title": "Business Transformation",
                     "transformation_desc": "Redesigning business processes to leverage the full power of new technologies."
-                }
+                },
+                "badge": "Expert Consulting Experience"
             },
             "managed_it_details": {
                 "hero_title": "Managed IT Operations",
@@ -858,7 +1269,8 @@
                     "backup_desc": "Comprehensive data protection strategies to ensure business continuity in any scenario.",
                     "patch_title": "Patch Management",
                     "patch_desc": "Regular updates and security patches to keep your software and systems secure."
-                }
+                },
+                "badge": "24/7 Support Coverage"
             },
             "cloud_details": {
                 "hero_title": "Cloud Transformation",
@@ -874,7 +1286,8 @@
                     "saas_desc": "Setting up and customizing software-as-a-service solutions to fit your needs.",
                     "optimization_title": "Cost Optimization",
                     "optimization_desc": "Continuous monitoring and adjustment of cloud resources to ensure maximum ROI."
-                }
+                },
+                "badge": "Elastic Infrastructure"
             }
         },
         "hardware": {
@@ -886,6 +1299,22 @@
             "cctv": "CCTV & Security Systems",
             "field_support": "Field Technical Support",
             "workstations": "Workstations & Laptops",
+            "servers_desc": "We supply and set up the latest stable servers and data centers to handle heavy workloads.",
+            "networks_desc": "Building advanced wired and wireless network infrastructure for fast data transfer.",
+            "maintenance_desc": "Comprehensive periodic maintenance contracts and tech support services.",
+            "cctv_desc": "Installing and operating advanced CCTV cameras and modern security systems.",
+            "field_support_desc": "Field technical support teams dispatched to your site for on-ground diagnosis.",
+            "workstations_desc": "Supplying powerful computers, workstations, and custom laptops tailored for productivity.",
+            "impact": {
+                "tag": "Nexit Standards",
+                "title": "Solid Infrastructure",
+                "subtitle": "& Global Gear",
+                "content": "From workstations to complex data centers, we provide the hardware necessary for mission-critical operations.",
+                "badges": {
+                    "supply": "Enterprise Supply",
+                    "deployment": "Rapid Deployment"
+                }
+            },
             "servers_details": {
                 "hero_title": "Server & Workstation Preparation",
                 "hero_subtitle": "Powerful, reliable computing infrastructure tailored to your business demands.",
@@ -900,7 +1329,8 @@
                     "virtualization_desc": "Maximize hardware usage and flexibility with industry-leading virtualization technology.",
                     "storage_title": "Advanced Storage Solutions",
                     "storage_desc": "High-speed NAS and SAN setups for secure, redundant, and accessible data storage."
-                }
+                },
+                "badge": "Enterprise Grade Hardware"
             },
             "networks_details": {
                 "hero_title": "Network & Cabling Equipment",
@@ -916,7 +1346,8 @@
                     "switching_desc": "Configuration of intelligent switches and routers to optimize data flow and security.",
                     "vpn_title": "Secure Remote Access",
                     "vpn_desc": "Robust VPN and SD-WAN solutions to connect your remote team safely and efficiently."
-                }
+                },
+                "badge": "Ultra-High Speed Connectivity"
             },
             "maintenance_details": {
                 "hero_title": "Maintenance & Tech Support Contracts",
@@ -932,7 +1363,8 @@
                     "emergency_desc": "Priority on-site and remote support to resolve critical hardware failures quickly.",
                     "slas_title": "Guaranteed SLAs",
                     "slas_desc": "Service Level Agreements tailored to your business needs, ensuring reliable response times."
-                }
+                },
+                "badge": "Complete Tech Care"
             },
             "cctv_details": {
                 "hero_title": "CCTV & Security Systems",
@@ -948,7 +1380,8 @@
                     "access_desc": "Biometric and card-based entry systems to manage and track movement within your facility.",
                     "analytics_title": "Smart AI Analytics",
                     "analytics_desc": "Advanced features like facial recognition and motion detection to alert you of unusual activity."
-                }
+                },
+                "badge": "Smart Security Solutions"
             },
             "field_support_details": {
                 "hero_title": "Field Technical Support",
@@ -964,7 +1397,8 @@
                     "maintenance_desc": "Periodic on-site visits to check the health of your physical IT infrastructure.",
                     "emergency_title": "Rapid Field Response",
                     "emergency_desc": "Dedicated emergency deployment for critical issues that require immediate physical intervention."
-                }
+                },
+                "badge": "Rapid Site Access"
             },
             "workstations_details": {
                 "hero_title": "Workstations & Laptops",
@@ -980,8 +1414,95 @@
                     "custom_config_desc": "Hardware tailored to your specific software needs, ensuring maximum performance out of the box.",
                     "lifecycle_title": "Hardware Lifecycle Management",
                     "lifecycle_desc": "End-to-end management from procurement and setup to secure disposal and upgrades."
-                }
+                },
+                "badge": "Premium Productivity Tools"
             }
+        }
+    },
+    "admin": {
+        "customers": {
+            "title": "Customers Management",
+            "subtitle": "Manage permissions and data for regular users.",
+            "add_user": "Add User",
+            "users_count": "users",
+            "search_placeholder": "Search by name, email or phone...",
+            "stats": {
+                "orders": "Orders",
+                "favs": "Favs",
+                "wish": "Wish"
+            },
+            "joined": "Joined",
+            "blocked": "Blocked",
+            "account_blocked_label": "ACCOUNT BLOCKED",
+            "details_title": "Customer Activity",
+            "no_favorites": "No favorites yet.",
+            "no_wishlist": "Wishlist is empty.",
+            "past_orders": "Past Orders",
+            "favorites": "Favorites",
+            "wishlist": "Wishlist",
+            "form": {
+                "edit_title": "Edit User Profile",
+                "add_title": "Create New User",
+                "edit_subtitle": "Updating account permissions and info",
+                "add_subtitle": "Setting up a new member of Nexit universe",
+                "full_name": "Full Name",
+                "email": "Email Address",
+                "username": "Username",
+                "password": "Password",
+                "phone": "Phone Number",
+                "whatsapp": "WhatsApp",
+                "role": "Permissions (Role)",
+                "avatar": "Avatar URL",
+                "save": "Create Account",
+                "update": "Update Records"
+            }
+        },
+        "companies": {
+            "title": "Companies Management",
+            "subtitle": "Manage registered companies and their details.",
+            "add_company": "Add Company",
+            "companies_count": "companies",
+            "stats": {
+                "inv": "INV",
+                "cont": "CONT",
+                "subs": "SUBS",
+                "ords": "ORDS"
+            },
+            "records_title": "Company Records",
+            "no_invoices": "No invoices yet.",
+            "no_contracts": "No contracts yet.",
+            "no_subscriptions": "No subscriptions yet.",
+            "no_orders": "No orders yet.",
+            "applied_on": "Applied on:",
+            "form": {
+                "edit_title": "Edit Company Profile",
+                "add_title": "Create New Company",
+                "name": "Company Name",
+                "email": "Email Address",
+                "username": "Username",
+                "password": "Password",
+                "phone": "Phone Number",
+                "whatsapp": "WhatsApp",
+                "position": "Position / Activity",
+                "governorate": "Governorate",
+                "save": "Save Company Profile",
+                "update": "Update Corporate Records"
+            }
+        },
+        "common": {
+            "edit": "Edit",
+            "delete": "Delete",
+            "block": "Block",
+            "unblock": "Unblock",
+            "cancel": "Cancel",
+            "save": "Save",
+            "update": "Update",
+            "loading": "Loading...",
+            "add_invoice": "Add Invoice",
+            "new": "NEW",
+            "this_user": "this user",
+            "confirm_delete": "Are you sure you want to delete {{name}}?",
+            "confirm_block": "Are you sure you want to block {{name}}? He won't be able to access his account again."
         }
     }
 }

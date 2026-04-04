@@ -3,7 +3,7 @@
 
 :root {
   --font-geist: "Geist", sans-serif;
-  --font-cairo: "Cairo", sans-serif;
+  --font-rubik: "Rubik", sans-serif;
 }
 
 body {
@@ -35,46 +35,74 @@ body {
 }
 
 [lang="ar"], [lang="ar"] body, [lang="ar"] :root {
-  font-family: var(--font-cairo) !important;
-  --font-sans: var(--font-cairo), var(--font-geist), "Cairo", sans-serif !important;
+  font-family: var(--font-rubik) !important;
+  --font-sans: var(--font-rubik), var(--font-geist), "Rubik", sans-serif !important;
 }
 
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================================
+   LIGHT MODE — Clean, modern, soft cool-gray palette
+   WCAG AA compliant contrast ratios throughout
+   ============================================================ */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Backgrounds — not pure white, slightly cool off-white */
+  --background: oklch(0.976 0.003 247);           /* #F5F7FA */
+  --foreground: oklch(0.148 0.015 264);           /* #0F1420 dark blue-tinted */
+  --card: oklch(0.992 0.002 247);                 /* #FAFBFC near-white card */
+  --card-foreground: oklch(0.148 0.015 264);
+  --popover: oklch(1 0 0);                        /* pure white dropdown */
+  --popover-foreground: oklch(0.148 0.015 264);
+
+  /* Brand accent — #0066FF */
+  --primary: oklch(0.52 0.225 264);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Muted surfaces */
+  --secondary: oklch(0.942 0.007 247);            /* light gray */
+  --secondary-foreground: oklch(0.22 0.012 264);
+  --muted: oklch(0.955 0.005 247);
+  --muted-foreground: oklch(0.505 0.01 247);      /* #6B7280 readable gray */
+
+  /* Accent — subtle blue-tinted hover surface */
+  --accent: oklch(0.93 0.02 264);
+  --accent-foreground: oklch(0.46 0.2 264);
+
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --destructive-foreground: oklch(1 0 0);
+
+  /* Borders & inputs */
+  --border: oklch(0.875 0.007 247);               /* #DDE1EA */
+  --input: oklch(0.925 0.005 247);
+  --ring: oklch(0.52 0.225 264);                  /* brand blue focus ring */
+
+  /* Charts */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  --radius: 1rem; /* 16px radius as requested */
+
+  /* Sidebar — slightly different from page bg for depth */
+  --sidebar: oklch(0.968 0.004 247);              /* #F2F4F8 */
+  --sidebar-foreground: oklch(0.148 0.015 264);
+  --sidebar-primary: oklch(0.52 0.225 264);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.94 0.015 264);
+  --sidebar-accent-foreground: oklch(0.22 0.012 264);
+  --sidebar-border: oklch(0.875 0.007 247);
+  --sidebar-ring: oklch(0.52 0.225 264);
+
+  /* User Defined Semantic Tokens for internal mapping */
+  --bg-primary: var(--background);
+  --bg-secondary: var(--secondary);
+  --card-bg: var(--card);
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --border-color: var(--border);
+  --accent: var(--primary);
 
   /* Racing lines animation offset variables */
   --animations--line-1-offset: 0px;
@@ -83,44 +111,64 @@ body {
   --animations--line-4-offset: 0px;
 }
 
+/* ============================================================
+   DARK MODE — Comfortable dark blue-gray, not pure black
+   Uses #0F1117-range tones for reduced eye strain
+   ============================================================ */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
+  /* Backgrounds */
+  --background: oklch(0.14 0.01 264);             /* #0F1117 dark blue-gray */
+  --foreground: oklch(0.936 0.006 247);           /* #EAECF0 cool light */
+  --card: oklch(0.178 0.012 264);                 /* #171D2E slightly lighter */
+  --card-foreground: oklch(0.936 0.006 247);
+  --popover: oklch(0.188 0.012 264);              /* #1A2133 */
+  --popover-foreground: oklch(0.936 0.006 247);
+
+  /* Brand accent — lighter blue for readability on dark */
+  --primary: oklch(0.60 0.23 264);               /* #4594FF */
+  --primary-foreground: oklch(1 0 0);
+
+  /* Muted surfaces */
+  --secondary: oklch(0.222 0.014 264);            /* #1E2535 */
+  --secondary-foreground: oklch(0.875 0.007 247);
+  --muted: oklch(0.215 0.011 264);
+  --muted-foreground: oklch(0.635 0.013 247);     /* #94A3B8 */
+
+  /* Accent — subtle hover surface */
+  --accent: oklch(0.235 0.017 264);
+  --accent-foreground: oklch(0.875 0.007 247);
+
+  --destructive: oklch(0.506 0.182 25);
+  --destructive-foreground: oklch(0.882 0.03 25);
+
+  /* Borders & inputs */
+  --border: oklch(0.265 0.014 264);               /* #273047 */
+  --input: oklch(0.235 0.014 264);
+  --ring: oklch(0.60 0.23 264);                   /* brand blue focus ring */
+
+  /* Charts */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+
+  /* Sidebar — slightly darker than page for depth */
+  --sidebar: oklch(0.164 0.013 264);              /* #121929 */
+  --sidebar-foreground: oklch(0.936 0.006 247);
+  --sidebar-primary: oklch(0.60 0.23 264);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.222 0.014 264);
+  --sidebar-accent-foreground: oklch(0.875 0.007 247);
+  --sidebar-border: oklch(0.265 0.014 264);
+  --sidebar-ring: oklch(0.60 0.23 264);
 }
 
 @theme inline {
-  --font-sans: var(--font-geist), var(--font-cairo), "Geist", "Geist Fallback";
+  --font-sans: var(--font-geist), var(--font-rubik), "Geist", "Geist Fallback";
   --font-mono: var(--font-geist-mono), "Geist Mono", "Geist Mono Fallback";
+
+  /* Map standard tokens */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -137,18 +185,30 @@ body {
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
+  --color-border: var(--border-color);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* User specific aliases */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-card-bg: var(--card-bg);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-color: var(--border-color);
+  /* The color-accent token is already defined as var(--accent) above */
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -157,6 +217,9 @@ body {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Container width */
+  --max-w-page: 80rem; /* 1280px */
 }
 
 @layer base {
@@ -166,6 +229,46 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* ── Smooth theme transitions ──────────────────────────────
+     Applied only to structural / color-bearing elements so we
+     don't accidentally delay layout animations or transforms. */
+  html,
+  body,
+  main,
+  section,
+  article,
+  header,
+  footer,
+  aside,
+  nav,
+  div,
+  span,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label,
+  p,
+  h1, h2, h3, h4, h5, h6,
+  li, ul, ol,
+  table, thead, tbody, tr, th, td,
+  [data-slot],
+  [class*="bg-"],
+  [class*="border-"],
+  [class*="text-"] {
+    transition-property: color, background-color, border-color, box-shadow, outline-color, fill, stroke;
+    transition-duration: 180ms;
+    transition-timing-function: ease;
+  }
+
+  /* Preserve animation performance — don't delay transforms/opacity */
+  [class*="animate-"],
+  [class*="motion-"],
+  [data-lenis-prevent] * {
+    transition-property: color, background-color, border-color !important;
   }
 
   /* Global input/textarea/select reset — keep native checkbox/radio so toggles stay visible */

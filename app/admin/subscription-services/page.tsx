@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
@@ -204,7 +204,7 @@ export default function AdminSubscriptionServicesPage() {
                 <div>
                     <Link
                         href="/admin/subscriptions"
-                        className="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-[#0066FF] mb-3"
+                        className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-[#0066FF] mb-3"
                     >
                         <ArrowLeft
                             className={`w-4 h-4 ${lang === "ar" ? "rotate-180" : ""}`}
@@ -215,7 +215,7 @@ export default function AdminSubscriptionServicesPage() {
                         <Layers className="w-8 h-8 text-[#0066FF]" />
                         {lang === "ar" ? "خدمات الاشتراك" : "Subscription services"}
                     </h1>
-                    <p className="text-zinc-500 mt-2 text-sm">
+                    <p className="text-muted-foreground mt-2 text-sm">
                         {lang === "ar"
                             ? "أضف أو عدّل أنواع الخدمات التي تظهر في قائمة الاشتراك. المفتاح الداخلي يُنشأ تلقائياً إن تركته فارغاً."
                             : "Add or edit service types shown in the subscription form. Leave key empty to auto-generate."}
@@ -224,7 +224,7 @@ export default function AdminSubscriptionServicesPage() {
                 <Button
                     type="button"
                     onClick={openCreate}
-                    className="rounded-2xl h-12 bg-[#0066FF] hover:bg-blue-600 text-white gap-2 [&_svg]:text-white"
+                    className="rounded-2xl h-12 bg-[#0066FF] hover:bg-blue-600 text-foreground gap-2 [&_svg]:text-foreground"
                 >
                     <Plus className="w-5 h-5" />
                     {lang === "ar" ? "خدمة جديدة" : "New service"}
@@ -236,7 +236,7 @@ export default function AdminSubscriptionServicesPage() {
                     <Loader2 className="w-8 h-8 animate-spin text-[#0066FF]" />
                 </div>
             ) : rows.length === 0 ? (
-                <div className="py-16 text-center text-zinc-500 border border-white/5 rounded-3xl">
+                <div className="py-16 text-center text-muted-foreground border border-border rounded-3xl">
                     {lang === "ar" ? "لا توجد خدمات بعد" : "No services yet"}
                 </div>
             ) : (
@@ -247,13 +247,13 @@ export default function AdminSubscriptionServicesPage() {
                             initial={{ opacity: 0, y: 6 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.03 }}
-                            className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-2xl bg-zinc-950 border border-white/10"
+                            className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-2xl bg-popover border border-border"
                         >
                             <div className="flex-1 min-w-0">
-                                <p className="font-bold text-white">
+                                <p className="font-bold text-foreground">
                                     {lang === "ar" ? r.nameAr : r.nameEn}
                                 </p>
-                                <p className="text-xs text-zinc-500 mt-1 font-mono truncate">
+                                <p className="text-xs text-muted-foreground mt-1 font-mono truncate">
                                     {r.key}
                                 </p>
                                 {!r.active && (
@@ -262,7 +262,7 @@ export default function AdminSubscriptionServicesPage() {
                                     </span>
                                 )}
                             </div>
-                            <div className="text-xs text-zinc-500">
+                            <div className="text-xs text-muted-foreground">
                                 {lang === "ar" ? "ترتيب" : "Order"}: {r.sortOrder}
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
@@ -271,7 +271,7 @@ export default function AdminSubscriptionServicesPage() {
                                     variant="outline"
                                     size="sm"
                                     onClick={() => openEdit(r)}
-                                    className="border-white/15 rounded-xl"
+                                    className="border-border rounded-xl"
                                     title={lang === "ar" ? "تعديل" : "Edit"}
                                 >
                                     <Pencil className="w-4 h-4" />
@@ -281,7 +281,7 @@ export default function AdminSubscriptionServicesPage() {
                                     variant="outline"
                                     size="sm"
                                     onClick={() => openDeleteDialog(r)}
-                                    className="border-white/15 rounded-xl text-zinc-400 hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/10"
+                                    className="border-border rounded-xl text-muted-foreground hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/10"
                                     title={lang === "ar" ? "حذف" : "Delete"}
                                 >
                                     <Trash2 className="w-4 h-4" />
@@ -297,9 +297,9 @@ export default function AdminSubscriptionServicesPage() {
                     <motion.div
                         initial={{ scale: 0.98, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="w-full max-w-md bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                        className="w-full max-w-md bg-card border-border rounded-4xl overflow-hidden"
                     >
-                        <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between">
+                        <div className="px-4 py-3 border-b border-border flex items-center justify-between">
                             <h2 className="font-bold">
                                 {editingId
                                     ? lang === "ar"
@@ -312,7 +312,7 @@ export default function AdminSubscriptionServicesPage() {
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className="p-2 rounded-lg hover:bg-white/5"
+                                className="p-2 rounded-lg hover:bg-accent/50"
                             >
                                 <X className="w-4 h-4" />
                             </button>
@@ -320,13 +320,13 @@ export default function AdminSubscriptionServicesPage() {
                         <form onSubmit={submit} className="p-4 space-y-3">
                             {!editingId && (
                                 <div className="space-y-1">
-                                    <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">
+                                    <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
                                         {lang === "ar"
                                             ? "المفتاح (اختياري)"
                                             : "Key (optional)"}
                                     </label>
                                     <input
-                                        className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm font-mono text-white outline-none focus:border-[#0066FF]"
+                                        className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm font-mono text-foreground outline-none focus:border-[#0066FF]"
                                         placeholder="MANAGED_IT"
                                         value={form.key}
                                         onChange={(e) =>
@@ -339,17 +339,17 @@ export default function AdminSubscriptionServicesPage() {
                                 </div>
                             )}
                             {editingId && (
-                                <p className="text-xs text-zinc-500 font-mono bg-zinc-900/50 rounded-lg px-3 py-2">
+                                <p className="text-xs text-muted-foreground font-mono bg-muted/30 rounded-lg px-3 py-2">
                                     {form.key}
                                 </p>
                             )}
                             <div className="space-y-1">
-                                <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">
+                                <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
                                     EN
                                 </label>
                                 <input
                                     required
-                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
                                     value={form.nameEn}
                                     onChange={(e) =>
                                         setForm((f) => ({
@@ -360,12 +360,12 @@ export default function AdminSubscriptionServicesPage() {
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">
+                                <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
                                     عربي
                                 </label>
                                 <input
                                     required
-                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                    className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
                                     dir="rtl"
                                     value={form.nameAr}
                                     onChange={(e) =>
@@ -378,12 +378,12 @@ export default function AdminSubscriptionServicesPage() {
                             </div>
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="space-y-1">
-                                    <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">
+                                    <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
                                         {lang === "ar" ? "ترتيب" : "Sort"}
                                     </label>
                                     <input
                                         type="number"
-                                        className="w-full bg-zinc-900 border border-white/5 rounded-xl py-2.5 px-3 text-sm text-white outline-none focus:border-[#0066FF]"
+                                        className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
                                         value={form.sortOrder}
                                         onChange={(e) =>
                                             setForm((f) => ({
@@ -404,7 +404,7 @@ export default function AdminSubscriptionServicesPage() {
                                                     active: e.target.checked,
                                                 }))
                                             }
-                                            className="rounded border-white/20"
+                                            className="rounded border-border"
                                         />
                                         {lang === "ar" ? "نشطة" : "Active"}
                                     </label>
@@ -414,7 +414,7 @@ export default function AdminSubscriptionServicesPage() {
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="flex-1 rounded-xl border-white/15"
+                                    className="flex-1 rounded-xl border-border"
                                     onClick={() => setIsModalOpen(false)}
                                 >
                                     {lang === "ar" ? "إلغاء" : "Cancel"}

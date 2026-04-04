@@ -5,8 +5,9 @@ import { PageHero } from "@/components/page-hero"
 import { PageSection } from "@/components/page-section"
 import { motion } from "framer-motion"
 import { NexBotAI } from "@/components/nexbot-ai"
-import { Globe, Server, Mail, ArrowRight, Check, ArrowUpRight, Cpu, Cloud, Database } from "lucide-react"
+import { Globe, Server, Mail, ArrowRight, Check, ArrowUpRight, Cpu, Cloud, Database, Zap, ShieldCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -14,21 +15,36 @@ export default function HostingVPS() {
     const { lang, t } = useLanguage()
 
     const plans = [
-        { name: "Starter", price: "2.99", features: ["1 Website", "50 GB SSD", "100 GB Bandwidth", "Free SSL"] },
-        { name: "Professional", price: "4.99", features: ["100 Websites", "200 GB SSD", "Unlimited Bandwidth", "Free Domain", "Daily Backups"], popular: true },
-        { name: "Enterprise", price: "9.99", features: ["300 Websites", "400 GB SSD", "Unlimited Bandwidth", "Dedicated Resources", "Priority Support"] },
+        { 
+            name: t("services_pages.hosting.plans.starter.name"), 
+            price: "2.99", 
+            features: t("services_pages.hosting.plans.starter.features") as unknown as string[], 
+            popular: false 
+        },
+        { 
+            name: t("services_pages.hosting.plans.professional.name"), 
+            price: "4.99", 
+            features: t("services_pages.hosting.plans.professional.features") as unknown as string[], 
+            popular: true 
+        },
+        { 
+            name: t("services_pages.hosting.plans.enterprise.name"), 
+            price: "9.99", 
+            features: t("services_pages.hosting.plans.enterprise.features") as unknown as string[], 
+            popular: false 
+        },
     ]
 
     return (
-        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-[#050505] min-h-screen">
+        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-bg-primary min-h-screen text-text-primary overflow-hidden">
             <PageHero
                 title={t("services_pages.hosting.hero_title")}
                 subtitle={t("services_pages.hosting.hero_subtitle")}
             />
 
-            {/* Other Services */}
-            <PageSection title={lang === "ar" ? "خدمات الاستضافة المدارة" : "Managed Hosting Services"}>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Hosting Infrastructure Grid */}
+            <PageSection className="pb-32!">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
                     {[
                         { key: "buying", icon: Globe, image: "/services/hosting-vps/Domain-&-Hosting-Purchase.jpg" },
                         { key: "vps", icon: Cpu, image: "/services/hosting-vps/VPS-Virtual-Private-Server.jpg" },
@@ -39,87 +55,121 @@ export default function HostingVPS() {
                     ].map((item, i) => (
                         <motion.div
                             key={item.key}
-                            whileHover={{ y: -10 }}
-                            className="relative group pt-6 md:pt-10 cursor-pointer"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1 }}
                         >
-                            <Link href={`/services/hosting-vps/${item.key}`} className="absolute inset-0 z-30" aria-label={`View ${item.key}`} />
+                            <Link href={`/services/hosting-vps/${item.key}`} className="block h-full group">
+                                <Card className="h-full p-0 overflow-hidden border-border-color hover:border-accent/40 bg-bg-secondary/20 transition-all duration-700 flex flex-col shadow-2xl hover:shadow-4xl relative">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    
+                                    <div className="p-10 md:p-12 flex flex-col grow">
+                                        <div className="w-16 h-16 rounded-[1.25rem] bg-bg-primary border border-border-color flex items-center justify-center text-accent mb-10 group-hover:bg-accent group-hover:text-white transition-all duration-700 shadow-xl group-hover:scale-110">
+                                            <item.icon className="w-8 h-8" />
+                                        </div>
+                                        <h3 className="text-2xl md:text-3xl font-black text-text-primary mb-6 group-hover:text-accent transition-colors tracking-tighter leading-tight uppercase">
+                                            {(t("services_pages.hosting") as any)[item.key]}
+                                        </h3>
+                                        <p className="text-text-secondary text-lg leading-relaxed grow mb-12 max-w-sm font-medium opacity-70 group-hover:opacity-100 transition-opacity">
+                                            {(t("services_pages.hosting") as any)[`${item.key}_desc`]}
+                                        </p>
 
-                            {/* Layered Cards Effect behind */}
-                            <div className="absolute top-2 left-3 right-3 h-10 md:top-4 md:left-6 md:right-6 md:h-20 bg-white/5 rounded-2xl md:rounded-4xl -z-10" />
-                            <div className="absolute top-4 left-2 right-2 h-10 md:top-7 md:left-4 md:right-4 md:h-20 bg-white/10 rounded-2xl md:rounded-4xl -z-10 transition-all duration-300 group-hover:bg-[#0066FF]/20" />
-
-                            {/* Main Card */}
-                            <div className={`relative rounded-2xl md:rounded-3xl overflow-hidden bg-[#111111] border border-white/10 shadow-2xl transition-all duration-500 h-full flex flex-col group-hover:border-[#0066FF]/50 p-3 md:p-6`}>
-                                <div className="border-b border-white/10 flex flex-col items-start gap-4 pb-4">
-                                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-[#0066FF]/10 flex items-center justify-center text-[#0066FF] group-hover:bg-[#0066FF] group-hover:text-white transition-colors duration-500">
-                                        <item.icon className="w-5 h-5 md:w-6 md:h-6" />
+                                        <div className="relative aspect-16/10 w-full rounded-[2.5rem] overflow-hidden border border-border-color bg-bg-primary shadow-2xl group-hover:border-accent/40 transition-all duration-700">
+                                            <Image
+                                                src={item.image}
+                                                alt={item.key}
+                                                fill
+                                                className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0"
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-bg-primary/60 via-bg-primary/20 to-transparent pointer-events-none" />
+                                            
+                                            <div className="absolute bottom-6 right-6 p-4 rounded-2xl bg-accent text-white shadow-3xl opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700">
+                                                <ArrowUpRight className="w-6 h-6" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 className="text-sm md:text-xl font-medium text-white tracking-tight leading-snug group-hover:text-[#0066FF] transition-colors duration-300 min-h-[48px] md:min-h-0">
-                                        {(t("services_pages.hosting") as any)[item.key]}
-                                    </h3>
-                                </div>
-
-                                <div className="relative pt-4 grow flex flex-col justify-between gap-4">
-                                    <p className="text-zinc-500 text-xs md:text-sm leading-relaxed mb-4 line-clamp-3">
-                                        {(t("services_pages.hosting") as any)[`${item.key}_desc`]}
-                                    </p>
-
-                                    <div className="relative aspect-video w-full rounded-xl md:rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 shadow-inner group/img">
-                                        <Image
-                                            src={item.image}
-                                            alt={item.key}
-                                            fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-1000 opacity-60 group-hover:opacity-100"
-                                        />
-                                        {/* Floating Button */}
-                                        <button className={`absolute bottom-3 md:bottom-5 ${lang === "ar" ? "left-3 md:left-5" : "right-3 md:right-5"} p-2 md:p-3 rounded-full z-30 shadow-2xl transition-all duration-500 bg-white/10 text-white backdrop-blur-xl border border-white/10 group-hover:bg-white group-hover:text-black`}>
-                                            <ArrowUpRight className={`w-3 h-3 md:w-4 md:h-4 ${lang === "ar" ? "-scale-x-100" : ""}`} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                                </Card>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>
             </PageSection>
 
-            <PageSection title={lang === "ar" ? "خطط الاستضافة" : "Hosting Plans"}>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Hosting Plans Section */}
+            <PageSection className="bg-bg-secondary/30 border-y border-border-color py-40! relative">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,102,255,0.05),transparent_70%)] pointer-events-none" />
+                
+                <div className="text-center mb-24 relative z-10">
+                    <span className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-black tracking-[0.3em] uppercase mb-10 shadow-xl">
+                        <Zap className="w-4 h-4 fill-accent" />
+                        {t("services_pages.hosting.plans.tag")}
+                    </span>
+                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-text-primary tracking-tighter leading-[0.95] uppercase">
+                        {t("services_pages.hosting.plans.title")} <span className="text-accent">{t("services_pages.hosting.plans.subtitle")}</span>
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14 items-stretch relative z-10">
                     {plans.map((plan, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
-                            className={`relative p-10 rounded-4xl border transition-all duration-500 flex flex-col ${plan.popular ? "bg-[#111] border-[#0066FF] scale-105 z-10" : "bg-white/5 border-white/10"}`}
+                            className="flex"
                         >
-                            {plan.popular && (
-                                <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#0066FF] text-white text-xs font-bold rounded-full uppercase tracking-widest">
-                                    {lang === "ar" ? "الأكثر مبيعاً" : "Most Popular"}
-                                </span>
-                            )}
-                            <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-                            <div className="flex items-end gap-1 mb-8">
-                                <span className="text-4xl font-black text-white">${plan.price}</span>
-                                <span className="text-zinc-500 mb-1">/{lang === "ar" ? "شهر" : "mo"}</span>
-                            </div>
-                            <div className="space-y-4 mb-10 flex-1">
-                                {plan.features.map((feat, j) => (
-                                    <div key={j} className="flex items-center gap-3">
-                                        <Check className="w-4 h-4 text-[#0066FF]" />
-                                        <span className="text-zinc-400 text-sm">{feat}</span>
+                            <Card className={`relative p-12 md:px-14 md:py-16 flex flex-col grow border-border-color transition-all duration-700 hover:shadow-4xl hover:border-accent/40 bg-bg-primary/50 shadow-2xl backdrop-blur-3xl rounded-[3rem] ${plan.popular ? "border-accent/60 ring-2 ring-accent/10 scale-105 z-10 bg-bg-primary shadow-accent/5" : ""}`}>
+                                {plan.popular && (
+                                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 px-8 py-3 bg-accent text-white text-[11px] font-black rounded-full uppercase tracking-widest shadow-3xl shadow-accent/40 flex items-center gap-3">
+                                        <Zap className="w-4 h-4 fill-current" />
+                                        {t("services_pages.hosting.plans.most_popular")}
                                     </div>
-                                ))}
-                            </div>
-                            <Button className={`w-full rounded-xl py-6 ${plan.popular ? "bg-[#0066FF] hover:bg-[#0052CC]" : "bg-white/5 border-white/10 hover:bg-white/10 border"}`}>
-                                {lang === "ar" ? "اختر الخطة" : "Select Plan"}
-                            </Button>
+                                )}
+                                
+                                <div className="mb-12">
+                                    <h3 className="text-3xl font-black text-text-primary mb-3 tracking-tighter uppercase">{plan.name}</h3>
+                                    <div className="flex items-end gap-2 group-hover:scale-105 transition-transform duration-500 origin-left">
+                                        <span className="text-6xl font-black text-text-primary tracking-tighter leading-none">${plan.price}</span>
+                                        <span className="text-text-secondary text-sm mb-2 font-black uppercase tracking-[0.2em] opacity-50">/{t("services_pages.hosting.plans.mo")}</span>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6 mb-16 flex-1 pt-8 border-t border-border-color/50">
+                                    {plan.features.map((feat, j) => (
+                                        <div key={j} className="flex items-start gap-5 group/feat">
+                                            <div className="mt-1 w-7 h-7 rounded-lg bg-accent/5 flex items-center justify-center shrink-0 border border-accent/10 group-hover/feat:bg-accent group-hover/feat:text-white group-hover/feat:scale-110 transition-all duration-500">
+                                                <Check className="w-4 h-4 text-accent group-hover/feat:text-white" />
+                                            </div>
+                                            <span className="text-text-secondary text-lg font-bold leading-tight group-hover/feat:text-text-primary transition-colors tracking-tight opacity-70 group-hover/feat:opacity-100">{feat}</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <Button 
+                                    className={`w-full rounded-3xl py-10 font-black text-sm uppercase tracking-[0.3em] transition-all duration-700 shadow-2xl active:scale-[0.98] ${plan.popular ? "bg-accent hover:bg-accent/90 text-white shadow-accent/30 hover:scale-[1.02]" : "bg-bg-secondary text-text-primary border-2 border-border-color hover:border-accent hover:bg-accent hover:text-white"}`}
+                                >
+                                    {t("services_pages.hosting.plans.activate")}
+                                </Button>
+                            </Card>
                         </motion.div>
                     ))}
                 </div>
-                <p className="text-center mt-12 text-zinc-600 text-sm italic">
-                    {t("services_pages.hosting.pricing_note")}
-                </p>
+                
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 0.6 }}
+                    className="text-center mt-24 pt-12 border-t border-border-color/30 max-w-2xl mx-auto flex flex-col items-center gap-6"
+                >
+                    <div className="flex items-center gap-4 text-accent/60">
+                        <ShieldCheck className="w-5 h-5" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em]">{t("services_pages.hosting.plans.guarantee")}</span>
+                    </div>
+                    <p className="text-text-secondary text-sm font-bold tracking-tight px-6 italic">
+                        &quot;{t("services_pages.hosting.pricing_note")}&quot;
+                    </p>
+                </motion.div>
             </PageSection>
 
             <NexBotAI />

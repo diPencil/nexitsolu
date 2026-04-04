@@ -5,7 +5,8 @@ import { PageHero } from "@/components/page-hero"
 import { PageSection } from "@/components/page-section"
 import { motion } from "framer-motion"
 import { NexBotAI } from "@/components/nexbot-ai"
-import { Code2, Database, Layout, Smartphone, ShieldCheck, ArrowUpRight } from "lucide-react"
+import { Code2, Database, Layout, Smartphone, ShieldCheck, ArrowUpRight, Zap } from "lucide-react"
+import { Card } from "@/components/ui/card"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -13,145 +14,128 @@ export default function SoftwareServices() {
     const { lang, t } = useLanguage()
 
     const systems = [
-        {
-            key: "erp",
-            icon: Database,
-            image: "/services/software/Enterprise-Resource-Planning-(ERP-Systems).jpg",
-            desc_ar: "أنظمة متكاملة لربط كافة أقسام المؤسسة ببعضها، من الموارد البشرية إلى المبيعات، لضمان تدفق سلس للبيانات.",
-            desc_en: "Integrated systems to connect all departments of the organization, from HR to sales, ensuring seamless data flow."
-        },
-        {
-            key: "crm",
-            icon: Layout,
-            image: "/services/software/Customer-Relationship-Management-(CRM).jpg",
-            desc_ar: "برمجيات مخصصة لإدارة تفاعلاتك مع العملاء الحاليين والمحتملين وبناء استراتيجيات تسويقية فعالة تدعم ولاء العملاء.",
-            desc_en: "Custom software to manage interactions with current and potential customers and build effective marketing strategies."
-        },
-        {
-            key: "automation",
-            icon: Code2,
-            image: "/services/software/Business-Process-Automation-(BPA).jpg",
-            desc_ar: "نظمة مصممة للقضاء على المهام اليدوية المتكررة وزيادة دقة المعاملات الإدارية ورفع كفاءة فريق العمل.",
-            desc_en: "A system designed to eliminate repetitive manual tasks, increase transaction accuracy, and boost team efficiency."
-        },
-        {
-            key: "custom",
-            icon: ShieldCheck,
-            image: "/services/software/Custom-Application-&-Platform-Development.jpg",
-            desc_ar: "تطوير برمجيات من الصفر لتناسب طريقة عمل مؤسستك الخاصة وتتوافق مع متطلباتك وميزانيتك.",
-            desc_en: "Developing software from scratch to fit your organization's unique workflow, matching your specific requirements and budget."
-        },
-        {
-            key: "hrm",
-            icon: Smartphone,
-            image: "/services/software/Human-Resource-Management-(HRM).jpg",
-            desc_ar: "نظام متكامل لإدارة الموارد البشرية من التوظيف وإعداد الموظفين وحتى الرواتب وتقييم الأداء والامتثال، كل ذلك في منصة واحدة ذكية.",
-            desc_en: "A comprehensive system to manage all HR operations—from recruitment and onboarding to payroll, performance reviews, and compliance—in one smart platform."
-        },
-        {
-            key: "bms",
-            icon: Layout,
-            image: "/services/software/Business-Management-System-(BMS).jpg",
-            desc_ar: "نظام إدارة أعمال موحد يتيح للقيادة رؤية شاملة ولحظية على جميع العمليات، من المشاريع والمالية وحتى الفرق وإدارة العملاء.",
-            desc_en: "A unified business management system that gives leadership a complete, real-time overview of all operations, from projects and financials to teams and client management."
-        },
+        { key: "erp", icon: Database, image: "/services/software/Enterprise-Resource-Planning-(ERP-Systems).jpg" },
+        { key: "crm", icon: Layout, image: "/services/software/Customer-Relationship-Management-(CRM).jpg" },
+        { key: "automation", icon: Code2, image: "/services/software/Business-Process-Automation-(BPA).jpg" },
+        { key: "custom", icon: ShieldCheck, image: "/services/software/Custom-Application-&-Platform-Development.jpg" },
+        { key: "hrm", icon: Smartphone, image: "/services/software/Human-Resource-Management-(HRM).jpg" },
+        { key: "bms", icon: Layout, image: "/services/software/Business-Management-System-(BMS).jpg" },
     ]
 
     return (
-        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-[#050505] min-h-screen">
+        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-bg-primary min-h-screen text-text-primary overflow-hidden">
             <PageHero
                 title={t("services_pages.software.hero_title")}
                 subtitle={t("services_pages.software.hero_subtitle")}
             />
 
-            <PageSection>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Software Systems Grid */}
+            <PageSection className="pb-32!">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
                     {systems.map((system, i) => (
                         <motion.div
                             key={system.key}
-                            whileHover={{ y: -10 }}
-                            className="relative group pt-6 md:pt-10 cursor-pointer"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1 }}
                         >
-                            <Link href={`/services/software/${system.key}`} className="absolute inset-0 z-30" aria-label={`View ${system.key}`} />
+                            <Link href={`/services/software/${system.key}`} className="block h-full group">
+                                <Card className="h-full p-0 overflow-hidden border-border-color hover:border-accent/40 bg-bg-secondary/20 transition-all duration-700 flex flex-col shadow-2xl hover:shadow-4xl relative">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    
+                                    <div className="p-10 md:p-12 flex flex-col grow">
+                                        <div className="w-16 h-16 rounded-[1.25rem] bg-bg-primary border border-border-color flex items-center justify-center text-accent mb-10 group-hover:bg-accent group-hover:text-white transition-all duration-700 shadow-xl group-hover:scale-110">
+                                            <system.icon className="w-8 h-8" />
+                                        </div>
+                                        <h3 className="text-2xl md:text-3xl font-black text-text-primary mb-6 group-hover:text-accent transition-colors tracking-tighter leading-tight uppercase">
+                                            {t(`services_pages.software.${system.key}`)}
+                                        </h3>
+                                        <p className="text-text-secondary text-lg leading-relaxed grow mb-12 max-w-sm font-medium opacity-70 group-hover:opacity-100 transition-opacity">
+                                            {t(`services_pages.software.${system.key}_desc`)}
+                                        </p>
 
-                            {/* Layered Cards Effect behind */}
-                            <div className="absolute top-2 left-3 right-3 h-10 md:top-4 md:left-6 md:right-6 md:h-20 bg-white/5 rounded-2xl md:rounded-4xl -z-10" />
-                            <div className="absolute top-4 left-2 right-2 h-10 md:top-7 md:left-4 md:right-4 md:h-20 bg-white/10 rounded-2xl md:rounded-4xl -z-10 transition-all duration-300 group-hover:bg-[#0066FF]/20" />
-
-                            {/* Main Card */}
-                            <div className={`relative rounded-2xl md:rounded-3xl overflow-hidden bg-[#111111] border border-white/10 shadow-2xl transition-all duration-500 h-full flex flex-col group-hover:border-[#0066FF]/50 p-3 md:p-6`}>
-                                <div className="border-b border-white/10 flex flex-col items-start gap-4 pb-4">
-                                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-[#0066FF]/10 flex items-center justify-center text-[#0066FF] group-hover:bg-[#0066FF] group-hover:text-white transition-colors duration-500">
-                                        <system.icon className="w-5 h-5 md:w-6 md:h-6" />
+                                        <div className="relative aspect-16/10 w-full rounded-[2.5rem] overflow-hidden border border-border-color bg-bg-primary shadow-2xl group-hover:border-accent/40 transition-all duration-700">
+                                            <Image
+                                                src={system.image}
+                                                alt={system.key}
+                                                fill
+                                                className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0"
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-bg-primary/60 via-bg-primary/20 to-transparent pointer-events-none" />
+                                            
+                                            <div className="absolute bottom-6 right-6 p-4 rounded-2xl bg-accent text-white shadow-3xl opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700">
+                                                <ArrowUpRight className="w-6 h-6" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 className="text-sm md:text-xl font-medium text-white tracking-tight leading-snug group-hover:text-[#0066FF] transition-colors duration-300 min-h-[48px] md:min-h-0">
-                                        {(t("services_pages.software") as any)[system.key]}
-                                    </h3>
-                                </div>
-
-                                <div className="relative pt-4 grow flex flex-col justify-between gap-4">
-                                    <p className="text-zinc-500 text-xs md:text-sm leading-relaxed mb-4 line-clamp-3">
-                                        {lang === "ar" ? system.desc_ar : system.desc_en}
-                                    </p>
-
-                                    <div className="relative aspect-video w-full rounded-xl md:rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 shadow-inner group/img">
-                                        <Image
-                                            src={system.image}
-                                            alt={system.key}
-                                            fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-1000 opacity-60 group-hover:opacity-100"
-                                        />
-
-                                        {/* Floating Button */}
-                                        <button className={`absolute bottom-3 md:bottom-5 ${lang === "ar" ? "left-3 md:left-5" : "right-3 md:right-5"} p-2 md:p-3 rounded-full z-30 shadow-2xl transition-all duration-500 bg-white/10 text-white backdrop-blur-xl border border-white/10 group-hover:bg-white group-hover:text-black`}>
-                                            <ArrowUpRight className={`w-3 h-3 md:w-4 md:h-4 ${lang === "ar" ? "-scale-x-100" : ""}`} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                                </Card>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>
             </PageSection>
 
-            {/* Custom Development Section */}
-            <PageSection title={lang === "ar" ? "هندسة البرمجيات والحلول المخصصة" : "Tailored Software Engineering"} columns={2} className="bg-white/3">
-                <div className="flex flex-col justify-center">
-                    <p className="text-xl text-zinc-400 mb-10 leading-relaxed max-w-xl">
-                        {lang === "ar"
-                            ? "نحن نبني حلولاً برمجية من الصفر لتناسب احتياجاتك الفريدة، سواء كانت تطبيقات ويب معقدة أو أنظمة إدارة داخلية متطورة تضمن لك التفوق التقني الكامل."
-                            : "We build software solutions from scratch to fit your unique needs, whether they are complex web applications or advanced internal management systems that ensure your full technical edge."}
-                    </p>
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-4 group">
-                            <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/10 flex items-center justify-center text-[#0066FF] border border-[#0066FF]/20 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-500">
-                                <Smartphone className="w-6 h-6" />
-                            </div>
-                            <span className="text-zinc-300 font-medium group-hover:text-white transition-colors">{lang === "ar" ? "تطبيقات هواتف ذكية متكاملة" : "Integrated Mobile Applications"}</span>
+            {/* Custom Engineering Section */}
+            <PageSection className="bg-bg-secondary/30 border-y border-border-color py-40!" columns={2}>
+                <div className="flex flex-col justify-center lg:pe-20 order-2 lg:order-1 space-y-12">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <span className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-black tracking-[0.3em] uppercase mb-10 shadow-xl">
+                            <Code2 className="w-4 h-4" />
+                            {t("services_pages.software.impact.tag")}
+                        </span>
+                        <h2 className="text-4xl md:text-6xl font-black text-text-primary mb-10 tracking-tighter leading-[0.95]">
+                            {t("services_pages.software.impact.title")}<br/>
+                            <span className="text-accent">{t("services_pages.software.impact.subtitle")}</span>
+                        </h2>
+                        <p className="text-xl md:text-2xl text-text-secondary mb-12 leading-relaxed max-w-2xl font-medium opacity-80">
+                            {t("services_pages.software.impact.content")}
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {[
+                                { icon: Smartphone, key: "mobile" },
+                                { icon: Database, key: "cloud" },
+                                { icon: Zap, key: "bpa" }
+                            ].map((item, idx) => (
+                                <motion.div 
+                                    key={idx} 
+                                    initial={{ opacity: 0, y: 10 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    className="flex items-center gap-6 group/badge"
+                                >
+                                    <div className={`w-16 h-16 rounded-2xl bg-bg-primary flex items-center justify-center text-accent border border-border-color group-hover/badge:bg-accent group-hover/badge:text-white transition-all duration-700 shadow-2xl`}>
+                                        <item.icon className="w-7 h-7" />
+                                    </div>
+                                    <span className="text-text-primary text-sm font-black uppercase tracking-widest group-hover/badge:text-accent transition-colors">
+                                        {t(`services_pages.software.impact.badges.${item.key}`)}
+                                    </span>
+                                </motion.div>
+                            ))}
                         </div>
-                        <div className="flex items-center gap-4 group">
-                            <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/10 flex items-center justify-center text-[#0066FF] border border-[#0066FF]/20 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-500">
-                                <Database className="w-6 h-6" />
-                            </div>
-                            <span className="text-zinc-300 font-medium group-hover:text-white transition-colors">{lang === "ar" ? "قواعد بيانات سحابية متطورة" : "Advanced Cloud Databases"}</span>
-                        </div>
-                        <div className="flex items-center gap-4 group">
-                            <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/10 flex items-center justify-center text-[#0066FF] border border-[#0066FF]/20 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-500">
-                                <Code2 className="w-6 h-6" />
-                            </div>
-                            <span className="text-zinc-300 font-medium group-hover:text-white transition-colors">{lang === "ar" ? "تطوير أنظمة خاصة من الصفر" : "Custom Systems From Scratch"}</span>
-                        </div>
-                    </div>
+                    </motion.div>
                 </div>
-                <div className="relative aspect-square md:aspect-video rounded-3xl overflow-hidden border border-white/10 group shadow-2xl">
-                    <Image
-                        src="/services/software/Custom-Development.jpg"
-                        alt="Custom Development"
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-1000"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#050505]/60 via-transparent to-transparent" />
-                    <div className="absolute inset-0 border-2 border-white/5 rounded-3xl z-10" />
+                <div className="relative order-1 lg:order-2 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-accent/5 blur-[120px] pointer-events-none" />
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className="relative aspect-square md:aspect-auto w-full h-full min-h-[500px] rounded-[3rem] overflow-hidden border border-border-color group shadow-4xl"
+                    >
+                        <Image
+                            src="/services/software/Custom-Development.jpg"
+                            alt="Custom Development"
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-1000 opacity-90 group-hover:opacity-100"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-bg-primary/60 via-bg-primary/20 to-transparent pointer-events-none" />
+                    </motion.div>
                 </div>
             </PageSection>
 

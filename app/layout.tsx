@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono, Cairo } from "next/font/google"
+import { Geist, Geist_Mono, Rubik } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { LenisProvider } from "@/components/lenis-provider"
 import "./globals.css"
@@ -14,7 +14,7 @@ import { ScrollToTop } from "@/components/scroll-to-top"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
-const cairo = Cairo({ subsets: ["arabic", "latin"], variable: "--font-cairo" })
+const rubik = Rubik({ subsets: ["arabic", "latin"], variable: "--font-rubik" })
 
 export const viewport: Viewport = {
   themeColor: "#050505",
@@ -101,8 +101,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`dark ${geist.variable} ${geistMono.variable} ${cairo.variable}`} suppressHydrationWarning>
-      <body className="antialiased bg-black text-white" suppressHydrationWarning>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${rubik.variable}`} suppressHydrationWarning>
+      <body className="antialiased" suppressHydrationWarning>
         <LanguageProvider>
           <Providers>
             <LenisProvider>

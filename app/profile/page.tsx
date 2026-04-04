@@ -20,7 +20,7 @@ export default function ProfileRedirect() {
     }, [status, router, session])
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="min-h-screen bg-background flex items-center justify-center">
             <Loader2 className="w-10 h-10 animate-spin text-[#0066FF]" />
         </div>
     )

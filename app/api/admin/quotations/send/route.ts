@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         const html = `
             <div style="font-family: sans-serif; padding: 20px; color: #333; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 8px;">
                 <div style="text-align: center; border-bottom: 2px solid #0066FF; padding-bottom: 20px; margin-bottom: 20px;">
-                    <h1 style="color: #0066FF; margin: 0;">NexIT Solutions</h1>
+                    <img src="https://nexitsolu.com/nexit-logo.png" alt="NexIT Solutions Logo" style="width: 180px; height: auto; margin-bottom: 10px;" />
                     <p style="color: #666; margin: 5px 0 0;">Innovative Systems & Digital Transformation</p>
                 </div>
                 

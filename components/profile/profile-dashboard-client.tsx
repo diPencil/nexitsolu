@@ -552,7 +552,7 @@ export function ProfileDashboardClient({
 
     return (
         <div
-            className="min-h-screen bg-[#050505] pt-16 sm:pt-20 md:pt-28 pb-[max(5rem,env(safe-area-inset-bottom,0px)+3.25rem)] md:pb-10 px-3 sm:px-4 md:px-10 overflow-x-hidden"
+            className="min-h-screen bg-background pt-16 sm:pt-20 md:pt-28 pb-[max(5rem,env(safe-area-inset-bottom,0px)+3.25rem)] md:pb-10 px-3 sm:px-4 md:px-10 overflow-x-hidden"
             dir={lang === 'ar' ? 'rtl' : 'ltr'}
         >
             <div className="max-w-[1600px] mx-auto w-full min-w-0">
@@ -561,10 +561,10 @@ export function ProfileDashboardClient({
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-8 items-start mb-6 md:mb-20">
                     {/* Left: User / Company Info & Navigation */}
                     <div className="hidden md:block md:col-span-1 md:sticky md:top-28 w-full min-w-0">
-                        <div className="bg-zinc-950 border border-white/5 rounded-2xl md:rounded-[2.5rem] p-4 sm:p-6 md:p-8 text-center relative overflow-hidden group flex flex-col min-h-0 md:min-h-[750px]">
+                        <div className="bg-zinc-950 border border-border rounded-2xl md:rounded-[2.5rem] p-4 sm:p-6 md:p-8 text-center relative overflow-hidden group flex flex-col min-h-0 md:min-h-[750px]">
                             <div className="flex-1">
                                 <div className="absolute inset-0 bg-[#0066FF]/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                                <div className="w-24 h-24 rounded-full bg-linear-to-br from-[#0066FF] to-purple-600 mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-white shadow-lg shadow-blue-500/20">
+                                <div className="w-24 h-24 rounded-full bg-linear-to-br from-[#0066FF] to-purple-600 mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-foreground shadow-lg shadow-blue-500/20">
                                     {isCompany ? (
                                         <Building2 className="w-10 h-10" />
                                     ) : (
@@ -578,10 +578,10 @@ export function ProfileDashboardClient({
                                     </span>
                                 )}
                                 
-                                <h2 className="text-xl font-bold text-white mb-1">
+                                <h2 className="text-xl font-bold text-foreground mb-1">
                                     {isCompany ? (session?.user as any)?.username : session?.user?.name}
                                 </h2>
-                                <p className="text-zinc-500 text-sm mb-6">{session?.user?.email}</p>
+                                <p className="text-muted-foreground text-sm mb-6">{session?.user?.email}</p>
 
                                 {/* Company Menu */}
                                 {isCompany && (
@@ -589,88 +589,88 @@ export function ProfileDashboardClient({
                                         className="space-y-1 mb-4 md:mb-6 text-left border-y border-white/10 py-3 md:py-4 max-h-[min(60vh,28rem)] md:max-h-none overflow-y-auto overscroll-contain -mx-1 px-1 md:mx-0 md:px-0 [scrollbar-width:thin]"
                                         dir={lang === 'ar' ? 'rtl' : 'ltr'}
                                     >
-                                        <button onClick={() => goToTab("dashboard")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'dashboard' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("dashboard")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'dashboard' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <LayoutDashboard className={`w-4 h-4 transition-colors ${activeTab === 'dashboard' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <LayoutDashboard className={`w-4 h-4 transition-colors ${activeTab === 'dashboard' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'نظرة عامة' : 'Overview'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'dashboard' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <Link href="/services/managed-it" className="w-full text-zinc-400 hover:text-white hover:bg-[#0066FF]/10 py-2.5 px-4 rounded-xl flex items-center justify-between transition-colors mb-2">
+                                        <Link href="/services/managed-it" className="w-full text-muted-foreground hover:text-white hover:bg-[#0066FF]/10 py-2.5 px-4 rounded-xl flex items-center justify-between transition-colors mb-2">
                                             <div className="flex items-center gap-3">
                                                 <Building2 className="w-4 h-4 text-[#0066FF]" />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'بوابة الشركات' : 'Corporate Portal'}</span>
                                             </div>
                                             <ArrowLeft className={`w-4 h-4 ${lang === 'ar' ? '' : 'rotate-180'}`} />
                                         </Link>
-                                        <button onClick={() => goToTab("subscriptions")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'subscriptions' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("subscriptions")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'subscriptions' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Briefcase className={`w-4 h-4 transition-colors ${activeTab === 'subscriptions' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Briefcase className={`w-4 h-4 transition-colors ${activeTab === 'subscriptions' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'الاشتراكات' : 'Subscriptions'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'subscriptions' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("contracts")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'contracts' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("contracts")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'contracts' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <ShieldCheck className={`w-4 h-4 transition-colors ${activeTab === 'contracts' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <ShieldCheck className={`w-4 h-4 transition-colors ${activeTab === 'contracts' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'العقود والطلبات' : 'Contracts & Requests'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'contracts' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("orders")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'orders' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("orders")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'orders' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Package className={`w-4 h-4 transition-colors ${activeTab === 'orders' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Package className={`w-4 h-4 transition-colors ${activeTab === 'orders' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'الطلبات' : 'Orders'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'orders' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("track")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'track' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("track")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'track' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Clock className={`w-4 h-4 transition-colors ${activeTab === 'track' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Clock className={`w-4 h-4 transition-colors ${activeTab === 'track' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'تتبع الطلبات' : 'Track Order'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'track' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("messages")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'messages' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("messages")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'messages' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <MessageSquare className={`w-4 h-4 transition-colors ${activeTab === 'messages' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <MessageSquare className={`w-4 h-4 transition-colors ${activeTab === 'messages' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'الرسائل' : 'Messages'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'messages' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
 
-                                        <button onClick={() => goToTab("invoices")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'invoices' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("invoices")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'invoices' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <FileText className={`w-4 h-4 transition-colors ${activeTab === 'invoices' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <FileText className={`w-4 h-4 transition-colors ${activeTab === 'invoices' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'الفواتير' : 'Invoices'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'invoices' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
 
-                                        <button onClick={() => goToTab("favorites")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'favorites' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("favorites")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'favorites' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Heart className={`w-4 h-4 transition-colors ${activeTab === 'favorites' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Heart className={`w-4 h-4 transition-colors ${activeTab === 'favorites' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'المفضلة' : 'Favorites'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'favorites' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("wishlist")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'wishlist' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("wishlist")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'wishlist' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Bookmark className={`w-4 h-4 transition-colors ${activeTab === 'wishlist' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Bookmark className={`w-4 h-4 transition-colors ${activeTab === 'wishlist' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'قائمة الأماني' : 'Wishlist'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'wishlist' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("settings")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'settings' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("settings")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'settings' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Key className={`w-4 h-4 transition-colors ${activeTab === 'settings' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Key className={`w-4 h-4 transition-colors ${activeTab === 'settings' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'تغيير الباسورد' : 'Change Password'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'settings' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("support")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'support' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("support")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'support' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Headset className={`w-4 h-4 transition-colors ${activeTab === 'support' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Headset className={`w-4 h-4 transition-colors ${activeTab === 'support' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'الدعم' : 'Support'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'support' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
@@ -684,65 +684,65 @@ export function ProfileDashboardClient({
                                         className="space-y-1 mb-4 md:mb-6 text-left border-y border-white/10 py-3 md:py-4 max-h-[min(60vh,28rem)] md:max-h-none overflow-y-auto overscroll-contain -mx-1 px-1 md:mx-0 md:px-0 [scrollbar-width:thin]"
                                         dir={lang === 'ar' ? 'rtl' : 'ltr'}
                                     >
-                                        <button onClick={() => goToTab("dashboard")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'dashboard' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("dashboard")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'dashboard' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <LayoutDashboard className={`w-4 h-4 transition-colors ${activeTab === 'dashboard' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <LayoutDashboard className={`w-4 h-4 transition-colors ${activeTab === 'dashboard' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'نظرة عامة' : 'Overview'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'dashboard' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <Link href="/store" className="w-full text-zinc-400 hover:text-white hover:bg-[#0066FF]/10 py-2.5 px-4 rounded-xl flex items-center justify-between transition-colors mb-2">
+                                        <Link href="/store" className="w-full text-muted-foreground hover:text-white hover:bg-[#0066FF]/10 py-2.5 px-4 rounded-xl flex items-center justify-between transition-colors mb-2">
                                             <div className="flex items-center gap-3">
                                                 <ShoppingBag className="w-4 h-4 text-[#0066FF]" />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'العودة للمتجر' : 'Back to Store'}</span>
                                             </div>
                                             <ArrowLeft className={`w-4 h-4 ${lang === 'ar' ? '' : 'rotate-180'}`} />
                                         </Link>
-                                        <button onClick={() => goToTab("orders")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'orders' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("orders")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'orders' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Package className={`w-4 h-4 transition-colors ${activeTab === 'orders' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Package className={`w-4 h-4 transition-colors ${activeTab === 'orders' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'طلباتي' : 'My Orders'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'orders' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("track")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'track' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("track")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'track' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Clock className={`w-4 h-4 transition-colors ${activeTab === 'track' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Clock className={`w-4 h-4 transition-colors ${activeTab === 'track' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'تتبع الطلبات' : 'Track Order'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'track' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("messages")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'messages' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("messages")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'messages' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <MessageSquare className={`w-4 h-4 transition-colors ${activeTab === 'messages' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <MessageSquare className={`w-4 h-4 transition-colors ${activeTab === 'messages' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'الرسائل' : 'Messages'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'messages' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("favorites")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'favorites' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("favorites")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'favorites' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Heart className={`w-4 h-4 transition-colors ${activeTab === 'favorites' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Heart className={`w-4 h-4 transition-colors ${activeTab === 'favorites' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'المفضلة' : 'Favorites'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'favorites' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("wishlist")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'wishlist' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("wishlist")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'wishlist' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Bookmark className={`w-4 h-4 transition-colors ${activeTab === 'wishlist' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Bookmark className={`w-4 h-4 transition-colors ${activeTab === 'wishlist' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'قائمة الأماني' : 'Wishlist'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'wishlist' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("settings")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'settings' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("settings")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'settings' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Key className={`w-4 h-4 transition-colors ${activeTab === 'settings' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Key className={`w-4 h-4 transition-colors ${activeTab === 'settings' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'تغيير الباسورد' : 'Change Password'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'settings' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
                                         </button>
-                                        <button onClick={() => goToTab("support")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'support' ? 'bg-[#0066FF]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}>
+                                        <button onClick={() => goToTab("support")} className={`w-full transition-all py-2.5 px-4 rounded-xl flex items-center justify-between group/tab ${activeTab === 'support' ? 'bg-[#0066FF]/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5'}`}>
                                             <div className="flex items-center gap-3">
-                                                <Headset className={`w-4 h-4 transition-colors ${activeTab === 'support' ? 'text-[#0066FF]' : 'text-zinc-500 group-hover/tab:text-[#0066FF]'}`} />
+                                                <Headset className={`w-4 h-4 transition-colors ${activeTab === 'support' ? 'text-[#0066FF]' : 'text-muted-foreground group-hover/tab:text-[#0066FF]'}`} />
                                                 <span className="text-sm font-medium">{lang === 'ar' ? 'الدعم' : 'Support'}</span>
                                             </div>
                                             <ChevronRight className={`w-4 h-4 transition-transform ${lang === 'ar' ? 'rotate-180' : ''} ${activeTab === 'support' ? 'translate-x-1 opacity-100' : 'opacity-0 shadow-sm'}`} />
@@ -764,7 +764,7 @@ export function ProfileDashboardClient({
 
                                 <button
                                     onClick={() => signOut({ callbackUrl: '/' })}
-                                    className="relative z-10 w-full py-4 rounded-2xl bg-zinc-900 border border-white/5 text-sm text-zinc-400 hover:text-red-500 hover:bg-red-500/10 transition-all flex items-center justify-center gap-2 font-medium"
+                                    className="relative z-10 w-full py-4 rounded-2xl bg-zinc-900 border border-border text-sm text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-all flex items-center justify-center gap-2 font-medium"
                                 >
                                     <LogOut className="w-4 h-4" />
                                     {lang === 'ar' ? 'تسجيل الخروج' : 'Logout'}
@@ -775,7 +775,7 @@ export function ProfileDashboardClient({
 
                     {/* Right: Dynamics Content Area based on Tab */}
                     <div className="md:col-span-3 flex flex-col min-h-0 md:min-h-[600px] w-full min-w-0">
-                        <div className="md:hidden mb-3 flex items-center justify-between gap-3 rounded-xl border border-white/5 bg-zinc-950 p-3">
+                        <div className="md:hidden mb-3 flex items-center justify-between gap-3 rounded-xl border border-border bg-card p-3">
                             <div className="flex min-w-0 items-center gap-3">
                                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-[#0066FF] to-purple-600 text-sm font-bold text-white">
                                     {isCompany ? (
@@ -796,7 +796,7 @@ export function ProfileDashboardClient({
                             <button
                                 type="button"
                                 onClick={() => signOut({ callbackUrl: "/" })}
-                                className="shrink-0 rounded-xl border border-white/10 bg-zinc-900 px-3 py-2 text-zinc-400 transition-colors hover:border-red-500/30 hover:text-red-400"
+                                className="shrink-0 rounded-xl border border-border bg-zinc-900 px-3 py-2 text-muted-foreground transition-colors hover:border-red-500/30 hover:text-red-400"
                                 aria-label={lang === "ar" ? "تسجيل الخروج" : "Logout"}
                             >
                                 <LogOut className="h-4 w-4" />
@@ -818,12 +818,12 @@ export function ProfileDashboardClient({
                                     </div>
                                     <div>
                                         <h3 className="text-white text-lg font-bold mb-1">{lang === 'ar' ? 'أكمل بيانات حسابك' : 'Complete Your Profile'}</h3>
-                                        <p className="text-zinc-500 text-sm max-w-md leading-relaxed">
+                                        <p className="text-muted-foreground text-sm max-w-md leading-relaxed">
                                             {lang === 'ar' ? 'يرجى إكمال بيانات الشركة (الموقع، التواصل) لنتمكن من متابعة طلبك بشكل أسرع وتقديم أفضل خدمة.' : 'Please complete company details (location, contact) so we can process your request faster.'}
                                         </p>
                                     </div>
                                 </div>
-                                <div className="relative z-10 px-8 py-3 rounded-full bg-red-500 text-white text-xs font-black uppercase tracking-widest group-hover:scale-105 transition-transform text-center shadow-[0_0_20px_rgba(239,68,68,0.3)]">
+                                <div className="relative z-10 px-8 py-3 rounded-full bg-red-500 text-foreground text-xs font-black uppercase tracking-widest group-hover:scale-105 transition-transform text-center shadow-[0_0_20px_rgba(239,68,68,0.3)]">
                                     {lang === 'ar' ? 'أكمل الآن' : 'Complete Now'}
                                 </div>
                             </motion.div>
@@ -832,13 +832,13 @@ export function ProfileDashboardClient({
                         {activeTab === "dashboard" && (
                             <div className="space-y-4 md:space-y-6">
                                 {/* Welcome Card */}
-                                <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 relative overflow-hidden group">
+                                <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 relative overflow-hidden group">
                                     <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066FF]/10 rounded-full blur-[80px] group-hover:bg-[#0066FF]/20 transition-all pointer-events-none" />
                                     <div className="relative z-10 text-start">
-                                        <h1 className="text-xl sm:text-3xl font-black text-white mb-1.5 sm:mb-2 wrap-break-word">
+                                        <h1 className="text-xl sm:text-3xl font-black text-foreground mb-1.5 sm:mb-2 wrap-break-word">
                                             {lang === 'ar' ? `أهلاً بك، ${session?.user?.name?.split(' ')[0] || 'مستخدمنا'}` : `Welcome back, ${session?.user?.name?.split(' ')[0] || 'User'}`}
                                         </h1>
-                                        <p className="text-zinc-500 max-w-lg leading-relaxed">
+                                        <p className="text-muted-foreground max-w-lg leading-relaxed">
                                             {lang === 'ar' ? 'يمكنك من هنا متابعة طلباتك، تتبع الشحن، والخدمات الخاصة بك بكل سهولة.' : 'From here you can monitor your orders, track shipping, and manage your services easily.'}
                                         </p>
                                     </div>
@@ -846,56 +846,56 @@ export function ProfileDashboardClient({
 
                                 {/* Stats Grid */}
                                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6">
-                                    <div onClick={() => goToTab("orders")} className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
+                                    <div onClick={() => goToTab("orders")} className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
                                         <div className="flex items-center justify-between mb-3 sm:mb-4">
                                             <div className="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                 <Package className="w-6 h-6" />
                                             </div>
                                             <span className="text-2xl font-black text-white">{orders.length}</span>
                                         </div>
-                                        <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'إجمالي الطلبات' : 'Total Orders'}</p>
+                                        <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'إجمالي الطلبات' : 'Total Orders'}</p>
                                     </div>
 
                                     {isCompany ? (
                                         <>
-                                            <div onClick={() => goToTab("subscriptions")} className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
+                                            <div onClick={() => goToTab("subscriptions")} className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
                                                 <div className="flex items-center justify-between mb-3 sm:mb-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-blue-500/10 text-[#0066FF] flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         <Briefcase className="w-6 h-6" />
                                                     </div>
                                                     <span className="text-2xl font-black text-white">{subscriptions.length}</span>
                                                 </div>
-                                                <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'الاشتراكات' : 'Subscriptions'}</p>
+                                                <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'الاشتراكات' : 'Subscriptions'}</p>
                                             </div>
-                                            <div onClick={() => goToTab("contracts")} className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
+                                            <div onClick={() => goToTab("contracts")} className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-[#0066FF]/30 transition-all cursor-pointer group">
                                                 <div className="flex items-center justify-between mb-3 sm:mb-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/10 text-[#0066FF] flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         <ShieldCheck className="w-6 h-6" />
                                                     </div>
                                                     <span className="text-2xl font-black text-white">{managedRequests.length}</span>
                                                 </div>
-                                                <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'العقود والطلبات' : 'Contracts'}</p>
+                                                <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'العقود والطلبات' : 'Contracts'}</p>
                                             </div>
                                         </>
                                     ) : (
                                         <>
-                                            <div onClick={() => goToTab("messages")} className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-purple-500/30 transition-all cursor-pointer group">
+                                            <div onClick={() => goToTab("messages")} className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-purple-500/30 transition-all cursor-pointer group">
                                                 <div className="flex items-center justify-between mb-3 sm:mb-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         <MessageSquare className="w-6 h-6" />
                                                     </div>
                                                     <span className="text-2xl font-black text-white">{messages.length > 0 ? 1 : 0}</span>
                                                 </div>
-                                                <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'الرسائل' : 'Messages'}</p>
+                                                <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'الرسائل' : 'Messages'}</p>
                                             </div>
-                                            <div onClick={() => goToTab("favorites")} className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-red-500/30 transition-all cursor-pointer group">
+                                            <div onClick={() => goToTab("favorites")} className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-6 hover:border-red-500/30 transition-all cursor-pointer group">
                                                 <div className="flex items-center justify-between mb-3 sm:mb-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         <Heart className="w-6 h-6" />
                                                     </div>
                                                     <span className="text-2xl font-black text-white">{favorites.length}</span>
                                                 </div>
-                                                <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">{lang === 'ar' ? 'المفضلة' : 'Favorites'}</p>
+                                                <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'المفضلة' : 'Favorites'}</p>
                                             </div>
                                         </>
                                     )}
@@ -903,7 +903,7 @@ export function ProfileDashboardClient({
 
                                 {/* Recent Activity / Order */}
                                 {orders.length > 0 && (
-                                    <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 text-start">
+                                    <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 text-start">
                                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-8">
                                             <h2 className="text-xl font-bold flex items-center gap-3">
                                                 <div className="p-2 rounded-xl bg-[#0066FF]/10">
@@ -918,9 +918,9 @@ export function ProfileDashboardClient({
 
                                         <div className="space-y-4">
                                             {orders.slice(0, 2).map((order: any) => (
-                                                <div key={order.id} className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/5 border border-white/5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 hover:bg-white/10 transition-colors min-w-0">
+                                                <div key={order.id} className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/5 border border-border flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 hover:bg-white/10 transition-colors min-w-0">
                                                     <div className="flex items-center gap-4 min-w-0">
-                                                        <div className="w-12 h-12 rounded-2xl bg-zinc-900 overflow-hidden shrink-0 border border-white/5">
+                                                        <div className="w-12 h-12 rounded-2xl bg-zinc-900 overflow-hidden shrink-0 border border-border">
                                                             {order.items[0]?.product?.images?.[0] ? (
                                                                 <img src={order.items[0].product.images[0]} className="w-full h-full object-cover" />
                                                             ) : (
@@ -928,18 +928,18 @@ export function ProfileDashboardClient({
                                                             )}
                                                         </div>
                                                         <div>
-                                                             <p className="font-bold text-white text-sm">#{order.orderNumber || order.id.slice(-6).toUpperCase()}</p>
+                                                             <p className="font-bold text-foreground text-sm">#{order.orderNumber || order.id.slice(-6).toUpperCase()}</p>
                                                              <p className="text-xs text-zinc-500">{new Date(order.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US')}</p>
                                                          </div>
                                                      </div>
                                                      <div className="flex items-center justify-between gap-4 sm:justify-end sm:gap-6 w-full sm:w-auto shrink-0">
                                                          <div className="text-start sm:text-end sm:hidden">
                                                              <p className="font-black text-[#0066FF]">{order.total} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
-                                                             <span className="text-[9px] px-2 py-0.5 bg-white/5 rounded-full text-zinc-400 font-bold uppercase tracking-widest">{order.status}</span>
+                                                             <span className="text-[9px] px-2 py-0.5 bg-white/5 rounded-full text-muted-foreground font-bold uppercase tracking-widest">{order.status}</span>
                                                          </div>
                                                          <div className="text-end hidden sm:block">
                                                              <p className="font-black text-[#0066FF]">{order.total} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
-                                                             <span className="text-[9px] px-2 py-0.5 bg-white/5 rounded-full text-zinc-400 font-bold uppercase tracking-widest">{order.status}</span>
+                                                             <span className="text-[9px] px-2 py-0.5 bg-white/5 rounded-full text-muted-foreground font-bold uppercase tracking-widest">{order.status}</span>
                                                          </div>
                                                          <button 
                                                              onClick={(e) => {
@@ -992,7 +992,7 @@ export function ProfileDashboardClient({
                                                             </p>
                                                         )}
                                                         <div className="flex items-center gap-2">
-                                                            <p className="text-zinc-500 text-sm">
+                                                            <p className="text-muted-foreground text-sm">
                                                                 {lang === 'ar' ? `ينتهي في: ${new Date(sub.endDate).toLocaleDateString('ar-EG')}` : `Expires: ${new Date(sub.endDate).toLocaleDateString()}`}
                                                             </p>
                                                             <div className={`w-1 h-1 rounded-full ${sub.status === 'ACTIVE' ? 'bg-emerald-500 animate-pulse' : 'bg-red-500'}`} />
@@ -1017,7 +1017,7 @@ export function ProfileDashboardClient({
                                         <h3 className="text-white font-bold text-lg mb-2">
                                             {lang === 'ar' ? 'لا توجد خطط مفعلة' : 'No Active Plans'}
                                         </h3>
-                                        <p className="text-zinc-500 text-sm max-w-sm mx-auto">
+                                        <p className="text-muted-foreground text-sm max-w-sm mx-auto">
                                             {lang === 'ar' ? 'سيقوم المسئول بإضافة خطط مخصصة لشركتك بعد الاتفاق على تفاصيل التعاقد.' : 'Admin will add custom plans for your company after agreement on contract terms.'}
                                         </p>
                                     </div>
@@ -1027,7 +1027,7 @@ export function ProfileDashboardClient({
 
                         {/* 1.1 Contracts Tab (Managed IT Requests) */}
                         {activeTab === "contracts" && isCompany && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 relative overflow-hidden h-full">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 relative overflow-hidden h-full">
                                 <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
                                     <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-[#0066FF] shrink-0" />
                                     {lang === 'ar' ? 'طلبات Managed IT' : 'Managed IT Requests'}
@@ -1036,7 +1036,7 @@ export function ProfileDashboardClient({
                                 {managedRequests.length > 0 ? (
                                     <div className="grid gap-4">
                                         {managedRequests.map((req: any) => (
-                                            <div key={req.id} className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900 border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+                                            <div key={req.id} className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900 border border-border flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
                                                 <div className="flex items-center gap-4">
                                                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
                                                         req.status === 'ACCEPTED' ? 'bg-green-500/10 text-green-500' :
@@ -1047,7 +1047,7 @@ export function ProfileDashboardClient({
                                                     </div>
                                                     <div>
                                                         <h4 className="font-bold text-lg">{req.model} Support</h4>
-                                                        <p className="text-zinc-500 text-sm">
+                                                        <p className="text-muted-foreground text-sm">
                                                             {lang === 'ar' ? `تاريخ الطلب: ${new Date(req.createdAt).toLocaleDateString('ar-EG')}` : `Date: ${new Date(req.createdAt).toLocaleDateString()}`}
                                                         </p>
                                                     </div>
@@ -1073,10 +1073,10 @@ export function ProfileDashboardClient({
                                         <h3 className="text-white font-bold text-lg mb-2">
                                             {lang === 'ar' ? 'لا يوجد طلبات تعاقد نشطة' : 'No Active Contract Requests'}
                                         </h3>
-                                        <p className="text-zinc-500 text-sm max-w-sm mx-auto">
+                                        <p className="text-muted-foreground text-sm max-w-sm mx-auto">
                                             {lang === 'ar' ? 'الطلبات التي ترسلها من صفحة خدمات Managed IT ستظهر هنا لمتابعة حالتها.' : 'Requests you send from the Managed IT services page will appear here to track their status.'}
                                         </p>
-                                        <Link href="/services/managed-it" className="mt-6 inline-block px-6 py-2.5 rounded-full bg-[#0066FF] text-white text-sm font-bold shadow-lg shadow-blue-500/25 transition-transform hover:scale-105">
+                                        <Link href="/services/managed-it" className="mt-6 inline-block px-6 py-2.5 rounded-full bg-[#0066FF] text-foreground text-sm font-bold shadow-lg shadow-blue-500/25 transition-transform hover:scale-105">
                                             {lang === 'ar' ? 'إرسال طلب جديد' : 'Send New Request'}
                                         </Link>
                                     </div>
@@ -1086,7 +1086,7 @@ export function ProfileDashboardClient({
 
                         {/* 2. Orders Tab */}
                         {activeTab === "orders" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full">
                                 <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
                                     <ShoppingBag className="w-5 h-5 md:w-6 md:h-6 text-[#0066FF] shrink-0" />
                                     {lang === 'ar' ? (isCompany ? 'مشتريات الشركة من المتجر' : 'طلباتي السابقة') : (isCompany ? 'Company Store Orders' : 'Order History')}
@@ -1109,7 +1109,7 @@ export function ProfileDashboardClient({
                                                 key={order.id}
                                                 initial={{ opacity: 0, x: 20 }}
                                                 animate={{ opacity: 1, x: 0 }}
-                                                className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/5 border border-white/5 hover:border-[#0066FF]/30 transition-all cursor-pointer group flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+                                                className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/5 border border-border hover:border-[#0066FF]/30 transition-all cursor-pointer group flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
                                             >
                                                 <div className="flex min-w-0 items-center gap-3 sm:gap-6">
                                                     {/* Product Images */}
@@ -1120,7 +1120,7 @@ export function ProfileDashboardClient({
                                                             </div>
                                                         ))}
                                                         {order.items.length > 3 && (
-                                                            <div className="w-12 h-12 rounded-2xl border-2 border-zinc-950 bg-zinc-800 flex items-center justify-center text-[10px] text-white font-black">
+                                                            <div className="w-12 h-12 rounded-2xl border-2 border-zinc-950 bg-muted flex items-center justify-center text-[10px] text-foreground font-black">
                                                                 +{order.items.length - 3}
                                                             </div>
                                                         )}
@@ -1128,8 +1128,8 @@ export function ProfileDashboardClient({
 
                                                     {/* Order Info */}
                                                     <div>
-                                                         <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-black mb-0.5">#{order.orderNumber || order.id.slice(-6).toUpperCase()}</p>
-                                                         <p className="font-bold text-white text-sm">{new Date(order.createdAt).toLocaleDateString()}</p>
+                                                         <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-black mb-0.5">#{order.orderNumber || order.id.slice(-6).toUpperCase()}</p>
+                                                         <p className="font-bold text-foreground text-sm">{new Date(order.createdAt).toLocaleDateString()}</p>
                                                      </div>
                                                 </div>
 
@@ -1154,7 +1154,7 @@ export function ProfileDashboardClient({
                                                             goToTab("track");
                                                             handleTrackOrder(undefined, order.id);
                                                         }}
-                                                        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0066FF] text-white text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(0,102,255,0.2)]"
+                                                        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0066FF] text-foreground text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(0,102,255,0.2)]"
                                                     >
                                                         <Clock className="w-3.5 h-3.5" />
                                                         {lang === 'ar' ? 'تتبع' : 'Track'}
@@ -1169,7 +1169,7 @@ export function ProfileDashboardClient({
 
                         {/* 3. Messages Tab */}
                         {activeTab === "messages" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-3 sm:p-6 md:p-10 min-h-0 h-[min(100dvh-8rem,850px)] max-h-[min(100dvh-8rem,850px)] md:h-[calc(100vh-180px)] md:min-h-[520px] md:max-h-[850px] flex flex-col overflow-hidden min-w-0">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-3 sm:p-6 md:p-10 min-h-0 h-[min(100dvh-8rem,850px)] max-h-[min(100dvh-8rem,850px)] md:h-[calc(100vh-180px)] md:min-h-[520px] md:max-h-[850px] flex flex-col overflow-hidden min-w-0">
                                 {!selectedChat ? (
                                     <>
                                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-8 shrink-0">
@@ -1188,12 +1188,12 @@ export function ProfileDashboardClient({
                                                         setIsClosed(false);
                                                         setCloseReason(null);
                                                     }}
-                                                    className="w-full sm:w-auto justify-center px-4 sm:px-5 py-2.5 sm:py-2 rounded-full bg-[#0066FF] hover:bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest transition-all hover:scale-[1.02] sm:hover:scale-105 flex items-center gap-2 shadow-[0_0_20px_rgba(0,102,255,0.2)]"
+                                                    className="w-full sm:w-auto justify-center px-4 sm:px-5 py-2.5 sm:py-2 rounded-full bg-[#0066FF] hover:bg-blue-600 text-foreground text-[10px] font-black uppercase tracking-widest transition-all hover:scale-[1.02] sm:hover:scale-105 flex items-center gap-2 shadow-[0_0_20px_rgba(0,102,255,0.2)]"
                                                 >
                                                     <Plus className="w-3.5 h-3.5" />
                                                     {lang === 'ar' ? 'محادثة جديدة' : 'New Chat'}
                                                 </button>
-                                                <span className="text-[10px] uppercase tracking-widest text-zinc-500 font-black hidden sm:inline">{conversations.length} {lang === 'ar' ? 'محادثة' : 'Conversations'}</span>
+                                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-black hidden sm:inline">{conversations.length} {lang === 'ar' ? 'محادثة' : 'Conversations'}</span>
                                             </div>
                                         </div>
                                         
@@ -1207,7 +1207,7 @@ export function ProfileDashboardClient({
                                                     <h3 className="text-white font-bold text-xl mb-2">
                                                         {lang === 'ar' ? 'لا توجد محادثات' : 'No Conversations'}
                                                     </h3>
-                                                    <p className="text-zinc-500 mb-8 max-w-xs mx-auto">
+                                                    <p className="text-muted-foreground mb-8 max-w-xs mx-auto">
                                                         {lang === 'ar' ? 'ابدأ محادثة جديدة مع فريق الدعم للإجابة على استفساراتك.' : 'Start a new conversation with our support team to answer your inquiries.'}
                                                     </p>
                                                     <button 
@@ -1218,7 +1218,7 @@ export function ProfileDashboardClient({
                                                             setIsClosed(false);
                                                             setCloseReason(null);
                                                         }}
-                                                        className="px-8 py-3 rounded-full bg-[#0066FF] text-white font-bold hover:scale-105 transition-transform inline-flex items-center gap-2 shadow-lg shadow-blue-500/20"
+                                                        className="px-8 py-3 rounded-full bg-[#0066FF] text-foreground font-bold hover:scale-105 transition-transform inline-flex items-center gap-2 shadow-lg shadow-blue-500/20"
                                                     >
                                                         <Plus className="w-5 h-5" />
                                                         {lang === 'ar' ? 'ابدأ محادثة الآن' : 'Start Chat Now'}
@@ -1233,9 +1233,9 @@ export function ProfileDashboardClient({
                                                             setSelectedChat("admin");
                                                             fetchMessages(conv.id);
                                                         }}
-                                                        className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white/5 border border-white/5 hover:border-[#0066FF]/30 transition-all cursor-pointer group flex items-center gap-4 sm:gap-6 min-w-0"
+                                                        className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white/5 border border-border hover:border-[#0066FF]/30 transition-all cursor-pointer group flex items-center gap-4 sm:gap-6 min-w-0"
                                                     >
-                                                        <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center transition-all duration-500 ${conv.status === 'CLOSED' ? 'bg-zinc-800 text-zinc-500' : 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/20 group-hover:bg-[#0066FF] group-hover:text-white'}`}>
+                                                        <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center transition-all duration-500 ${conv.status === 'CLOSED' ? 'bg-muted text-zinc-500' : 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/20 group-hover:bg-[#0066FF] group-hover:text-white'}`}>
                                                             {conv.status === 'CLOSED' ? <CheckCheck className="w-7 h-7" /> : <ShieldCheck className="w-7 h-7" />}
                                                         </div>
                                                         <div className="flex-1 text-start overflow-hidden">
@@ -1244,12 +1244,12 @@ export function ProfileDashboardClient({
                                                                     {lang === 'ar' ? 'تذكرة دعم' : 'Support Ticket'} 
                                                                     <span className="ml-2 text-xs font-black text-[#0066FF]/60">{conv.ticketId}</span>
                                                                 </h3>
-                                                                <span className="text-[11px] text-zinc-500 font-bold uppercase tracking-widest">
+                                                                <span className="text-[11px] text-muted-foreground font-bold uppercase tracking-widest">
                                                                     {new Date(conv.updatedAt || conv.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US', { month: 'short', day: 'numeric' })}
                                                                 </span>
                                                             </div>
                                                             <div className="flex items-center justify-between">
-                                                                <p className="text-sm text-zinc-400 truncate flex-1 pr-4">
+                                                                <p className="text-sm text-muted-foreground truncate flex-1 pr-4">
                                                                     {conv.messages?.[0]?.content || (lang === 'ar' ? 'لا توجد رسائل بعد' : 'No messages yet')}
                                                                 </p>
                                                                 {conv.status === 'CLOSED' && (
@@ -1268,7 +1268,7 @@ export function ProfileDashboardClient({
                                     <>
                                         {/* Chat Header */}
                                         <div className="flex items-center gap-4 mb-6 shrink-0 border-b border-white/5 pb-4">
-                                            <button onClick={() => setSelectedChat(null)} className="p-2 bg-zinc-900 hover:bg-[#0066FF]/20 hover:text-[#0066FF] rounded-full text-zinc-400 transition-colors">
+                                            <button onClick={() => setSelectedChat(null)} className="p-2 bg-zinc-900 hover:bg-[#0066FF]/20 hover:text-[#0066FF] rounded-full text-muted-foreground transition-colors">
                                                 <ArrowLeft className={`w-4 h-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
                                             </button>
                                             <div className="flex items-center gap-3">
@@ -1302,7 +1302,7 @@ export function ProfileDashboardClient({
                                                         Boolean(uid) &&
                                                         String(msg.senderId ?? "") === uid
                                                     return (
-                                                        <div key={msg.id || i} className={`max-w-[70%] rounded-2xl p-4 shadow-sm ${isMine ? 'bg-[#0066FF] text-white self-end rounded-tr-sm shadow-blue-500/10' : 'bg-zinc-900 text-zinc-300 self-start border border-white/5 rounded-tl-sm shadow-black/20'}`}>
+                                                        <div key={msg.id || i} className={`max-w-[70%] rounded-2xl p-4 shadow-sm ${isMine ? 'bg-[#0066FF] text-foreground self-end rounded-tr-sm shadow-blue-500/10' : 'bg-secondary text-foreground/80 self-start border border-border rounded-tl-sm shadow-black/20'}`}>
                                                             <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                                                             <span className="text-[10px] opacity-60 mt-2 block w-full text-end">
                                                                 {new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
@@ -1315,14 +1315,14 @@ export function ProfileDashboardClient({
                                         </div>
                                         
                                         {isClosed ? (
-                                            <div className="max-w-4xl w-full mx-auto p-8 rounded-3xl bg-zinc-900/50 border border-[#0066FF]/20 text-center space-y-4">
+                                            <div className="max-w-4xl w-full mx-auto p-8 rounded-3xl bg-secondary/50 border border-[#0066FF]/20 text-center space-y-4">
                                                 <div className="w-16 h-16 rounded-full bg-[#0066FF]/10 text-[#0066FF] flex items-center justify-center mx-auto">
                                                     <CheckCheck className="w-8 h-8" />
                                                 </div>
                                                 <h3 className="text-white font-bold text-lg">
                                                     {lang === 'ar' ? 'تم إغلاق المحادثة' : 'Conversation Closed'}
                                                 </h3>
-                                                <p className="text-zinc-500 text-sm max-w-md mx-auto">
+                                                <p className="text-muted-foreground text-sm max-w-md mx-auto">
                                                     {lang === 'ar' 
                                                         ? `سبب الإغلاق: ${closeReason === 'resolved' ? 'تم حل المشكلة' : (closeReason === 'phone' ? 'سنتواصل بك هاتفياً' : (closeReason === 'followup' ? 'متابعة لاحقة' : 'أخرى'))}`
                                                         : `Reason: ${closeReason === 'resolved' ? 'Issue Resolved' : (closeReason === 'phone' ? 'Phone Follow-up' : (closeReason === 'followup' ? 'Scheduled Follow-up' : 'Other'))}`}
@@ -1335,7 +1335,7 @@ export function ProfileDashboardClient({
                                                         setIsClosed(false);
                                                         setCloseReason(null);
                                                     }}
-                                                    className="px-8 py-3 rounded-full bg-[#0066FF] text-white font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
+                                                    className="px-8 py-3 rounded-full bg-[#0066FF] text-foreground font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
                                                 >
                                                     {lang === 'ar' ? 'فتح تذكرة جديدة' : 'Open New Ticket'}
                                                 </button>
@@ -1349,9 +1349,9 @@ export function ProfileDashboardClient({
                                                         required
                                                         value={newMessage}
                                                         onChange={(e)=>setNewMessage(e.target.value)}
-                                                        className={`w-full bg-zinc-900 border border-white/10 rounded-full py-4 ${lang === 'ar' ? 'pr-6 pl-14' : 'pl-6 pr-14'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-600 shadow-xl`}
+                                                        className={`w-full bg-zinc-900 border border-border rounded-full py-4 ${lang === 'ar' ? 'pr-6 pl-14' : 'pl-6 pr-14'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground shadow-xl`}
                                                     />
-                                                    <button type="submit" disabled={isSending} className={`absolute top-2 ${lang === 'ar' ? 'left-2' : 'right-2'} w-10 h-10 rounded-full bg-[#0066FF] hover:bg-blue-600 flex items-center justify-center text-white transition-colors disabled:opacity-50`}>
+                                                    <button type="submit" disabled={isSending} className={`absolute top-2 ${lang === 'ar' ? 'left-2' : 'right-2'} w-10 h-10 rounded-full bg-[#0066FF] hover:bg-blue-600 flex items-center justify-center text-foreground transition-colors disabled:opacity-50`}>
                                                         {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className={`w-4 h-4 ${lang === 'ar' ? 'rotate-180' : ''} ml-1`} />}
                                                     </button>
                                                 </form>
@@ -1364,7 +1364,7 @@ export function ProfileDashboardClient({
 
                         {/* 4. Track Order Tab */}
                         {activeTab === "track" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
                                 <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
                                     <div className="p-2 rounded-xl bg-[#0066FF]/10 shrink-0">
                                         <Clock className="w-5 h-5 md:w-6 md:h-6 text-[#0066FF]" />
@@ -1373,7 +1373,7 @@ export function ProfileDashboardClient({
                                 </h2>
 
                                 <div>
-                                    <p className="text-sm text-zinc-500 mb-4 md:mb-6">
+                                    <p className="text-sm text-muted-foreground mb-4 md:mb-6">
                                         {lang === 'ar' ? 'أدخل رقم الطلب الخاص بك لمتابعة حالة الشحن والتوصيل بشكل مباشر.' : 'Enter your order ID to track shipping and delivery status in real-time.'}
                                     </p>
                                     
@@ -1389,13 +1389,13 @@ export function ProfileDashboardClient({
                                                     if (!val) setTrackResult(null);
                                                 }}
                                                 placeholder={lang === 'ar' ? 'رقم الطلب (Order ID)' : 'Order ID'}
-                                                className={`w-full bg-zinc-900 border border-white/5 rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12' : 'pl-12'} px-4 text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                                className={`w-full bg-zinc-900 border border-border rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12' : 'pl-12'} px-4 text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                             />
                                         </div>
                                         <button 
                                             type="submit" 
                                             disabled={isTracking}
-                                            className="w-full sm:w-auto shrink-0 px-6 sm:px-8 py-3.5 rounded-2xl bg-[#0066FF] hover:bg-blue-600 text-white font-bold transition-all disabled:opacity-50 hover:scale-[1.02]"
+                                            className="w-full sm:w-auto shrink-0 px-6 sm:px-8 py-3.5 rounded-2xl bg-[#0066FF] hover:bg-blue-600 text-foreground font-bold transition-all disabled:opacity-50 hover:scale-[1.02]"
                                         >
                                             {isTracking ? <Loader2 className="w-5 h-5 animate-spin"/> : (lang === 'ar' ? 'بحث' : 'Track')}
                                         </button>
@@ -1406,13 +1406,13 @@ export function ProfileDashboardClient({
                                             <motion.div 
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
-                                                className="bg-white/2 border border-white/5 rounded-2xl md:rounded-4xl p-5 md:p-10 overflow-hidden relative"
+                                                className="bg-white/2 border border-border rounded-2xl md:rounded-4xl p-5 md:p-10 overflow-hidden relative"
                                             >
                                                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mb-6 md:mb-12 relative z-10">
                                                     <div>
                                                         <span className="text-[10px] uppercase tracking-[0.2em] text-[#0066FF] font-black mb-1 block">Status Found</span>
                                                         <h3 className="text-2xl font-black text-white">Order #{trackResult.id.slice(-6)}</h3>
-                                                        <p className="text-zinc-500 text-xs mt-1">{new Date(trackResult.createdAt).toLocaleDateString()} at {new Date(trackResult.createdAt).toLocaleTimeString()}</p>
+                                                        <p className="text-muted-foreground text-xs mt-1">{new Date(trackResult.createdAt).toLocaleDateString()} at {new Date(trackResult.createdAt).toLocaleTimeString()}</p>
                                                     </div>
                                                     <div className="px-5 py-2 rounded-full bg-[#0066FF]/10 border border-[#0066FF]/20 text-[#0066FF] font-black text-xs uppercase tracking-widest">
                                                         {trackResult.status}
@@ -1421,7 +1421,7 @@ export function ProfileDashboardClient({
 
                                                 {/* Tracking Progress Bar */}
                                                 <div className="relative pt-6 pb-8 md:pt-8 md:pb-12 px-2 md:px-0">
-                                                    <div className="absolute top-[48px] left-0 right-0 h-1 bg-zinc-800 rounded-full overflow-hidden">
+                                                    <div className="absolute top-[48px] left-0 right-0 h-1 bg-muted rounded-full overflow-hidden">
                                                         <motion.div 
                                                             initial={{ width: 0 }}
                                                             animate={{ 
@@ -1450,10 +1450,10 @@ export function ProfileDashboardClient({
 
                                                             return (
                                                                 <div key={step.id} className="flex flex-col items-center gap-4 flex-1">
-                                                                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 border-2 ${isCompleted ? 'bg-[#0066FF] border-[#0066FF] text-white shadow-[0_0_20px_rgba(0,102,255,0.3)]' : 'bg-black border-zinc-800 text-zinc-600'}`}>
+                                                                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 border-2 ${isCompleted ? 'bg-[#0066FF] border-[#0066FF] text-foreground shadow-[0_0_20px_rgba(0,102,255,0.3)]' : 'bg-black border-zinc-800 text-zinc-600'}`}>
                                                                         <step.icon className={`w-4 h-4 md:w-5 md:h-5 ${isCurrent ? 'animate-pulse' : ''}`} />
                                                                     </div>
-                                                                    <span className={`text-[9px] md:text-[10px] uppercase font-black tracking-widest text-center ${isCompleted ? 'text-white' : 'text-zinc-600'}`}>
+                                                                    <span className={`text-[9px] md:text-[10px] uppercase font-black tracking-widest text-center ${isCompleted ? 'text-foreground' : 'text-zinc-600'}`}>
                                                                         {step.label}
                                                                     </span>
                                                                 </div>
@@ -1462,8 +1462,8 @@ export function ProfileDashboardClient({
                                                     </div>
                                                 </div>
 
-                                                <div className="bg-zinc-900/50 rounded-3xl p-6 border border-white/5">
-                                                    <h4 className="text-xs font-black uppercase text-zinc-500 tracking-widest mb-4">Items Overview</h4>
+                                                <div className="bg-secondary/50 rounded-3xl p-6 border border-border">
+                                                    <h4 className="text-xs font-black uppercase text-muted-foreground tracking-widest mb-4">Items Overview</h4>
                                                     <div className="space-y-3">
                                                         {trackResult.items.map((item: any, i: number) => (
                                                             <div key={i} className="flex justify-between items-center text-sm">
@@ -1486,21 +1486,21 @@ export function ProfileDashboardClient({
 
                         {/* 5. Support Tab */}
                         {activeTab === "support" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full">
                                 <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
                                     <Headset className="w-5 h-5 md:w-6 md:h-6 text-[#0066FF] shrink-0" />
                                     {lang === 'ar' ? 'الدعم الفني للشركات' : 'Corporate Support'}
                                 </h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-                                    <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-4 sm:p-6 text-center hover:bg-[#0066FF]/5 hover:border-[#0066FF]/30 transition-all cursor-pointer">
+                                    <div className="bg-white/5 border border-border rounded-2xl md:rounded-3xl p-4 sm:p-6 text-center hover:bg-[#0066FF]/5 hover:border-[#0066FF]/30 transition-all cursor-pointer">
                                         <Headset className="w-10 h-10 text-[#0066FF] mx-auto mb-4" />
                                         <h3 className="text-white font-bold mb-2">{lang === 'ar' ? 'طلب دعم مخصص' : 'Request Dedicated Support'}</h3>
-                                        <p className="text-zinc-500 text-sm">{lang === 'ar' ? 'افتح تذكرة دعم فني وسيقوم مهندسونا بمتابعة طلبك' : 'Open a technical support ticket and our engineers will follow up'}</p>
+                                        <p className="text-muted-foreground text-sm">{lang === 'ar' ? 'افتح تذكرة دعم فني وسيقوم مهندسونا بمتابعة طلبك' : 'Open a technical support ticket and our engineers will follow up'}</p>
                                     </div>
-                                    <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-4 sm:p-6 text-center hover:bg-[#0066FF]/5 hover:border-[#0066FF]/30 transition-all cursor-pointer" onClick={()=>goToTab("messages")}>
+                                    <div className="bg-white/5 border border-border rounded-2xl md:rounded-3xl p-4 sm:p-6 text-center hover:bg-[#0066FF]/5 hover:border-[#0066FF]/30 transition-all cursor-pointer" onClick={()=>goToTab("messages")}>
                                         <MessageSquare className="w-10 h-10 text-[#0066FF] mx-auto mb-4" />
                                         <h3 className="text-white font-bold mb-2">{lang === 'ar' ? 'تواصل معنا' : 'Chat with Us'}</h3>
-                                        <p className="text-zinc-500 text-sm">{lang === 'ar' ? 'محادثة مباشرة مع فريق دعم المنصة' : 'Live chat with our platform support team'}</p>
+                                        <p className="text-muted-foreground text-sm">{lang === 'ar' ? 'محادثة مباشرة مع فريق دعم المنصة' : 'Live chat with our platform support team'}</p>
                                     </div>
                                 </div>
                             </div>
@@ -1508,7 +1508,7 @@ export function ProfileDashboardClient({
 
                         {/* 6. Settings Tab / Change Password */}
                         {activeTab === "settings" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full">
                                 <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
                                     <Key className="w-5 h-5 md:w-6 md:h-6 text-[#0066FF] shrink-0" />
                                     {lang === 'ar' ? 'تغيير كلمة المرور' : 'Change Password'}
@@ -1523,9 +1523,9 @@ export function ProfileDashboardClient({
                                                 required
                                                 value={passwords.current}
                                                 onChange={(e)=>setPasswords({...passwords, current: e.target.value})}
-                                                className={`w-full bg-zinc-900 border border-white/10 rounded-xl py-3 ${lang === 'ar' ? 'pr-4 pl-12' : 'pl-4 pr-12'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                                className={`w-full bg-zinc-900 border border-border rounded-xl py-3 ${lang === 'ar' ? 'pr-4 pl-12' : 'pl-4 pr-12'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                             />
-                                            <button type="button" onClick={()=>setShowPassword({...showPassword, current: !showPassword.current})} className={`absolute top-3 ${lang === 'ar' ? 'left-4' : 'right-4'} text-zinc-500 hover:text-white`}>
+                                            <button type="button" onClick={()=>setShowPassword({...showPassword, current: !showPassword.current})} className={`absolute top-3 ${lang === 'ar' ? 'left-4' : 'right-4'} text-muted-foreground hover:text-white`}>
                                                 {showPassword.current ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
                                             </button>
                                         </div>
@@ -1539,9 +1539,9 @@ export function ProfileDashboardClient({
                                                 required minLength={6}
                                                 value={passwords.new}
                                                 onChange={(e)=>setPasswords({...passwords, new: e.target.value})}
-                                                className={`w-full bg-zinc-900 border border-white/10 rounded-xl py-3 ${lang === 'ar' ? 'pr-4 pl-12' : 'pl-4 pr-12'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                                className={`w-full bg-zinc-900 border border-border rounded-xl py-3 ${lang === 'ar' ? 'pr-4 pl-12' : 'pl-4 pr-12'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                             />
-                                            <button type="button" onClick={()=>setShowPassword({...showPassword, new: !showPassword.new})} className={`absolute top-3 ${lang === 'ar' ? 'left-4' : 'right-4'} text-zinc-500 hover:text-white`}>
+                                            <button type="button" onClick={()=>setShowPassword({...showPassword, new: !showPassword.new})} className={`absolute top-3 ${lang === 'ar' ? 'left-4' : 'right-4'} text-muted-foreground hover:text-white`}>
                                                 {showPassword.new ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
                                             </button>
                                         </div>
@@ -1555,15 +1555,15 @@ export function ProfileDashboardClient({
                                                 required minLength={6}
                                                 value={passwords.confirm}
                                                 onChange={(e)=>setPasswords({...passwords, confirm: e.target.value})}
-                                                className={`w-full bg-zinc-900 border border-white/10 rounded-xl py-3 ${lang === 'ar' ? 'pr-4 pl-12' : 'pl-4 pr-12'} text-white focus:border-[#0066FF] outline-none transition-all placeholder:text-zinc-700`}
+                                                className={`w-full bg-zinc-900 border border-border rounded-xl py-3 ${lang === 'ar' ? 'pr-4 pl-12' : 'pl-4 pr-12'} text-foreground focus:border-[#0066FF] outline-none transition-all placeholder:text-muted-foreground`}
                                             />
-                                            <button type="button" onClick={()=>setShowPassword({...showPassword, confirm: !showPassword.confirm})} className={`absolute top-3 ${lang === 'ar' ? 'left-4' : 'right-4'} text-zinc-500 hover:text-white`}>
+                                            <button type="button" onClick={()=>setShowPassword({...showPassword, confirm: !showPassword.confirm})} className={`absolute top-3 ${lang === 'ar' ? 'left-4' : 'right-4'} text-muted-foreground hover:text-white`}>
                                                 {showPassword.confirm ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
                                             </button>
                                         </div>
                                     </div>
 
-                                    <button disabled={isUpdatingPassword} type="submit" className="w-full mt-6 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#0066FF] hover:bg-blue-600 text-white font-bold transition-all disabled:opacity-50 hover:scale-[1.02]">
+                                    <button disabled={isUpdatingPassword} type="submit" className="w-full mt-6 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#0066FF] hover:bg-blue-600 text-foreground font-bold transition-all disabled:opacity-50 hover:scale-[1.02]">
                                         {isUpdatingPassword ? <Loader2 className="w-5 h-5 animate-spin"/> : (lang === 'ar' ? 'حفظ التغييرات' : 'Save Changes')}
                                     </button>
                                 </form>
@@ -1572,7 +1572,7 @@ export function ProfileDashboardClient({
 
                         {/* 9. Invoices Tab */}
                         {activeTab === "invoices" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
                                 <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
                                     <div className="p-2 rounded-xl bg-[#0066FF]/10 shrink-0">
                                         <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#0066FF]" />
@@ -1589,12 +1589,12 @@ export function ProfileDashboardClient({
                                 ) : (
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                                         {invoices.map((inv) => (
-                                            <div key={inv.id} className="bg-zinc-900/50 border border-white/5 rounded-2xl md:rounded-3xl p-4 sm:p-6 hover:border-[#0066FF]/30 transition-all flex flex-col justify-between">
+                                            <div key={inv.id} className="bg-secondary/50 border border-border rounded-2xl md:rounded-3xl p-4 sm:p-6 hover:border-[#0066FF]/30 transition-all flex flex-col justify-between">
                                                 <div className="flex justify-between items-start mb-4 md:mb-6">
                                                     <div>
                                                         <span className="text-[10px] font-black text-[#0066FF] uppercase tracking-widest block mb-1">Invoice</span>
                                                         <h4 className="text-white font-bold text-lg">#{inv.invoiceNo}</h4>
-                                                        <p className="text-zinc-500 text-xs">{new Date(inv.createdAt).toLocaleDateString()}</p>
+                                                        <p className="text-muted-foreground text-xs">{new Date(inv.createdAt).toLocaleDateString()}</p>
                                                     </div>
                                                     <span className={`px-3 py-1 rounded-full text-[10px] font-black border ${inv.status === 'PAID' ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'}`}>
                                                         {inv.status}
@@ -1602,12 +1602,12 @@ export function ProfileDashboardClient({
                                                 </div>
                                                 <div className="flex items-center justify-between pt-6 border-t border-white/5">
                                                     <div>
-                                                        <p className="text-[10px] text-zinc-500 uppercase font-black tracking-widest">{lang === 'ar' ? 'المبلغ' : 'Amount'}</p>
+                                                        <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">{lang === 'ar' ? 'المبلغ' : 'Amount'}</p>
                                                         <p className="text-xl font-black text-white">{inv.amount} EGP</p>
                                                     </div>
                                                     <button 
                                                         onClick={() => setViewInvoice(inv)}
-                                                        className="px-6 py-2.5 rounded-xl bg-[#0066FF] text-white text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
+                                                        className="px-6 py-2.5 rounded-xl bg-[#0066FF] text-foreground text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
                                                     >
                                                         {lang === 'ar' ? 'عرض الفاتورة' : 'View Invoice'}
                                                     </button>
@@ -1620,7 +1620,7 @@ export function ProfileDashboardClient({
                         )}
                         {/* 7. Favorites Tab */}
                         {activeTab === "favorites" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
                                 <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
                                     <Heart className="w-5 h-5 md:w-6 md:h-6 text-red-500 fill-red-500 shrink-0" />
                                     {lang === 'ar' ? 'المنتجات المفضلة' : 'My Favorites'}
@@ -1630,15 +1630,15 @@ export function ProfileDashboardClient({
                                     <div className="text-center py-12 md:py-20 border border-dashed border-white/5 rounded-2xl md:rounded-3xl bg-white/2">
                                         <Heart className="w-16 h-16 text-zinc-800 mx-auto mb-6" />
                                         <h3 className="text-white font-bold text-xl mb-2">{lang === 'ar' ? 'قائمتك فارغة' : 'Your favorites are empty'}</h3>
-                                        <p className="text-zinc-500 mb-4 md:mb-8">{lang === 'ar' ? 'اضغط على أيقونة القلب في المتجر لإضافة منتجات هنا.' : 'Click the heart icon in the store to add products here.'}</p>
-                                        <Link href="/store" className="px-8 py-3 rounded-full bg-[#0066FF] text-white font-bold hover:scale-105 transition-transform inline-block">
+                                        <p className="text-muted-foreground mb-4 md:mb-8">{lang === 'ar' ? 'اضغط على أيقونة القلب في المتجر لإضافة منتجات هنا.' : 'Click the heart icon in the store to add products here.'}</p>
+                                        <Link href="/store" className="px-8 py-3 rounded-full bg-[#0066FF] text-foreground font-bold hover:scale-105 transition-transform inline-block">
                                             {lang === 'ar' ? 'اكتشف المنتجات' : 'Explore Products'}
                                         </Link>
                                     </div>
                                 ) : (
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                                         {favorites.map((fav: any) => (
-                                            <div key={fav.id} className="group relative bg-[#111111] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/5 hover:border-[#0066FF]/30 transition-all p-4 flex gap-4">
+                                            <div key={fav.id} className="group relative bg-[#111111] rounded-2xl sm:rounded-3xl overflow-hidden border border-border hover:border-[#0066FF]/30 transition-all p-4 flex gap-4">
                                                 <Link href={`/store/${fav.product.id}`} className="w-24 h-24 rounded-2xl overflow-hidden bg-zinc-900 shrink-0">
                                                     {fav.product.image ? (
                                                         <img src={fav.product.image} alt={fav.product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -1656,7 +1656,7 @@ export function ProfileDashboardClient({
                                                         <p className="text-[#0066FF] font-black mt-1">${fav.product.price}</p>
                                                     </div>
                                                     <div className="flex items-center gap-3">
-                                                        <Link href={`/store/${fav.product.id}`} className="text-[10px] text-zinc-500 hover:text-white underline uppercase tracking-widest font-bold">
+                                                        <Link href={`/store/${fav.product.id}`} className="text-[10px] text-muted-foreground hover:text-white underline uppercase tracking-widest font-bold">
                                                             {lang === 'ar' ? 'عرض' : 'View'}
                                                         </Link>
                                                         <button 
@@ -1676,7 +1676,7 @@ export function ProfileDashboardClient({
 
                         {/* 8. Wishlist Tab */}
                         {activeTab === "wishlist" && (
-                            <div className="bg-zinc-950 border border-white/5 rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
+                            <div className="bg-zinc-950 border border-border rounded-xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 min-w-0 h-full overflow-y-auto">
                                 <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
                                     <Bookmark className="w-5 h-5 md:w-6 md:h-6 text-[#0066FF] shrink-0" />
                                     {lang === 'ar' ? 'قائمة الأماني' : 'My Wishlist'}
@@ -1686,15 +1686,15 @@ export function ProfileDashboardClient({
                                     <div className="text-center py-12 md:py-20 border border-dashed border-white/5 rounded-2xl md:rounded-3xl bg-white/2">
                                         <ShoppingBag className="w-16 h-16 text-zinc-800 mx-auto mb-6" />
                                         <h3 className="text-white font-bold text-xl mb-2">{lang === 'ar' ? 'قائمة الأماني فارغة' : 'Your wishlist is empty'}</h3>
-                                        <p className="text-zinc-500 mb-4 md:mb-8">{lang === 'ar' ? 'اضغط على زر الحقيبة الصغير في المنتج لحفظه هنا.' : 'Click the small bag icon in the product to save it here.'}</p>
-                                        <Link href="/store" className="px-8 py-3 rounded-full bg-[#0066FF] text-white font-bold hover:scale-105 transition-transform inline-block">
+                                        <p className="text-muted-foreground mb-4 md:mb-8">{lang === 'ar' ? 'اضغط على زر الحقيبة الصغير في المنتج لحفظه هنا.' : 'Click the small bag icon in the product to save it here.'}</p>
+                                        <Link href="/store" className="px-8 py-3 rounded-full bg-[#0066FF] text-foreground font-bold hover:scale-105 transition-transform inline-block">
                                             {lang === 'ar' ? 'اكتشف المنتجات' : 'Explore Products'}
                                         </Link>
                                     </div>
                                 ) : (
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                                         {wishlist.map((item: any) => (
-                                            <div key={item.id} className="group relative bg-[#111111] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/5 hover:border-[#0066FF]/30 transition-all p-4 flex gap-4">
+                                            <div key={item.id} className="group relative bg-[#111111] rounded-2xl sm:rounded-3xl overflow-hidden border border-border hover:border-[#0066FF]/30 transition-all p-4 flex gap-4">
                                                 <Link href={`/store/${item.product.id}`} className="w-24 h-24 rounded-2xl overflow-hidden bg-zinc-900 shrink-0">
                                                     {item.product.image ? (
                                                         <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -1712,7 +1712,7 @@ export function ProfileDashboardClient({
                                                         <p className="text-[#0066FF] font-black mt-1">${item.product.price}</p>
                                                     </div>
                                                     <div className="flex items-center gap-3">
-                                                        <Link href={`/store/${item.product.id}`} className="text-[10px] text-zinc-500 hover:text-white underline uppercase tracking-widest font-bold">
+                                                        <Link href={`/store/${item.product.id}`} className="text-[10px] text-muted-foreground hover:text-white underline uppercase tracking-widest font-bold">
                                                             {lang === 'ar' ? 'عرض' : 'View'}
                                                         </Link>
                                                         <button 
@@ -1731,8 +1731,8 @@ export function ProfileDashboardClient({
                         )}
 
                         {activeTab === "more" && (
-                            <div className="min-w-0 rounded-xl border border-white/5 bg-zinc-950 p-4 sm:p-8 md:rounded-[2.5rem]">
-                                <h2 className="mb-1.5 flex items-center gap-2 md:gap-3 text-lg font-bold text-white md:text-2xl">
+                            <div className="min-w-0 rounded-xl border border-border bg-card p-4 sm:p-8 md:rounded-[2.5rem]">
+                                <h2 className="mb-1.5 flex items-center gap-2 md:gap-3 text-lg font-bold text-foreground md:text-2xl">
                                     <div className="rounded-lg md:rounded-xl bg-[#0066FF]/10 p-1.5 md:p-2 shrink-0">
                                         <Menu className="h-5 w-5 md:h-6 md:w-6 text-[#0066FF]" />
                                     </div>
@@ -1748,7 +1748,7 @@ export function ProfileDashboardClient({
                                         <>
                                             <Link
                                                 href="/services/managed-it"
-                                                className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                                className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                             >
                                                 <span className="flex items-center gap-3">
                                                     <Building2 className="h-4 w-4 text-[#0066FF]" />
@@ -1761,7 +1761,7 @@ export function ProfileDashboardClient({
                                             <button
                                                 type="button"
                                                 onClick={() => goToTab("subscriptions")}
-                                                className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-start text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                                className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-start text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                             >
                                                 <span className="flex items-center gap-3">
                                                     <Briefcase className="h-4 w-4 text-[#0066FF]" />
@@ -1774,7 +1774,7 @@ export function ProfileDashboardClient({
                                             <button
                                                 type="button"
                                                 onClick={() => goToTab("contracts")}
-                                                className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-start text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                                className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-start text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                             >
                                                 <span className="flex items-center gap-3">
                                                     <ShieldCheck className="h-4 w-4 text-[#0066FF]" />
@@ -1787,7 +1787,7 @@ export function ProfileDashboardClient({
                                             <button
                                                 type="button"
                                                 onClick={() => goToTab("invoices")}
-                                                className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-start text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                                className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-start text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                             >
                                                 <span className="flex items-center gap-3">
                                                     <FileText className="h-4 w-4 text-[#0066FF]" />
@@ -1802,7 +1802,7 @@ export function ProfileDashboardClient({
                                     {!isCompany && (
                                         <Link
                                             href="/store"
-                                            className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                            className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                         >
                                             <span className="flex items-center gap-3">
                                                 <ShoppingBag className="h-4 w-4 text-[#0066FF]" />
@@ -1816,7 +1816,7 @@ export function ProfileDashboardClient({
                                     <button
                                         type="button"
                                         onClick={() => goToTab("track")}
-                                        className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-start text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                        className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-start text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                     >
                                         <span className="flex items-center gap-3">
                                             <Clock className="h-4 w-4 text-[#0066FF]" />
@@ -1829,7 +1829,7 @@ export function ProfileDashboardClient({
                                     <button
                                         type="button"
                                         onClick={() => goToTab("favorites")}
-                                        className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-start text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                        className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-start text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                     >
                                         <span className="flex items-center gap-3">
                                             <Heart className="h-4 w-4 text-[#0066FF]" />
@@ -1842,7 +1842,7 @@ export function ProfileDashboardClient({
                                     <button
                                         type="button"
                                         onClick={() => goToTab("wishlist")}
-                                        className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-start text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                        className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-start text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                     >
                                         <span className="flex items-center gap-3">
                                             <Bookmark className="h-4 w-4 text-[#0066FF]" />
@@ -1855,7 +1855,7 @@ export function ProfileDashboardClient({
                                     <button
                                         type="button"
                                         onClick={() => goToTab("settings")}
-                                        className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-start text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                        className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-start text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                     >
                                         <span className="flex items-center gap-3">
                                             <Key className="h-4 w-4 text-[#0066FF]" />
@@ -1868,7 +1868,7 @@ export function ProfileDashboardClient({
                                     <button
                                         type="button"
                                         onClick={() => goToTab("support")}
-                                        className="flex w-full items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-start text-sm font-medium text-zinc-300 transition-colors hover:border-[#0066FF]/30 hover:text-white"
+                                        className="flex w-full items-center justify-between rounded-xl border border-border bg-white/5 px-4 py-3 text-start text-sm font-medium text-foreground/80 transition-colors hover:border-[#0066FF]/30 hover:text-white"
                                     >
                                         <span className="flex items-center gap-3">
                                             <Headset className="h-4 w-4 text-[#0066FF]" />
@@ -1913,17 +1913,17 @@ export function ProfileDashboardClient({
                             initial={{ opacity: 0, scale: 0.9, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 30 }}
-                            className="w-full max-w-2xl bg-zinc-950 border border-white/10 rounded-[3.5rem] p-8 md:p-14 relative z-10 overflow-y-auto max-h-[90vh] shadow-[0_0_150px_rgba(0,102,255,0.2)] scrollbar-hide"
+                            className="w-full max-w-2xl bg-card border border-border rounded-[3.5rem] p-8 md:p-14 relative z-10 overflow-y-auto max-h-[90vh] shadow-[0_0_150px_rgba(0,102,255,0.2)] scrollbar-hide"
                         >
                             <div className="text-center mb-12">
                                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-[#0066FF]/10 text-[#0066FF] mb-6 relative">
                                     <div className="absolute inset-0 bg-[#0066FF]/20 rounded-3xl blur-2xl animate-pulse" />
                                     <Building2 className="w-10 h-10 relative z-10" />
                                 </div>
-                                <h1 className="text-3xl font-black text-white mb-3">
+                                <h1 className="text-3xl font-black text-foreground mb-3">
                                     {lang === 'ar' ? 'بيانات المؤسسة' : 'Company Details'}
                                 </h1>
-                                <p className="text-zinc-500 text-sm leading-relaxed max-w-sm mx-auto">
+                                <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mx-auto">
                                     {lang === 'ar' ? 'يرجى إكمال الحقول التالية لتفعيل جميع ميزات حسابك ومتابعة طلباتك بكفاءة.' : 'Please fill missing fields to activate all features and track requests efficiently.'}
                                 </p>
                             </div>
@@ -1932,15 +1932,15 @@ export function ProfileDashboardClient({
                                 <div className="grid md:grid-cols-2 gap-6">
                                     {/* Company Name - ReadOnly */}
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-2">{lang === 'ar' ? 'اسم الشركة' : 'Company Name'}</label>
-                                        <div className="w-full bg-zinc-900/40 border border-white/5 rounded-2xl py-4 px-6 text-zinc-500 cursor-not-allowed font-medium text-sm">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">{lang === 'ar' ? 'اسم الشركة' : 'Company Name'}</label>
+                                        <div className="w-full bg-zinc-900/40 border border-border rounded-2xl py-4 px-6 text-muted-foreground cursor-not-allowed font-medium text-sm">
                                             {(session?.user as any)?.username || (session?.user as any)?.name}
                                         </div>
                                     </div>
                                     {/* Phone - ReadOnly */}
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-2">{lang === 'ar' ? 'رقم الهاتف' : 'Contact Phone'}</label>
-                                        <div className="w-full bg-zinc-900/40 border border-white/5 rounded-2xl py-4 px-6 text-zinc-500 cursor-not-allowed font-medium text-sm">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">{lang === 'ar' ? 'رقم الهاتف' : 'Contact Phone'}</label>
+                                        <div className="w-full bg-zinc-900/40 border border-border rounded-2xl py-4 px-6 text-muted-foreground cursor-not-allowed font-medium text-sm">
                                             {(session?.user as any)?.phone}
                                         </div>
                                     </div>
@@ -1956,7 +1956,7 @@ export function ProfileDashboardClient({
                                                 type="text"
                                                 required
                                                 placeholder="CEO, IT Manager, etc."
-                                                className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 pl-12 pr-6 text-white focus:border-[#0066FF] font-medium outline-none transition-all placeholder:text-zinc-700 text-sm"
+                                                className="w-full bg-zinc-900 border border-border rounded-2xl py-4 pl-12 pr-6 text-foreground focus:border-[#0066FF] font-medium outline-none transition-all placeholder:text-muted-foreground text-sm"
                                                 value={completionData.position}
                                                 onChange={(e) => setCompletionData({...completionData, position: e.target.value})}
                                             />
@@ -1971,7 +1971,7 @@ export function ProfileDashboardClient({
                                                 type="tel"
                                                 required
                                                 placeholder="+20 123..."
-                                                className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 pl-12 pr-6 text-white focus:border-[#0066FF] font-medium outline-none transition-all placeholder:text-zinc-700 text-sm"
+                                                className="w-full bg-zinc-900 border border-border rounded-2xl py-4 pl-12 pr-6 text-foreground focus:border-[#0066FF] font-medium outline-none transition-all placeholder:text-muted-foreground text-sm"
                                                 value={completionData.whatsapp}
                                                 onChange={(e) => setCompletionData({...completionData, whatsapp: e.target.value})}
                                             />
@@ -1986,7 +1986,7 @@ export function ProfileDashboardClient({
                                         <MapPin className="absolute left-4 top-4 w-5 h-5 text-zinc-600 group-focus-within:text-[#0066FF] transition-colors" />
                                         <select
                                             required
-                                            className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 pl-12 pr-6 text-white focus:border-[#0066FF] font-medium outline-none transition-all appearance-none cursor-pointer text-sm"
+                                            className="w-full bg-zinc-900 border border-border rounded-2xl py-4 pl-12 pr-6 text-foreground focus:border-[#0066FF] font-medium outline-none transition-all appearance-none cursor-pointer text-sm"
                                             value={completionData.governorate}
                                             onChange={(e) => setCompletionData({...completionData, governorate: e.target.value})}
                                         >
@@ -2002,7 +2002,7 @@ export function ProfileDashboardClient({
                                     <button
                                         type="submit"
                                         disabled={isUpdatingProfile}
-                                        className="w-full h-15 rounded-2xl bg-[#0066FF] hover:bg-white hover:text-black text-white font-black text-lg transition-all group shadow-[0_20px_40px_rgba(0,102,255,0.2)] flex items-center justify-center gap-3 disabled:opacity-50"
+                                        className="w-full h-15 rounded-2xl bg-[#0066FF] hover:bg-white hover:text-black text-foreground font-black text-lg transition-all group shadow-[0_20px_40px_rgba(0,102,255,0.2)] flex items-center justify-center gap-3 disabled:opacity-50"
                                     >
                                         {isUpdatingProfile ? <Loader2 className="w-6 h-6 animate-spin" /> : (
                                             <>
@@ -2035,10 +2035,10 @@ export function ProfileDashboardClient({
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
                             onClick={e => e.stopPropagation()}
-                            className="w-full max-w-2xl min-w-0 bg-zinc-950 border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90dvh] flex flex-col"
+                            className="w-full max-w-2xl min-w-0 bg-card border border-border rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90dvh] flex flex-col"
                         >
                             {/* Digital Invoice Layout */}
-                            <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 bg-[#0a0a0a] overflow-y-auto flex-1 invoice-print-area min-w-0">
+                            <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 bg-card overflow-y-auto flex-1 invoice-print-area min-w-0">
                                 <div className="flex flex-col gap-6 sm:flex-row sm:justify-between sm:items-start">
                                     <div>
                                         <div className="mb-8 flex flex-col items-start gap-3">
@@ -2056,12 +2056,12 @@ export function ProfileDashboardClient({
                                         <p className="text-[#0066FF] font-mono text-sm tracking-widest">#{viewInvoice.invoiceNo}</p>
                                     </div>
                                     <div className="text-start sm:text-end space-y-1 sm:mt-4">
-                                        <p className="text-xs text-zinc-500 uppercase font-bold tracking-widest">{lang === 'ar' ? 'تاريخ الإصدار' : 'Issue Date'}</p>
+                                        <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest">{lang === 'ar' ? 'تاريخ الإصدار' : 'Issue Date'}</p>
                                         <p className="text-sm font-medium border-b border-white/5 pb-2 text-white">{new Date(viewInvoice.createdAt).toLocaleDateString()}</p>
                                         
                                         {viewInvoice.dueDate && (
                                             <div className="pt-2">
-                                                <p className="text-xs text-zinc-500 uppercase font-bold tracking-widest mt-4">{lang === 'ar' ? 'تاريخ الاستحقاق' : 'Due Date'}</p>
+                                                <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest mt-4">{lang === 'ar' ? 'تاريخ الاستحقاق' : 'Due Date'}</p>
                                                 <p className="text-sm font-medium text-red-500">{new Date(viewInvoice.dueDate).toLocaleDateString()}</p>
                                             </div>
                                         )}
@@ -2070,19 +2070,19 @@ export function ProfileDashboardClient({
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 py-6 sm:py-8 border-y border-white/5">
                                     <div>
-                                        <p className="text-xs text-zinc-500 uppercase font-bold tracking-widest mb-4">{lang === 'ar' ? 'مقدم من' : 'From'}</p>
+                                        <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest mb-4">{lang === 'ar' ? 'مقدم من' : 'From'}</p>
                                         <p className="font-bold text-lg text-white">Nexit Solutions</p>
-                                        <p className="text-sm text-zinc-400 mt-1">admin@nexitweb.com</p>
+                                        <p className="text-sm text-muted-foreground mt-1">admin@nexitweb.com</p>
                                     </div>
                                     <div className="text-start sm:text-end">
-                                        <p className="text-xs text-zinc-500 uppercase font-bold tracking-widest mb-4">{lang === 'ar' ? 'إلى عميل' : 'Bill To'}</p>
+                                        <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest mb-4">{lang === 'ar' ? 'إلى عميل' : 'Bill To'}</p>
                                         <p className="font-bold text-lg text-white">{(session?.user as any)?.username || session?.user?.name}</p>
-                                        <p className="text-sm text-zinc-400 mt-1">{session?.user?.email}</p>
+                                        <p className="text-sm text-muted-foreground mt-1">{session?.user?.email}</p>
                                     </div>
                                 </div>
 
                                 <div className="space-y-4 min-w-0 overflow-x-auto">
-                                    <div className="flex justify-between items-center bg-zinc-900/50 p-3 sm:p-4 rounded-xl border border-white/5 text-[10px] uppercase font-bold tracking-widest text-zinc-500 min-w-[320px] sm:min-w-0">
+                                    <div className="flex justify-between items-center bg-secondary/50 p-3 sm:p-4 rounded-xl border border-border text-[10px] uppercase font-bold tracking-widest text-muted-foreground min-w-[320px] sm:min-w-0">
                                         <span className="flex-1 text-start">{lang === 'ar' ? 'الوصف' : 'Description'}</span>
                                         <span className="w-20 text-center">{lang === 'ar' ? 'الكمية' : 'Qty'}</span>
                                         <span className="w-24 text-center">{lang === 'ar' ? 'السعر' : 'Price'}</span>
@@ -2091,17 +2091,17 @@ export function ProfileDashboardClient({
                                     <div className="space-y-2">
                                         {viewInvoice.items && Array.isArray(viewInvoice.items) ? (
                                             viewInvoice.items.map((item: any, idx: number) => (
-                                                <div key={idx} className="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
-                                                    <span className="flex-1 font-bold text-sm text-white text-start">{item.description}</span>
+                                                <div key={idx} className="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-border hover:bg-white/10 transition-colors">
+                                                    <span className="flex-1 font-bold text-sm text-foreground text-start">{item.description}</span>
                                                     <span className="w-20 text-center text-sm font-medium text-zinc-400">{item.quantity}</span>
                                                     <span className="w-24 text-center text-sm font-medium text-zinc-400">{item.price}</span>
-                                                    <span className="w-24 text-end font-black text-sm text-white pr-4">{(item.quantity * item.price).toFixed(2)}</span>
+                                                    <span className="w-24 text-end font-black text-sm text-foreground pr-4">{(item.quantity * item.price).toFixed(2)}</span>
                                                 </div>
                                             ))
                                         ) : (
-                                            <div className="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-white/5 text-start">
+                                            <div className="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-border text-start">
                                                 <span className="flex-1 font-bold text-sm text-white">{lang === 'ar' ? 'منتجات / خدمات برمجية' : 'Software Services / Products'}</span>
-                                                <span className="w-24 text-end font-black text-sm text-white pr-4">{Number(viewInvoice.amount).toFixed(2)}</span>
+                                                <span className="w-24 text-end font-black text-sm text-foreground pr-4">{Number(viewInvoice.amount).toFixed(2)}</span>
                                             </div>
                                         )}
                                     </div>
@@ -2112,7 +2112,7 @@ export function ProfileDashboardClient({
                                     <div className="w-full max-w-xs space-y-3 shrink-0">
                                         {viewInvoice.subtotal !== null && viewInvoice.subtotal !== undefined && (
                                             <div className="flex justify-between text-sm">
-                                                <span className="text-zinc-500 font-medium">{lang === 'ar' ? 'المجموع الفرعي:' : 'Subtotal:'}</span>
+                                                <span className="text-muted-foreground font-medium">{lang === 'ar' ? 'المجموع الفرعي:' : 'Subtotal:'}</span>
                                                 <span className="font-bold text-white">{Number(viewInvoice.subtotal).toFixed(2)} EGP</span>
                                             </div>
                                         )}
@@ -2132,7 +2132,7 @@ export function ProfileDashboardClient({
                                         )}
                                         
                                         <div className="pt-4 border-t border-white/10 flex justify-between items-center mt-2">
-                                            <span className="text-xs text-zinc-500 font-bold uppercase tracking-widest">{lang === 'ar' ? 'الإجمالي النهائي' : 'Grand Total'}</span>
+                                            <span className="text-xs text-muted-foreground font-bold uppercase tracking-widest">{lang === 'ar' ? 'الإجمالي النهائي' : 'Grand Total'}</span>
                                             <span className="text-3xl font-black text-[#0066FF]">{Number(viewInvoice.amount).toFixed(2)} EGP</span>
                                         </div>
                                     </div>
@@ -2144,12 +2144,12 @@ export function ProfileDashboardClient({
                                             <FileText className="w-3 h-3" />
                                             {lang === 'ar' ? 'ملاحظات إضافية' : 'Additional Notes'}
                                         </p>
-                                        <p className="text-sm text-zinc-300 italic leading-relaxed whitespace-pre-wrap text-start">"{viewInvoice.notes}"</p>
+                                        <p className="text-sm text-foreground/80 italic leading-relaxed whitespace-pre-wrap text-start">"{viewInvoice.notes}"</p>
                                     </div>
                                 )}
                             </div>
 
-                            <div className="p-6 bg-zinc-900/50 border-t border-white/5 flex justify-between gap-4">
+                            <div className="p-6 bg-secondary/50 border-t border-white/5 flex justify-between gap-4">
                                 <div className="flex items-center gap-3">
                                     <span className={`px-4 py-1.5 rounded-full text-[10px] font-black border ${viewInvoice.status === 'PAID' ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'}`}>
                                         {viewInvoice.status}
@@ -2158,13 +2158,13 @@ export function ProfileDashboardClient({
                                 <div className="flex gap-2">
                                     <button 
                                         onClick={() => setViewInvoice(null)}
-                                        className="px-6 py-2.5 rounded-xl border border-white/10 text-zinc-400 hover:text-white transition-all text-sm font-bold"
+                                        className="px-6 py-2.5 rounded-xl border border-border text-muted-foreground hover:text-white transition-all text-sm font-bold"
                                     >
                                         {lang === 'ar' ? 'إغلاق' : 'Close'}
                                     </button>
                                     <button 
                                         onClick={() => window.print()}
-                                        className="flex items-center gap-2 bg-[#0066FF] text-white px-8 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
+                                        className="flex items-center gap-2 bg-[#0066FF] text-foreground px-8 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
                                     >
                                         <DollarSign className="w-4 h-4" />
                                         {lang === 'ar' ? 'طباعة / تحميل' : 'Print / Download'}

@@ -21,7 +21,7 @@ export function NavDropdown({ title, items }: NavDropdownProps) {
             onMouseEnter={() => setIsOpen(true)}
             onMouseLeave={() => setIsOpen(false)}
         >
-            <button className="px-4 py-2 text-white hover:text-zinc-300 transition-colors flex items-center gap-1.5 text-sm font-medium whitespace-nowrap">
+            <button className="px-4 py-2 text-foreground hover:text-muted-foreground transition-colors flex items-center gap-1.5 text-sm font-medium whitespace-nowrap">
                 {title}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
             </button>
@@ -35,12 +35,12 @@ export function NavDropdown({ title, items }: NavDropdownProps) {
                         transition={{ duration: 0.2, ease: "easeOut" }}
                         className={`absolute top-full pt-4 ${lang === "ar" ? "right-0" : "left-0"}`}
                     >
-                        <div className="bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl overflow-hidden min-w-[200px] flex flex-col p-2">
+                        <div className="bg-popover border border-border rounded-2xl shadow-2xl shadow-foreground/5 overflow-hidden min-w-[200px] flex flex-col p-2">
                             {items.map((item, i) => (
                                 <Link
                                     key={i}
                                     href={item.href}
-                                    className="px-4 py-2.5 text-sm text-zinc-300 hover:text-white hover:bg-white/5 rounded-xl transition-all whitespace-nowrap"
+                                    className="px-4 py-2.5 text-sm text-muted-foreground hover:bg-primary hover:text-primary-foreground rounded-xl transition-all whitespace-nowrap"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {item.label}

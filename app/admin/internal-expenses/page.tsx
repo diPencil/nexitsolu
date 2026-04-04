@@ -191,14 +191,11 @@ export default function InternalExpensesPage() {
     }
 
     return (
-        <div className="space-y-8 max-w-6xl">
+        <div className="space-y-8 w-full max-w-none">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold flex items-center gap-3">
-                        <Wallet className="w-8 h-8 text-[#0066FF]" />
-                        {lang === "ar" ? "مصروفات خاصة" : "Internal expenses"}
-                    </h1>
-                    <p className="text-zinc-500 mt-2 max-w-xl text-sm leading-relaxed">
+                    <h1 className="text-3xl font-bold">{lang === "ar" ? "مصروفات خاصة" : "Internal expenses"}</h1>
+                    <p className="text-muted-foreground mt-2 max-w-xl text-sm leading-relaxed">
                         {lang === "ar"
                             ? "مصروفات تشغيلية أو مشتركة بينكم (مستودع، نقل، …) — سجل مالي منفصل؛ لا تغيّر مخزون المنتجات ولا تستبدل «المشتريات» من الموردين."
                             : "Shared or operational costs (warehouse, transport, etc.). Separate ledger — does not change product stock; not a substitute for Purchases from suppliers."}
@@ -206,7 +203,7 @@ export default function InternalExpensesPage() {
                 </div>
                 <Button
                     onClick={openCreate}
-                    className="bg-[#0066FF] hover:bg-blue-600 rounded-2xl h-12 px-6 gap-2"
+                    className="bg-[#0066FF] hover:bg-blue-600 text-primary-foreground rounded-2xl h-12 px-6 gap-2"
                 >
                     <Plus className="w-5 h-5" />
                     {lang === "ar" ? "مصروف جديد" : "New expense"}
@@ -214,11 +211,11 @@ export default function InternalExpensesPage() {
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-zinc-950 border border-white/5 rounded-2xl p-6">
-                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">
+                <div className="bg-card border border-border rounded-2xl p-6">
+                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
                         {lang === "ar" ? "إجمالي المسجّل" : "Total recorded"}
                     </p>
-                    <p className="text-2xl font-black text-white mt-2">
+                    <p className="text-2xl font-black text-foreground mt-2">
                         {totalRecorded.toLocaleString(
                             lang === "ar" ? "ar-EG" : "en-US",
                             { minimumFractionDigits: 2, maximumFractionDigits: 2 }
@@ -226,8 +223,8 @@ export default function InternalExpensesPage() {
                         EGP
                     </p>
                 </div>
-                <div className="bg-zinc-950 border border-white/5 rounded-2xl p-6">
-                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">
+                <div className="bg-card border border-border rounded-2xl p-6">
+                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
                         {lang === "ar" ? "عدد السجلات" : "Entries"}
                     </p>
                     <p className="text-2xl font-black text-[#0066FF] mt-2">
@@ -236,13 +233,13 @@ export default function InternalExpensesPage() {
                 </div>
             </div>
 
-            <div className="bg-zinc-950 border border-white/5 rounded-2xl overflow-hidden">
+            <div className="bg-card border border-border rounded-2xl overflow-hidden">
                 {isLoading ? (
                     <div className="py-20 flex justify-center">
                         <Loader2 className="w-8 h-8 animate-spin text-[#0066FF]" />
                     </div>
                 ) : rows.length === 0 ? (
-                    <div className="py-16 text-center text-zinc-600 text-sm">
+                    <div className="py-16 text-center text-muted-foreground/60 text-sm">
                         {lang === "ar"
                             ? "لا توجد مصروفات بعد."
                             : "No internal expenses yet."}
@@ -251,7 +248,7 @@ export default function InternalExpensesPage() {
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                             <thead>
-                                <tr className="border-b border-white/5 bg-zinc-900/40 text-[10px] uppercase tracking-wider text-zinc-500">
+                                <tr className="border-b border-border bg-muted/40 text-[10px] uppercase tracking-wider text-muted-foreground">
                                     <th className="text-start px-4 py-3">
                                         {lang === "ar" ? "التاريخ" : "Date"}
                                     </th>
@@ -269,14 +266,14 @@ export default function InternalExpensesPage() {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-border/50">
                                 {rows.map((r, i) => (
                                     <motion.tr
                                         key={r.id}
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         transition={{ delay: i * 0.02 }}
-                                        className="hover:bg-white/2"
+                                        className="hover:bg-accent/30"
                                     >
                                         <td className="px-4 py-3 text-zinc-400 whitespace-nowrap">
                                             {new Date(
@@ -286,16 +283,16 @@ export default function InternalExpensesPage() {
                                             )}
                                         </td>
                                         <td className="px-4 py-3">
-                                            <span className="font-medium text-white">
+                                            <span className="font-medium text-foreground">
                                                 {r.title}
                                             </span>
                                             {r.notes && (
-                                                <p className="text-[11px] text-zinc-500 mt-0.5 line-clamp-1">
+                                                <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-1">
                                                     {r.notes}
                                                 </p>
                                             )}
                                         </td>
-                                        <td className="px-4 py-3 text-zinc-400">
+                                        <td className="px-4 py-3 text-muted-foreground">
                                             {categoryLabel(r.category)}
                                         </td>
                                         <td className="px-4 py-3 text-end font-bold text-emerald-400 whitespace-nowrap">
@@ -306,7 +303,7 @@ export default function InternalExpensesPage() {
                                                 <button
                                                     type="button"
                                                     onClick={() => openEdit(r)}
-                                                    className="p-2 rounded-lg border border-white/10 text-zinc-500 hover:text-white hover:bg-white/5"
+                                                    className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-accent/50"
                                                     title={lang === "ar" ? "تعديل" : "Edit"}
                                                 >
                                                     <Pencil className="w-3.5 h-3.5" />
@@ -314,7 +311,7 @@ export default function InternalExpensesPage() {
                                                 <button
                                                     type="button"
                                                     onClick={() => remove(r.id)}
-                                                    className="p-2 rounded-lg border border-white/10 text-zinc-500 hover:text-red-400 hover:bg-red-500/10"
+                                                    className="p-2 rounded-lg border border-border text-muted-foreground hover:text-red-400 hover:bg-red-500/10"
                                                     title={lang === "ar" ? "حذف" : "Delete"}
                                                 >
                                                     <Trash2 className="w-3.5 h-3.5" />
@@ -330,13 +327,13 @@ export default function InternalExpensesPage() {
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
                     <motion.div
                         initial={{ scale: 0.96, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="w-full max-w-md bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                        className="w-full max-w-md bg-card border border-border rounded-2xl shadow-none overflow-hidden"
                     >
-                        <div className="p-5 border-b border-white/5 flex items-center justify-between">
+                        <div className="p-5 border-b border-border flex items-center justify-between">
                             <h3 className="font-bold flex items-center gap-2">
                                 <Wallet className="w-5 h-5 text-[#0066FF]" />
                                 {editingId
@@ -350,14 +347,14 @@ export default function InternalExpensesPage() {
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className="p-2 rounded-lg hover:bg-white/5"
+                                className="p-2 rounded-lg hover:bg-accent/50"
                             >
                                 <X className="w-4 h-4" />
                             </button>
                         </div>
                         <form onSubmit={submit} className="p-5 space-y-4">
                             <div>
-                                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                                     {lang === "ar" ? "البيان" : "Title"}
                                 </label>
                                 <input
@@ -369,7 +366,7 @@ export default function InternalExpensesPage() {
                                             title: e.target.value,
                                         }))
                                     }
-                                    className="mt-1 w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF]"
+                                    className="mt-1 w-full bg-secondary border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF]"
                                     placeholder={
                                         lang === "ar"
                                             ? "مثال: تأمين الشحن الداخلي"
@@ -379,7 +376,7 @@ export default function InternalExpensesPage() {
                             </div>
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                                         {lang === "ar" ? "المبلغ (EGP)" : "Amount (EGP)"}
                                     </label>
                                     <input
@@ -394,11 +391,11 @@ export default function InternalExpensesPage() {
                                                 amount: e.target.value,
                                             }))
                                         }
-                                        className="mt-1 w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF]"
+                                        className="mt-1 w-full bg-secondary border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF]"
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1">
+                                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-1">
                                         <Calendar className="w-3 h-3" />
                                         {lang === "ar" ? "التاريخ" : "Date"}
                                     </label>
@@ -411,12 +408,12 @@ export default function InternalExpensesPage() {
                                                 spentAt: e.target.value,
                                             }))
                                         }
-                                        className="mt-1 w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF]"
+                                        className="mt-1 w-full bg-secondary border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF]"
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1">
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-1">
                                     <Tag className="w-3 h-3" />
                                     {lang === "ar" ? "التصنيف" : "Category"}
                                 </label>
@@ -428,7 +425,7 @@ export default function InternalExpensesPage() {
                                             category: e.target.value,
                                         }))
                                     }
-                                    className="mt-1 w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF]"
+                                    className="mt-1 w-full bg-secondary border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF]"
                                 >
                                     {CATEGORIES.map((c) => (
                                         <option key={c.value || "none"} value={c.value}>
@@ -438,7 +435,7 @@ export default function InternalExpensesPage() {
                                 </select>
                             </div>
                             <div>
-                                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                                     {lang === "ar" ? "ملاحظات" : "Notes"}
                                 </label>
                                 <textarea
@@ -450,7 +447,7 @@ export default function InternalExpensesPage() {
                                         }))
                                     }
                                     rows={3}
-                                    className="mt-1 w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF] resize-none"
+                                    className="mt-1 w-full bg-secondary border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0066FF] resize-none"
                                 />
                             </div>
                             <Button

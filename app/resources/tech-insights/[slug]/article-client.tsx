@@ -29,7 +29,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
     const isAr = lang === "ar"
 
     return (
-        <main dir={isAr ? "rtl" : "ltr"} className="bg-[#050505] min-h-screen text-white">
+        <main dir={isAr ? "rtl" : "ltr"} className="bg-background min-h-screen text-foreground">
             {/* Article Hero */}
             <div className="pt-24 pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
@@ -39,7 +39,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                             initial={{ opacity: 0, scale: 0.9, x: isAr ? -20 : 20 }}
                             animate={{ opacity: 1, scale: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="relative aspect-video rounded-4xl overflow-hidden border border-white/10 shadow-2xl order-2"
+                            className="relative aspect-video rounded-4xl overflow-hidden border border-border shadow-2xl order-2"
                         >
                             <Image
                                 src={article.image}
@@ -48,7 +48,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                 className="object-cover"
                                 priority
                             />
-                            <div className="absolute inset-0 bg-linear-to-t from-[#050505]/40 via-transparent to-transparent" />
+                            <div className="absolute inset-0 bg-linear-to-t from-background/40 via-transparent to-transparent" />
                         </motion.div>
 
                         {/* Text Content - Order 1 on Mobile, 1 on Desktop */}
@@ -74,9 +74,9 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                     {isAr ? article.title_ar : article.title_en}
                                 </h1>
 
-                                <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-white/5">
+                                <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center">
+                                        <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
                                             <User className="w-5 h-5 text-zinc-400" />
                                         </div>
                                         <div className="flex flex-col">
@@ -112,7 +112,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    className="p-8 rounded-4xl bg-[#0A0A0A] border border-white/5 space-y-6 shadow-2xl relative overflow-hidden group"
+                                    className="p-8 rounded-4xl bg-card border border-border space-y-6 shadow-2xl relative overflow-hidden group"
                                 >
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#0066FF]/5 rounded-full blur-3xl group-hover:bg-[#0066FF]/10 transition-colors" />
                                     <h4 className="text-xl font-bold flex items-center gap-3 relative">
@@ -138,14 +138,14 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.2 }}
-                                    className="p-8 rounded-4xl bg-linear-to-br from-[#0066FF]/10 via-[#0A0A0A] to-[#0A0A0A] border border-[#0066FF]/20 space-y-6 relative overflow-hidden"
+                                    className="p-8 rounded-4xl bg-linear-to-br from-[#0066FF]/10 via-card to-card border border-[#0066FF]/20 space-y-6 relative overflow-hidden"
                                 >
                                     <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#0066FF]/10 rounded-full blur-3xl" />
                                     <h4 className="text-xl font-bold relative">{isAr ? "تحتاج مساعدة تقنية؟" : "Need Expert Advice?"}</h4>
                                     <p className="text-zinc-400 text-sm leading-relaxed relative">
                                         {isAr ? "خبراؤنا جاهزون لمساعدتك في تأمين وتطوير بنيتك التحتية بأحدث التقنيات وتقديم حلول مخصصة لأعمالك." : "Our experts are ready to help you secure and evolve your infrastructure with the latest technologies and custom solutions."}
                                     </p>
-                                    <Link href="/contact" className="relative flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-[#0066FF] text-white font-bold hover:bg-[#0052cc] transition-all shadow-lg shadow-[#0066FF]/25 overflow-hidden group/btn">
+                                    <Link href="/contact" className="relative flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-primary text-primary-foreground font-bold hover:bg-[#0052cc] transition-all shadow-lg shadow-[#0066FF]/25 overflow-hidden group/btn">
                                         <span className="relative z-10">{isAr ? "تواصل معنا اليوم" : "Contact Us Today"}</span>
                                         <ArrowRight className={`w-4 h-4 relative z-10 transition-transform group-hover/btn:translate-x-1 ${isAr ? "rotate-180 group-hover/btn:-translate-x-1" : ""}`} />
                                         <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000" />
@@ -180,7 +180,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                         >
                                             <div className="space-y-4">
                                                 <span className="text-[#0066FF] text-sm font-black uppercase tracking-widest">{isAr ? `القسم ${i + 1}` : `SECTION 0${i + 1}`}</span>
-                                                <h2 className="text-3xl lg:text-4xl font-black text-white group-hover:text-[#0066FF] transition-colors leading-tight">
+                                                <h2 className="text-3xl lg:text-4xl font-black text-foreground group-hover:text-primary transition-colors leading-tight">
                                                     {isAr ? sec.heading_ar : sec.heading_en}
                                                 </h2>
                                             </div>
@@ -193,13 +193,13 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                             </div>
 
                             {/* Share & Footer */}
-                            <div className="mt-24 pt-12 border-t border-white/5 flex flex-wrap items-center justify-between gap-8">
+                            <div className="mt-24 pt-12 border-t border-border flex flex-wrap items-center justify-between gap-8">
                                 <div className="flex items-center gap-6">
                                     <span className="text-zinc-500 font-black uppercase tracking-tighter text-xs">{isAr ? "شارك المعرفة:" : "SHARE KNOWLEDGE:"}</span>
                                     <div className="flex gap-3">
                                         {[Share2, BookOpen].map((Icon, i) => (
-                                            <button key={i} className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center hover:bg-[#0066FF] hover:border-[#0066FF] hover:-translate-y-1 transition-all group">
-                                                <Icon className="w-5 h-5 text-zinc-400 group-hover:text-white" />
+                                            <button key={i} className="w-12 h-12 rounded-xl bg-white/5 border border-border flex items-center justify-center hover:bg-[#0066FF] hover:border-[#0066FF] hover:-translate-y-1 transition-all group">
+                                                <Icon className="w-5 h-5 text-zinc-400 group-hover:text-primary-foreground" />
                                             </button>
                                         ))}
                                     </div>
@@ -209,7 +209,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                     className="flex items-center gap-3 text-[#0066FF] font-black hover:gap-5 transition-all group"
                                 >
                                     <div className={`w-10 h-10 rounded-full border border-[#0066FF]/30 flex items-center justify-center group-hover:bg-[#0066FF] group-hover:border-[#0066FF] transition-all`}>
-                                        {isAr ? <ChevronRight className="w-5 h-5 group-hover:text-white" /> : <ChevronLeft className="w-5 h-5 group-hover:text-white" />}
+                                        {isAr ? <ChevronRight className="w-5 h-5 group-hover:text-primary-foreground" /> : <ChevronLeft className="w-5 h-5 group-hover:text-primary-foreground" />}
                                     </div>
                                     <span className="group-hover:translate-x-1 transition-transform">{isAr ? "استكشف المزيد من الرؤى" : "EXPLORE ALL INSIGHTS"}</span>
                                 </Link>
@@ -220,13 +220,13 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
             </section>
 
             {/* Related Articles */}
-            <section className="pb-32 px-6 border-t border-white/5 pt-32 bg-[#080808]/30">
+            <section className="pb-32 px-6 border-t border-border pt-32 bg-card/30">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center justify-between mb-12">
                         <h3 className="text-3xl md:text-4xl font-black">
                             {isAr ? "مقالات " : "Related "}<span className="text-[#0066FF]">{isAr ? "ذات صلة" : "Insights"}</span>
                         </h3>
-                        <Link href="/resources/tech-insights" className="hidden md:flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
+                        <Link href="/resources/tech-insights" className="hidden md:flex items-center gap-2 text-zinc-400 hover:text-foreground transition-colors">
                             {isAr ? "عرض الكل" : "View All"}
                             {isAr ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                         </Link>
@@ -237,7 +237,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                             <Link
                                 key={i}
                                 href={`/resources/tech-insights/${rel.slug}`}
-                                className="group flex flex-col rounded-4xl bg-[#0A0A0A] border border-white/5 hover:border-[#0066FF]/30 transition-all overflow-hidden"
+                                className="group flex flex-col rounded-4xl bg-card border border-border hover:border-[#0066FF]/30 transition-all overflow-hidden"
                             >
                                 <div className="aspect-video relative overflow-hidden">
                                     <Image
@@ -252,7 +252,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                     <h4 className="text-xl font-bold leading-snug group-hover:text-[#0066FF] transition-colors line-clamp-2">
                                         {isAr ? rel.title_ar : rel.title_en}
                                     </h4>
-                                    <div className="flex items-center gap-2 text-zinc-500 text-xs pt-4 border-t border-white/5">
+                                    <div className="flex items-center gap-2 text-zinc-500 text-xs pt-4 border-t border-border">
                                         <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-2 ${isAr ? "rotate-180" : ""}`} />
                                         {isAr ? "اقرأ المزيد" : "Read More"}
                                     </div>

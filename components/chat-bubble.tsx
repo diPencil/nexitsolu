@@ -167,10 +167,10 @@ export function ChatBubble() {
                         initial={{ opacity: 0, y: 100, scale: 0.8 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 100, scale: 0.8 }}
-                        className="absolute bottom-14 right-0 w-[calc(100vw-2rem)] max-w-[min(100vw-2rem,380px)] sm:max-w-[340px] md:bottom-16 md:max-w-[320px] h-[min(420px,58dvh)] md:h-[min(480px,58dvh)] bg-zinc-950 border border-white/10 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-3xl"
+                        className="absolute bottom-14 right-0 w-[calc(100vw-2rem)] max-w-[min(100vw-2rem,380px)] sm:max-w-[340px] md:bottom-16 md:max-w-[320px] h-[min(420px,58dvh)] md:h-[min(480px,58dvh)] bg-popover border border-border rounded-2xl md:rounded-3xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-3xl"
                     >
                         {/* Header */}
-                        <div className="p-4 sm:p-5 bg-[#0066FF] text-white flex items-center justify-between shrink-0">
+                        <div className="p-4 sm:p-5 bg-[#0066FF] text-primary-foreground flex items-center justify-between shrink-0">
                             <div className="flex items-center gap-3">
                                 {view === 'chat' && selectedConversationId ? (
                                     <button 
@@ -188,10 +188,10 @@ export function ChatBubble() {
                                     </div>
                                 )}
                                 <div>
-                                    <h3 className="text-sm font-bold text-white">
+                                    <h3 className="text-sm font-bold text-primary-foreground">
                                         {view === 'history' ? (lang === 'ar' ? 'سجل المحادثات' : 'History') : (lang === 'ar' ? 'دعم نيكسيت' : 'NexIT Support')}
                                     </h3>
-                                    <p className="text-[10px] text-white/80 uppercase font-black tracking-widest">{lang === 'ar' ? 'متصل الآن' : 'Always Online'}</p>
+                                    <p className="text-[10px] text-primary-foreground/80 uppercase font-black tracking-widest">{lang === 'ar' ? 'متصل الآن' : 'Always Online'}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-1">
@@ -222,15 +222,15 @@ export function ChatBubble() {
                         </div>
 
                         {view === 'history' ? (
-                            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-zinc-950/50">
+                            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-background/50">
                                 {isLoadingConversations ? (
                                     <div className="flex items-center justify-center h-full">
                                         <Loader2 className="w-6 h-6 animate-spin text-[#0066FF]" />
                                     </div>
                                 ) : conversations.length === 0 ? (
                                     <div className="flex flex-col items-center justify-center h-full text-center p-6">
-                                        <Clock className="w-12 h-12 text-zinc-800 mb-4" />
-                                        <p className="text-zinc-500 text-sm">
+                                        <Clock className="w-12 h-12 text-muted-foreground mb-4" />
+                                        <p className="text-muted-foreground text-sm">
                                             {lang === 'ar' ? 'لا يوجد سجل محادثات بعد' : 'No conversation history yet'}
                                         </p>
                                     </div>
@@ -242,7 +242,7 @@ export function ChatBubble() {
                                                 setSelectedConversationId(conv.id)
                                                 setView('chat')
                                             }}
-                                            className="w-full p-4 rounded-3xl bg-zinc-900/50 border border-white/5 hover:bg-zinc-900 transition-all text-left flex items-center justify-between group"
+                                            className="w-full p-4 rounded-3xl bg-secondary border border-border hover:bg-muted transition-all text-left flex items-center justify-between group"
                                         >
                                             <div className="flex-1 min-w-0" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
                                                 <div className="flex items-center gap-2 mb-1">
@@ -255,7 +255,7 @@ export function ChatBubble() {
                                                         {conv.status === 'OPEN' ? (lang === 'ar' ? 'نشط' : 'Active') : (lang === 'ar' ? 'مغلق' : 'Closed')}
                                                     </span>
                                                 </div>
-                                                <p className="text-xs text-zinc-300 truncate font-medium">
+                                                <p className="text-xs text-foreground/80 truncate font-medium">
                                                     {conv.messages?.[0]?.content || (lang === 'ar' ? 'لا توجد رسائل' : 'No messages')}
                                                 </p>
                                                 <p className="text-[8px] text-zinc-600 mt-2 uppercase font-black">
@@ -282,11 +282,11 @@ export function ChatBubble() {
                                         const showNexitSupportLine =
                                             (!isMine && isFromAdmin) || (isMine && isViewerAdmin)
                                         const supportLineColor = isViewerAdmin
-                                            ? "text-white"
+                                            ? "text-foreground"
                                             : "text-[#0066FF]"
                                         return (
                                             <div key={m.id || i} className={`flex flex-col gap-2 w-full ${isMine ? 'items-end' : 'items-start'}`}>
-                                                <div className={`max-w-[85%] p-3 rounded-2xl text-xs sm:text-sm shadow-md whitespace-pre-wrap ${isMine ? 'bg-[#0066FF] text-white rounded-br-none' : 'bg-zinc-800 text-zinc-200 rounded-bl-none border border-white/5'
+                                                <div className={`max-w-[85%] p-3 rounded-2xl text-xs sm:text-sm shadow-md whitespace-pre-wrap ${isMine ? 'bg-[#0066FF] text-primary-foreground rounded-br-none' : 'bg-secondary text-foreground rounded-bl-none border border-border'
                                                     }`}>
                                                     {showNexitSupportLine && (
                                                         <span
@@ -308,14 +308,14 @@ export function ChatBubble() {
 
                                 {/* Input Area */}
                                 {isClosed ? (
-                                    <div className="p-8 border-t border-white/5 bg-zinc-900/80 text-center space-y-3 shrink-0">
+                                    <div className="p-8 border-t border-border bg-muted/50 text-center space-y-3 shrink-0">
                                         <div className="w-12 h-12 rounded-full bg-[#0066FF]/10 text-[#0066FF] flex items-center justify-center mx-auto">
                                             <CheckCheck className="w-6 h-6" />
                                         </div>
-                                        <h4 className="text-white font-bold text-sm">
+                                        <h4 className="text-foreground font-bold text-sm">
                                             {lang === 'ar' ? 'تم إغلاق المحادثة' : 'Conversation Closed'}
                                         </h4>
-                                        <p className="text-[10px] text-zinc-500 uppercase font-black tracking-widest">
+                                        <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">
                                             {lang === 'ar' 
                                                 ? `السبب: ${closeReason === 'resolved' ? 'تم الحل' : (closeReason === 'phone' ? 'تواصل هاتفياً' : (closeReason === 'followup' ? 'متابعة' : 'أخرى'))}`
                                                 : `Reason: ${closeReason === 'resolved' ? 'Resolved' : (closeReason === 'phone' ? 'Phone' : (closeReason === 'followup' ? 'Follow-up' : 'Other'))}`}
@@ -326,23 +326,23 @@ export function ChatBubble() {
                                                 setSelectedConversationId(null);
                                                 setView('chat');
                                             }}
-                                            className="w-full py-3 rounded-2xl bg-[#0066FF] text-white text-xs font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
+                                            className="w-full py-3 rounded-2xl bg-[#0066FF] text-primary-foreground text-xs font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
                                         >
                                             {lang === 'ar' ? 'بدء محادثة جديدة' : 'Start New Conversation'}
                                         </button>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSend} className="p-4 sm:p-5 border-t border-white/5 bg-zinc-900/50 flex gap-2 sm:gap-3 shrink-0">
+                                    <form onSubmit={handleSend} className="p-4 sm:p-5 border-t border-border bg-muted/30 flex gap-2 sm:gap-3 shrink-0">
                                         <input
                                             value={input}
                                             onChange={(e) => setInput(e.target.value)}
                                             placeholder={lang === 'ar' ? 'اكتب رسالتك...' : "Type your message..."}
-                                            className="flex-1 min-h-11 bg-zinc-950 border border-white/5 rounded-xl px-3.5 text-sm text-white focus:border-[#0066FF] outline-none transition-all"
+                                            className="flex-1 min-h-11 bg-background border border-border rounded-xl px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary outline-none transition-all"
                                         />
                                         <button
                                             type="submit"
                                             disabled={isLoading}
-                                            className="h-11 w-11 shrink-0 rounded-xl bg-[#0066FF] text-white flex items-center justify-center hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50"
+                                            className="h-11 w-11 shrink-0 rounded-xl bg-[#0066FF] text-primary-foreground flex items-center justify-center hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50"
                                         >
                                             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                                         </button>
@@ -356,7 +356,7 @@ export function ChatBubble() {
 
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full bg-[#0066FF] text-white shadow-lg shadow-blue-500/25 hover:scale-105 active:scale-95 transition-transform md:h-12 md:w-12"
+                className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full bg-[#0066FF] text-primary-foreground shadow-lg shadow-blue-500/25 hover:scale-105 active:scale-95 transition-transform md:h-12 md:w-12"
                 aria-expanded={isOpen}
                 aria-label={isOpen ? (lang === "ar" ? "إغلاق الدردشة" : "Close chat") : (lang === "ar" ? "فتح الدردشة" : "Open chat")}
             >

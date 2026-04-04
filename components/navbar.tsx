@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import { ShoppingBag } from "lucide-react"
 import { NavDropdown } from "./nav-dropdown"
 import { MobileMenu } from "./mobile-menu"
+import { ThemeToggle } from "./theme-toggle"
 
 import { useLanguage } from "@/lib/i18n-context"
 import { useSession } from "next-auth/react"
@@ -52,22 +53,24 @@ export function Navbar() {
   
   if (pathname?.startsWith('/profile')) {
       return (
-          <nav className="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-3xl border-b border-white/5 h-20 flex items-center px-6">
+          <nav className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-3xl border-b border-border h-20 flex items-center px-6">
               <div className="max-w-[1600px] mx-auto w-full flex justify-between items-center">
                   <Link href="/">
-                      <Image src="/nexitlogo.png" alt="Nexit Logo" width={110} height={26} className="h-6 w-auto object-contain" />
+                      <Image src="/nexit-logo.png" alt="Nexit Logo" width={110} height={26} className="h-6 w-auto object-contain dark:hidden" />
+                      <Image src="/nexitlogo.png" alt="Nexit Logo" width={110} height={26} className="h-6 w-auto object-contain hidden dark:block" />
                   </Link>
                   <div className="flex items-center gap-4">
+                      <ThemeToggle />
                       <button
                         onClick={() => setLang(lang === "en" ? "ar" : "en")}
-                        className="p-2 rounded-full border border-white/10 hover:bg-white/5 transition-colors text-xs font-bold w-10 h-10 flex items-center justify-center shrink-0"
+                        className="p-2 rounded-full border border-border hover:bg-accent text-foreground transition-colors text-xs font-bold w-10 h-10 flex items-center justify-center shrink-0"
                       >
                         {lang === "en" ? "ع" : "EN"}
                       </button>
                       
-                      <Link href="/store" className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-4 py-2.5 rounded-xl border border-white/5">
+                      <Link href="/store" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors bg-accent/50 hover:bg-accent px-4 py-2.5 rounded-xl border border-border">
                           <ShoppingBag className="w-4 h-4" />
-                          <span className="hidden sm:inline">{lang === 'ar' ? 'العودة للمتجر' : 'Back to Store'}</span>
+                          <span className="hidden sm:inline">{t("nav.back_to_store")}</span>
                       </Link>
                   </div>
               </div>
@@ -80,10 +83,11 @@ export function Navbar() {
       className={`fixed left-1/2 -translate-x-1/2 z-50 px-6 w-full max-w-7xl transition-all duration-700 ease-in-out ${isVisible ? "top-8 opacity-100" : "-top-24 opacity-0"
         }`}
     >
-      <div className="bg-black/50 backdrop-blur-[120px] rounded-full px-4 md:px-8 py-3 flex items-center justify-between shadow-lg border border-white/10 w-full shrink-0">
+      <div className="bg-background/50 border-border/80 backdrop-blur-[120px] rounded-full px-4 md:px-8 py-3 flex items-center justify-between shadow-lg border w-full shrink-0">
         <div className="flex items-center shrink-0">
           <Link href="/">
-            <Image src="/nexitlogo.png" alt="Nexit Logo" width={130} height={30} className="h-6 md:h-8 w-auto object-contain brightness-110" />
+            <Image src="/nexit-logo.png" alt="Nexit Logo" width={130} height={30} className="h-6 md:h-8 w-auto object-contain dark:hidden" />
+            <Image src="/nexitlogo.png" alt="Nexit Logo" width={130} height={30} className="h-6 md:h-8 w-auto object-contain brightness-110 hidden dark:block" />
           </Link>
         </div>
 
@@ -91,65 +95,66 @@ export function Navbar() {
           <NavDropdown
             title={t("nav.about")}
             items={[
-              { label: lang === "ar" ? "نيكسيت لاند" : "Nexit Land", href: "/about/nexit-land" },
-              { label: lang === "ar" ? "شركائنا" : "Partners", href: "/about/partners" },
-              { label: lang === "ar" ? "الدعم الفني" : "Tech Support", href: "/about/tech-support" },
-              { label: lang === "ar" ? "فريق العمل" : "Team", href: "/about/team" },
-              { label: lang === "ar" ? "تواصل معنا" : "Contact", href: "/contact" },
+              { label: t("nav.nexit_land"), href: "/about/nexit-land" },
+              { label: t("nav.partners"), href: "/about/partners" },
+              { label: t("nav.tech_support"), href: "/about/tech-support" },
+              { label: t("nav.team"), href: "/about/team" },
+              { label: t("nav.contact"), href: "/contact" },
             ]}
           />
 
           <NavDropdown
             title={t("common.resources")}
             items={[
-              { label: lang === "ar" ? "الصناعات والحلول" : "Industries & Solutions", href: "/resources/industries-solutions" },
-              { label: lang === "ar" ? "البنية التحتية للـ IT" : "IT Infrastructure", href: "/resources/it-infrastructure" },
-              { label: lang === "ar" ? "بنية تحتية متطورة" : "Advanced Infrastructure", href: "/resources/advanced-infrastructure" },
-              { label: lang === "ar" ? "دراسات الحالة" : "Case Studies", href: "/resources/case-studies" },
-              { label: lang === "ar" ? "أبحاث تقنية" : "Tech Insights", href: "/resources/tech-insights" },
+              { label: t("nav.industries_solutions"), href: "/resources/industries-solutions" },
+              { label: t("nav.it_infrastructure"), href: "/resources/it-infrastructure" },
+              { label: t("nav.advanced_infrastructure"), href: "/resources/advanced-infrastructure" },
+              { label: t("nav.case_studies"), href: "/resources/case-studies" },
+              { label: t("nav.tech_insights"), href: "/resources/tech-insights" },
             ]}
           />
 
           <NavDropdown
-            title={lang === "ar" ? "الخدمات" : "Services"}
+            title={t("common.services")}
             items={[
-              { label: lang === "ar" ? "مسرعات الـ IT" : "IT Accelerators", href: "/services/it-accelerators" },
-              { label: lang === "ar" ? "رقميات" : "Digital", href: "/services/digital" },
-              { label: lang === "ar" ? "برمجيات" : "Software", href: "/services/software" },
-              { label: lang === "ar" ? "معدات هاردوير" : "Hardware", href: "/services/hardware" },
-              { label: lang === "ar" ? "استضافة و VPS" : "Hosting & VPS", href: "/services/hosting-vps" },
-              { label: lang === "ar" ? "طلب عرض سعر" : "Request a Quote", href: "/quotation/request" },
+              { label: t("nav.it_accelerators"), href: "/services/it-accelerators" },
+              { label: t("nav.digital"), href: "/services/digital" },
+              { label: t("nav.software"), href: "/services/software" },
+              { label: t("nav.hardware"), href: "/services/hardware" },
+              { label: t("nav.hosting_vps"), href: "/services/hosting-vps" },
+              { label: t("nav.request_quote"), href: "/quotation/request" },
             ]}
           />
 
           <NavDropdown
             title={t("common.tools")}
             items={[
-              { label: lang === "ar" ? "ربط الـ API" : "API Integrations", href: "/tools/api-integrations" },
-              { label: lang === "ar" ? "إضافات وأنظمة" : "CMS Plugins", href: "/tools/cms-plugins" },
-              { label: lang === "ar" ? "بوابات الدفع" : "Payment Gateways", href: "/tools/payment-gateways" },
+              { label: t("nav.api_integrations"), href: "/tools/api-integrations" },
+              { label: t("nav.cms_plugins"), href: "/tools/cms-plugins" },
+              { label: t("nav.payment_gateways"), href: "/tools/payment-gateways" },
             ]}
           />
 
           <Link href="/store" className="px-4 py-2 text-[#0066FF] hover:opacity-80 transition-all text-sm font-bold whitespace-nowrap flex items-center gap-2">
             <ShoppingBag className="w-4 h-4" />
-            {lang === "ar" ? "متجر نكسيت" : "NexIT Store"}
+            {t("nav.nexit_store")}
           </Link>
         </div>
 
         <div className="flex items-center justify-end gap-3 shrink-0">
+          <ThemeToggle />
           <button
             onClick={() => setLang(lang === "en" ? "ar" : "en")}
-            className="hidden md:flex px-4 py-2 rounded-full border border-zinc-700 text-sm font-medium hover:bg-white/10 transition-colors uppercase"
+            className="hidden md:flex px-4 py-2 rounded-full border border-border text-sm font-medium hover:bg-muted transition-colors uppercase"
           >
             {lang === "en" ? "AR" : "EN"}
           </button>
 
           <Link
             href="/services/managed-it"
-            className="hidden sm:flex px-[18px] py-[10px] rounded-full border border-[#0066FF] bg-[#0066FF]/50 text-white text-sm font-medium hover:scale-105 transition-transform duration-500 whitespace-nowrap"
+            className="hidden sm:flex px-[18px] py-[10px] rounded-full border border-[#0066FF] bg-[#0066FF]/50 text-primary-foreground text-sm font-medium hover:scale-105 transition-transform duration-500 whitespace-nowrap"
           >
-            {lang === "ar" ? "تعاقدات الشركات" : "Enterprise Support"}
+            {t("nav.enterprise_support")}
           </Link>
 
           {status === "authenticated" ? (
@@ -162,8 +167,8 @@ export function Navbar() {
                   {lang === 'ar' ? 'لوحة التحكم' : 'Admin'}
                 </Link>
               ) : (
-                <Link href="/profile" className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 border border-white/5 hover:bg-zinc-800 transition-all">
-                  <div className="w-5 h-5 rounded-full bg-[#0066FF] flex items-center justify-center text-[10px] font-bold text-white uppercase">
+                <Link href="/profile" className="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border hover:bg-accent transition-all">
+                  <div className="w-5 h-5 rounded-full bg-[#0066FF] flex items-center justify-center text-[10px] font-bold text-primary-foreground uppercase">
                     {session?.user?.name?.[0]}
                   </div>
                   <span className="text-sm font-medium">{lang === 'ar' ? 'حسابي' : 'Profile'}</span>
@@ -173,9 +178,10 @@ export function Navbar() {
           ) : null}
 
           <div className="flex md:hidden items-center gap-2">
+            <ThemeToggle />
             <button
               onClick={() => setLang(lang === "en" ? "ar" : "en")}
-              className="px-3 py-1.5 rounded-full border border-zinc-700 text-xs font-medium uppercase"
+              className="px-3 py-1.5 rounded-full border border-border text-xs font-medium uppercase"
             >
               {lang === "en" ? "AR" : "EN"}
             </button>

@@ -45,7 +45,7 @@ export function ConfirmDialog({
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.85, opacity: 0, y: 20 }}
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                        className="relative w-full max-w-sm bg-zinc-950 border border-white/10 rounded-3xl shadow-2xl overflow-hidden"
+                        className="relative w-full max-w-sm bg-popover border border-border rounded-3xl shadow-2xl overflow-hidden"
                     >
                         {/* Glow */}
                         <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-40 h-20 blur-[60px] pointer-events-none ${danger ? 'bg-red-500/20' : 'bg-[#0066FF]/20'}`} />
@@ -53,7 +53,7 @@ export function ConfirmDialog({
                         {/* Close X */}
                         <button
                             onClick={onCancel}
-                            className="absolute top-4 right-4 p-1.5 rounded-xl text-zinc-600 hover:text-white hover:bg-white/5 transition-all z-10"
+                            className="absolute top-4 right-4 p-1.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-accent transition-all z-10"
                         >
                             <X className="w-4 h-4" />
                         </button>
@@ -68,22 +68,22 @@ export function ConfirmDialog({
                             </div>
 
                             {/* Title */}
-                            <h2 className="text-xl font-bold text-white mb-2">{title}</h2>
+                            <h2 className="text-xl font-bold text-foreground mb-2">{title}</h2>
 
                             {/* Message */}
-                            <p className="text-sm text-zinc-400 leading-relaxed mb-8">{message}</p>
+                            <p className="text-sm text-muted-foreground leading-relaxed mb-8">{message}</p>
 
                             {/* Buttons */}
                             <div className="grid grid-cols-2 gap-3">
                                 <button
                                     onClick={onCancel}
-                                    className="h-12 rounded-2xl border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 transition-all font-bold text-sm"
+                                    className="h-12 rounded-2xl border border-border text-muted-foreground hover:text-foreground hover:bg-accent transition-all font-bold text-sm"
                                 >
                                     {cancelText}
                                 </button>
                                 <button
                                     onClick={() => { onConfirm(); }}
-                                    className={`h-12 rounded-2xl font-bold text-sm text-white transition-all ${danger
+                                    className={`h-12 rounded-2xl font-bold text-sm text-foreground transition-all ${danger
                                         ? 'bg-red-500 hover:bg-red-400 shadow-[0_0_25px_rgba(239,68,68,0.3)] hover:shadow-[0_0_35px_rgba(239,68,68,0.4)]'
                                         : 'bg-[#0066FF] hover:bg-blue-500 shadow-[0_0_25px_rgba(0,102,255,0.3)]'
                                     }`}

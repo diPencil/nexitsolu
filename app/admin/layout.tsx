@@ -34,6 +34,7 @@ import {
 import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/i18n-context"
 import { motion, AnimatePresence } from "framer-motion"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 interface NavItem {
     name: string
@@ -120,10 +121,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     if (status === "loading") {
         return (
-            <div className="fixed inset-0 bg-[#0a0a0a] flex items-center justify-center z-9999">
+            <div className="fixed inset-0 bg-background flex items-center justify-center z-9999">
                 <div className="flex flex-col items-center gap-4">
-                    <Image src="/nexitlogo.png" alt="Nexit Logo" width={150} height={40} className="w-auto h-8 animate-pulse brightness-110" />
-                    <p className="text-zinc-500 text-sm animate-pulse">{lang === 'ar' ? 'جاري تحميل لوحة التحكم...' : 'Loading admin panel...'}</p>
+                    <Image src="/nexit-logo.png" alt="Nexit Logo" width={150} height={40} className="w-auto h-8 animate-pulse dark:hidden" />
+                    <Image src="/nexitlogo.png" alt="Nexit Logo" width={150} height={40} className="w-auto h-8 animate-pulse brightness-110 hidden dark:block" />
+                    <p className="text-muted-foreground text-sm animate-pulse">{lang === 'ar' ? 'جاري تحميل لوحة التحكم...' : 'Loading admin panel...'}</p>
                 </div>
             </div>
         )
@@ -199,16 +201,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
 
     return (
-        <div className="fixed inset-0 bg-[#0a0a0a] text-white flex z-999" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+        <div className="fixed inset-0 bg-background text-foreground flex z-999 transition-colors duration-300" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
             {/* Sidebar */}
             <aside
-                className={`${isSidebarOpen ? 'w-[260px]' : 'w-0'} border-e border-white/5 bg-[#0d0d0d] overflow-hidden flex flex-col transition-all duration-300 fixed md:relative h-full z-50`}
+                className={`${isSidebarOpen ? 'w-[260px]' : 'w-0'} border-e border-border bg-sidebar overflow-hidden flex flex-col transition-all duration-300 fixed md:relative h-full z-50`}
             >
                 {/* Logo */}
-                <div className="p-5 flex items-center gap-3 border-b border-white/5 shrink-0">
+                <div className="p-5 flex items-center gap-3 border-b border-border shrink-0">
                     <Link href="/admin" className="flex items-center gap-2 mb-1">
-                        <Image src="/nexitlogo.png" alt="Nexit Logo" width={140} height={32} className="h-8 w-auto object-contain brightness-110 shrink-0" />
-                        <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-[0.2em] bg-white/5 px-2 py-0.5 rounded-md border border-white/5 hidden sm:block mt-1">{lang === 'ar' ? 'الأدمن' : 'Admin'}</span>
+                        {/* Light Mode Logo */}
+                        <Image src="/nexit-logo.png" alt="Nexit Logo" width={140} height={32} className="h-8 w-auto object-contain shrink-0 dark:hidden" />
+                        {/* Dark Mode Logo */}
+                        <Image src="/nexitlogo.png" alt="Nexit Logo" width={140} height={32} className="h-8 w-auto object-contain brightness-110 shrink-0 hidden dark:block" />
+                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] bg-accent/10 px-2 py-0.5 rounded-md border border-border hidden sm:block mt-1">{lang === 'ar' ? 'الأدمن' : 'Admin'}</span>
                     </Link>
                 </div>
 
@@ -219,7 +224,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 >
                     {menuGroups.map((group, groupIndex) => (
                         <div key={groupIndex} className="space-y-1">
-                            <p className="px-3 text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em] mb-3">
+                            <p className="px-3 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-3">
                                 {group.title}
                             </p>
                             {group.items.map((item) => {
@@ -229,15 +234,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${isActive
-                                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
-                                            : 'text-zinc-500 hover:text-white hover:bg-white/5'
+                                        className={`group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${isActive
+                                            ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
+                                            : 'text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/15'
                                         }`}
                                     >
-                                        <item.icon className={`w-[18px] h-[18px] shrink-0 ${isActive ? 'text-white' : 'text-zinc-500'}`} />
+                                        <item.icon className={`w-[18px] h-[18px] shrink-0 transition-colors ${isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-primary-foreground'}`} />
                                         <span className="truncate flex-1">{item.name}</span>
                                         {hasCount && (
-                                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${isActive ? 'bg-white/20 text-white' : 'bg-blue-600/10 text-blue-500'} border border-white/5`}>
+                                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md border border-border transition-colors ${isActive ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-primary/10 text-primary group-hover:bg-primary-foreground/20 group-hover:text-primary-foreground'}`}>
                                                 {item.count}
                                             </span>
                                         )}
@@ -249,15 +254,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </nav>
 
                 {/* User + Logout */}
-                <div className="p-3 border-t border-white/5 mt-auto">
+                <div className="p-3 border-t border-border mt-auto">
                     {/* User Info */}
                     <div className="flex items-center gap-3 px-3 py-2 mb-2">
-                        <div className="w-8 h-8 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 overflow-hidden relative">
+                        <div className="w-8 h-8 rounded-full bg-secondary border border-border flex items-center justify-center shrink-0 overflow-hidden relative">
                             <Image src="/favicon.png" alt="Admin" fill className="object-contain p-1" />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-xs font-bold text-white truncate">{session?.user?.name || 'Admin'}</p>
-                            <p className="text-[10px] text-zinc-600 truncate">{session?.user?.email}</p>
+                            <p className="text-xs font-bold text-foreground truncate">{session?.user?.name || 'Admin'}</p>
+                            <p className="text-[10px] text-muted-foreground truncate">{session?.user?.email}</p>
                         </div>
                     </div>
 
@@ -283,18 +288,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* Main Content */}
             <div className="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden" data-lenis-prevent="true">
                 {/* Top Bar */}
-                <header data-admin="true" className="h-14 border-b border-white/5 bg-[#0a0a0a]/90 backdrop-blur-xl sticky top-0 z-30 px-4 md:px-6 flex items-center justify-between shrink-0">
+                <header data-admin="true" className="h-14 border-b border-border bg-background/90 backdrop-blur-xl sticky top-0 z-30 px-4 md:px-6 flex items-center justify-between shrink-0">
                     <div className="flex items-center gap-3">
                         <button
                             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                            className="p-2 rounded-lg border border-white/5 hover:bg-white/5 transition-all"
+                            className="p-2 rounded-lg border border-border hover:bg-accent transition-all text-muted-foreground hover:text-foreground"
                         >
                             {isSidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
                         </button>
                         <div className="hidden sm:flex items-center gap-2 text-sm">
-                            <Link href="/admin" className="text-zinc-500 hover:text-white transition-colors">{lang === 'ar' ? 'الأدمن' : 'Admin'}</Link>
-                            <ChevronRight className={`w-3 h-3 text-zinc-700 ${lang === 'ar' ? 'rotate-180' : ''}`} />
-                            <span className="text-white font-medium">{currentPage}</span>
+                            <Link href="/admin" className="text-muted-foreground hover:text-foreground transition-colors">{lang === 'ar' ? 'الأدمن' : 'Admin'}</Link>
+                            <ChevronRight className={`w-3 h-3 text-muted-foreground/50 ${lang === 'ar' ? 'rotate-180' : ''}`} />
+                            <span className="text-foreground font-medium">{currentPage}</span>
                         </div>
                     </div>
 
@@ -302,12 +307,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         {/* Language Toggle */}
                         <button
                             onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
-                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/5 hover:bg-white/5 transition-all text-xs font-bold text-zinc-400 hover:text-white"
+                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border hover:bg-accent transition-all text-xs font-bold text-muted-foreground hover:text-foreground"
                             title={lang === 'ar' ? 'Switch to English' : 'التبديل للعربية'}
                         >
                             <span className="text-base leading-none">{lang === 'ar' ? '🇬🇧' : '🇪🇬'}</span>
                             <span className="hidden sm:inline">{lang === 'ar' ? 'EN' : 'عربي'}</span>
                         </button>
+
+                        <ThemeToggle />
 
                         {/* Notifications */}
                         <NotificationBell lang={lang} />
@@ -315,7 +322,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         <Link
                             href="/"
                             target="_blank"
-                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/5 hover:bg-white/5 transition-all text-xs text-zinc-500 hover:text-white"
+                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border hover:bg-accent transition-all text-xs text-muted-foreground hover:text-foreground"
                         >
                             <ExternalLink className="w-3 h-3" />
                             <span className="hidden sm:inline">{lang === 'ar' ? 'الموقع' : 'View Site'}</span>
@@ -409,11 +416,11 @@ function NotificationBell({ lang }: { lang: string }) {
         <div className="relative">
             <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-lg border border-white/5 hover:bg-white/5 transition-all relative"
+                className="p-2 rounded-lg border border-border hover:bg-accent transition-all relative text-muted-foreground hover:text-foreground"
             >
-                <Bell className="w-4 h-4 text-zinc-500" />
+                <Bell className="w-4 h-4" />
                 {unreadCount > 0 && (
-                    <div className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#0066FF] border border-[#0a0a0a] text-[9px] flex items-center justify-center font-bold">
+                    <div className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary border-2 border-background text-[9px] text-primary-foreground flex items-center justify-center font-bold">
                         {unreadCount}
                     </div>
                 )}
@@ -427,9 +434,9 @@ function NotificationBell({ lang }: { lang: string }) {
                             initial={{ opacity: 0, y: 10, scale: 0.95 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                            className={`absolute top-full ${lang === 'ar' ? 'left-0' : 'right-0'} mt-2 w-80 bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden`}
+                            className={`absolute top-full ${lang === 'ar' ? 'left-0' : 'right-0'} mt-2 w-80 bg-popover border border-border rounded-2xl shadow-xl shadow-foreground/10 z-50 overflow-hidden`}
                         >
-                            <div className="p-4 border-b border-white/5 flex items-center justify-between">
+                            <div className="p-4 border-b border-border flex items-center justify-between">
                                 <h3 className="font-bold text-sm">{lang === 'ar' ? 'التنبيهات' : 'Notifications'}</h3>
                                 {unreadCount > 0 && (
                                     <button 
@@ -442,7 +449,7 @@ function NotificationBell({ lang }: { lang: string }) {
                             </div>
                             <div className="max-h-80 overflow-y-auto">
                                 {notifications.length === 0 ? (
-                                    <div className="p-8 text-center text-zinc-600 text-xs">
+                                    <div className="p-8 text-center text-muted-foreground text-xs">
                                         {lang === 'ar' ? 'لا توجد تنبيهات' : 'No notifications'}
                                     </div>
                                 ) : (
@@ -456,14 +463,14 @@ function NotificationBell({ lang }: { lang: string }) {
                                             <div 
                                                 key={n.id} 
                                                 onClick={() => handleNotificationClick(n)}
-                                                className={`p-4 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors cursor-pointer ${!n.read ? 'bg-blue-500/5' : ''}`}
+                                                className={`p-4 border-b border-border last:border-0 hover:bg-accent transition-colors cursor-pointer ${!n.read ? 'bg-primary/5' : ''}`}
                                             >
                                                 <div className="flex items-start gap-3">
                                                     <div className={`mt-1 w-2 h-2 rounded-full shrink-0 ${n.type === 'ORDER' ? 'bg-emerald-500' : 'bg-[#0066FF]'}`} />
                                                     <div className="flex-1 min-w-0">
-                                                        <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${!n.read ? 'text-white' : 'text-zinc-500'}`}>{displayTitle}</p>
-                                                        <p className={`text-xs leading-relaxed ${!n.read ? 'text-zinc-200' : 'text-zinc-500'}`}>{displayMsg}</p>
-                                                        <p className="text-[8px] text-zinc-600 mt-2 flex items-center gap-1 uppercase font-bold tracking-tighter">
+                                                        <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${!n.read ? 'text-foreground' : 'text-muted-foreground'}`}>{displayTitle}</p>
+                                                        <p className={`text-xs leading-relaxed ${!n.read ? 'text-foreground/80' : 'text-muted-foreground'}`}>{displayMsg}</p>
+                                                        <p className="text-[8px] text-muted-foreground mt-2 flex items-center gap-1 uppercase font-bold tracking-tighter">
                                                             <Clock className="w-2 h-2" />
                                                             {new Date(n.createdAt).toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-US')}
                                                         </p>

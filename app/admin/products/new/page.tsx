@@ -53,31 +53,31 @@ function ZonePicker({ selected, onChange, allZones }: { selected: string[], onCh
             <button
                 type="button"
                 onClick={() => setOpen(o => !o)}
-                className="w-full bg-zinc-900 border border-white/5 rounded-2xl py-4 px-6 text-start flex items-center justify-between focus:border-[#0066FF] outline-none transition-all"
+                className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 text-start flex items-center justify-between focus:border-[#0066FF] outline-none transition-all"
             >
                 <span className="text-sm">
                     {selected.length === 0
-                        ? <span className="text-zinc-500">{lang === 'ar' ? 'كل المحافظات (شحن لكل مكان)' : 'All Governorates (Ship Everywhere)'}</span>
+                        ? <span className="text-muted-foreground">{lang === 'ar' ? 'كل المحافظات (شحن لكل مكان)' : 'All Governorates (Ship Everywhere)'}</span>
                         : <span className="text-white font-bold">{selected.length} {lang === 'ar' ? 'محافظة محددة' : 'Zones Selected'}</span>}
                 </span>
                 <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform ${open ? 'rotate-180' : ''}`} />
             </button>
             {open && (
-                <div className="absolute top-full mt-2 left-0 right-0 z-50 bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-zinc-900/50">
+                <div className="absolute top-full mt-2 left-0 right-0 z-50 bg-popover border border-border rounded-2xl shadow-none overflow-hidden">
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/30">
                         <button type="button" onClick={() => onChange(allZones.map(z => z.name))} className="text-xs font-bold text-[#0066FF] hover:underline">Select All</button>
                         <button type="button" onClick={() => onChange([])} className="text-xs font-bold text-red-400 hover:underline">Clear All</button>
                     </div>
                     <div className="max-h-64 overflow-y-auto p-3 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                         {allZones.map(z => (
                             <button key={z.name} type="button" onClick={() => toggle(z.name)}
-                                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all text-start ${selected.includes(z.name) ? 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/30' : 'text-zinc-400 hover:bg-white/5 border border-transparent'}`}>
-                                {selected.includes(z.name) ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4 text-zinc-700" />}
+                                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all text-start ${selected.includes(z.name) ? 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/30' : 'text-zinc-400 hover:bg-accent/50 border border-transparent'}`}>
+                                {selected.includes(z.name) ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4 text-muted-foreground/40" />}
                                 <span className="font-bold truncate">{lang === 'ar' ? z.nameAr : z.nameEn}</span>
                             </button>
                         ))}
                     </div>
-                    <div className="px-4 py-3 border-t border-white/5 bg-zinc-900/30">
+                    <div className="px-4 py-3 border-t border-border bg-muted/20">
                         <button type="button" onClick={() => setOpen(false)} className="w-full text-sm font-bold text-white bg-[#0066FF] hover:bg-blue-500 py-2 rounded-xl">Done ✓</button>
                     </div>
                 </div>
@@ -151,7 +151,7 @@ export default function NewProductPage() {
                 <div className="w-20" /> {/* Spacer */}
             </div>
 
-            <form onSubmit={handleSubmit} className="bg-zinc-950 border border-white/5 rounded-[3rem] p-10 shadow-2xl relative overflow-hidden group">
+            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-[3rem] p-10 shadow-none relative overflow-hidden group">
                 {/* Glow behind */}
                 <div className="absolute -right-32 -top-32 w-96 h-96 bg-[#0066FF]/5 blur-[120px] rounded-full pointer-events-none" />
                 
@@ -160,30 +160,30 @@ export default function NewProductPage() {
                     <div className="space-y-6">
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Product Title (English)</label>
-                            <input required className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-white font-bold transition-all shadow-inner" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                            <input required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-white font-bold transition-all shadow-inner" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                         </div>
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Arabic Title</label>
-                            <input required className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-end text-white font-bold transition-all shadow-inner" value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} />
+                            <input required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-end text-white font-bold transition-all shadow-inner" value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Base Price (EGP)</label>
                                 <div className="relative">
                                     <DollarSign className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0066FF]" />
-                                    <input type="number" step="0.01" required className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 pl-14 pr-6 focus:border-[#0066FF] outline-none font-black text-emerald-500" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} />
+                                    <input type="number" step="0.01" required className="w-full bg-muted/30 border border-border rounded-2xl py-5 pl-14 pr-6 focus:border-[#0066FF] outline-none font-black text-emerald-500" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} />
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Special Price</label>
-                                <input type="number" step="0.01" className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none font-bold text-zinc-400" value={formData.discountPrice} onChange={e => setFormData({ ...formData, discountPrice: e.target.value })} />
+                                <input type="number" step="0.01" className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none font-bold text-muted-foreground" value={formData.discountPrice} onChange={e => setFormData({ ...formData, discountPrice: e.target.value })} />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Category</label>
-                                <select className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none appearance-none font-bold" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
+                                <select className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none appearance-none font-bold" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
                                     {categories.length > 0 ? (
                                         categories.map(cat => <option key={cat.id} value={cat.name}>{lang === 'ar' ? cat.nameAr : cat.nameEn}</option>)
                                     ) : (
@@ -193,7 +193,7 @@ export default function NewProductPage() {
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Inventory Stock</label>
-                                <input type="number" required className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none font-bold" value={formData.stock} onChange={e => setFormData({ ...formData, stock: e.target.value })} />
+                                <input type="number" required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none font-bold" value={formData.stock} onChange={e => setFormData({ ...formData, stock: e.target.value })} />
                             </div>
                         </div>
                     </div>
@@ -203,9 +203,9 @@ export default function NewProductPage() {
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Main Cover Image</label>
                             <div className="group/img relative">
-                                <input className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none transition-all" value={formData.image} placeholder="Paste direct image link..." onChange={e => setFormData({ ...formData, image: e.target.value })} />
+                                <input className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none transition-all" value={formData.image} placeholder="Paste direct image link..." onChange={e => setFormData({ ...formData, image: e.target.value })} />
                                 {formData.image && (
-                                    <div className="mt-4 aspect-video rounded-3xl bg-zinc-900 border border-white/5 overflow-hidden shadow-2xl">
+                                    <div className="mt-4 aspect-video rounded-3xl bg-secondary border border-border overflow-hidden shadow-none">
                                         <img src={formData.image} className="w-full h-full object-cover" />
                                     </div>
                                 )}
@@ -213,7 +213,7 @@ export default function NewProductPage() {
                         </div>
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Image Gallery (Comma Separated)</label>
-                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[100px] text-sm" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
+                            <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[100px] text-sm" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
                         </div>
                         <div className="space-y-2 pt-2">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 flex items-center gap-2">
@@ -221,37 +221,37 @@ export default function NewProductPage() {
                                 Shipping Coverage
                             </label>
                             <ZonePicker allZones={allZones} selected={selectedZones} onChange={setSelectedZones} />
-                            <p className="text-[9px] text-zinc-600 px-2">Leave empty to enable nationwide shipping.</p>
+                            <p className="text-[9px] text-muted-foreground/60 px-2">Leave empty to enable nationwide shipping.</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Full-width description rows: EN | AR side by side */}
-                <div className="mt-10 pt-10 border-t border-white/5 space-y-8 relative z-10">
+                <div className="mt-10 pt-10 border-t border-border space-y-8 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2 min-w-0">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Short description (EN)</label>
-                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[140px] text-sm" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                            <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[140px] text-sm" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
                         </div>
                         <div className="space-y-2 min-w-0">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block md:text-start">وصف قصير (AR)</label>
-                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[140px] text-sm text-end" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
+                            <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[140px] text-sm text-end" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
                         </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2 min-w-0">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Long description (EN)</label>
-                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[220px] text-sm" value={formData.longDescription} placeholder="Full specs, details for the product page..." onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
+                            <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[220px] text-sm" value={formData.longDescription} placeholder="Full specs, details for the product page..." onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
                         </div>
                         <div className="space-y-2 min-w-0">
                             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block md:text-start">وصف طويل (AR)</label>
-                            <textarea className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[220px] text-sm text-end" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
+                            <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[220px] text-sm text-end" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-12 pt-8 border-t border-white/5 flex gap-4">
-                    <Button type="button" variant="ghost" className="h-16 flex-1 rounded-3xl border border-white/5 bg-transparent text-zinc-500 hover:text-white" onClick={() => router.push("/admin/products")}>
+                <div className="mt-12 pt-8 border-t border-border flex gap-4">
+                    <Button type="button" variant="ghost" className="h-16 flex-1 rounded-3xl border border-border bg-transparent text-zinc-500 hover:text-white" onClick={() => router.push("/admin/products")}>
                         Discard
                     </Button>
                     <Button disabled={isLoading} type="submit" className="h-16 flex-2 rounded-3xl bg-[#0066FF] hover:bg-blue-600 text-white font-black text-lg gap-3">

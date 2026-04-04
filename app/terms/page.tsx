@@ -2,96 +2,104 @@
 
 import { useLanguage } from "@/lib/i18n-context"
 import { PageHero } from "@/components/page-hero"
+import { PageSection } from "@/components/page-section"
 import { NexBotAI } from "@/components/nexbot-ai"
-import { FileText, AlertCircle, Scale, RefreshCw, Ban, Globe } from "lucide-react"
+import { FileText, AlertCircle, Scale, RefreshCw, Ban, Globe, ShieldCheck, Zap } from "lucide-react"
 import { motion } from "framer-motion"
+import { Card } from "@/components/ui/card"
 
 export default function TermsPage() {
-    const { lang } = useLanguage()
+    const { lang, t } = useLanguage()
 
     const sections = [
         {
             icon: FileText,
-            title: lang === "ar" ? "قبول الشروط" : "Acceptance of Terms",
-            body: lang === "ar"
-                ? "باستخدامك لموقع نكسيت سوليوشنز أو خدماتها، فإنك توافق على الالتزام بهذه الشروط والأحكام. إذا كنت لا توافق على أي من هذه الشروط، يرجى التوقف عن استخدام منصتنا فوراً."
-                : "By using Nexit Solutions' website or services, you agree to be bound by these Terms and Conditions. If you do not agree to any of these terms, please stop using our platform immediately.",
+            title: t("terms_pages.sections.acceptance.title"),
+            body: t("terms_pages.sections.acceptance.body"),
         },
         {
             icon: Globe,
-            title: lang === "ar" ? "نطاق الخدمات" : "Scope of Services",
-            body: lang === "ar"
-                ? "نقدم خدمات تقنية متكاملة تشمل: تطوير البرمجيات، حلول البنية التحتية، الأمن السيبراني، الاستضافة، وتكاملات الأنظمة. تخضع جميع الخدمات لاتفاقيات مستوى الخدمة (SLA) المتفق عليها مسبقاً."
-                : "We provide comprehensive technology services including: software development, infrastructure solutions, cybersecurity, hosting, and system integrations. All services are governed by pre-agreed Service Level Agreements (SLAs).",
+            title: t("terms_pages.sections.scope.title"),
+            body: t("terms_pages.sections.scope.body"),
         },
         {
             icon: Scale,
-            title: lang === "ar" ? "المسؤولية والتعويض" : "Liability & Indemnification",
-            body: lang === "ar"
-                ? "لا تتحمل نكسيت سوليوشنز مسؤولية الأضرار غير المباشرة أو العرضية الناجمة عن استخدام خدماتنا. تلتزم بتعويض الشركة عن أي مطالبات ناجمة عن انتهاكك لهذه الشروط."
-                : "Nexit Solutions is not liable for indirect or incidental damages arising from the use of our services. You agree to indemnify the company for any claims arising from your violation of these terms.",
+            title: t("terms_pages.sections.liability.title"),
+            body: t("terms_pages.sections.liability.body"),
         },
         {
             icon: Ban,
-            title: lang === "ar" ? "الاستخدام المحظور" : "Prohibited Uses",
-            body: lang === "ar"
-                ? "يُحظر استخدام خدماتنا لأغراض غير قانونية، أو لنشر محتوى ضار، أو لانتهاك حقوق الملكية الفكرية لأي طرف، أو لأي نشاط يتعارض مع القوانين المحلية والدولية المعمول بها."
-                : "It is prohibited to use our services for illegal purposes, disseminating harmful content, infringing intellectual property rights of any party, or any activity conflicting with applicable local and international laws.",
+            title: t("terms_pages.sections.prohibited.title"),
+            body: t("terms_pages.sections.prohibited.body"),
         },
         {
             icon: RefreshCw,
-            title: lang === "ar" ? "التعديلات على الشروط" : "Modifications to Terms",
-            body: lang === "ar"
-                ? "تحتفظ نكسيت سوليوشنز بالحق في تعديل هذه الشروط في أي وقت. سيتم إشعارك بالتغييرات الجوهرية عبر البريد الإلكتروني أو إشعار بارز على الموقع قبل 30 يوماً من سريانها."
-                : "Nexit Solutions reserves the right to modify these terms at any time. You will be notified of material changes via email or a prominent notice on the website 30 days before they take effect.",
+            title: t("terms_pages.sections.modifications.title"),
+            body: t("terms_pages.sections.modifications.body"),
         },
         {
             icon: AlertCircle,
-            title: lang === "ar" ? "القانون الحاكم" : "Governing Law",
-            body: lang === "ar"
-                ? "تخضع هذه الشروط وتُفسَّر وفقاً لقوانين جمهورية مصر العربية. يتفق الطرفان على أن المحاكم المختصة في القاهرة هي الجهة الحصرية لتسوية أي نزاعات."
-                : "These terms shall be governed and interpreted in accordance with the laws of the Arab Republic of Egypt. Both parties agree that the competent courts in Cairo shall be the exclusive venue for resolving any disputes.",
+            title: t("terms_pages.sections.governing_law.title"),
+            body: t("terms_pages.sections.governing_law.body"),
         },
     ]
 
     return (
-        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-[#050505] min-h-screen">
+        <main dir={lang === "ar" ? "rtl" : "ltr"} className="bg-bg-primary min-h-screen text-text-primary overflow-hidden">
             <PageHero
-                title={lang === "ar" ? "شروط الخدمة" : "Terms of Service"}
-                subtitle={lang === "ar" ? "يرجى قراءة هذه الشروط بعناية قبل استخدام خدماتنا." : "Please read these terms carefully before using our services."}
+                title={t("terms_pages.hero_title")}
+                subtitle={t("terms_pages.hero_subtitle")}
             />
 
-            <section className="py-24 max-w-5xl mx-auto px-6">
-                <div className="space-y-8">
+            <PageSection className="pb-32!">
+                <div className="max-w-4xl mx-auto space-y-10 pt-16">
                     {sections.map((sec, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: i * 0.08 }}
-                            className="flex gap-6 p-8 rounded-3xl bg-[#080808] border border-white/5 hover:border-white/10 transition-colors"
                         >
-                            <div className="shrink-0 w-12 h-12 bg-[#0066FF]/10 rounded-2xl flex items-center justify-center">
-                                <sec.icon className="w-6 h-6 text-[#0066FF]" />
-                            </div>
-                            <div>
-                                <h3 className="text-white font-bold text-xl mb-3">{sec.title}</h3>
-                                <p className="text-zinc-400 leading-relaxed">{sec.body}</p>
-                            </div>
+                            <Card className="flex flex-col md:flex-row gap-8 p-10 md:p-12 rounded-[2.5rem] bg-bg-secondary/20 border-2 border-border-color hover:border-accent/40 transition-all duration-700 shadow-2xl group relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+                                
+                                <div className="shrink-0 w-16 h-16 bg-bg-primary border-2 border-border-color rounded-2xl flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-700 shadow-xl group-hover:scale-110 group-hover:rotate-6">
+                                    <sec.icon className="w-8 h-8" />
+                                </div>
+                                <div className="space-y-4">
+                                    <h3 className="text-2xl font-black text-text-primary group-hover:text-accent transition-colors tracking-tighter uppercase leading-none">
+                                        {sec.title}
+                                    </h3>
+                                    <p className="text-text-secondary text-lg leading-relaxed font-medium opacity-70 group-hover:opacity-100 transition-opacity">
+                                        {sec.body}
+                                    </p>
+                                </div>
+                            </Card>
                         </motion.div>
                     ))}
                 </div>
 
-                <div className="mt-16 p-8 rounded-3xl bg-[#0066FF]/5 border border-[#0066FF]/20 text-center">
-                    <p className="text-zinc-300 text-sm">
-                        {lang === "ar"
-                            ? "آخر تحديث: مارس 2026 — لأي استفسارات قانونية، تواصل معنا على"
-                            : "Last updated: March 2026 — For any legal inquiries, contact us at"}
-                        {" "}
-                        <a href="mailto:legal@nexit.com" className="text-[#0066FF] hover:underline font-medium">legal@nexit.com</a>
-                    </p>
-                </div>
-            </section>
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="mt-20 p-12 rounded-[3rem] bg-bg-secondary/30 border-2 border-accent/20 text-center relative overflow-hidden group"
+                >
+                    <div className="absolute inset-0 bg-accent/5 blur-[120px] pointer-events-none" />
+                    <div className="relative z-10 space-y-8">
+                        <div className="flex items-center justify-center gap-6 text-accent">
+                            <Scale className="w-8 h-8" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em]">{t("terms_pages.compliance_tag")}</span>
+                        </div>
+                        <p className="text-text-primary text-xl md:text-2xl font-black tracking-tight max-w-2xl mx-auto uppercase">
+                            {t("terms_pages.last_updated")}
+                            <br/>
+                            <a href="mailto:support@nexitsolu.com" className="text-accent hover:border-b-2 border-accent transition-all inline-block mt-4 lowercase">support@nexitsolu.com</a>
+                        </p>
+                    </div>
+                </motion.div>
+            </PageSection>
 
             <NexBotAI />
         </main>

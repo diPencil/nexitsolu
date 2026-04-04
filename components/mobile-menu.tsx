@@ -66,7 +66,7 @@ export function MobileMenu() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="p-2 text-white hover:text-[#0066FF] transition-colors"
+        className="p-2 text-foreground hover:text-[#0066FF] transition-colors"
         aria-label="Open Menu"
       >
         <Menu className="w-6 h-6" />
@@ -84,23 +84,24 @@ export function MobileMenu() {
         />
 
         <div className="absolute inset-x-8 top-6 flex flex-col gap-2 max-w-[260px] mx-auto">
-          {/* 1. Logo Pill - Tiny & White */}
+          {/* 1. Logo Pill */}
           <div
-            className={`bg-white rounded-[18px] px-4 py-2 flex justify-between items-center shadow-lg transition-all duration-500 transform ${isOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
+            className={`bg-popover border border-border rounded-[18px] px-4 py-2 flex justify-between items-center shadow-lg transition-all duration-500 transform ${isOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
               }`}
           >
-            <Image src="/nexitlogo.png" alt="Nexit Logo" width={60} height={14} className="h-3.5 w-auto object-contain brightness-0" />
+            <Image src="/nexit-logo.png" alt="Nexit Logo" width={60} height={14} className="h-3.5 w-auto object-contain dark:hidden" />
+            <Image src="/nexitlogo.png" alt="Nexit Logo" width={60} height={14} className="h-3.5 w-auto object-contain brightness-110 hidden dark:block" />
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 text-zinc-400 hover:text-black transition-colors"
+              className="p-1 text-muted-foreground hover:text-foreground transition-colors"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* 2. Content Card - Pure White & Compact */}
+          {/* 2. Content Card */}
           <div
-            className={`bg-white rounded-[22px] p-5 shadow-xl border border-zinc-100 transition-all duration-500 delay-100 transform overflow-y-auto max-h-[70vh] ${isOpen ? "translate-y-0 opacity-100 scale-100" : "-translate-y-2 opacity-0 scale-95"
+            className={`bg-popover rounded-[22px] p-5 shadow-xl border border-border transition-all duration-500 delay-100 transform overflow-y-auto max-h-[70vh] ${isOpen ? "translate-y-0 opacity-100 scale-100" : "-translate-y-2 opacity-0 scale-95"
               }`}
             dir={lang === "ar" ? "rtl" : "ltr"}
           >
@@ -109,19 +110,19 @@ export function MobileMenu() {
                 <div key={item.name} className="flex flex-col gap-2">
                   <button
                     onClick={() => toggleSection(item.name)}
-                    className="flex items-center justify-between text-[10px] font-bold text-zinc-900 uppercase tracking-widest text-start transition-colors"
+                    className="flex items-center justify-between text-[10px] font-bold text-foreground uppercase tracking-widest text-start transition-colors"
                   >
                     {item.name}
-                    <span className="text-zinc-400 font-normal">{openSections.includes(item.name) ? "-" : "+"}</span>
+                    <span className="text-muted-foreground font-normal">{openSections.includes(item.name) ? "-" : "+"}</span>
                   </button>
                   {openSections.includes(item.name) && (
-                    <div className="flex flex-col gap-2 pl-2 pr-2 border-l border-zinc-100 mt-1 mb-2">
+                    <div className="flex flex-col gap-2 pl-2 pr-2 border-l border-border mt-1 mb-2">
                       {item.subLinks.map((subLink, idx) => (
                         <Link
                           key={idx}
                           href={subLink.href}
                           onClick={() => setIsOpen(false)}
-                          className="text-[9px] font-medium text-zinc-500 hover:text-[#0066FF] uppercase tracking-wider transition-colors"
+                          className="text-[9px] font-medium text-muted-foreground hover:text-primary uppercase tracking-wider transition-colors"
                         >
                           {subLink.label}
                         </Link>
@@ -130,11 +131,11 @@ export function MobileMenu() {
                   )}
                 </div>
               ))}
-              <div className="flex flex-col gap-2 border-t pt-4 border-zinc-100">
+              <div className="flex flex-col gap-2 border-t pt-4 border-border">
                 <Link
                   href="/store"
                   onClick={() => setIsOpen(false)}
-                  className="text-[10px] font-bold text-[#0066FF] hover:text-black uppercase tracking-widest transition-colors flex items-center gap-2"
+                  className="text-[10px] font-bold text-[#0066FF] hover:text-foreground uppercase tracking-widest transition-colors flex items-center gap-2"
                 >
                   <ShoppingBag className="w-3 h-3" />
                   {lang === "ar" ? "متجر نكسيت" : "NexIT Store"}
@@ -145,7 +146,7 @@ export function MobileMenu() {
             <Link
               href="/services/managed-it"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-black text-white rounded-full font-bold text-[8px] uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-sm mb-2"
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-foreground text-background rounded-full font-bold text-[8px] uppercase tracking-widest hover:bg-foreground/90 transition-colors shadow-sm mb-2"
             >
               <div className="w-3 h-3 rounded-full border border-white/20 flex items-center justify-center">
                 <div className="w-1 h-1 bg-[#0066FF] rounded-full" />
@@ -154,17 +155,17 @@ export function MobileMenu() {
             </Link>
 
             {/* Social Links */}
-            <div className="flex justify-center gap-4 pt-4 border-t border-zinc-100">
-              <a href="https://www.linkedin.com/company/nexitsolucom" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-[#0066FF] transition-colors">
+            <div className="flex justify-center gap-4 pt-4 border-t border-border">
+              <a href="https://www.linkedin.com/company/nexitsolucom" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="https://www.facebook.com/nexitsolucom/" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-[#0066FF] transition-colors">
+              <a href="https://www.facebook.com/nexitsolucom/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="https://www.instagram.com/nexitsolucom/" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-[#0066FF] transition-colors">
+              <a href="https://www.instagram.com/nexitsolucom/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="https://api.whatsapp.com/send/?phone=201031620990" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-[#0066FF] transition-colors">
+              <a href="https://api.whatsapp.com/send/?phone=201031620990" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <WhatsAppIcon className="w-4 h-4" />
               </a>
             </div>
