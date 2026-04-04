@@ -121,7 +121,8 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: "Quotation sent successfully" })
         } else {
             console.error("Mail send failed:", result.error)
-            return NextResponse.json({ error: "Failed to send email" }, { status: 500 })
+            const message = result.error instanceof Error ? result.error.message : String(result.error)
+            return NextResponse.json({ error: message || "Failed to send email" }, { status: 500 })
         }
 
     } catch (error: any) {

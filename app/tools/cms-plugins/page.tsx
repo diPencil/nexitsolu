@@ -28,7 +28,7 @@ export default function CMSPlugins() {
             <section className="py-32 relative border-y border-border-color bg-bg-secondary/20 overflow-hidden">
                 <div className="absolute inset-0 bg-accent/3 blur-[120px] pointer-events-none" />
                 <div className="max-w-4xl mx-auto text-center px-6 relative z-10">
-                    <div className="inline-flex p-5 rounded-3xl bg-bg-primary border border-border-color shadow-2xl mb-10 group hover:border-accent transition-all duration-500">
+                    <div className="inline-flex p-5 rounded-3xl bg-bg-primary border border-border-color shadow-none dark:shadow-2xl mb-10 group hover:border-accent transition-all duration-500">
                         <MonitorSmartphone className="w-12 h-12 text-accent group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-2xl md:text-4xl text-text-primary mb-10 leading-tight font-black tracking-tight italic">
@@ -50,9 +50,9 @@ export default function CMSPlugins() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="group h-full p-8 md:p-10 border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 text-center flex flex-col items-center shadow-xl overflow-hidden relative">
+                            <Card className="group h-full p-8 md:p-10 border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 text-center flex flex-col items-center shadow-none dark:shadow-xl overflow-hidden relative">
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/10 transition-colors pointer-events-none" />
-                                <div className="relative z-10 p-5 bg-bg-primary rounded-2xl mb-8 group-hover:scale-110 group-hover:bg-accent group-hover:text-white transition-all duration-500 border border-border-color shadow-xl">
+                                <div className="relative z-10 p-5 bg-bg-primary rounded-2xl mb-8 group-hover:scale-110 group-hover:bg-accent group-hover:text-white transition-all duration-500 border border-border-color shadow-none dark:shadow-xl">
                                     <item.icon className={`w-10 h-10 ${item.color} group-hover:text-white transition-colors`} />
                                 </div>
                                 <h3 className="relative z-10 text-xl md:text-2xl font-black text-text-primary mb-4 group-hover:text-accent transition-colors tracking-tight">{item.title}</h3>
@@ -168,8 +168,8 @@ export default function CMSPlugins() {
                             { title: t("tools_pages.cms.benefits.security"), icon: Shield },
                             { title: t("tools_pages.cms.benefits.integration"), icon: Puzzle },
                         ].map((feat, idx) => (
-                            <div key={idx} className="flex gap-4 items-start bg-bg-primary/50 backdrop-blur-md p-5 rounded-2xl border border-border-color shadow-xl group hover:border-accent/40 transition-all">
-                                <div className="p-3 bg-accent/10 text-accent rounded-xl shrink-0 group-hover:bg-accent group-hover:text-white transition-all shadow-inner">
+                            <div key={idx} className="flex gap-4 items-start bg-bg-primary/50 backdrop-blur-md p-5 rounded-2xl border border-border-color shadow-none dark:shadow-xl group hover:border-accent/40 transition-all">
+                                <div className="p-3 bg-accent/10 text-accent rounded-xl shrink-0 group-hover:bg-accent group-hover:text-white transition-all shadow-none dark:shadow-inner">
                                     <feat.icon className="w-5 h-5" />
                                 </div>
                                 <p className="text-text-primary font-black tracking-tight pt-2">{feat.title}</p>

@@ -68,14 +68,14 @@ export default function Team() {
                     
                     <div className="flex flex-wrap gap-4 md:ps-12">
                          {cultureTags.map((item, i) => (
-                            <div key={i} className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-bg-secondary border border-border-color shadow-xl hover:border-accent/40 transition-colors">
+                            <div key={i} className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-bg-secondary border border-border-color shadow-none dark:shadow-xl hover:border-accent/40 transition-colors">
                                 <item.icon className="w-5 h-5 text-accent" />
                                 <span className="font-black text-sm uppercase tracking-widest opacity-80">{item.label}</span>
                             </div>
                          ))}
                     </div>
                 </div>
-                <div className="relative aspect-video lg:aspect-auto h-full min-h-[500px] rounded-[50px] overflow-hidden border border-border-color shadow-3xl group">
+                <div className="relative aspect-video lg:aspect-auto h-full min-h-[500px] rounded-[50px] overflow-hidden border border-border-color shadow-none dark:shadow-3xl group">
                     <Image
                         src="/expert-team.png"
                         alt="Team Culture"
@@ -97,7 +97,7 @@ export default function Team() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="group relative h-[600px] rounded-[40px] overflow-hidden border-border-color bg-bg-secondary shadow-2xl cursor-pointer">
+                            <Card className="group relative h-[600px] rounded-[40px] overflow-hidden border-border-color bg-bg-secondary shadow-none dark:shadow-2xl cursor-pointer">
                                 <Image
                                     src={dept.image}
                                     alt={dept.key}
@@ -132,7 +132,7 @@ export default function Team() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="p-14 md:p-20 border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 text-center group h-full shadow-3xl backdrop-blur-sm relative overflow-hidden">
+                            <Card className="p-14 md:p-20 border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 text-center group h-full shadow-none dark:shadow-3xl backdrop-blur-sm relative overflow-hidden">
                                 <div className="absolute -top-10 -right-10 w-24 h-24 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/10 transition-colors pointer-events-none" />
                                 <div className="w-20 h-20 rounded-3xl bg-bg-primary flex items-center justify-center mx-auto mb-10 group-hover:bg-accent group-hover:text-white transition-all duration-500 border border-border-color shadow-xl">
                                     <val.icon className="w-10 h-10 text-accent group-hover:text-white transition-colors" />
@@ -155,7 +155,7 @@ export default function Team() {
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="w-24 h-24 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-12 border border-accent/20 shadow-2xl group transition-all duration-700"
+                        className="w-24 h-24 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-12 border border-accent/20 shadow-none dark:shadow-2xl group transition-all duration-700"
                     >
                         <Wrench className="w-12 h-12 text-accent" />
                     </motion.div>
@@ -167,7 +167,7 @@ export default function Team() {
                     </p>
                     <Link
                         href="/about/tech-support"
-                        className="inline-flex items-center gap-6 px-14 py-6 bg-accent hover:bg-accent/90 text-white rounded-4xl font-black transition-all hover:scale-105 shadow-3xl shadow-accent/20 group uppercase tracking-widest text-sm"
+                        className="inline-flex items-center gap-6 px-14 py-6 bg-accent hover:bg-accent/90 text-white rounded-4xl font-black transition-all hover:scale-105 shadow-none dark:shadow-3xl dark:shadow-accent/20 group uppercase tracking-widest text-sm"
                     >
                         {t("about_pages.team.cta_button")}
                         <ArrowRight className={`w-6 h-6 transition-transform group-hover:translate-x-3 ${lang === "ar" ? "rotate-180 group-hover:-translate-x-3" : ""}`} />

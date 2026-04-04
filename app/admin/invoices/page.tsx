@@ -429,13 +429,32 @@ function AdminInvoicesContent() {
                         >
                             <div className="sticky top-0 z-10 bg-card/80 backdrop-blur-md p-6 border-b border-border flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    <Image 
-                                        src="/nexitlogo.png" 
-                                        alt="Nexit" 
-                                        width={100} 
-                                        height={30} 
-                                        className="object-contain"
-                                    />
+                                    {editInvoice ? (
+                                        <>
+                                            <img
+                                                src="https://nexitsolu.com/nexit-logo.png"
+                                                alt="Nexit"
+                                                width={100}
+                                                height={30}
+                                                className="object-contain dark:hidden"
+                                            />
+                                            <Image
+                                                src="/nexitlogo.png"
+                                                alt="Nexit"
+                                                width={100}
+                                                height={30}
+                                                className="object-contain hidden dark:block"
+                                            />
+                                        </>
+                                    ) : (
+                                        <Image 
+                                            src="/nexitlogo.png" 
+                                            alt="Nexit" 
+                                            width={100} 
+                                            height={30} 
+                                            className="object-contain"
+                                        />
+                                    )}
                                     <div className="h-6 w-px bg-border" />
                                     <h3 className="font-bold">{editInvoice ? (lang === 'ar' ? 'تعديل الفاتورة' : 'Edit Invoice') : (lang === 'ar' ? 'إنشاء فاتورة جديدة' : 'Create New Invoice')}</h3>
                                 </div>

@@ -78,7 +78,7 @@ export default function Partners() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="group relative p-10 md:p-14 border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 overflow-hidden flex flex-col items-center text-center h-full shadow-2xl backdrop-blur-sm">
+                            <Card className="group relative p-10 md:p-14 border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 overflow-hidden flex flex-col items-center text-center h-full shadow-none dark:shadow-2xl backdrop-blur-sm">
                                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-accent/5 rounded-full blur-[60px] group-hover:bg-accent/15 transition-all pointer-events-none" />
 
                                 <div className="p-5 bg-bg-primary text-accent rounded-2xl w-fit mb-8 group-hover:bg-accent group-hover:text-white transition-all duration-500 border border-border-color shadow-xl">
@@ -99,7 +99,7 @@ export default function Partners() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <Card className="p-12 md:p-20 border-border-color relative overflow-hidden group hover:border-accent/40 transition-all duration-1000 h-full bg-bg-secondary/30 shadow-3xl backdrop-blur-xl">
+                        <Card className="p-12 md:p-20 border-border-color relative overflow-hidden group hover:border-accent/40 transition-all duration-1000 h-full bg-bg-secondary/30 shadow-none dark:shadow-3xl backdrop-blur-xl">
                             <div className="absolute inset-0 bg-accent/3 blur-[120px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                             <Globe className="absolute -bottom-16 -right-16 w-80 h-80 text-accent/5 group-hover:text-accent/10 group-hover:rotate-12 group-hover:scale-110 transition-all duration-1000 pointer-events-none" />
                             
@@ -118,7 +118,7 @@ export default function Partners() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <Card className="p-12 md:p-20 bg-bg-primary relative overflow-hidden group hover:border-accent/40 transition-all duration-1000 h-full shadow-3xl border border-border-color/50">
+                        <Card className="p-12 md:p-20 bg-bg-primary relative overflow-hidden group hover:border-accent/40 transition-all duration-1000 h-full shadow-none dark:shadow-3xl border border-border-color/50">
                             <div className="absolute inset-0 bg-accent/5 blur-[120px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                             <Zap className="absolute -bottom-16 -right-16 w-80 h-80 text-accent/5 group-hover:text-accent/10 group-hover:-rotate-12 group-hover:scale-110 transition-all duration-1000 pointer-events-none" />
                             

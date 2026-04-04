@@ -149,7 +149,7 @@ export default function TechSupport() {
                             transition={{ duration: 0.6, ease: "circOut" }}
                             className="max-w-4xl mx-auto"
                         >
-                            <Card className="p-10 md:p-16 lg:p-20 border-border-color bg-bg-secondary/40 backdrop-blur-3xl shadow-4xl relative overflow-hidden rounded-[3.5rem] group">
+                            <Card className="p-10 md:p-16 lg:p-20 border-border-color bg-bg-secondary/40 backdrop-blur-3xl shadow-none dark:shadow-4xl relative overflow-hidden rounded-[3.5rem] group">
                                 <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full blur-[120px] pointer-events-none group-hover:bg-accent/10 transition-all duration-1000" />
                                 
                                 {success ? (
@@ -157,7 +157,7 @@ export default function TechSupport() {
                                         <motion.div 
                                             initial={{ scale: 0.5, opacity: 0 }}
                                             animate={{ scale: 1, opacity: 1 }}
-                                            className="w-32 h-32 bg-emerald-500/10 rounded-[2.5rem] flex items-center justify-center mx-auto border-2 border-emerald-500/20 shadow-4xl relative shadow-emerald-500/10"
+                                            className="w-32 h-32 bg-emerald-500/10 rounded-[2.5rem] flex items-center justify-center mx-auto border-2 border-emerald-500/20 shadow-none dark:shadow-4xl relative dark:shadow-emerald-500/10"
                                         >
                                             <div className="absolute inset-0 bg-emerald-500/20 rounded-[2.5rem] blur-2xl animate-pulse" />
                                             <CheckCircle2 className="w-16 h-16 text-emerald-500 relative z-10" />
@@ -172,7 +172,7 @@ export default function TechSupport() {
                                         </div>
                                         <Button 
                                             onClick={() => setSuccess(false)}
-                                            className="bg-accent hover:bg-accent/90 text-white rounded-2xl px-12 py-8 font-black text-sm uppercase tracking-widest shadow-2xl shadow-accent/20 hover:scale-105 transition-transform"
+                                            className="bg-accent hover:bg-accent/90 text-white rounded-2xl px-12 py-8 font-black text-sm uppercase tracking-widest shadow-none dark:shadow-2xl dark:shadow-accent/20 hover:scale-105 transition-transform"
                                         >
                                             {lang === "ar" ? "إرسال طلب آخر" : "New Transmission"}
                                         </Button>
@@ -180,7 +180,7 @@ export default function TechSupport() {
                                 ) : (
                                     <>
                                         <div className="flex flex-col md:flex-row md:items-center gap-8 mb-16 pb-12 border-b border-border-color/50">
-                                            <div className="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center text-accent border-2 border-accent/20 shadow-3xl">
+                                            <div className="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center text-accent border-2 border-accent/20 shadow-none dark:shadow-3xl">
                                                 <LifeBuoy className="w-10 h-10 animate-spin-slow" />
                                             </div>
                                             <div>
@@ -224,7 +224,7 @@ export default function TechSupport() {
                                                     className="bg-bg-primary border-2 border-border-color rounded-3xl min-h-[220px] p-8 text-lg font-bold focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all resize-none"
                                                 />
                                             </div>
-                                            <Button disabled={submitting} type="submit" className="w-full bg-accent hover:bg-accent/90 text-white rounded-3xl py-10 text-sm font-black uppercase tracking-[0.4em] transition-all shadow-4xl shadow-accent/20 group disabled:opacity-50 active:scale-[0.98]">
+                                            <Button disabled={submitting} type="submit" className="w-full bg-accent hover:bg-accent/90 text-white rounded-3xl py-10 text-sm font-black uppercase tracking-[0.4em] transition-all shadow-none dark:shadow-4xl dark:shadow-accent/20 group disabled:opacity-50 active:scale-[0.98]">
                                                 {submitting ? (lang === "ar" ? "جاري الإرسال..." : "Transmitting Data...") : (lang === "ar" ? "إرسال طلب الدعم" : "Deploy Support Request")}
                                                 {!submitting && <Send className={`ms-4 w-6 h-6 transition-transform group-hover:translate-x-3 group-hover:-translate-y-3 ${lang === "ar" ? "rotate-180" : ""}`} />}
                                             </Button>
@@ -258,7 +258,7 @@ export default function TechSupport() {
                             transition={{ delay: i * 0.1 }}
                             className="relative z-10 flex flex-col items-center text-center group"
                         >
-                            <div className="w-24 h-24 rounded-4xl bg-bg-primary border-2 border-border-color text-accent flex items-center justify-center text-3xl font-black mb-10 group-hover:-translate-y-4 group-hover:bg-accent group-hover:text-white group-hover:border-accent transition-all duration-700 shadow-2xl group-hover:rotate-12">
+                            <div className="w-24 h-24 rounded-4xl bg-bg-primary border-2 border-border-color text-accent flex items-center justify-center text-3xl font-black mb-10 group-hover:-translate-y-4 group-hover:bg-accent group-hover:text-white group-hover:border-accent transition-all duration-700 shadow-none dark:shadow-2xl group-hover:rotate-12">
                                 {item.step}
                             </div>
                             <h3 className="text-2xl font-black text-text-primary mb-6 tracking-tighter group-hover:text-accent transition-colors uppercase">{item.title}</h3>

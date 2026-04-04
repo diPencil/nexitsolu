@@ -63,7 +63,7 @@ export default function NexitLand() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="p-8 md:p-10 border-border-color shadow-2xl flex flex-col items-center text-center group hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 overflow-hidden relative">
+                            <Card className="p-8 md:p-10 border-border-color shadow-none dark:shadow-2xl flex flex-col items-center text-center group hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 overflow-hidden relative">
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/10 transition-colors pointer-events-none" />
                                 <div className="w-16 h-16 rounded-2xl bg-bg-primary flex items-center justify-center mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 shadow-xl border border-border-color">
                                     <stat.icon className="w-8 h-8 text-accent group-hover:text-white transition-colors" />
@@ -99,7 +99,7 @@ export default function NexitLand() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="p-5 rounded-2xl bg-bg-secondary/30 border border-border-color hover:border-accent/40 transition-all group flex items-center gap-4 shadow-xl backdrop-blur-sm"
+                                className="p-5 rounded-2xl bg-bg-secondary/30 border border-border-color hover:border-accent/40 transition-all group flex items-center gap-4 shadow-none dark:shadow-xl backdrop-blur-sm"
                             >
                                 <div className="p-2 bg-accent/10 text-accent rounded-lg group-hover:bg-accent group-hover:text-white transition-all">
                                     <CheckCircle2 className="w-5 h-5" />
@@ -145,7 +145,7 @@ export default function NexitLand() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.2 }}
                         >
-                            <Card className="relative z-10 p-10 h-full border-border-color hover:border-accent/40 bg-bg-primary transition-all duration-500 group shadow-2xl flex flex-col items-center text-center">
+                            <Card className="relative z-10 p-10 h-full border-border-color hover:border-accent/40 bg-bg-primary transition-all duration-500 group shadow-none dark:shadow-2xl flex flex-col items-center text-center">
                                 <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center text-white font-black text-2xl mb-10 shadow-2xl group-hover:scale-110 transition-transform duration-500 relative">
                                     <div className="absolute inset-0 bg-accent rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity" />
                                     <span className="relative z-10">{step.id}</span>
@@ -177,7 +177,7 @@ export default function NexitLand() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="p-10 h-full border-border-color hover:border-accent/40 hover:bg-bg-secondary/30 transition-all duration-500 group flex flex-col items-center text-center shadow-xl relative overflow-hidden backdrop-blur-sm">
+                            <Card className="p-10 h-full border-border-color hover:border-accent/40 hover:bg-bg-secondary/30 transition-all duration-500 group flex flex-col items-center text-center shadow-none dark:shadow-xl relative overflow-hidden backdrop-blur-sm">
                                 <div className="absolute -top-10 -right-10 w-24 h-24 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/10 transition-colors pointer-events-none" />
                                 <div className="w-16 h-16 rounded-2xl bg-bg-secondary flex items-center justify-center mb-8 text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500 border border-border-color shadow-inner">
                                     <item.icon className="w-8 h-8" />
@@ -221,7 +221,7 @@ export default function NexitLand() {
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
                         >
-                            <Card className="h-full p-10 md:p-14 border-border-color hover:border-accent/40 transition-all duration-500 flex flex-col items-center text-center group bg-bg-primary/50 backdrop-blur-xl shadow-2xl">
+                            <Card className="h-full p-10 md:p-14 border-border-color hover:border-accent/40 transition-all duration-500 flex flex-col items-center text-center group bg-bg-primary/50 backdrop-blur-xl shadow-none dark:shadow-2xl">
                                 <div className="w-20 h-20 rounded-3xl bg-bg-secondary border border-border-color flex items-center justify-center mb-10 group-hover:bg-accent group-hover:text-white transition-all duration-500 text-accent shadow-xl">
                                     <Eye className="w-10 h-10" />
                                 </div>
@@ -240,7 +240,7 @@ export default function NexitLand() {
                             transition={{ delay: 0.2 }}
                             className="z-20 transform md:scale-110"
                         >
-                            <div className="h-full bg-accent p-10 md:p-14 rounded-[30px] shadow-3xl flex flex-col items-center text-center border border-white/15 relative overflow-hidden group">
+                            <div className="h-full bg-accent p-10 md:p-14 rounded-[30px] shadow-none dark:shadow-3xl flex flex-col items-center text-center border border-white/15 relative overflow-hidden group">
                                 <div className="absolute inset-0 bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                                 <div className="w-20 h-20 rounded-3xl bg-foreground/10 flex items-center justify-center mb-10 border border-white/20 backdrop-blur-md shadow-2xl">
                                     <Rocket className="w-10 h-10 text-white" />
@@ -264,7 +264,7 @@ export default function NexitLand() {
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
                         >
-                            <Card className="h-full p-10 md:p-14 border-border-color hover:border-accent/40 transition-all duration-500 flex flex-col items-center text-center group bg-bg-primary/50 backdrop-blur-xl shadow-2xl">
+                            <Card className="h-full p-10 md:p-14 border-border-color hover:border-accent/40 transition-all duration-500 flex flex-col items-center text-center group bg-bg-primary/50 backdrop-blur-xl shadow-none dark:shadow-2xl">
                                 <div className="w-20 h-20 rounded-3xl bg-bg-secondary border border-border-color flex items-center justify-center mb-10 group-hover:bg-accent group-hover:text-white transition-all duration-500 text-accent shadow-xl">
                                     <Heart className="w-10 h-10" />
                                 </div>
@@ -300,7 +300,7 @@ export default function NexitLand() {
                                 : "Frequently asked questions for us by our clients and partners regarding Nexit Land ecosystem."}
                         </p>
 
-                        <div className="flex items-center gap-6 p-8 rounded-3xl bg-bg-primary border border-border-color group/cta max-w-md shadow-3xl relative overflow-hidden">
+                        <div className="flex items-center gap-6 p-8 rounded-3xl bg-bg-primary border border-border-color group/cta max-w-md shadow-none dark:shadow-3xl relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl group-hover/cta:bg-accent/10 transition-colors pointer-events-none" />
                             <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center text-accent shrink-0 group-hover/cta:bg-accent group-hover/cta:text-white transition-all duration-500 shadow-inner">
                                 <Users className="w-8 h-8" />
@@ -327,7 +327,7 @@ export default function NexitLand() {
                                 <AccordionItem
                                     key={num}
                                     value={`item-${num}`}
-                                    className="border border-border-color bg-bg-primary rounded-[30px] px-8 py-4 overflow-hidden hover:border-accent/40 transition-all duration-500 data-[state=open]:border-accent/40 shadow-2xl relative"
+                                    className="border border-border-color bg-bg-primary rounded-[30px] px-8 py-4 overflow-hidden hover:border-accent/40 transition-all duration-500 data-[state=open]:border-accent/40 shadow-none dark:shadow-2xl relative"
                                 >
                                     <div className="absolute top-0 right-0 w-24 h-24 bg-accent/2 rounded-full blur-2xl pointer-events-none" />
                                     <AccordionTrigger className={`text-lg md:text-2xl font-black text-text-primary hover:no-underline py-8 ${lang === 'ar' ? 'text-right' : 'text-left'} hover:text-accent transition-colors tracking-tight`}>

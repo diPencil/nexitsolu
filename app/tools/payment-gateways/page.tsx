@@ -40,7 +40,7 @@ export default function PaymentGateways() {
             <section className="py-32 border-y border-border-color bg-bg-secondary/20 relative overflow-hidden">
                 <div className="absolute inset-0 bg-accent/3 blur-[120px] pointer-events-none" />
                 <div className="max-w-4xl mx-auto text-center px-6 relative z-10">
-                    <div className="inline-flex p-5 rounded-3xl bg-bg-primary border border-border-color shadow-2xl mb-10 group hover:border-accent transition-all duration-500">
+                    <div className="inline-flex p-5 rounded-3xl bg-bg-primary border border-border-color shadow-none dark:shadow-2xl mb-10 group hover:border-accent transition-all duration-500">
                         <CreditCard className="w-12 h-12 text-accent group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-2xl md:text-5xl text-text-primary mb-10 leading-tight font-black tracking-tight">
@@ -66,10 +66,10 @@ export default function PaymentGateways() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="group relative p-8 md:p-10 h-full border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 overflow-hidden shadow-xl text-center flex flex-col items-center">
+                            <Card className="group relative p-8 md:p-10 h-full border-border-color hover:border-accent/40 bg-bg-secondary/30 transition-all duration-500 overflow-hidden shadow-none dark:shadow-xl text-center flex flex-col items-center">
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/10 transition-colors pointer-events-none" />
 
-                                <div className="relative z-10 mx-auto mb-8 w-16 h-16 bg-bg-primary rounded-2xl flex items-center justify-center border border-border-color group-hover:scale-110 group-hover:bg-accent group-hover:text-white transition-all duration-500 shadow-xl">
+                                <div className="relative z-10 mx-auto mb-8 w-16 h-16 bg-bg-primary rounded-2xl flex items-center justify-center border border-border-color group-hover:scale-110 group-hover:bg-accent group-hover:text-white transition-all duration-500 shadow-none dark:shadow-xl">
                                     <Wallet className="w-8 h-8 text-accent group-hover:text-white transition-colors" />
                                 </div>
 
@@ -95,10 +95,10 @@ export default function PaymentGateways() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="group relative p-8 md:p-10 h-full bg-bg-primary/50 backdrop-blur-xl border-border-color hover:border-accent/40 transition-all duration-500 overflow-hidden shadow-xl text-center flex flex-col items-center">
+                            <Card className="group relative p-8 md:p-10 h-full bg-bg-primary/50 backdrop-blur-xl border-border-color hover:border-accent/40 transition-all duration-500 overflow-hidden shadow-none dark:shadow-xl text-center flex flex-col items-center">
                                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/10 transition-colors pointer-events-none" />
 
-                                <div className="relative z-10 mx-auto mb-8 w-16 h-16 bg-bg-primary rounded-2xl flex items-center justify-center border border-border-color group-hover:rotate-12 group-hover:bg-accent group-hover:text-white transition-all duration-500 shadow-xl">
+                                <div className="relative z-10 mx-auto mb-8 w-16 h-16 bg-bg-primary rounded-2xl flex items-center justify-center border border-border-color group-hover:rotate-12 group-hover:bg-accent group-hover:text-white transition-all duration-500 shadow-none dark:shadow-xl">
                                     <Landmark className="w-8 h-8 text-accent group-hover:text-white transition-colors" />
                                 </div>
 
@@ -114,12 +114,12 @@ export default function PaymentGateways() {
 
             {/* Security & Integration Section */}
             <PageSection className="py-32" columns={2}>
-                <div className="relative rounded-[40px] bg-accent overflow-hidden group shadow-3xl flex flex-col min-h-[500px]">
+                <div className="relative rounded-[40px] bg-accent overflow-hidden group shadow-none dark:shadow-3xl flex flex-col min-h-[500px]">
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay" />
                     <div className="absolute -top-20 -right-20 w-80 h-80 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-1000" />
 
                     <div className="relative z-10 p-10 md:p-16 grow flex flex-col justify-center">
-                        <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl w-fit mb-10 border border-white/20 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                        <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl w-fit mb-10 border border-white/20 shadow-none dark:shadow-inner group-hover:scale-110 transition-transform duration-500">
                             <ShieldCheck className="w-12 h-12 text-white" />
                         </div>
                         <h3 className="text-3xl md:text-5xl font-black mb-8 text-white leading-tight tracking-tight">
@@ -141,7 +141,7 @@ export default function PaymentGateways() {
 
                 <div className="flex flex-col justify-center ps-0 lg:ps-16 py-12">
                     <div className="flex items-center gap-4 mb-8">
-                        <div className="p-3 bg-accent/10 text-accent rounded-xl border border-accent/20 shadow-md">
+                        <div className="p-3 bg-accent/10 text-accent rounded-xl border border-accent/20 shadow-none dark:shadow-md">
                             <Zap className="w-6 h-6 animate-pulse" />
                         </div>
                         <span className="text-sm font-black uppercase tracking-widest text-accent opacity-80">{t("tools_pages.payments.integration.tag")}</span>
@@ -161,8 +161,8 @@ export default function PaymentGateways() {
                             { title: t("tools_pages.payments.integration.fraud"), icon: Lock },
                             { title: t("tools_pages.payments.integration.settlements"), icon: Banknote },
                         ].map((feat, idx) => (
-                            <div key={idx} className="flex gap-5 items-center p-6 rounded-2xl bg-bg-secondary/30 border border-border-color group hover:border-accent/40 transition-all shadow-xl backdrop-blur-sm">
-                                <div className="p-3 bg-accent/10 text-accent rounded-xl shrink-0 group-hover:bg-accent group-hover:text-white transition-all shadow-inner">
+                            <div key={idx} className="flex gap-5 items-center p-6 rounded-2xl bg-bg-secondary/30 border border-border-color group hover:border-accent/40 transition-all shadow-none dark:shadow-xl backdrop-blur-sm">
+                                <div className="p-3 bg-accent/10 text-accent rounded-xl shrink-0 group-hover:bg-accent group-hover:text-white transition-all shadow-none dark:shadow-inner">
                                     <feat.icon className="w-6 h-6" />
                                 </div>
                                 <span className="text-text-primary font-black tracking-tight text-lg">{feat.title}</span>

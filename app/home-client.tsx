@@ -342,7 +342,7 @@ export default function Home() {
                 <div className="absolute top-4 left-2 right-2 h-8 md:top-7 md:left-4 md:right-4 md:h-16 bg-muted rounded-2xl md:rounded-[32px] -z-10" />
 
                 {/* Main Card */}
-                <div className={`relative rounded-3xl md:rounded-[32px] overflow-hidden ${i === 0 ? "bg-card border md:bg-primary border-primary" : "bg-card"} border border-border shadow-2xl transition-all duration-500 h-full flex flex-col group/main`}>
+                <div className={`relative rounded-3xl md:rounded-[32px] overflow-hidden ${i === 0 ? "bg-card border md:bg-primary border-primary" : "bg-card"} border border-border shadow-none dark:shadow-2xl transition-all duration-500 h-full flex flex-col group/main`}>
                   <div className="p-6 md:p-8 border-b border-border min-h-[100px] md:min-h-[130px] flex flex-col justify-center">
                     <h3 className="text-lg md:text-xl font-black text-foreground tracking-tight leading-tight mb-2">{t(`capabilities.cards.${item.key}.title`)}</h3>
                     <p className={`text-xs md:text-sm ${i === 0 ? "text-primary-foreground" : "text-muted-foreground"} font-medium line-clamp-2 leading-relaxed opacity-80`}>
@@ -672,7 +672,7 @@ export default function Home() {
       </section>
 
       {/* Moving Marquee (Inter-section decoration) */}
-      <div className="relative z-20 bg-[#0066FF] py-6 overflow-hidden -rotate-2 -mx-10 shadow-2xl">
+            <div className="relative z-20 bg-[#0066FF] py-6 overflow-hidden -rotate-2 -mx-10 shadow-none dark:shadow-2xl">
         <div className="flex gap-20 animate-marquee whitespace-nowrap">
           {[...techIcons, ...techIcons, ...techIcons].map((item, i) => (
             <div key={i} className="flex items-center gap-4 text-foreground font-black text-2xl uppercase tracking-[0.2em] italic">
@@ -777,7 +777,7 @@ export default function Home() {
             <Link
               key={i}
               href={`/resources/case-studies/${project.slug}`}
-              className="relative group rounded-2xl md:rounded-3xl overflow-hidden bg-card aspect-square shadow-2xl cursor-pointer border border-border hover:border-[#0066FF]/30 transition-all"
+              className="relative group rounded-2xl md:rounded-3xl overflow-hidden bg-card aspect-square shadow-none dark:shadow-2xl cursor-pointer border border-border hover:border-[#0066FF]/30 transition-all"
             >
               <Image
                 src={project.logo}

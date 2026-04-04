@@ -10,10 +10,18 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+function resolveFromAddress() {
+  return process.env.SMTP_FROM || process.env.SMTP_USER || "sales@nexitsolu.com"
+}
+
 export const sendMail = async (to: string, subject: string, html: string) => {
   try {
+    if (!process.env.SMTP_HOST || !process.env.SMTP_PORT || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      throw new Error("SMTP configuration is incomplete. Check SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, and SMTP_FROM.")
+    }
+
     const info = await transporter.sendMail({
-      from: `"NexIT Sales" <${process.env.SMTP_FROM}>`,
+      from: `"NexIT Sales" <${resolveFromAddress()}>`,
       to,
       subject,
       html,

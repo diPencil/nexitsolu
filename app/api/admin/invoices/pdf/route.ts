@@ -66,15 +66,19 @@ export async function GET(req: NextRequest) {
         let page = pdfDoc.addPage([PAGE_W, PAGE_H]);
 
         const lang = req.nextUrl.searchParams.get("lang") || "en";
-        const fontPath = path.join(process.cwd(), "public", "fonts", "Rubik-Variable.ttf");
-        
+        const fontPath = path.join(process.cwd(), "public", "fonts", "Rubik-Regular.ttf");
+        const fontBoldPath = path.join(process.cwd(), "public", "fonts", "Rubik-Bold.ttf");
+
         if (!fs.existsSync(fontPath)) {
             return NextResponse.json({ error: `Font file missing: ${fontPath}` }, { status: 500 });
         }
 
         const fontBytes = fs.readFileSync(fontPath);
         const font = await pdfDoc.embedFont(fontBytes);
-        const fontBold = font; 
+
+        const fontBold = fs.existsSync(fontBoldPath)
+            ? await pdfDoc.embedFont(fs.readFileSync(fontBoldPath))
+            : font;
         
         const amiriPath = path.join(process.cwd(), "public", "fonts", "Amiri-Regular.ttf");
         let amiriFont: PDFFont | undefined;
