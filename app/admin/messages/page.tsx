@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -125,7 +125,7 @@ export default function AdminMessages() {
                 setInput("")
                 // Message will be added via Pusher or next poll
             } else {
-                let detail = lang === 'ar' ? "??? ???????" : "Failed to send"
+                let detail = lang === 'ar' ? "فشل الإرسال" : "Failed to send"
                 const raw = await res.text()
                 try {
                     const data = JSON.parse(raw) as { error?: string }
@@ -138,7 +138,7 @@ export default function AdminMessages() {
             }
         } catch (error) {
             console.error("Failed to send", error)
-            toast.error(lang === 'ar' ? "??? ???????" : "Failed to send")
+            toast.error(lang === 'ar' ? "فشل الإرسال" : "Failed to send")
         } finally {
             setIsSending(false)
         }
@@ -155,21 +155,21 @@ export default function AdminMessages() {
             });
 
             if (res.ok) {
-                toast.success(lang === 'ar' ? "?? ????? ????????" : "Conversation closed");
+                toast.success(lang === 'ar' ? "تم إغلاق المحادثة" : "Conversation closed");
                 setShowCloseModal(false);
                 setShowCloseMenu(false);
                 fetchConversations();
             }
         } catch (error) {
-            toast.error(lang === 'ar' ? "??? ???" : "An error occurred");
+            toast.error(lang === 'ar' ? "حدث خطأ" : "An error occurred");
         }
     }
 
     const closeReasons = [
-        { id: "resolved", ar: "?? ?? ???????", en: "Issue resolved" },
-        { id: "phone", ar: "??????? ?? ???????", en: "Will contact via phone" },
-        { id: "followup", ar: "?????? ?????", en: "Follow-up scheduled" },
-        { id: "other", ar: "????", en: "Other" }
+        { id: "resolved", ar: "تم حل المشكلة", en: "Issue resolved" },
+        { id: "phone", ar: "سنتواصل بك هاتفياً", en: "Will contact via phone" },
+        { id: "followup", ar: "متابعة لاحقة", en: "Follow-up scheduled" },
+        { id: "other", ar: "أخرى", en: "Other" }
     ];
 
     const filteredConversations = conversations.filter(c => 
@@ -184,14 +184,14 @@ export default function AdminMessages() {
         <div className="h-[calc(100vh-160px)] flex flex-col gap-6" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h1 className="text-3xl font-bold mb-2">{lang === 'ar' ? '??????? ?????' : 'Support Conversations'}</h1>
-                    <p className="text-muted-foreground">{lang === 'ar' ? '????? ??????? ????? ??????? ?? ???????.' : 'Manage live support conversations with customers.'}</p>
+                    <h1 className="text-3xl font-bold mb-2">{lang === 'ar' ? 'محادثات الدعم' : 'Support Conversations'}</h1>
+                    <p className="text-muted-foreground">{lang === 'ar' ? 'إدارة محادثات الدعم المباشر مع العملاء.' : 'Manage live support conversations with customers.'}</p>
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="hidden sm:flex items-center gap-2 bg-white/5 border border-border px-4 py-2 rounded-2xl">
                         <MessageCircle className="w-4 h-4 text-[#0066FF]" />
                         <span className="text-sm font-bold">{conversations.length}</span>
-                        <span className="text-xs text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? '??????' : 'chats'}</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'محادثة' : 'chats'}</span>
                     </div>
                 </div>
             </div>
@@ -204,7 +204,7 @@ export default function AdminMessages() {
                         <input
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder={lang === 'ar' ? '????? ?? ?????...' : "Search tickets..."}
+                            placeholder={lang === 'ar' ? 'البحث عن تذكرة...' : "Search tickets..."}
                             className={`w-full bg-background border border-input rounded-2xl py-3.5 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-sm focus:border-primary outline-none transition-all placeholder:text-muted-foreground`}
                         />
                     </div>
@@ -216,7 +216,7 @@ export default function AdminMessages() {
                         </div>
                     ) : filteredConversations.length === 0 ? (
                         <div className="text-center py-10 text-muted-foreground text-sm">
-                            {lang === 'ar' ? '?? ???? ????? ???' : 'No support tickets found'}
+                            {lang === 'ar' ? 'لا توجد تذاكر دعم' : 'No support tickets found'}
                         </div>
                     ) : (
                         <div className="flex-1 overflow-y-auto p-2 space-y-2 min-h-0">
@@ -242,7 +242,7 @@ export default function AdminMessages() {
                                             </p>
                                             {chat.status === 'CLOSED' && (
                                                 <span className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded-full ${selectedConversation?.id === chat.id ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-green-500/10 text-green-500'}`}>
-                                                    {lang === 'ar' ? '????' : 'Closed'}
+                                                    {lang === 'ar' ? 'مغلق' : 'Closed'}
                                                 </span>
                                             )}
                                         </div>
@@ -305,7 +305,7 @@ export default function AdminMessages() {
                                                 className="w-full px-5 py-4 text-start hover:bg-muted flex items-center gap-3 text-destructive transition-colors"
                                             >
                                                 <X className="w-4 h-4" />
-                                                <span className="text-sm font-bold">{lang === 'ar' ? '????? ????????' : 'Close Conversation'}</span>
+                                                <span className="text-sm font-bold">{lang === 'ar' ? 'إغلاق المحادثة' : 'Close Conversation'}</span>
                                             </button>
                                         </motion.div>
                                     )}
@@ -317,14 +317,14 @@ export default function AdminMessages() {
                             {isLoadingMessages ? (
                                 <div className="h-full flex flex-col items-center justify-center text-muted-foreground gap-3">
                                     <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                                    <p className="text-sm font-medium">{lang === 'ar' ? '???? ????? ???????...' : 'Loading messages...'}</p>
+                                    <p className="text-sm font-medium">{lang === 'ar' ? 'جاري تحميل الرسائل...' : 'Loading messages...'}</p>
                                 </div>
                             ) : messages.length === 0 ? (
                                 <div className="h-full flex flex-col items-center justify-center text-muted-foreground gap-4 opacity-50">
                                     <div className="bg-muted px-4 py-2 border-y border-border">
                                         <MessageCircle className="w-10 h-10" />
                                     </div>
-                                    <p className="text-sm font-medium">{lang === 'ar' ? '?? ???? ????? ???. ???? ????????!' : 'No messages yet. Say hi!'}</p>
+                                    <p className="text-sm font-medium">{lang === 'ar' ? 'لا توجد رسائل بعد. ابدأ المحادثة!' : 'No messages yet. Say hi!'}</p>
                                 </div>
                             ) : (
                                 <>
@@ -361,11 +361,11 @@ export default function AdminMessages() {
                                     <ShieldCheck className="w-6 h-6" />
                                 </div>
                                 <h4 className="text-foreground font-bold text-sm">
-                                    {lang === 'ar' ? '??? ???????? ?????' : 'This conversation is closed'}
+                                    {lang === 'ar' ? 'هذه المحادثة مغلقة' : 'This conversation is closed'}
                                 </h4>
                                 <p className="text-muted-foreground text-[11px] max-w-md mx-auto leading-relaxed">
                                     {lang === 'ar' 
-                                        ? `??? ???????: ${selectedConversation.closedReason === 'resolved' ? '?? ????' : (selectedConversation.closedReason === 'phone' ? '????? ???????' : (selectedConversation.closedReason === 'followup' ? '??????' : '????'))}`
+                                        ? `سبب الإغلاق: ${selectedConversation.closedReason === 'resolved' ? 'تم الحل' : (selectedConversation.closedReason === 'phone' ? 'تواصل هاتفياً' : (selectedConversation.closedReason === 'followup' ? 'متابعة' : 'أخرى'))}`
                                         : `Closed reason: ${selectedConversation.closedReason === 'resolved' ? 'Issue Resolved' : (selectedConversation.closedReason === 'phone' ? 'Phone Follow-up' : (selectedConversation.closedReason === 'followup' ? 'Scheduled Follow-up' : 'Other'))}`}
                                 </p>
                             </div>
@@ -375,7 +375,7 @@ export default function AdminMessages() {
                                     autoFocus
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
-                                    placeholder={lang === 'ar' ? '???? ??? ???...' : "Type your reply..."}
+                                    placeholder={lang === 'ar' ? 'اكتب ردك هنا...' : "Type your reply..."}
                                     className="flex-1 bg-background border border-input rounded-2xl px-6 py-4 text-sm text-foreground focus:border-primary outline-none transition-all placeholder:text-muted-foreground shadow-inner"
                                 />
                                 <button
@@ -385,7 +385,7 @@ export default function AdminMessages() {
                                 >
                                     {isSending ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                                         <>
-                                            <span className="hidden md:inline">{lang === 'ar' ? '?????' : 'Send'}</span>
+                                            <span className="hidden md:inline">{lang === 'ar' ? 'إرسال' : 'Send'}</span>
                                             <Send className={`w-4 h-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
                                         </>
                                     )}
@@ -399,9 +399,9 @@ export default function AdminMessages() {
                             <MessageCircle className="w-24 h-24 mb-6 opacity-5 animate-pulse" />
                             <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full" />
                         </div>
-                        <h3 className="text-xl font-bold text-foreground/50">{lang === 'ar' ? '??? ????? ?????' : 'Select a ticket to start'}</h3>
+                        <h3 className="text-xl font-bold text-foreground/50">{lang === 'ar' ? 'حدد تذكرة للبدء' : 'Select a ticket to start'}</h3>
                         <p className="text-sm max-w-xs text-center leading-relaxed">
-                            {lang === 'ar' ? '???? ????? ??? ?? ??????? ???????? ???? ??? ????????? ???????.' : 'Choose a support ticket from the sidebar to reply to customer inquiries.'}
+                            {lang === 'ar' ? 'اختر تذكرة دعم من القائمة الجانبية للرد على استفسارات العملاء.' : 'Choose a support ticket from the sidebar to reply to customer inquiries.'}
                         </p>
                     </div>
                 )}
@@ -423,12 +423,12 @@ export default function AdminMessages() {
                             className="bg-card border-border shadow-none max-w-md rounded-[2.5rem] p-8 relative"
                         >
                             <h3 className="text-xl font-bold mb-6 text-foreground">
-                                {lang === 'ar' ? '????? ??? ????????' : 'Close this ticket?'}
+                                {lang === 'ar' ? 'إغلاق هذه التذكرة؟' : 'Close this ticket?'}
                             </h3>
                             
                             <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
                                 {lang === 'ar' 
-                                    ? '???? ?????? ??? ????? ??????? ?????? ????????.' 
+                                    ? 'يرجى اختيار سبب إغلاق التذكرة لتنبيه المستخدم.' 
                                     : 'Please select a reason for closing to notify the user.'}
                             </p>
 
@@ -454,13 +454,13 @@ export default function AdminMessages() {
                                     onClick={() => setShowCloseModal(false)}
                                     className="flex-1 py-4 rounded-2xl bg-secondary text-muted-foreground/70 font-bold hover:bg-muted transition-all border border-border"
                                 >
-                                    {lang === 'ar' ? '?????' : 'Cancel'}
+                                    {lang === 'ar' ? 'إلغاء' : 'Cancel'}
                                 </button>
                                 <button
                                     onClick={handleCloseConversation}
                                     className="flex-1 py-4 rounded-2xl bg-[#0066FF] text-primary-foreground font-bold hover:bg-blue-600 transition-all shadow-none"
                                 >
-                                    {lang === 'ar' ? '????? ????' : 'Close Now'}
+                                    {lang === 'ar' ? 'إغلاق الآن' : 'Close Now'}
                                 </button>
                             </div>
                         </motion.div>

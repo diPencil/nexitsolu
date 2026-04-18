@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/i18n-context"
@@ -53,7 +53,7 @@ export default function AdminReviews() {
             }
         } catch (error) {
             console.error("Failed to fetch reviews", error)
-            toast.error(lang === 'ar' ? '??? ????? ?????????' : 'Failed to load reviews')
+            toast.error(lang === 'ar' ? 'فشل تحميل التقييمات' : 'Failed to load reviews')
         } finally {
             setIsLoading(false)
         }
@@ -74,24 +74,24 @@ export default function AdminReviews() {
                 setReviews(prev => prev.map(r => r.id === id ? { ...r, status } : r))
                 
                 let message = ""
-                if (status === "APPROVED") message = lang === 'ar' ? '??? ???????? ??? ???????' : 'Review approved'
-                if (status === "HIDDEN") message = lang === 'ar' ? '?? ????? ???????' : 'Review hidden'
-                if (status === "TRASHED") message = lang === 'ar' ? '?? ??? ??????? ??? ?????' : 'Review moved to trash'
+                if (status === "APPROVED") message = lang === 'ar' ? 'تمت الموافقة على التقييم' : 'Review approved'
+                if (status === "HIDDEN") message = lang === 'ar' ? 'تم إخفاء التقييم' : 'Review hidden'
+                if (status === "TRASHED") message = lang === 'ar' ? 'تم نقل التقييم إلى السلة' : 'Review moved to trash'
                 
                 toast.success(message)
             }
         } catch (error) {
-            toast.error(lang === 'ar' ? '??? ??? ??' : 'Something went wrong')
+            toast.error(lang === 'ar' ? 'حدث خطأ ما' : 'Something went wrong')
         }
     }
 
     const handleDeletePermanently = async (id: string) => {
         setConfirmModal({
             isOpen: true,
-            title: lang === 'ar' ? '??? ??????' : 'Hard Delete?',
-            message: lang === 'ar' ? '?? ??? ????? ?? ??? ??? ??????? ??????? ?? ????? ????????? ?? ???? ???????!' : 'Are you sure you want to delete this permanently? This cannot be undone!',
-            confirmText: lang === 'ar' ? '???' : 'Delete',
-            cancelText: lang === 'ar' ? '?????' : 'Cancel',
+            title: lang === 'ar' ? 'حذف نهائي؟' : 'Hard Delete?',
+            message: lang === 'ar' ? 'هل أنت متأكد من حذف هذا التقييم نهائياً من قاعدة البيانات؟ لا يمكن التراجع!' : 'Are you sure you want to delete this permanently? This cannot be undone!',
+            confirmText: lang === 'ar' ? 'حذف' : 'Delete',
+            cancelText: lang === 'ar' ? 'تراجع' : 'Cancel',
             danger: true,
             icon: <Trash2 className="w-8 h-8 text-red-500" />,
             onConfirm: async () => {
@@ -99,10 +99,10 @@ export default function AdminReviews() {
                     const res = await fetch(`/api/admin/reviews/${id}`, { method: "DELETE" })
                     if (res.ok) {
                         setReviews(prev => prev.filter(r => r.id !== id))
-                        toast.success(lang === 'ar' ? '?? ????? ???????' : 'Deleted permanently')
+                        toast.success(lang === 'ar' ? 'تم الحذف نهائياً' : 'Deleted permanently')
                     }
                 } catch (error) {
-                    toast.error(lang === 'ar' ? '??? ?????' : 'Failed to delete')
+                    toast.error(lang === 'ar' ? 'فشل الحذف' : 'Failed to delete')
                 } finally {
                     setConfirmModal(prev => ({ ...prev, isOpen: false }))
                 }
@@ -118,21 +118,21 @@ export default function AdminReviews() {
         let danger = false
 
         if (status === 'HIDDEN') {
-            title = lang === 'ar' ? '????? ????????' : 'Hide Review?'
-            message = lang === 'ar' ? '?? ???? ????? ??? ??????? ?? ????????' : 'Do you want to hide this review from customers?'
-            confirmText = lang === 'ar' ? '?????' : 'Hide'
+            title = lang === 'ar' ? 'إخفاء التقييم؟' : 'Hide Review?'
+            message = lang === 'ar' ? 'هل تريد إخفاء هذا التقييم عن العملاء؟' : 'Do you want to hide this review from customers?'
+            confirmText = lang === 'ar' ? 'إخفاء' : 'Hide'
             icon = <EyeOff className="w-8 h-8 text-yellow-500" />
             danger = false
         } else if (status === 'TRASHED') {
-            title = lang === 'ar' ? '??? ??????' : 'Move to Trash?'
-            message = lang === 'ar' ? '???? ??? ??????? ??? ??? ????????.' : 'Review will be moved to the trash section.'
-            confirmText = lang === 'ar' ? '???' : 'Move'
+            title = lang === 'ar' ? 'نقل للسلة؟' : 'Move to Trash?'
+            message = lang === 'ar' ? 'سيتم نقل التقييم إلى سلة المهملات.' : 'Review will be moved to the trash section.'
+            confirmText = lang === 'ar' ? 'نقل' : 'Move'
             icon = <Trash2 className="w-8 h-8 text-red-500" />
             danger = true
         } else if (status === 'APPROVED') {
-            title = lang === 'ar' ? '??????? ????????' : 'Restore Review?'
-            message = lang === 'ar' ? '?? ???? ????? ??? ??????? ??? ????? ??????' : 'Do you want to restore this review to the active section?'
-            confirmText = lang === 'ar' ? '???????' : 'Restore'
+            title = lang === 'ar' ? 'استعادة التقييم؟' : 'Restore Review?'
+            message = lang === 'ar' ? 'هل تريد إعادة هذا التقييم إلى القسم النشط؟' : 'Do you want to restore this review to the active section?'
+            confirmText = lang === 'ar' ? 'استعادة' : 'Restore'
             icon = <RotateCcw className="w-8 h-8 text-blue-500" />
             danger = false
         }
@@ -142,7 +142,7 @@ export default function AdminReviews() {
             title,
             message,
             confirmText,
-            cancelText: lang === 'ar' ? '?????' : 'Cancel',
+            cancelText: lang === 'ar' ? 'إلغاء' : 'Cancel',
             danger,
             icon,
             onConfirm: () => {
@@ -175,10 +175,10 @@ export default function AdminReviews() {
                     next.delete(id)
                     return next
                 })
-                toast.success(lang === 'ar' ? '?? ??? ???? ?????' : 'Reply saved successfully')
+                toast.success(lang === 'ar' ? 'تم حفظ الرد بنجاح' : 'Reply saved successfully')
             }
         } catch (error) {
-            toast.error(lang === 'ar' ? '??? ??? ????' : 'Failed to save reply')
+            toast.error(lang === 'ar' ? 'فشل حفظ الرد' : 'Failed to save reply')
         }
     }
 
@@ -200,10 +200,10 @@ export default function AdminReviews() {
                     next.delete(id)
                     return next
                 })
-                toast.success(lang === 'ar' ? '?? ????? ??????? ?????' : 'Comment updated successfully')
+                toast.success(lang === 'ar' ? 'تم تحديث التعليق بنجاح' : 'Comment updated successfully')
             }
         } catch (error) {
-            toast.error(lang === 'ar' ? '??? ????? ???????' : 'Failed to update comment')
+            toast.error(lang === 'ar' ? 'فشل تحديث التعليق' : 'Failed to update comment')
         }
     }
 
@@ -225,20 +225,20 @@ export default function AdminReviews() {
                     messages: r.messages.map((m: any) => m.id === messageId ? updatedMessage : m)
                 } : r))
                 setEditingMessageId(null)
-                toast.success(lang === 'ar' ? '?? ????? ???????' : 'Message updated')
+                toast.success(lang === 'ar' ? 'تم تحديث الرسالة' : 'Message updated')
             }
         } catch (error) {
-            toast.error(lang === 'ar' ? '??? ????? ???????' : 'Failed to update message')
+            toast.error(lang === 'ar' ? 'فشل تحديث الرسالة' : 'Failed to update message')
         }
     }
 
     const handleDeleteMessage = async (messageId: string, reviewId: string) => {
         setConfirmModal({
             isOpen: true,
-            title: lang === 'ar' ? '??? ????????' : 'Delete message?',
-            message: lang === 'ar' ? '?? ??? ????? ?? ??? ??? ??????? ?? ?????????' : 'Are you sure you want to delete this message from conversation?',
-            confirmText: lang === 'ar' ? '???' : 'Delete',
-            cancelText: lang === 'ar' ? '?????' : 'Cancel',
+            title: lang === 'ar' ? 'حذف الرسالة؟' : 'Delete message?',
+            message: lang === 'ar' ? 'هل أنت متأكد من حذف هذه الرسالة من المحادثة؟' : 'Are you sure you want to delete this message from conversation?',
+            confirmText: lang === 'ar' ? 'حذف' : 'Delete',
+            cancelText: lang === 'ar' ? 'إلغاء' : 'Cancel',
             danger: true,
             icon: <Trash2 className="w-8 h-8 text-red-500" />,
             onConfirm: async () => {
@@ -249,10 +249,10 @@ export default function AdminReviews() {
                             ...r,
                             messages: r.messages.filter((m: any) => m.id !== messageId)
                         } : r))
-                        toast.success(lang === 'ar' ? '?? ??? ???????' : 'Message deleted')
+                        toast.success(lang === 'ar' ? 'تم حذف الرسالة' : 'Message deleted')
                     }
                 } catch (error) {
-                    toast.error(lang === 'ar' ? '??? ??? ???????' : 'Failed to delete message')
+                    toast.error(lang === 'ar' ? 'فشل حذف الرسالة' : 'Failed to delete message')
                 }
             }
         })
@@ -271,7 +271,7 @@ export default function AdminReviews() {
             <div className="flex items-center justify-center p-20 min-h-[400px]">
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-                    <p className="text-muted-foreground font-medium">{lang === 'ar' ? '???? ???????...' : 'Fetching reviews...'}</p>
+                    <p className="text-muted-foreground font-medium">{lang === 'ar' ? 'جاري التحميل...' : 'Fetching reviews...'}</p>
                 </div>
             </div>
         )
@@ -282,17 +282,17 @@ export default function AdminReviews() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 py-4">
                 <div>
                     <h1 className="text-3xl font-bold mb-2">
-                        {lang === 'ar' ? '????? ?????????' : 'Reviews Management'}
+                        {lang === 'ar' ? 'إدارة التقييمات' : 'Reviews Management'}
                     </h1>
                     <p className="text-muted-foreground">
-                        {lang === 'ar' ? '???? ?? ?? ????? ??????? ????? ?????' : 'Monitor and moderate customer feedback in real-time.'}
+                        {lang === 'ar' ? 'تحكم في ما يكتبه العملاء بضغطة واحدة' : 'Monitor and moderate customer feedback in real-time.'}
                     </p>
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="hidden sm:flex items-center gap-2 bg-white/5 border border-border px-4 py-2 rounded-2xl">
                         <Star className="w-4 h-4 text-[#0066FF]" />
                         <span className="text-sm font-bold">{reviews.length}</span>
-                        <span className="text-xs text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? '?????' : 'reviews'}</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'تقييم' : 'reviews'}</span>
                     </div>
                 </div>
             </div>
@@ -300,19 +300,19 @@ export default function AdminReviews() {
             <Tabs defaultValue="active" onValueChange={setActiveTab} className="w-full">
                 <TabsList className="bg-muted border border-border p-1 rounded-2xl h-auto w-full flex flex-wrap gap-2">
                     <TabsTrigger value="active" className="px-6 py-2.5 rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all text-xs font-black">
-                        {lang === 'ar' ? '??????' : 'Active'}
+                        {lang === 'ar' ? 'النشطة' : 'Active'}
                         <span className="ml-2 bg-background/10 px-2 py-0.5 rounded-full text-[10px]">{reviews.filter(r => r.status === 'APPROVED').length}</span>
                     </TabsTrigger>
                     <TabsTrigger value="pending" className="px-6 py-2.5 rounded-xl data-[state=active]:bg-purple-500 data-[state=active]:text-white transition-all text-xs font-black">
-                        {lang === 'ar' ? '???????' : 'Pending'}
+                        {lang === 'ar' ? 'المعلقة' : 'Pending'}
                         <span className="ml-2 bg-background/10 px-2 py-0.5 rounded-full text-[10px]">{reviews.filter(r => r.status === 'PENDING').length}</span>
                     </TabsTrigger>
                     <TabsTrigger value="hidden" className="px-6 py-2.5 rounded-xl data-[state=active]:bg-yellow-500 data-[state=active]:text-black transition-all text-xs font-black">
-                        {lang === 'ar' ? '???????' : 'Hidden'}
+                        {lang === 'ar' ? 'المخفية' : 'Hidden'}
                         <span className="ml-2 bg-black/20 px-2 py-0.5 rounded-full text-[10px]">{reviews.filter(r => r.status === 'HIDDEN').length}</span>
                     </TabsTrigger>
                     <TabsTrigger value="trash" className="px-6 py-2.5 rounded-xl data-[state=active]:bg-red-500 data-[state=active]:text-white transition-all text-xs font-black">
-                        {lang === 'ar' ? '?????' : 'Trash'}
+                        {lang === 'ar' ? 'السلة' : 'Trash'}
                         <span className="ml-2 bg-background/10 px-2 py-0.5 rounded-full text-[10px]">{reviews.filter(r => r.status === 'TRASHED').length}</span>
                     </TabsTrigger>
                 </TabsList>
@@ -478,7 +478,7 @@ function ReviewList({
             {list.length === 0 ? (
                 <div className="text-center py-20 bg-muted/20 rounded-3xl border border-border space-y-4">
                     <ShieldAlert className="w-12 h-12 text-muted-foreground mx-auto" />
-                    <p className="text-muted-foreground text-sm">{lang === 'ar' ? '?? ???? ??????? ?? ??? ?????' : 'No reviews found in this section'}</p>
+                    <p className="text-muted-foreground text-sm">{lang === 'ar' ? 'لا توجد تقييمات في هذا القسم' : 'No reviews found in this section'}</p>
                 </div>
             ) : (
                 list.map(review => (
@@ -571,7 +571,7 @@ function ReviewList({
                                             <div className="space-y-3 bg-muted/20 p-4 rounded-2xl border border-border">
                                                 <div className="flex items-center gap-2 mb-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                                     <MessageSquare className="w-3 h-3" />
-                                                    {lang === 'ar' ? '??? ????????' : 'Conversation History'}
+                                                    {lang === 'ar' ? 'سجل المحادثة' : 'Conversation History'}
                                                 </div>
                                                 {review.messages.map((msg: any) => (
                                                     <div 
@@ -602,7 +602,7 @@ function ReviewList({
                                                                             {msg.role === 'ADMIN' ? <Star className="w-2.5 h-2.5 fill-white text-white" /> : <User className="w-2.5 h-2.5 text-white" />}
                                                                         </div>
                                                                         <span className="font-bold text-[10px] uppercase tracking-widest">
-                                                                            {msg.role === 'ADMIN' ? (lang === 'ar' ? '???????' : 'Admin') : (lang === 'ar' ? '??????' : 'Customer')}
+                                                                            {msg.role === 'ADMIN' ? (lang === 'ar' ? 'الإدارة' : 'Admin') : (lang === 'ar' ? 'العميل' : 'Customer')}
                                                                         </span>
                                                                     </div>
                                                                     <div className="flex items-center gap-3">
@@ -642,7 +642,7 @@ function ReviewList({
                                             <div className="flex gap-2 bg-muted/40 p-2 rounded-2xl border border-border">
                                                 <input 
                                                     type="text" 
-                                                    placeholder={lang === 'ar' ? "??? ???? ?????? ???..." : "Add a new reply to discussion..."}
+                                                    placeholder={lang === 'ar' ? "أضف رداً جديداً هنا..." : "Add a new reply to discussion..."}
                                                     className="flex-1 bg-transparent px-3 py-2 text-xs text-foreground focus:outline-none"
                                                     value={replyText[review.id] || ''}
                                                     onChange={(e) => setReplyText(prev => ({ ...prev, [review.id]: e.target.value }))}
@@ -652,7 +652,7 @@ function ReviewList({
                                                     onClick={() => handleReply(review.id)}
                                                     className="px-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-[10px] font-black transition-all shadow-none active:scale-95"
                                                 >
-                                                    {lang === 'ar' ? '?????' : 'Send'}
+                                                    {lang === 'ar' ? 'إرسال' : 'Send'}
                                                 </button>
                                             </div>
                                         )}
@@ -683,7 +683,7 @@ function ReviewList({
                                                         onClick={() => handleReply(review.id)}
                                                         className="px-4 bg-emerald-500 text-primary-foreground rounded-xl text-[10px] font-black"
                                                     >
-                                                        {lang === 'ar' ? '???' : 'Save'}
+                                                        {lang === 'ar' ? 'حفظ' : 'Save'}
                                                     </button>
                                                     <button 
                                                         onClick={() => setEditingReplyIds(prev => {
@@ -693,7 +693,7 @@ function ReviewList({
                                                         })}
                                                         className="px-4 bg-muted text-primary-foreground rounded-xl text-[10px] font-black"
                                                     >
-                                                        {lang === 'ar' ? '?????' : 'Cancel'}
+                                                        {lang === 'ar' ? 'إلغاء' : 'Cancel'}
                                                     </button>
                                                 </div>
                                             </div>
@@ -710,24 +710,24 @@ function ReviewList({
                                                 className="flex-1 flex items-center justify-center gap-2 px-5 py-3 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-2xl text-[11px] font-black transition-all"
                                             >
                                                 <CheckCircle className="w-4 h-4" />
-                                                {lang === 'ar' ? '????' : 'Approve'}
+                                                {lang === 'ar' ? 'قبول' : 'Approve'}
                                             </button>
                                             <button 
                                                 onClick={() => confirmStatusUpdate(review.id, 'TRASHED')}
                                                 className="flex-1 flex items-center justify-center gap-2 px-5 py-3 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-2xl text-[11px] font-black transition-all"
                                             >
                                                 <XCircle className="w-4 h-4" />
-                                                {lang === 'ar' ? '???' : 'Reject'}
+                                                {lang === 'ar' ? 'رفض' : 'Reject'}
                                             </button>
                                         </div>
                                     ) : review.status === 'APPROVED' ? (
                                         <button 
                                             onClick={() => confirmStatusUpdate(review.id, 'HIDDEN')}
                                             className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-background border border-border text-yellow-500 hover:bg-yellow-500 hover:text-primary-foreground rounded-2xl text-[11px] font-black transition-all group/btn"
-                                            title={lang === 'ar' ? '????? ?? ??????' : 'Hide from public'}
+                                            title={lang === 'ar' ? 'إخفاء عن العامة' : 'Hide from public'}
                                         >
                                             <EyeOff className="w-4 h-4" />
-                                            {lang === 'ar' ? '?????' : 'Hide'}
+                                            {lang === 'ar' ? 'إخفاء' : 'Hide'}
                                         </button>
                                     ) : (
                                         <button 
@@ -735,7 +735,7 @@ function ReviewList({
                                             className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-background border border-border text-emerald-500 hover:bg-emerald-500 hover:text-primary-foreground rounded-2xl text-[11px] font-black transition-all"
                                         >
                                             <CheckCircle className="w-4 h-4" />
-                                            {lang === 'ar' ? '??????' : 'Approve'}
+                                            {lang === 'ar' ? 'موافقة' : 'Approve'}
                                         </button>
                                     )}
 
@@ -745,7 +745,7 @@ function ReviewList({
                                             className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-background border border-border text-red-400 hover:bg-red-500 hover:text-primary-foreground rounded-2xl text-[11px] font-black transition-all"
                                         >
                                             <Trash2 className="w-4 h-4" />
-                                            {lang === 'ar' ? '??? ????????' : 'Trash'}
+                                            {lang === 'ar' ? 'سلة المهملات' : 'Trash'}
                                         </button>
                                     )}
                                     
@@ -756,14 +756,14 @@ function ReviewList({
                                                 className="flex-1 flex items-center justify-center gap-2 px-5 py-3 bg-background border border-border text-blue-400 hover:bg-blue-500 hover:text-primary-foreground rounded-2xl text-[11px] font-black transition-all"
                                             >
                                                 <RotateCcw className="w-4 h-4" />
-                                                {lang === 'ar' ? '???????' : 'Restore'}
+                                                {lang === 'ar' ? 'استعادة' : 'Restore'}
                                             </button>
                                             <button 
                                                 onClick={() => handleDeletePermanently(review.id)}
                                                 className="flex-1 flex items-center justify-center gap-2 px-5 py-3 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-2xl text-[11px] font-black transition-all"
                                             >
                                                 <Trash2 className="w-4 h-4" />
-                                                {lang === 'ar' ? '??? ?????' : 'Hard Delete'}
+                                                {lang === 'ar' ? 'حذف نهائي' : 'Hard Delete'}
                                             </button>
                                         </div>
                                     )}

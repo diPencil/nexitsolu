@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
@@ -70,14 +70,14 @@ export default function AdminSubscriptionPlansPage() {
                 const data = await resPlans.json()
                 setRows(Array.isArray(data) ? data : [])
             } else {
-                toast.error(lang === "ar" ? "??? ????? ?????" : "Failed to load plans")
+                toast.error(lang === "ar" ? "فشل تحميل الخطط" : "Failed to load plans")
             }
             if (resSvc.ok) {
                 const data = await resSvc.json()
                 setServices(Array.isArray(data) ? data : [])
             }
         } catch {
-            toast.error(lang === "ar" ? "??? ???????" : "Failed to load")
+            toast.error(lang === "ar" ? "فشل التحميل" : "Failed to load")
         } finally {
             setIsLoading(false)
         }
@@ -89,7 +89,7 @@ export default function AdminSubscriptionPlansPage() {
 
     const serviceLabel = (key: string | null) => {
         if (!key)
-            return lang === "ar" ? "?? ???????" : "All services"
+            return lang === "ar" ? "كل الخدمات" : "All services"
         const s = services.find((x) => x.key === key)
         if (!s) return key
         return lang === "ar" ? s.nameAr : s.nameEn
@@ -129,7 +129,7 @@ export default function AdminSubscriptionPlansPage() {
         if (!nameEn || !nameAr) {
             toast.error(
                 lang === "ar"
-                    ? "???? ????? ??????? ??????????"
+                    ? "أدخل الاسم بالعربي والإنجليزي"
                     : "Enter Arabic and English names"
             )
             return
@@ -158,7 +158,7 @@ export default function AdminSubscriptionPlansPage() {
                     toast.error(err.error || "Error")
                     return
                 }
-                toast.success(lang === "ar" ? "?? ???????" : "Updated")
+                toast.success(lang === "ar" ? "تم التحديث" : "Updated")
             } else {
                 const res = await fetch("/api/admin/subscription-plans", {
                     method: "POST",
@@ -177,7 +177,7 @@ export default function AdminSubscriptionPlansPage() {
                     toast.error(err.error || "Error")
                     return
                 }
-                toast.success(lang === "ar" ? "??? ???????" : "Added")
+                toast.success(lang === "ar" ? "تمت الإضافة" : "Added")
             }
             setIsModalOpen(false)
             load()
@@ -211,7 +211,7 @@ export default function AdminSubscriptionPlansPage() {
                 method: "DELETE",
             })
             if (res.status === 204) {
-                toast.success(lang === "ar" ? "?? ?????" : "Deleted")
+                toast.success(lang === "ar" ? "تم الحذف" : "Deleted")
                 load()
                 return
             }
@@ -219,7 +219,7 @@ export default function AdminSubscriptionPlansPage() {
             if (err.error === "PLAN_IN_USE") {
                 toast.error(
                     lang === "ar"
-                        ? "?? ???? ?????: ???? ???????? ???? ??? ?????."
+                        ? "لا يمكن الحذف: توجد اشتراكات بنفس اسم الخطة."
                         : "Cannot delete: subscriptions still use this plan name."
                 )
                 return
@@ -241,16 +241,16 @@ export default function AdminSubscriptionPlansPage() {
                         <ArrowLeft
                             className={`w-4 h-4 ${lang === "ar" ? "rotate-180" : ""}`}
                         />
-                        {lang === "ar" ? "??????????" : "Subscriptions"}
+                        {lang === "ar" ? "الاشتراكات" : "Subscriptions"}
                     </Link>
                     <h1 className="text-3xl font-bold flex items-center gap-3">
                         <ListOrdered className="w-8 h-8 text-[#0066FF]" />
-                        {lang === "ar" ? "??? ????????" : "Subscription plans"}
+                        {lang === "ar" ? "خطط الاشتراك" : "Subscription plans"}
                     </h1>
                     <p className="text-muted-foreground mt-2 text-sm">
                         {lang === "ar"
-                            ? "???? ??????? (?????? ???? ???????�). ???? ??? ????? ????? ????? ?? ????? ????? ??? ???????."
-                            : "Define tiers (Bronze, Gold, Premium�). Tie a plan to one service or leave �all services�."}
+                            ? "عرّف الباقات (برونز، ذهب، بريميوم…). يمكن ربط الخطة بخدمة محددة أو جعلها متاحة لكل الخدمات."
+                            : "Define tiers (Bronze, Gold, Premium…). Tie a plan to one service or leave “all services”."}
                     </p>
                 </div>
                 <Button
@@ -259,7 +259,7 @@ export default function AdminSubscriptionPlansPage() {
                     className="rounded-2xl h-12 bg-[#0066FF] hover:bg-blue-600 text-white gap-2 [&_svg]:text-white"
                 >
                     <Plus className="w-5 h-5" />
-                    {lang === "ar" ? "??? ?????" : "New plan"}
+                    {lang === "ar" ? "خطة جديدة" : "New plan"}
                 </Button>
             </div>
 
@@ -269,7 +269,7 @@ export default function AdminSubscriptionPlansPage() {
                 </div>
             ) : rows.length === 0 ? (
                 <div className="py-16 text-center text-muted-foreground border border-border rounded-3xl">
-                    {lang === "ar" ? "?? ???? ??? ???" : "No plans yet"}
+                    {lang === "ar" ? "لا توجد خطط بعد" : "No plans yet"}
                 </div>
             ) : (
                 <div className="space-y-2">
@@ -288,12 +288,12 @@ export default function AdminSubscriptionPlansPage() {
                                 <p className="text-xs text-muted-foreground mt-1">
                                     {serviceLabel(r.serviceKey)}
                                     {r.suggestedAmount != null
-                                        ? ` � ${r.suggestedAmount} EGP`
+                                        ? ` · ${r.suggestedAmount} EGP`
                                         : ""}
                                 </p>
                                 {!r.active && (
                                     <span className="text-[10px] text-amber-500 font-black uppercase mt-1 inline-block">
-                                        {lang === "ar" ? "??????" : "Inactive"}
+                                        {lang === "ar" ? "موقوفة" : "Inactive"}
                                     </span>
                                 )}
                             </div>
@@ -307,7 +307,7 @@ export default function AdminSubscriptionPlansPage() {
                                     size="sm"
                                     onClick={() => openEdit(r)}
                                     className="border-border rounded-xl"
-                                    title={lang === "ar" ? "?????" : "Edit"}
+                                    title={lang === "ar" ? "تعديل" : "Edit"}
                                 >
                                     <Pencil className="w-4 h-4" />
                                 </Button>
@@ -317,7 +317,7 @@ export default function AdminSubscriptionPlansPage() {
                                     size="sm"
                                     onClick={() => openDeleteDialog(r)}
                                     className="border-border rounded-xl text-muted-foreground hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/10"
-                                    title={lang === "ar" ? "???" : "Delete"}
+                                    title={lang === "ar" ? "حذف" : "Delete"}
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </Button>
@@ -338,10 +338,10 @@ export default function AdminSubscriptionPlansPage() {
                             <h2 className="font-bold">
                                 {editingId
                                     ? lang === "ar"
-                                        ? "????? ???"
+                                        ? "تعديل خطة"
                                         : "Edit plan"
                                     : lang === "ar"
-                                      ? "??? ?????"
+                                      ? "خطة جديدة"
                                       : "New plan"}
                             </h2>
                             <button
@@ -355,7 +355,7 @@ export default function AdminSubscriptionPlansPage() {
                         <form onSubmit={submit} className="p-4 space-y-3">
                             <div className="space-y-1">
                                 <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
-                                    {lang === "ar" ? "?????? (???????)" : "Service (optional)"}
+                                    {lang === "ar" ? "الخدمة (اختياري)" : "Service (optional)"}
                                 </label>
                                 <select
                                     className="w-full bg-secondary border border-border rounded-xl py-2.5 px-3 text-sm text-foreground outline-none focus:border-[#0066FF]"
@@ -369,8 +369,8 @@ export default function AdminSubscriptionPlansPage() {
                                 >
                                     <option value="">
                                         {lang === "ar"
-                                            ? "� ?? ??????? �"
-                                            : "� All services �"}
+                                            ? "— كل الخدمات —"
+                                            : "— All services —"}
                                     </option>
                                     {services
                                         .filter((s) => s.active)
@@ -401,7 +401,7 @@ export default function AdminSubscriptionPlansPage() {
                             </div>
                             <div className="space-y-1">
                                 <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
-                                    ????
+                                    عربي
                                 </label>
                                 <input
                                     required
@@ -419,7 +419,7 @@ export default function AdminSubscriptionPlansPage() {
                             <div className="space-y-1">
                                 <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
                                     {lang === "ar"
-                                        ? "???? ????? (?.?? ???????)"
+                                        ? "مبلغ مقترح (ج.م، اختياري)"
                                         : "Suggested amount (EGP, optional)"}
                                 </label>
                                 <input
@@ -437,7 +437,7 @@ export default function AdminSubscriptionPlansPage() {
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="space-y-1">
                                     <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
-                                        {lang === "ar" ? "?????" : "Sort"}
+                                        {lang === "ar" ? "ترتيب" : "Sort"}
                                     </label>
                                     <input
                                         type="number"
@@ -464,7 +464,7 @@ export default function AdminSubscriptionPlansPage() {
                                             }
                                             className="rounded border-border"
                                         />
-                                        {lang === "ar" ? "????" : "Active"}
+                                        {lang === "ar" ? "نشطة" : "Active"}
                                     </label>
                                 </div>
                             </div>
@@ -475,7 +475,7 @@ export default function AdminSubscriptionPlansPage() {
                                     className="flex-1 rounded-xl border-border"
                                     onClick={() => setIsModalOpen(false)}
                                 >
-                                    {lang === "ar" ? "?????" : "Cancel"}
+                                    {lang === "ar" ? "إلغاء" : "Cancel"}
                                 </Button>
                                 <Button
                                     type="submit"
@@ -485,9 +485,9 @@ export default function AdminSubscriptionPlansPage() {
                                     {isSaving ? (
                                         <Loader2 className="w-4 h-4 animate-spin" />
                                     ) : editingId ? (
-                                        lang === "ar" ? "???" : "Save"
+                                        lang === "ar" ? "حفظ" : "Save"
                                     ) : (
-                                        lang === "ar" ? "?????" : "Add"
+                                        lang === "ar" ? "إضافة" : "Add"
                                     )}
                                 </Button>
                             </div>
@@ -500,16 +500,16 @@ export default function AdminSubscriptionPlansPage() {
                 isOpen={deleteDialogOpen}
                 onCancel={closeDeleteDialog}
                 onConfirm={() => void executeConfirmedDelete()}
-                title={lang === "ar" ? "??? ??????" : "Delete plan?"}
+                title={lang === "ar" ? "حذف الخطة؟" : "Delete plan?"}
                 message={
                     deleteLabels
                         ? lang === "ar"
-                          ? `???? ??? �${deleteLabels.ar}� ???????. ?? ???? ???????.`
+                          ? `سيتم حذف «${deleteLabels.ar}» نهائياً. لا يمكن التراجع.`
                           : `"${deleteLabels.en}" will be permanently removed. This cannot be undone.`
                         : ""
                 }
-                confirmText={lang === "ar" ? "???" : "Delete"}
-                cancelText={lang === "ar" ? "?????" : "Cancel"}
+                confirmText={lang === "ar" ? "حذف" : "Delete"}
+                cancelText={lang === "ar" ? "إلغاء" : "Cancel"}
                 danger
             />
         </div>
