@@ -60,7 +60,7 @@ function ZonePicker({ selected, onChange, allZones }: { selected: string[], onCh
                         ? <span className="text-muted-foreground">{lang === 'ar' ? 'كل المحافظات (شحن لكل مكان)' : 'All Governorates (Ship Everywhere)'}</span>
                         : <span className="text-foreground font-bold">{selected.length} {lang === 'ar' ? 'محافظة محددة' : 'Zones Selected'}</span>}
                 </span>
-                <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform ${open ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${open ? 'rotate-180' : ''}`} />
             </button>
             {open && (
                 <div className="absolute top-full mt-2 left-0 right-0 z-50 bg-popover border border-border rounded-2xl shadow-none overflow-hidden">
@@ -140,13 +140,13 @@ export default function NewProductPage() {
     return (
         <div className="max-w-7xl mx-auto pb-20 space-y-8 px-4 md:px-0">
             <div className="flex items-center justify-between">
-                <Button variant="ghost" className="rounded-2xl gap-2 text-zinc-500 hover:text-foreground" onClick={() => router.push("/admin/products")}>
+                <Button variant="ghost" className="rounded-2xl gap-2 text-muted-foreground hover:text-foreground" onClick={() => router.push("/admin/products")}>
                     <ArrowLeft className="w-4 h-4" />
                     {lang === 'ar' ? "رجوع" : "Back"}
                 </Button>
                 <div>
                    <h1 className="text-3xl font-black text-center">{lang === 'ar' ? "إضافة منتج جديد" : "Add New Product"}</h1>
-                   <p className="text-zinc-500 text-sm text-center mt-1">Create a fresh product listing for NexIT Store</p>
+                   <p className="text-muted-foreground text-sm text-center mt-1">Create a fresh product listing for NexIT Store</p>
                 </div>
                 <div className="w-20" /> {/* Spacer */}
             </div>
@@ -159,30 +159,30 @@ export default function NewProductPage() {
                     {/* Left Column */}
                     <div className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Product Title (English)</label>
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Product Title (English)</label>
                             <input required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-foreground font-bold transition-all shadow-inner" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Arabic Title</label>
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Arabic Title</label>
                             <input required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none text-end text-foreground font-bold transition-all shadow-inner" value={formData.nameAr} onChange={e => setFormData({ ...formData, nameAr: e.target.value })} />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Base Price (EGP)</label>
+                                <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Base Price (EGP)</label>
                                 <div className="relative">
                                     <DollarSign className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0066FF]" />
                                     <input type="number" step="0.01" required className="w-full bg-muted/30 border border-border rounded-2xl py-5 pl-14 pr-6 focus:border-[#0066FF] outline-none font-black text-emerald-500" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} />
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Special Price</label>
+                                <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Special Price</label>
                                 <input type="number" step="0.01" className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none font-bold text-muted-foreground" value={formData.discountPrice} onChange={e => setFormData({ ...formData, discountPrice: e.target.value })} />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Category</label>
+                                <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Category</label>
                                 <select className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none appearance-none font-bold" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
                                     {categories.length > 0 ? (
                                         categories.map(cat => <option key={cat.id} value={cat.name}>{lang === 'ar' ? cat.nameAr : cat.nameEn}</option>)
@@ -192,7 +192,7 @@ export default function NewProductPage() {
                                 </select>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Inventory Stock</label>
+                                <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Inventory Stock</label>
                                 <input type="number" required className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none font-bold" value={formData.stock} onChange={e => setFormData({ ...formData, stock: e.target.value })} />
                             </div>
                         </div>
@@ -201,7 +201,7 @@ export default function NewProductPage() {
                     {/* Right Column */}
                     <div className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Main Cover Image</label>
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Main Cover Image</label>
                             <div className="group/img relative">
                                 <input className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none transition-all" value={formData.image} placeholder="Paste direct image link..." onChange={e => setFormData({ ...formData, image: e.target.value })} />
                                 {formData.image && (
@@ -212,11 +212,11 @@ export default function NewProductPage() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Image Gallery (Comma Separated)</label>
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Image Gallery (Comma Separated)</label>
                             <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[100px] text-sm" value={formData.gallery} placeholder="url1, url2, url3..." onChange={e => setFormData({ ...formData, gallery: e.target.value })} />
                         </div>
                         <div className="space-y-2 pt-2">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 flex items-center gap-2">
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2 flex items-center gap-2">
                                 <Truck className="w-3.5 h-3.5 text-[#0066FF]" />
                                 Shipping Coverage
                             </label>
@@ -230,28 +230,28 @@ export default function NewProductPage() {
                 <div className="mt-10 pt-10 border-t border-border space-y-8 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2 min-w-0">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Short description (EN)</label>
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Short description (EN)</label>
                             <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[140px] text-sm" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
                         </div>
                         <div className="space-y-2 min-w-0">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block md:text-start">وصف قصير (AR)</label>
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2 text-end block md:text-start">وصف قصير (AR)</label>
                             <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[140px] text-sm text-end" value={formData.descriptionAr} onChange={e => setFormData({ ...formData, descriptionAr: e.target.value })} />
                         </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2 min-w-0">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2">Long description (EN)</label>
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2">Long description (EN)</label>
                             <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[220px] text-sm" value={formData.longDescription} placeholder="Full specs, details for the product page..." onChange={e => setFormData({ ...formData, longDescription: e.target.value })} />
                         </div>
                         <div className="space-y-2 min-w-0">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-2 text-end block md:text-start">وصف طويل (AR)</label>
+                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-2 text-end block md:text-start">وصف طويل (AR)</label>
                             <textarea className="w-full bg-muted/30 border border-border rounded-2xl py-5 px-6 focus:border-[#0066FF] outline-none min-h-[220px] text-sm text-end" value={formData.longDescriptionAr} onChange={e => setFormData({ ...formData, longDescriptionAr: e.target.value })} />
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-border flex gap-4">
-                    <Button type="button" variant="ghost" className="h-16 flex-1 rounded-3xl border border-border bg-transparent text-zinc-500 hover:text-foreground" onClick={() => router.push("/admin/products")}>
+                    <Button type="button" variant="ghost" className="h-16 flex-1 rounded-3xl border border-border bg-transparent text-muted-foreground hover:text-foreground" onClick={() => router.push("/admin/products")}>
                         Discard
                     </Button>
                     <Button disabled={isLoading} type="submit" className="h-16 flex-2 rounded-3xl bg-[#0066FF] hover:bg-blue-600 text-white font-black text-lg gap-3">

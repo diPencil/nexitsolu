@@ -153,7 +153,7 @@ function CheckoutContent() {
     if (checkoutItems.length === 0 && !orderDone) {
         return (
             <div className="min-h-screen bg-background pt-32 text-center text-foreground">
-                <ShoppingCart className="w-16 h-16 text-zinc-700 mx-auto mb-4" />
+                <ShoppingCart className="w-16 h-16 text-muted-foreground/80 mx-auto mb-4" />
                 <h1 className="text-2xl font-bold mb-4">{lang === 'ar' ? 'لا توجد منتجات للشراء' : 'No items to checkout'}</h1>
                 <Link href="/store" className="text-[#0066FF] hover:underline">{lang === 'ar' ? 'العودة للمتجر' : 'Back to Store'}</Link>
             </div>
@@ -310,7 +310,7 @@ function CheckoutContent() {
                                 {step > s.n ? <CheckCircle className="w-4 h-4" /> : <span className="w-5 h-5 rounded-full border-2 border-current flex items-center justify-center text-xs">{s.n}</span>}
                                 <span className="hidden sm:block">{s.label}</span>
                             </div>
-                            {i < arr.length - 1 && <ChevronRight className="w-4 h-4 text-zinc-700 shrink-0" />}
+                            {i < arr.length - 1 && <ChevronRight className="w-4 h-4 text-muted-foreground/80 shrink-0" />}
                         </div>
                     ))}
                 </div>
@@ -335,7 +335,7 @@ function CheckoutContent() {
                                         <div key={f.key}>
                                             <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2 block">{f.label}</label>
                                             <div className="relative">
-                                                <f.icon className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-zinc-500`} />
+                                                <f.icon className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-muted-foreground`} />
                                                 <input
                                                     type={f.type}
                                                     value={(shipping as any)[f.key]}
@@ -352,7 +352,7 @@ function CheckoutContent() {
                                         {lang === 'ar' ? 'المدينة / المحافظة' : 'City / Governorate'}
                                     </label>
                                     <div className="relative">
-                                        <Building2 className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-zinc-500`} />
+                                        <Building2 className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-muted-foreground`} />
                                         <select
                                             value={shipping.city}
                                             onChange={e => setShipping(p => ({ ...p, city: e.target.value }))}
@@ -376,7 +376,7 @@ function CheckoutContent() {
                                         {lang === 'ar' ? 'عنوان التسليم التفصيلي' : 'Detailed Delivery Address'}
                                     </label>
                                     <div className="relative">
-                                        <MapPin className={`absolute top-3.5 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-zinc-500`} />
+                                        <MapPin className={`absolute top-3.5 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-muted-foreground`} />
                                         <textarea
                                             rows={3}
                                             value={shipping.address}
@@ -472,7 +472,7 @@ function CheckoutContent() {
                                                 {lang === 'ar' ? 'رقم الهاتف المحوَّل منه *' : 'Sender Phone Number *'}
                                             </label>
                                             <div className="relative">
-                                                <Phone className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-zinc-500`} />
+                                                <Phone className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-muted-foreground`} />
                                                 <input
                                                     type="tel"
                                                     required
@@ -490,7 +490,7 @@ function CheckoutContent() {
                                                 {lang === 'ar' ? 'رقم العملية / كود التحويل *' : 'Transaction ID / Reference Code *'}
                                             </label>
                                             <div className="relative">
-                                                <Hash className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-zinc-500`} />
+                                                <Hash className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'right-4' : 'left-4'} w-4 h-4 text-muted-foreground`} />
                                                 <input
                                                     type="text"
                                                     required
@@ -515,7 +515,7 @@ function CheckoutContent() {
                                                 className={`p-4 rounded-2xl border text-start transition-all ${paymentType === "FULL" ? 'bg-[#0066FF]/10 border-[#0066FF]' : 'bg-secondary border-border hover:border-border/80'}`}
                                             >
                                                 <p className="font-black text-foreground text-lg">{totalWithShipping.toFixed(2)} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
-                                                <p className={`text-xs mt-1 font-bold ${paymentType === "FULL" ? 'text-[#0066FF]' : 'text-zinc-500'}`}>
+                                                <p className={`text-xs mt-1 font-bold ${paymentType === "FULL" ? 'text-[#0066FF]' : 'text-muted-foreground'}`}>
                                                     {lang === 'ar' ? 'الدفع الكامل' : 'Full Payment'}
                                                 </p>
                                                 <p className="text-[10px] text-muted-foreground/80 mt-0.5">
@@ -528,7 +528,7 @@ function CheckoutContent() {
                                                 className={`p-4 rounded-2xl border text-start transition-all ${paymentType === "DEPOSIT" ? 'bg-[#0066FF]/10 border-[#0066FF]' : 'bg-secondary border-border hover:border-border/80'}`}
                                             >
                                                 <p className="font-black text-foreground text-lg">{depositAmount.toFixed(2)} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
-                                                <p className={`text-xs mt-1 font-bold ${paymentType === "DEPOSIT" ? 'text-[#0066FF]' : 'text-zinc-500'}`}>
+                                                <p className={`text-xs mt-1 font-bold ${paymentType === "DEPOSIT" ? 'text-[#0066FF]' : 'text-muted-foreground'}`}>
                                                     {lang === 'ar' ? `عربون ${DEPOSIT_PERCENT}%` : `${DEPOSIT_PERCENT}% Deposit`}
                                                 </p>
                                                 <p className="text-[10px] text-muted-foreground/80 mt-0.5">

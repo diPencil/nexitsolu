@@ -93,7 +93,7 @@ export default function CorporateRegisterPage() {
                     <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
                         {/* Company Name (Mapped to Username) */}
                         <div className="relative md:col-span-2">
-                            <Building2 className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <Building2 className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="text"
                                 required
@@ -106,7 +106,7 @@ export default function CorporateRegisterPage() {
 
                         {/* Account Owner Name */}
                         <div className="relative w-full">
-                            <User className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <User className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="text"
                                 required
@@ -119,7 +119,7 @@ export default function CorporateRegisterPage() {
 
                         {/* Position */}
                         <div className="relative w-full">
-                            <Briefcase className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <Briefcase className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <select
                                 required
                                 className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all appearance-none cursor-pointer`}
@@ -138,7 +138,7 @@ export default function CorporateRegisterPage() {
 
                         {/* Company Email */}
                         <div className="relative">
-                            <Mail className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <Mail className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="email"
                                 required
@@ -151,7 +151,7 @@ export default function CorporateRegisterPage() {
 
                         {/* Company Phone */}
                         <div className="relative">
-                            <Phone className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <Phone className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="tel"
                                 required
@@ -164,7 +164,7 @@ export default function CorporateRegisterPage() {
 
                         {/* Company WhatsApp */}
                         <div className="relative w-full">
-                            <WhatsAppIcon className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <WhatsAppIcon className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="tel"
                                 required
@@ -197,7 +197,7 @@ export default function CorporateRegisterPage() {
 
                         {/* Password */}
                         <div className="relative md:col-span-2">
-                            <Lock className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <Lock className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="password"
                                 required

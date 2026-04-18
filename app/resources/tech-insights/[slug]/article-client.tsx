@@ -54,12 +54,12 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                         {/* Text Content - Order 1 on Mobile, 1 on Desktop */}
                         <div className="space-y-8 order-1">
                             {/* Breadcrumbs */}
-                            <div className="flex items-center gap-2 text-zinc-500 text-sm">
+                            <div className="flex items-center gap-2 text-muted-foreground text-sm">
                                 <Link href="/" className="hover:text-[#0066FF] transition-colors">{isAr ? "الرئيسية" : "Home"}</Link>
                                 {isAr ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                                 <Link href="/resources/tech-insights" className="hover:text-[#0066FF] transition-colors">{isAr ? "الرؤى التقنية" : "Tech Insights"}</Link>
                                 {isAr ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-                                <span className="text-zinc-300 truncate max-w-[150px]">{isAr ? article.title_ar : article.title_en}</span>
+                                <span className="text-foreground/60 truncate max-w-[150px]">{isAr ? article.title_ar : article.title_en}</span>
                             </div>
 
                             <motion.div
@@ -77,14 +77,14 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                 <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                                            <User className="w-5 h-5 text-zinc-400" />
+                                            <User className="w-5 h-5 text-muted-foreground/70" />
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="text-[10px] text-zinc-500 uppercase font-black">{isAr ? "بواسطة" : "Written by"}</span>
+                                            <span className="text-[10px] text-muted-foreground uppercase font-black">{isAr ? "بواسطة" : "Written by"}</span>
                                             <span className="text-sm font-bold">{article.author}</span>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-6 text-zinc-500 text-sm">
+                                    <div className="flex items-center gap-6 text-muted-foreground text-sm">
                                         <div className="flex items-center gap-2">
                                             <Calendar className="w-4 h-4" />
                                             {article.date}
@@ -123,11 +123,11 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                     </h4>
                                     <ul className="space-y-5 relative">
                                         {(isAr ? article.highlights_ar : article.highlights_en).map((h, i) => (
-                                            <li key={i} className="flex items-start gap-3 text-sm text-zinc-400 group/item">
+                                            <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground/80 group/item">
                                                 <div className="mt-1 w-5 h-5 rounded-full border border-[#0066FF]/30 flex items-center justify-center shrink-0 group-hover/item:border-[#0066FF] transition-colors">
                                                     <CheckCircle2 className="w-3 h-3 text-[#0066FF]" />
                                                 </div>
-                                                <span className="group-hover/item:text-zinc-200 transition-colors">{h}</span>
+                                                <span className="group-hover/item:text-foreground transition-colors">{h}</span>
                                             </li>
                                         ))}
                                     </ul>
@@ -142,7 +142,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                 >
                                     <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#0066FF]/10 rounded-full blur-3xl" />
                                     <h4 className="text-xl font-bold relative">{isAr ? "تحتاج مساعدة تقنية؟" : "Need Expert Advice?"}</h4>
-                                    <p className="text-zinc-400 text-sm leading-relaxed relative">
+                                    <p className="text-muted-foreground text-sm leading-relaxed relative">
                                         {isAr ? "خبراؤنا جاهزون لمساعدتك في تأمين وتطوير بنيتك التحتية بأحدث التقنيات وتقديم حلول مخصصة لأعمالك." : "Our experts are ready to help you secure and evolve your infrastructure with the latest technologies and custom solutions."}
                                     </p>
                                     <Link href="/contact" className="relative flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-primary text-primary-foreground font-bold hover:bg-[#0052cc] transition-all shadow-lg shadow-[#0066FF]/25 overflow-hidden group/btn">
@@ -164,7 +164,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                     className="relative mb-16"
                                 >
                                     <div className="absolute -left-6 lg:-left-12 top-0 bottom-0 w-1 bg-linear-to-b from-[#0066FF] to-transparent rounded-full" />
-                                    <p className="text-2xl lg:text-3xl font-medium text-zinc-200 leading-relaxed italic ps-0">
+                                    <p className="text-2xl lg:text-3xl font-medium text-foreground/80 leading-relaxed italic ps-0">
                                         {isAr ? article.intro_ar : article.intro_en}
                                     </p>
                                 </motion.div>
@@ -184,7 +184,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                                     {isAr ? sec.heading_ar : sec.heading_en}
                                                 </h2>
                                             </div>
-                                            <p className="text-zinc-400 leading-[1.8] text-lg lg:text-xl font-light">
+                                            <p className="text-muted-foreground/90 leading-[1.8] text-lg lg:text-xl font-light">
                                                 {isAr ? sec.text_ar : sec.text_en}
                                             </p>
                                         </motion.div>
@@ -195,11 +195,11 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                             {/* Share & Footer */}
                             <div className="mt-24 pt-12 border-t border-border flex flex-wrap items-center justify-between gap-8">
                                 <div className="flex items-center gap-6">
-                                    <span className="text-zinc-500 font-black uppercase tracking-tighter text-xs">{isAr ? "شارك المعرفة:" : "SHARE KNOWLEDGE:"}</span>
+                                    <span className="text-muted-foreground font-black uppercase tracking-tighter text-xs">{isAr ? "شارك المعرفة:" : "SHARE KNOWLEDGE:"}</span>
                                     <div className="flex gap-3">
                                         {[Share2, BookOpen].map((Icon, i) => (
                                             <button key={i} className="w-12 h-12 rounded-xl bg-white/5 border border-border flex items-center justify-center hover:bg-[#0066FF] hover:border-[#0066FF] hover:-translate-y-1 transition-all group">
-                                                <Icon className="w-5 h-5 text-zinc-400 group-hover:text-primary-foreground" />
+                                                <Icon className="w-5 h-5 text-muted-foreground/70 group-hover:text-primary-foreground" />
                                             </button>
                                         ))}
                                     </div>
@@ -226,7 +226,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                         <h3 className="text-3xl md:text-4xl font-black">
                             {isAr ? "مقالات " : "Related "}<span className="text-[#0066FF]">{isAr ? "ذات صلة" : "Insights"}</span>
                         </h3>
-                        <Link href="/resources/tech-insights" className="hidden md:flex items-center gap-2 text-zinc-400 hover:text-foreground transition-colors">
+                        <Link href="/resources/tech-insights" className="hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                             {isAr ? "عرض الكل" : "View All"}
                             {isAr ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                         </Link>
@@ -252,7 +252,7 @@ export default function ArticleClient({ article, relatedArticles }: ArticleClien
                                     <h4 className="text-xl font-bold leading-snug group-hover:text-[#0066FF] transition-colors line-clamp-2">
                                         {isAr ? rel.title_ar : rel.title_en}
                                     </h4>
-                                    <div className="flex items-center gap-2 text-zinc-500 text-xs pt-4 border-t border-border">
+                                    <div className="flex items-center gap-2 text-muted-foreground text-xs pt-4 border-t border-border">
                                         <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-2 ${isAr ? "rotate-180" : ""}`} />
                                         {isAr ? "اقرأ المزيد" : "Read More"}
                                     </div>

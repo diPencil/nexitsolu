@@ -73,7 +73,7 @@ export default function LoginPage() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-4">
                             <div className="relative">
-                                <User className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                                <User className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                                 <input
                                     type="text"
                                     required
@@ -84,7 +84,7 @@ export default function LoginPage() {
                                 />
                             </div>
                             <div className="relative">
-                                <Lock className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                                <Lock className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     required
@@ -96,7 +96,7 @@ export default function LoginPage() {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword((value) => !value)}
-                                    className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'left-4' : 'right-4'} text-zinc-600 hover:text-[#0066FF] transition-colors`}
+                                    className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'left-4' : 'right-4'} text-muted-foreground hover:text-[#0066FF] transition-colors`}
                                     aria-label={showPassword ? (lang === 'ar' ? 'إخفاء كلمة المرور' : 'Hide password') : (lang === 'ar' ? 'إظهار كلمة المرور' : 'Show password')}
                                 >
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}

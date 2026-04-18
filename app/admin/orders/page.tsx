@@ -243,7 +243,7 @@ export default function AdminOrders() {
                                 <div className="text-end">
                                     <p className="text-sm font-bold text-foreground">{selectedOrder.shippingName || 'N/A'}</p>
                                     <p className="text-xs text-muted-foreground">{selectedOrder.shippingPhone}</p>
-                                    <p className="text-xs text-zinc-400 max-w-[200px] truncate">{selectedOrder.shippingCity} - {selectedOrder.shippingAddress}</p>
+                                    <p className="text-xs text-muted-foreground/70 max-w-[200px] truncate">{selectedOrder.shippingCity} - {selectedOrder.shippingAddress}</p>
                                 </div>
                             </div>
                             <div className="flex justify-between items-center pt-3 border-t border-border">

@@ -398,7 +398,7 @@ export default function ProductDetailPage() {
                                     >
                                         <div className="flex bg-yellow-500/10 px-2 py-1 rounded-lg mr-1 items-center gap-0.5">
                                             {[1, 2, 3, 4, 5].map(star => (
-                                                <Star key={star} className={`w-2.5 h-2.5 ${star <= averageRating ? 'fill-yellow-500 text-yellow-500' : 'text-zinc-700'}`} />
+                                                <Star key={star} className={`w-2.5 h-2.5 ${star <= averageRating ? 'fill-yellow-500 text-yellow-500' : 'text-muted-foreground/40'}`} />
                                             ))}
                                         </div>
                                         <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-primary-foreground transition-colors">
@@ -453,7 +453,7 @@ export default function ProductDetailPage() {
                                     {(product.discountPrice || product.price) + (selectedZone?.price || 0)} {t("store.currency")}
                                 </span>
                                 {hasDiscount && (
-                                    <span className="text-xl text-zinc-600 line-through">
+                                    <span className="text-xl text-muted-foreground line-through">
                                         {product.price + (selectedZone?.price || 0)} {t("store.currency")}
                                     </span>
                                 )}
@@ -531,7 +531,7 @@ export default function ProductDetailPage() {
                                     <div className={`flex items-center gap-3 p-4 rounded-2xl bg-card border transition-all ${selectedZone ? 'border-primary/50 ring-1 ring-primary/20' : 'border-border'}`}>
                                         <MapPin className={`w-5 h-5 ${selectedZone ? 'text-[#0066FF]' : 'text-muted-foreground/70'}`} />
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest leading-none mb-1">
+                                            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1">
                                                 {t("store.shipping_zone")}
                                             </p>
                                             <select 
@@ -710,7 +710,7 @@ export default function ProductDetailPage() {
                                                 />
                                             ) : (
                                                 <div className="absolute inset-0 bg-card flex items-center justify-center">
-                                                    <ShoppingBag className="w-12 h-12 text-zinc-800" />
+                                                    <ShoppingBag className="w-12 h-12 text-muted-foreground" />
                                                 </div>
                                             )}
                                             

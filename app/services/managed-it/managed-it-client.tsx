@@ -383,7 +383,7 @@ export default function ManagedITClient() {
                                                                     }`}
                                                             >
                                                                 <div className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-all duration-500 border-2 ${formData.model === opt.id 
-                                                                    ? "bg-white text-accent border-white shadow-2xl" 
+                                                                    ? "bg-white dark:bg-primary text-accent dark:text-primary-foreground border-white dark:border-primary shadow-2xl" 
                                                                     : "bg-bg-secondary text-text-secondary border-border-color group-hover/model:border-accent/40 group-hover/model:text-accent"
                                                                     }`}>
                                                                     <opt.icon className="w-10 h-10" />

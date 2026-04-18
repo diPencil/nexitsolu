@@ -923,7 +923,7 @@ export default function AdminInvoices() {
                         border-color: #eee !important;
                     }
                     .invoice-print-area .text-muted-foreground, 
-                    .invoice-print-area .text-zinc-400,
+                    .invoice-print-area .text-muted-foreground/70,
                     .invoice-print-area .text-muted-foreground/60 {
                         color: #666 !important;
                     }

@@ -395,7 +395,7 @@ function AdminQuotationsContent() {
                     </div>
                 ) : quotations.length === 0 ? (
                     <div className="py-20 text-center">
-                        <FileText className="w-10 h-10 text-zinc-800 mx-auto mb-3" />
+                        <FileText className="w-10 h-10 text-foreground/50 mx-auto mb-3" />
                         <p className="text-sm text-muted-foreground/60">{lang === 'ar' ? 'لا توجد عروض سعر' : 'No quotations found'}</p>
                     </div>
                 ) : (

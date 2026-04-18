@@ -86,7 +86,7 @@ export default function RegisterPage() {
                     <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
                         {/* Name */}
                         <div className="relative md:col-span-2">
-                            <User className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <User className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="text"
                                 required
@@ -99,7 +99,7 @@ export default function RegisterPage() {
 
                         {/* Username */}
                         <div className="relative">
-                            <AtSign className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <AtSign className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="text"
                                 required
@@ -112,7 +112,7 @@ export default function RegisterPage() {
 
                         {/* Phone */}
                         <div className="relative">
-                            <Phone className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <Phone className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="tel"
                                 required
@@ -125,7 +125,7 @@ export default function RegisterPage() {
 
                         {/* Email */}
                         <div className="relative">
-                            <Mail className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <Mail className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="email"
                                 required
@@ -138,14 +138,14 @@ export default function RegisterPage() {
 
                         {/* Governorate */}
                         <div className="relative">
-                            <MapPin className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <MapPin className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <select
                                 required
                                 className={`w-full bg-secondary border border-border rounded-2xl py-4 ${lang === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} text-foreground focus:border-[#0066FF] outline-none transition-all appearance-none cursor-pointer`}
                                 value={formData.governorate}
                                 onChange={(e) => setFormData({ ...formData, governorate: e.target.value })}
                             >
-                                <option value="" disabled className="text-zinc-700">{lang === 'ar' ? 'اختر المحافظة' : 'Select Governorate'}</option>
+                                <option value="" disabled className="text-muted-foreground/80">{lang === 'ar' ? 'اختر المحافظة' : 'Select Governorate'}</option>
                                 {governorates.map((gov) => (
                                     <option key={gov} value={gov} className="bg-card">{gov}</option>
                                 ))}
@@ -154,7 +154,7 @@ export default function RegisterPage() {
 
                         {/* Password */}
                         <div className="relative md:col-span-2">
-                            <Lock className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-zinc-600`} />
+                            <Lock className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} w-5 h-5 text-muted-foreground`} />
                             <input
                                 type="password"
                                 required

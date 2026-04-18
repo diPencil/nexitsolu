@@ -595,7 +595,7 @@ export default function PurchasesPage() {
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="px-8 rounded-2xl bg-secondary text-zinc-400 hover:text-foreground transition-all font-bold"
+                                        className="px-8 rounded-2xl bg-secondary text-muted-foreground/70 hover:text-foreground transition-all font-bold"
                                     >
                                         {lang === 'ar' ? 'إلغاء' : 'Cancel'}
                                     </button>
@@ -651,7 +651,7 @@ export default function PurchasesPage() {
                                             {detailModal === "stock" &&
                                                 (lang === "ar" ? "المخزون حسب المنتج" : "Stock by product")}
                                         </h2>
-                                        <p className="text-xs text-zinc-500 mt-1">
+                                        <p className="text-xs text-muted-foreground mt-1">
                                             {detailModal === "operations" &&
                                                 (lang === "ar"
                                                     ? `إجمالي ${purchases.length} عملية — مرتبة من الأحدث`
@@ -670,7 +670,7 @@ export default function PurchasesPage() {
                                 <button
                                     type="button"
                                     onClick={() => setDetailModal(null)}
-                                    className="p-2 hover:bg-accent/50 rounded-xl transition-all shrink-0 text-zinc-400 hover:text-white"
+                                    className="p-2 hover:bg-accent/50 rounded-xl transition-all shrink-0 text-muted-foreground/70 hover:text-white"
                                     aria-label={lang === "ar" ? "إغلاق" : "Close"}
                                 >
                                     <X className="w-6 h-6" />
@@ -681,7 +681,7 @@ export default function PurchasesPage() {
                                 {detailModal === "operations" && (
                                     <>
                                         {purchasesByDate.length === 0 ? (
-                                            <p className="text-center text-zinc-500 py-12 italic">
+                                            <p className="text-center text-muted-foreground py-12 italic">
                                                 {lang === "ar" ? "لا توجد عمليات توريد بعد." : "No supply operations yet."}
                                             </p>
                                         ) : (
@@ -720,14 +720,14 @@ export default function PurchasesPage() {
                                                                 <td className="px-4 py-3 font-black text-white">
                                                                     {(p.totalPrice || 0).toLocaleString()} EGP
                                                                 </td>
-                                                                <td className="px-4 py-3 text-zinc-400 text-xs">
+                                                                <td className="px-4 py-3 text-muted-foreground/70 text-xs">
                                                                     {(p.paymentStatus || "UNPAID") === "PAID" ? (
                                                                         <>
                                                                             <span className="text-emerald-400 font-bold">
                                                                                 {paymentMethodLabel(p.paymentMethod, lang)}
                                                                             </span>
                                                                             {p.transactionRef ? (
-                                                                                <span className="block text-zinc-500 truncate max-w-[140px]">
+                                                                                <span className="block text-muted-foreground truncate max-w-[140px]">
                                                                                     #{p.transactionRef}
                                                                                 </span>
                                                                             ) : null}
@@ -743,7 +743,7 @@ export default function PurchasesPage() {
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className="px-4 py-3 text-end text-zinc-500 text-xs">
+                                                                <td className="px-4 py-3 text-end text-muted-foreground text-xs">
                                                                     {new Date(p.purchaseDate).toLocaleString()}
                                                                 </td>
                                                             </tr>
@@ -766,12 +766,12 @@ export default function PurchasesPage() {
                                             </span>
                                         </div>
                                         {purchasesByDate.length === 0 ? (
-                                            <p className="text-center text-zinc-500 py-8 italic">
+                                            <p className="text-center text-muted-foreground py-8 italic">
                                                 {lang === "ar" ? "لا بيانات مشتريات." : "No purchase data."}
                                             </p>
                                         ) : (
                                             <>
-                                                <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-3">
+                                                <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-3">
                                                     {lang === "ar" ? "حسب المورد" : "By supplier"}
                                                 </h3>
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
@@ -799,7 +799,7 @@ export default function PurchasesPage() {
                                                         </div>
                                                     ))}
                                                 </div>
-                                                <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-3">
+                                                <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-3">
                                                     {lang === "ar" ? "كل العمليات" : "Every line item"}
                                                 </h3>
                                                 <div className="overflow-x-auto rounded-2xl border border-border">
@@ -856,7 +856,7 @@ export default function PurchasesPage() {
                                 {detailModal === "stock" && (
                                     <>
                                         {productsByStock.length === 0 ? (
-                                            <p className="text-center text-zinc-500 py-12 italic">
+                                            <p className="text-center text-muted-foreground py-12 italic">
                                                 {lang === "ar" ? "لا توجد منتجات." : "No products in catalog."}
                                             </p>
                                         ) : (
@@ -881,7 +881,7 @@ export default function PurchasesPage() {
                                                                 <td className="px-4 py-3 font-bold text-foreground">
                                                                     {lang === "ar" ? p.nameAr || p.name : p.name}
                                                                 </td>
-                                                                <td className="px-4 py-3 text-zinc-500 text-xs uppercase">
+                                                                <td className="px-4 py-3 text-muted-foreground text-xs uppercase">
                                                                     {p.category || "—"}
                                                                 </td>
                                                                 <td className="px-4 py-3 text-end font-black text-orange-400">

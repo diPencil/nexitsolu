@@ -362,7 +362,7 @@ export default function Home() {
 
                     {/* Floating Button */}
                     <Link href={item.href || "#"}>
-                      <button className={`absolute bottom-4 md:bottom-6 ${lang === "ar" ? "left-4 md:left-6" : "right-4 md:right-6"} p-2.5 md:p-3.5 rounded-full z-20 shadow-2xl transition-all duration-500 ${i === 0 ? "bg-primary md:bg-white text-primary-foreground md:text-[#0066FF]" : "bg-muted text-foreground backdrop-blur-xl border border-border group-hover/main:bg-primary group-hover/main:text-primary-foreground group-hover/main:border-[#0066FF]"}`}>
+                      <button className={`absolute bottom-4 md:bottom-6 ${lang === "ar" ? "left-4 md:left-6" : "right-4 md:right-6"} p-2.5 md:p-3.5 rounded-full z-20 shadow-2xl transition-all duration-500 ${i === 0 ? "bg-primary md:bg-white dark:bg-primary text-primary-foreground md:text-[#0066FF] dark:text-primary-foreground" : "bg-muted text-foreground backdrop-blur-xl border border-border group-hover/main:bg-primary group-hover/main:text-primary-foreground group-hover/main:border-[#0066FF]"}`}>
                         <ArrowUpRight className={`w-4 h-4 md:w-5 md:h-5 ${lang === "ar" ? "-scale-x-100" : ""}`} />
                       </button>
                     </Link>
@@ -484,7 +484,7 @@ export default function Home() {
                               <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80 group-hover:opacity-100" />
                             ) : (
                               <div className="absolute inset-0 bg-card flex items-center justify-center">
-                                <ShoppingBag className="w-12 h-12 text-zinc-800" />
+                                <ShoppingBag className="w-12 h-12 text-zinc-800 dark:text-muted-foreground" />
                               </div>
                             )}
                             <div className={`absolute top-2 md:top-4 ${lang === 'ar' ? 'right-2 md:right-4' : 'left-2 md:left-4'}`}>
@@ -613,7 +613,7 @@ export default function Home() {
             <motion.div
               animate={{ scale: [0.9, 1.1], opacity: [0.5, 1] }}
               transition={{ repeat: Infinity, duration: 4, repeatType: "reverse", ease: "easeInOut" }}
-              className="absolute top-1/2 -left-4 md:-left-6 z-20 bg-white p-2 md:p-3 rounded-full shadow-xl"
+              className="absolute top-1/2 -left-4 md:-left-6 z-20 bg-white dark:bg-card p-2 md:p-3 rounded-full shadow-xl"
             >
               <Cloud className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
             </motion.div>

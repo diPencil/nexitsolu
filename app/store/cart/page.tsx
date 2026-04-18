@@ -86,7 +86,7 @@ export default function CartPage() {
                 {items.length === 0 ? (
                     <div className="text-center py-32">
                         <div className="w-24 h-24 rounded-3xl bg-secondary border border-border flex items-center justify-center mx-auto mb-6">
-                            <ShoppingCart className="w-10 h-10 text-zinc-700" />
+                            <ShoppingCart className="w-10 h-10 text-muted-foreground/80" />
                         </div>
                         <h2 className="text-xl font-semibold text-foreground mb-2">
                             {lang === 'ar' ? 'سلتك فارغة' : 'Your cart is empty'}

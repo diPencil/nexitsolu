@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -105,15 +105,15 @@ export default function SuppliersPage() {
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h1 className="text-3xl font-bold mb-2">{lang === 'ar' ? 'الموردين' : 'Suppliers Management'}</h1>
-                    <p className="text-muted-foreground">{lang === 'ar' ? 'إدارة قائمة الموردين والشركات الموردة.' : 'Manage your list of suppliers and partners.'}</p>
+                    <h1 className="text-3xl font-bold mb-2">{lang === 'ar' ? '????????' : 'Suppliers Management'}</h1>
+                    <p className="text-muted-foreground">{lang === 'ar' ? '????? ????? ???????? ???????? ???????.' : 'Manage your list of suppliers and partners.'}</p>
                 </div>
                 <Button
                     onClick={() => { setEditingSupplier(null); setIsModalOpen(true); }}
                     className="bg-[#0066FF] hover:bg-blue-600 text-primary-foreground border-none rounded-2xl h-12 px-6 flex items-center gap-2 group font-black shadow-lg shadow-blue-500/20 transition-all font-inter"
                 >
                     <Plus className="w-5 h-5 text-primary-foreground transition-transform group-hover:rotate-90" />
-                    {lang === 'ar' ? 'إضافة مورد' : 'Add Supplier'}
+                    {lang === 'ar' ? '????? ????' : 'Add Supplier'}
                 </Button>
             </div>
 
@@ -125,7 +125,7 @@ export default function SuppliersPage() {
                     </div>
                     <div>
                         <p className="text-2xl font-black">{suppliers.length}</p>
-                        <p className="text-xs text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'إجمالي الموردين' : 'Total Suppliers'}</p>
+                        <p className="text-xs text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? '?????? ????????' : 'Total Suppliers'}</p>
                     </div>
                 </div>
             </div>
@@ -137,7 +137,7 @@ export default function SuppliersPage() {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <input
                             type="text"
-                            placeholder={lang === 'ar' ? "ابحث عن مورد..." : "Search suppliers..."}
+                            placeholder={lang === 'ar' ? "???? ?? ????..." : "Search suppliers..."}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full bg-card border-border py-3 pl-12 pr-4 text-sm focus:border-blue-600 outline-none transition-all"
@@ -149,10 +149,10 @@ export default function SuppliersPage() {
                     <table className="w-full text-start">
                         <thead>
                             <tr className="border-b border-border bg-card/50">
-                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'المورد' : 'Supplier'}</th>
-                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'بيانات التواصل' : 'Contact Info'}</th>
-                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'العنوان' : 'Address'}</th>
-                                <th className="px-6 py-4 text-end text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? 'إجراءات' : 'Actions'}</th>
+                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? '??????' : 'Supplier'}</th>
+                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? '?????? ???????' : 'Contact Info'}</th>
+                                <th className="px-6 py-4 text-start text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? '???????' : 'Address'}</th>
+                                <th className="px-6 py-4 text-end text-[10px] font-black text-muted-foreground uppercase tracking-widest">{lang === 'ar' ? '???????' : 'Actions'}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border">
@@ -165,7 +165,7 @@ export default function SuppliersPage() {
                             ) : filteredSuppliers.length === 0 ? (
                                 <tr>
                                     <td colSpan={4} className="px-6 py-20 text-center text-muted-foreground italic">
-                                        {lang === 'ar' ? 'لا يوجد موردين بهذا الاسم' : 'No suppliers found'}
+                                        {lang === 'ar' ? '?? ???? ?????? ???? ?????' : 'No suppliers found'}
                                     </td>
                                 </tr>
                             ) : (
@@ -178,19 +178,19 @@ export default function SuppliersPage() {
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-foreground text-sm">{s.name}</p>
-                                                    <p className="text-[10px] text-muted-foreground">{s.contact || (lang === 'ar' ? 'مسؤول غير محدد' : 'No contact person')}</p>
+                                                    <p className="text-[10px] text-muted-foreground">{s.contact || (lang === 'ar' ? '????? ??? ????' : 'No contact person')}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="space-y-1">
                                                 {s.phone && (
-                                                    <p className="text-xs text-zinc-400 flex items-center gap-2">
+                                                    <p className="text-xs text-muted-foreground/70 flex items-center gap-2">
                                                         <Phone className="w-3 h-3 text-muted-foreground/60" /> {s.phone}
                                                     </p>
                                                 )}
                                                 {s.email && (
-                                                    <p className="text-xs text-zinc-400 flex items-center gap-2">
+                                                    <p className="text-xs text-muted-foreground/70 flex items-center gap-2">
                                                         <Mail className="w-3 h-3 text-muted-foreground/60" /> {s.email}
                                                     </p>
                                                 )}
@@ -198,7 +198,7 @@ export default function SuppliersPage() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <p className="text-xs text-muted-foreground max-w-[200px] truncate flex items-center gap-2">
-                                                <MapPin className="w-3 h-3" /> {s.address || (lang === 'ar' ? 'غير مسجل' : 'N/A')}
+                                                <MapPin className="w-3 h-3" /> {s.address || (lang === 'ar' ? '??? ????' : 'N/A')}
                                             </p>
                                         </td>
                                         <td className="px-6 py-4 text-end">
@@ -237,7 +237,7 @@ export default function SuppliersPage() {
                         >
                             <form onSubmit={handleSubmit} className="p-8 space-y-6">
                                 <div className="flex items-center justify-between mb-4">
-                                    <h2 className="text-2xl font-black">{editingSupplier ? (lang === 'ar' ? 'تعديل مورد' : 'Edit Supplier') : (lang === 'ar' ? 'إضافة مورد جديد' : 'Add New Supplier')}</h2>
+                                    <h2 className="text-2xl font-black">{editingSupplier ? (lang === 'ar' ? '????? ????' : 'Edit Supplier') : (lang === 'ar' ? '????? ???? ????' : 'Add New Supplier')}</h2>
                                     <button type="button" onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-accent/50 rounded-xl transition-all">
                                         <X className="w-6 h-6" />
                                     </button>
@@ -246,21 +246,21 @@ export default function SuppliersPage() {
                                 <div className="space-y-4">
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                                            <Briefcase className="w-3 h-3" /> {lang === 'ar' ? 'اسم الشركة / المورد' : 'Supplier Name'}
+                                            <Briefcase className="w-3 h-3" /> {lang === 'ar' ? '??? ?????? / ??????' : 'Supplier Name'}
                                         </label>
                                         <input
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                             className="w-full bg-secondary border border-border rounded-2xl py-4 px-6 focus:border-blue-600 outline-none transition-all text-sm"
-                                            placeholder={lang === 'ar' ? "مثال: شركة النصر للاستيراد" : "e.g., Al-Nasr Trading"}
+                                            placeholder={lang === 'ar' ? "????: ???? ????? ?????????" : "e.g., Al-Nasr Trading"}
                                         />
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                                                <User className="w-3 h-3" /> {lang === 'ar' ? 'اسم المسؤول' : 'Contact Person'}
+                                                <User className="w-3 h-3" /> {lang === 'ar' ? '??? ???????' : 'Contact Person'}
                                             </label>
                                             <input
                                                 value={formData.contact}
@@ -270,7 +270,7 @@ export default function SuppliersPage() {
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                                                <Phone className="w-3 h-3" /> {lang === 'ar' ? 'رقم الهاتف' : 'Phone'}
+                                                <Phone className="w-3 h-3" /> {lang === 'ar' ? '??? ??????' : 'Phone'}
                                             </label>
                                             <input
                                                 value={formData.phone}
@@ -282,7 +282,7 @@ export default function SuppliersPage() {
 
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                                            <Mail className="w-3 h-3" /> {lang === 'ar' ? 'البريد الإلكتروني' : 'Email'}
+                                            <Mail className="w-3 h-3" /> {lang === 'ar' ? '?????? ??????????' : 'Email'}
                                         </label>
                                         <input
                                             type="email"
@@ -294,7 +294,7 @@ export default function SuppliersPage() {
 
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                                            <MapPin className="w-3 h-3" /> {lang === 'ar' ? 'العنوان' : 'Address'}
+                                            <MapPin className="w-3 h-3" /> {lang === 'ar' ? '???????' : 'Address'}
                                         </label>
                                         <textarea
                                             value={formData.address}
@@ -310,14 +310,14 @@ export default function SuppliersPage() {
                                         type="submit"
                                         className="flex-1 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl h-14 font-black"
                                     >
-                                        {lang === 'ar' ? 'حفظ البيانات' : 'Save Supplier'}
+                                        {lang === 'ar' ? '??? ????????' : 'Save Supplier'}
                                     </Button>
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="px-8 rounded-2xl bg-secondary text-zinc-400 hover:text-white transition-all font-bold"
+                                        className="px-8 rounded-2xl bg-secondary text-muted-foreground/70 hover:text-white transition-all font-bold"
                                     >
-                                        {lang === 'ar' ? 'إلغاء' : 'Cancel'}
+                                        {lang === 'ar' ? '?????' : 'Cancel'}
                                     </button>
                                 </div>
                             </form>
@@ -329,10 +329,10 @@ export default function SuppliersPage() {
             {/* Confirm Delete */}
             <ConfirmDialog
                 isOpen={confirmDelete.isOpen}
-                title={lang === 'ar' ? 'حذف هذا المورد؟' : 'Delete this supplier?'}
-                message={lang === 'ar' ? 'سيتم حذف المورد نهائياً من النظام. هل أنت متأكد؟' : 'This will permanently remove the supplier. Are you sure?'}
-                confirmText={lang === 'ar' ? 'نعم، احذف' : 'Yes, Delete'}
-                cancelText={lang === 'ar' ? 'إلغاء' : 'Cancel'}
+                title={lang === 'ar' ? '??? ??? ???????' : 'Delete this supplier?'}
+                message={lang === 'ar' ? '???? ??? ?????? ??????? ?? ??????. ?? ??? ??????' : 'This will permanently remove the supplier. Are you sure?'}
+                confirmText={lang === 'ar' ? '???? ????' : 'Yes, Delete'}
+                cancelText={lang === 'ar' ? '?????' : 'Cancel'}
                 onConfirm={() => confirmDelete.id && handleDelete(confirmDelete.id)}
                 onCancel={() => setConfirmDelete({ isOpen: false, id: null })}
             />

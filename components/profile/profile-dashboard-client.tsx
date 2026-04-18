@@ -790,7 +790,7 @@ export function ProfileDashboardClient({
                                             ? (session?.user as any)?.username
                                             : session?.user?.name}
                                     </p>
-                                    <p className="truncate text-[10px] text-zinc-500">{session?.user?.email}</p>
+                                    <p className="truncate text-[10px] text-muted-foreground">{session?.user?.email}</p>
                                 </div>
                             </div>
                             <button
@@ -924,12 +924,12 @@ export function ProfileDashboardClient({
                                                             {order.items[0]?.product?.images?.[0] ? (
                                                                 <img src={order.items[0].product.images[0]} className="w-full h-full object-cover" />
                                                             ) : (
-                                                                <div className="w-full h-full flex items-center justify-center text-xs text-zinc-500">?</div>
+                                                                <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground">?</div>
                                                             )}
                                                         </div>
                                                         <div>
                                                              <p className="font-bold text-foreground text-sm">#{order.orderNumber || order.id.slice(-6).toUpperCase()}</p>
-                                                             <p className="text-xs text-zinc-500">{new Date(order.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US')}</p>
+                                                             <p className="text-xs text-muted-foreground">{new Date(order.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US')}</p>
                                                          </div>
                                                      </div>
                                                      <div className="flex items-center justify-between gap-4 sm:justify-end sm:gap-6 w-full sm:w-auto shrink-0">
@@ -1003,7 +1003,7 @@ export function ProfileDashboardClient({
                                                     </div>
                                                 </div>
                                                 <div className="text-start sm:text-end shrink-0 w-full sm:w-auto pt-2 sm:pt-0 border-t border-white/5 sm:border-0">
-                                                    <p className={`text-xl font-black ${sub.status === 'ACTIVE' ? 'text-[#0066FF]' : 'text-zinc-600'}`}>{sub.amount} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
+                                                    <p className={`text-xl font-black ${sub.status === 'ACTIVE' ? 'text-[#0066FF]' : 'text-muted-foreground'}`}>{sub.amount} {lang === 'ar' ? 'ج.م' : 'EGP'}</p>
                                                     <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded ${sub.status === 'ACTIVE' ? 'bg-[#0066FF]/10 text-[#0066FF]' : 'bg-red-500/5 text-red-500'}`}>
                                                         {sub.type}
                                                     </span>
@@ -1096,8 +1096,8 @@ export function ProfileDashboardClient({
                                     <div className="py-12 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#0066FF]" /></div>
                                 ) : orders.length === 0 ? (
                                     <div className="text-center py-8 md:py-12 border-2 border-dashed border-white/5 rounded-2xl md:rounded-3xl">
-                                        <Package className="w-12 h-12 text-zinc-800 mx-auto mb-4" />
-                                        <p className="text-zinc-500">{lang === 'ar' ? 'ليس لديك أي طلبات بعد.' : "You haven't placed any orders yet."}</p>
+                                        <Package className="w-12 h-12 text-foreground/50 mx-auto mb-4" />
+                                        <p className="text-muted-foreground">{lang === 'ar' ? 'ليس لديك أي طلبات بعد.' : "You haven't placed any orders yet."}</p>
                                         <Link href="/store" className="mt-4 inline-block text-[#0066FF] font-bold hover:underline">
                                             {lang === 'ar' ? 'ابدأ التسوق الآن' : 'Start shopping now'}
                                         </Link>
@@ -1116,7 +1116,7 @@ export function ProfileDashboardClient({
                                                     <div className="flex -space-x-4 space-x-reverse overflow-hidden shrink-0">
                                                         {order.items.slice(0, 3).map((item: any, i: number) => (
                                                             <div key={i} className="w-12 h-12 rounded-2xl border-2 border-zinc-950 bg-zinc-900 overflow-hidden shadow-lg" title={item.product.name}>
-                                                                {item.product.image ? <img src={item.product.image} className="w-full h-full object-cover"/> : <div className="w-full h-full flex items-center justify-center text-[10px] text-zinc-500">{item.product.name[0]}</div>}
+                                                                {item.product.image ? <img src={item.product.image} className="w-full h-full object-cover"/> : <div className="w-full h-full flex items-center justify-center text-[10px] text-muted-foreground">{item.product.name[0]}</div>}
                                                             </div>
                                                         ))}
                                                         {order.items.length > 3 && (
@@ -1203,7 +1203,7 @@ export function ProfileDashboardClient({
                                         >
                                             {conversations.length === 0 ? (
                                                 <div className="text-center py-20 border-2 border-dashed border-white/5 rounded-[2.5rem] bg-white/2">
-                                                    <MessageSquare className="w-16 h-16 text-zinc-800 mx-auto mb-6 opacity-20" />
+                                                    <MessageSquare className="w-16 h-16 text-foreground/50 mx-auto mb-6 opacity-20" />
                                                     <h3 className="text-white font-bold text-xl mb-2">
                                                         {lang === 'ar' ? 'لا توجد محادثات' : 'No Conversations'}
                                                     </h3>
@@ -1235,7 +1235,7 @@ export function ProfileDashboardClient({
                                                         }}
                                                         className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white/5 border border-border hover:border-[#0066FF]/30 transition-all cursor-pointer group flex items-center gap-4 sm:gap-6 min-w-0"
                                                     >
-                                                        <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center transition-all duration-500 ${conv.status === 'CLOSED' ? 'bg-muted text-zinc-500' : 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/20 group-hover:bg-[#0066FF] group-hover:text-white'}`}>
+                                                        <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center transition-all duration-500 ${conv.status === 'CLOSED' ? 'bg-muted text-muted-foreground' : 'bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/20 group-hover:bg-[#0066FF] group-hover:text-white'}`}>
                                                             {conv.status === 'CLOSED' ? <CheckCheck className="w-7 h-7" /> : <ShieldCheck className="w-7 h-7" />}
                                                         </div>
                                                         <div className="flex-1 text-start overflow-hidden">
@@ -1379,7 +1379,7 @@ export function ProfileDashboardClient({
                                     
                                     <form onSubmit={handleTrackOrder} className="flex flex-col sm:flex-row gap-3 sm:gap-2 mb-6 md:mb-10 w-full min-w-0">
                                         <div className="relative flex-1 min-w-0">
-                                            <Search className={`absolute ${lang === 'ar' ? 'right-4' : 'left-4'} top-3.5 w-4 h-4 text-zinc-600`} />
+                                            <Search className={`absolute ${lang === 'ar' ? 'right-4' : 'left-4'} top-3.5 w-4 h-4 text-muted-foreground`} />
                                             <input 
                                                 type="text" 
                                                 value={trackId}
@@ -1450,10 +1450,10 @@ export function ProfileDashboardClient({
 
                                                             return (
                                                                 <div key={step.id} className="flex flex-col items-center gap-4 flex-1">
-                                                                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 border-2 ${isCompleted ? 'bg-[#0066FF] border-[#0066FF] text-foreground shadow-[0_0_20px_rgba(0,102,255,0.3)]' : 'bg-black border-zinc-800 text-zinc-600'}`}>
+                                                                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 border-2 ${isCompleted ? 'bg-[#0066FF] border-[#0066FF] text-foreground shadow-[0_0_20px_rgba(0,102,255,0.3)]' : 'bg-card border-border text-muted-foreground'}`}>
                                                                         <step.icon className={`w-4 h-4 md:w-5 md:h-5 ${isCurrent ? 'animate-pulse' : ''}`} />
                                                                     </div>
-                                                                    <span className={`text-[9px] md:text-[10px] uppercase font-black tracking-widest text-center ${isCompleted ? 'text-foreground' : 'text-zinc-600'}`}>
+                                                                    <span className={`text-[9px] md:text-[10px] uppercase font-black tracking-widest text-center ${isCompleted ? 'text-foreground' : 'text-muted-foreground'}`}>
                                                                         {step.label}
                                                                     </span>
                                                                 </div>
@@ -1516,7 +1516,7 @@ export function ProfileDashboardClient({
                                 
                                 <form onSubmit={handleChangePassword} className="max-w-md space-y-4">
                                     <div className="space-y-1">
-                                        <label className="text-sm text-zinc-400">{lang === 'ar' ? 'كلمة المرور الحالية' : 'Current Password'}</label>
+                                        <label className="text-sm text-muted-foreground/70">{lang === 'ar' ? 'كلمة المرور الحالية' : 'Current Password'}</label>
                                         <div className="relative">
                                             <input 
                                                 type={showPassword.current ? "text" : "password"} 
@@ -1532,7 +1532,7 @@ export function ProfileDashboardClient({
                                     </div>
 
                                     <div className="space-y-1">
-                                        <label className="text-sm text-zinc-400">{lang === 'ar' ? 'كلمة المرور الجديدة' : 'New Password'}</label>
+                                        <label className="text-sm text-muted-foreground/70">{lang === 'ar' ? 'كلمة المرور الجديدة' : 'New Password'}</label>
                                         <div className="relative">
                                             <input 
                                                 type={showPassword.new ? "text" : "password"} 
@@ -1548,7 +1548,7 @@ export function ProfileDashboardClient({
                                     </div>
 
                                     <div className="space-y-1">
-                                        <label className="text-sm text-zinc-400">{lang === 'ar' ? 'تأكيد كلمة المرور' : 'Confirm Password'}</label>
+                                        <label className="text-sm text-muted-foreground/70">{lang === 'ar' ? 'تأكيد كلمة المرور' : 'Confirm Password'}</label>
                                         <div className="relative">
                                             <input 
                                                 type={showPassword.confirm ? "text" : "password"} 
@@ -1582,9 +1582,9 @@ export function ProfileDashboardClient({
 
                                 {invoices.length === 0 ? (
                                     <div className="text-center py-12 md:py-20 border border-dashed border-white/5 rounded-2xl md:rounded-3xl bg-white/2">
-                                        <FileText className="w-16 h-16 text-zinc-800 mx-auto mb-6 opacity-20" />
+                                        <FileText className="w-16 h-16 text-foreground/50 mx-auto mb-6 opacity-20" />
                                         <h3 className="text-white font-bold text-xl mb-2">{lang === 'ar' ? 'لا توجد فواتير' : 'No Invoices Yet'}</h3>
-                                        <p className="text-zinc-500">{lang === 'ar' ? 'سيتم عرض الفواتير المرسلة إليك هنا.' : 'Invoices sent to you will appear here.'}</p>
+                                        <p className="text-muted-foreground">{lang === 'ar' ? 'سيتم عرض الفواتير المرسلة إليك هنا.' : 'Invoices sent to you will appear here.'}</p>
                                     </div>
                                 ) : (
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
@@ -1628,7 +1628,7 @@ export function ProfileDashboardClient({
 
                                 {favorites.length === 0 ? (
                                     <div className="text-center py-12 md:py-20 border border-dashed border-white/5 rounded-2xl md:rounded-3xl bg-white/2">
-                                        <Heart className="w-16 h-16 text-zinc-800 mx-auto mb-6" />
+                                        <Heart className="w-16 h-16 text-foreground/50 mx-auto mb-6" />
                                         <h3 className="text-white font-bold text-xl mb-2">{lang === 'ar' ? 'قائمتك فارغة' : 'Your favorites are empty'}</h3>
                                         <p className="text-muted-foreground mb-4 md:mb-8">{lang === 'ar' ? 'اضغط على أيقونة القلب في المتجر لإضافة منتجات هنا.' : 'Click the heart icon in the store to add products here.'}</p>
                                         <Link href="/store" className="px-8 py-3 rounded-full bg-[#0066FF] text-foreground font-bold hover:scale-105 transition-transform inline-block">
@@ -1643,7 +1643,7 @@ export function ProfileDashboardClient({
                                                     {fav.product.image ? (
                                                         <img src={fav.product.image} alt={fav.product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                                     ) : (
-                                                        <div className="w-full h-full flex items-center justify-center text-zinc-700 bg-zinc-900">
+                                                        <div className="w-full h-full flex items-center justify-center text-muted-foreground/80 bg-zinc-900">
                                                             <ShoppingBag className="w-8 h-8" />
                                                         </div>
                                                     )}
@@ -1684,7 +1684,7 @@ export function ProfileDashboardClient({
 
                                 {wishlist.length === 0 ? (
                                     <div className="text-center py-12 md:py-20 border border-dashed border-white/5 rounded-2xl md:rounded-3xl bg-white/2">
-                                        <ShoppingBag className="w-16 h-16 text-zinc-800 mx-auto mb-6" />
+                                        <ShoppingBag className="w-16 h-16 text-foreground/50 mx-auto mb-6" />
                                         <h3 className="text-white font-bold text-xl mb-2">{lang === 'ar' ? 'قائمة الأماني فارغة' : 'Your wishlist is empty'}</h3>
                                         <p className="text-muted-foreground mb-4 md:mb-8">{lang === 'ar' ? 'اضغط على زر الحقيبة الصغير في المنتج لحفظه هنا.' : 'Click the small bag icon in the product to save it here.'}</p>
                                         <Link href="/store" className="px-8 py-3 rounded-full bg-[#0066FF] text-foreground font-bold hover:scale-105 transition-transform inline-block">
@@ -1699,7 +1699,7 @@ export function ProfileDashboardClient({
                                                     {item.product.image ? (
                                                         <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                                     ) : (
-                                                        <div className="w-full h-full flex items-center justify-center text-zinc-700 bg-zinc-900">
+                                                        <div className="w-full h-full flex items-center justify-center text-muted-foreground/80 bg-zinc-900">
                                                             <ShoppingBag className="w-8 h-8" />
                                                         </div>
                                                     )}
@@ -1738,7 +1738,7 @@ export function ProfileDashboardClient({
                                     </div>
                                     {lang === "ar" ? "المزيد" : "Menu"}
                                 </h2>
-                                <p className="mb-4 text-sm text-zinc-500">
+                                <p className="mb-4 text-sm text-muted-foreground">
                                     {lang === "ar"
                                         ? "جميع أقسام حسابك."
                                         : "All other account sections."}
@@ -1951,7 +1951,7 @@ export function ProfileDashboardClient({
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black uppercase tracking-widest text-[#0066FF] ml-2">{lang === 'ar' ? 'منصبك الوظيفي' : 'Your Position'} *</label>
                                         <div className="relative group">
-                                            <Briefcase className="absolute left-4 top-4 w-5 h-5 text-zinc-600 group-focus-within:text-[#0066FF] transition-colors" />
+                                            <Briefcase className="absolute left-4 top-4 w-5 h-5 text-muted-foreground group-focus-within:text-[#0066FF] transition-colors" />
                                             <input
                                                 type="text"
                                                 required
@@ -1966,7 +1966,7 @@ export function ProfileDashboardClient({
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black uppercase tracking-widest text-[#0066FF] ml-2">{lang === 'ar' ? 'رقم الواتساب' : 'WhatsApp Number'} *</label>
                                         <div className="relative group">
-                                            <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-zinc-600 group-focus-within:text-[#0066FF] transition-colors" />
+                                            <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-muted-foreground group-focus-within:text-[#0066FF] transition-colors" />
                                             <input
                                                 type="tel"
                                                 required
@@ -1983,14 +1983,14 @@ export function ProfileDashboardClient({
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black uppercase tracking-widest text-[#0066FF] ml-2">{lang === 'ar' ? 'المحافظة' : 'Governorate'} *</label>
                                     <div className="relative group">
-                                        <MapPin className="absolute left-4 top-4 w-5 h-5 text-zinc-600 group-focus-within:text-[#0066FF] transition-colors" />
+                                        <MapPin className="absolute left-4 top-4 w-5 h-5 text-muted-foreground group-focus-within:text-[#0066FF] transition-colors" />
                                         <select
                                             required
                                             className="w-full bg-zinc-900 border border-border rounded-2xl py-4 pl-12 pr-6 text-foreground focus:border-[#0066FF] font-medium outline-none transition-all appearance-none cursor-pointer text-sm"
                                             value={completionData.governorate}
                                             onChange={(e) => setCompletionData({...completionData, governorate: e.target.value})}
                                         >
-                                            <option value="" disabled className="text-zinc-700">{lang === 'ar' ? 'اختر المحافظة' : 'Select Governorate'}</option>
+                                            <option value="" disabled className="text-muted-foreground/80">{lang === 'ar' ? 'اختر المحافظة' : 'Select Governorate'}</option>
                                             {governorates.map((gov) => (
                                                 <option key={gov} value={gov} className="bg-zinc-900">{gov}</option>
                                             ))}
@@ -2015,7 +2015,7 @@ export function ProfileDashboardClient({
                                     <button
                                         type="button"
                                         onClick={() => setShowUpdateModal(false)}
-                                        className="w-full text-zinc-600 text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors py-6"
+                                        className="w-full text-muted-foreground text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors py-6"
                                     >
                                         {lang === 'ar' ? 'تذكيري لاحقاً' : 'Remind me later'}
                                     </button>
@@ -2093,8 +2093,8 @@ export function ProfileDashboardClient({
                                             viewInvoice.items.map((item: any, idx: number) => (
                                                 <div key={idx} className="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-border hover:bg-white/10 transition-colors">
                                                     <span className="flex-1 font-bold text-sm text-foreground text-start">{item.description}</span>
-                                                    <span className="w-20 text-center text-sm font-medium text-zinc-400">{item.quantity}</span>
-                                                    <span className="w-24 text-center text-sm font-medium text-zinc-400">{item.price}</span>
+                                                    <span className="w-20 text-center text-sm font-medium text-muted-foreground/70">{item.quantity}</span>
+                                                    <span className="w-24 text-center text-sm font-medium text-muted-foreground/70">{item.price}</span>
                                                     <span className="w-24 text-end font-black text-sm text-foreground pr-4">{(item.quantity * item.price).toFixed(2)}</span>
                                                 </div>
                                             ))

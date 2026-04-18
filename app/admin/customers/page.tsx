@@ -518,7 +518,7 @@ export default function AdminCustomers() {
                                                          </div>
                                                          <div className="space-y-1">
                                                              {o.items?.map((item: any, i: number) => (
-                                                                 <p key={i} className="text-xs text-zinc-400 truncate w-full">• {isAr ? item.product?.nameAr || item.product?.name : item.product?.name} (x{item.quantity})</p>
+                                                                 <p key={i} className="text-xs text-muted-foreground/70 truncate w-full">• {isAr ? item.product?.nameAr || item.product?.name : item.product?.name} (x{item.quantity})</p>
                                                              ))}
                                                          </div>
                                                          <div className="flex justify-between items-center pt-2 border-t border-border">
@@ -674,7 +674,7 @@ export default function AdminCustomers() {
                                         </div>
                                         <div className="pt-4 p-6 bg-[#0066FF]/5 rounded-4xl border border-[#0066FF]/10 flex items-start gap-4">
                                             <Shield className="w-6 h-6 text-[#0066FF] shrink-0" />
-                                            <p className="text-[10px] text-zinc-400 font-medium leading-relaxed italic">
+                                            <p className="text-[10px] text-muted-foreground/70 font-medium leading-relaxed italic">
                                                 {isAr 
                                                     ? 'من خلال إنشاء أو تحديث هذا الحساب، فإنك تؤكد أن بيانات المستخدم تتوافق مع سياسة الخصوصية ومعايير الأمان الخاصة بالموقع.' 
                                                     : "By creating or updating this account, you confirm that the user data complies with the site's privacy policy and security standards."}

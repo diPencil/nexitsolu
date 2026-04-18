@@ -291,7 +291,7 @@ export default function StorePage() {
                             )}
                         </div>
                     </div>
-                    <ShoppingBag className={`absolute bottom-[-20%] ${lang === 'ar' ? 'left-[-5%]' : 'right-[-5%]'} w-[40%] h-[40%] text-zinc-800/20 rotate-12 hidden lg:block`} />
+                    <ShoppingBag className={`absolute bottom-[-20%] ${lang === 'ar' ? 'left-[-5%]' : 'right-[-5%]'} w-[40%] h-[40%] text-foreground/50/20 rotate-12 hidden lg:block`} />
                 </div>
 
                 {/* Filters & Search */}
@@ -487,7 +487,7 @@ export default function StorePage() {
                 {/* No Results */}
                 {filteredProducts.length === 0 && (
                     <div className="py-24 text-center">
-                        <ShoppingBag className="w-12 h-12 text-zinc-800 mx-auto mb-6" />
+                        <ShoppingBag className="w-12 h-12 text-foreground/50 mx-auto mb-6" />
                         <h3 className="text-xl text-foreground font-medium mb-2">{t("store.no_products")}</h3>
                         <p className="text-muted-foreground/70">{t("store.no_products_desc")}</p>
                     </div>

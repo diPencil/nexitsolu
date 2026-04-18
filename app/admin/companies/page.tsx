@@ -261,7 +261,7 @@ export default function AdminCompanies() {
                 </div>
             ) : filteredCompanies.length === 0 ? (
                 <div className="py-32 text-center bg-card border border-border rounded-[2.5rem]">
-                    <Building2 className="w-16 h-16 text-zinc-900 mx-auto mb-6 opacity-20" />
+                    <Building2 className="w-16 h-16 text-foreground mx-auto mb-6 opacity-20" />
                     <p className="text-xl font-bold text-muted-foreground/40">{lang === 'ar' ? 'لا توجد شركات تطابق بحثك' : 'No companies found matching your search'}</p>
                 </div>
             ) : (

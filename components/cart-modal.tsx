@@ -72,7 +72,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                                     <div className="w-20 h-20 rounded-3xl bg-secondary border border-border flex items-center justify-center">
                                         <ShoppingCart className="w-8 h-8 text-muted-foreground" />
                                     </div>
-                                    <p className="text-sm font-medium text-zinc-400">
+                                    <p className="text-sm font-medium text-muted-foreground/70">
                                         {lang === 'ar' ? 'سلتك فارغة تماماً' : 'Your cart is empty'}
                                     </p>
                                     <button 
@@ -117,7 +117,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                                                     </div>
                                                     <button 
                                                         onClick={() => removeItem(item.id)}
-                                                        className="p-1.5 text-zinc-600 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                                                        className="p-1.5 text-muted-foreground hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
                                                     >
                                                         <Trash2 className="w-3.5 h-3.5" />
                                                     </button>

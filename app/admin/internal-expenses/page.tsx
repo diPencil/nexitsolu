@@ -275,7 +275,7 @@ export default function InternalExpensesPage() {
                                         transition={{ delay: i * 0.02 }}
                                         className="hover:bg-accent/30"
                                     >
-                                        <td className="px-4 py-3 text-zinc-400 whitespace-nowrap">
+                                        <td className="px-4 py-3 text-muted-foreground/70 whitespace-nowrap">
                                             {new Date(
                                                 r.spentAt
                                             ).toLocaleDateString(

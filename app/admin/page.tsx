@@ -96,7 +96,7 @@ export default function AdminDashboard() {
             {/* Header */}
             <div>
                 <h1 className="text-2xl font-bold mb-1">{lang === 'ar' ? 'لوحة القيادة' : 'Dashboard Overview'}</h1>
-                <p className="text-zinc-500 text-sm">{lang === 'ar' ? 'تابع أداء متجر نكست والطلبات.' : 'Track NexIT Store performance and orders.'}</p>
+                <p className="text-muted-foreground text-sm">{lang === 'ar' ? 'تابع أداء متجر نكست والطلبات.' : 'Track NexIT Store performance and orders.'}</p>
             </div>
 
             {/* Stats Grid */}
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
                             </div>
                             
                             <div>
-                                <p className="text-zinc-500 text-xs mb-1">{stat.label}</p>
+                                <p className="text-muted-foreground text-xs mb-1">{stat.label}</p>
                                 <p className="text-xl font-bold text-foreground group-hover:text-primary transition-all">{stat.value}</p>
                             </div>
                         </div>

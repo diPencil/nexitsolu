@@ -262,7 +262,7 @@ export function ChatBubble() {
                                                     {new Date(conv.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US')}
                                                 </p>
                                             </div>
-                                            <ArrowLeft className={`w-4 h-4 text-zinc-700 group-hover:text-[#0066FF] transition-all transform ${lang === 'ar' ? '' : 'rotate-180'}`} />
+                                            <ArrowLeft className={`w-4 h-4 text-muted-foreground/80 group-hover:text-[#0066FF] transition-all transform ${lang === 'ar' ? '' : 'rotate-180'}`} />
                                         </button>
                                     ))
                                 )}

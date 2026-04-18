@@ -162,6 +162,16 @@ body {
   --sidebar-accent-foreground: oklch(0.875 0.007 247);
   --sidebar-border: oklch(0.265 0.014 264);
   --sidebar-ring: oklch(0.60 0.23 264);
+
+  /* User Defined Semantic Tokens — mirror :root overrides so brand accent stays blue */
+  --bg-primary: var(--background);
+  --bg-secondary: var(--secondary);
+  --card-bg: var(--card);
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --border-color: var(--border);
+  --accent: var(--primary);
+  --accent-foreground: var(--primary-foreground);
 }
 
 @theme inline {

@@ -129,11 +129,11 @@ export default function ReviewsSection({
                             {[1, 2, 3, 4, 5].map(star => (
                                 <Star 
                                     key={star} 
-                                    className={`w-5 h-5 ${star <= Math.round(Number(averageRating)) ? 'fill-yellow-500 text-yellow-500' : 'text-zinc-700'}`} 
+                                    className={`w-5 h-5 ${star <= Math.round(Number(averageRating)) ? 'fill-yellow-500 text-yellow-500' : 'text-muted-foreground/40'}`} 
                                 />
                             ))}
                         </div>
-                        <p className="text-xs text-zinc-500">
+                        <p className="text-xs text-muted-foreground">
                             {lang === 'ar' ? `بناءً على ${reviews.length} تقييم` : `Based on ${reviews.length} reviews`}
                         </p>
                     </div>
@@ -154,7 +154,7 @@ export default function ReviewsSection({
                                             className="focus:outline-none transition-transform hover:scale-110"
                                         >
                                             <Star 
-                                                className={`w-8 h-8 ${(hoverRating || rating) >= star ? 'fill-yellow-500 text-yellow-500' : 'text-zinc-700'}`} 
+                                                className={`w-8 h-8 ${(hoverRating || rating) >= star ? 'fill-yellow-500 text-yellow-500' : 'text-muted-foreground/40'}`} 
                                             />
                                         </button>
                                     ))}
@@ -214,7 +214,7 @@ export default function ReviewsSection({
                                                 {[1, 2, 3, 4, 5].map(star => (
                                                     <Star 
                                                         key={star} 
-                                                        className={`w-3 h-3 ${star <= review.rating ? 'fill-yellow-500 text-yellow-500' : 'text-zinc-700'}`} 
+                                                        className={`w-3 h-3 ${star <= review.rating ? 'fill-yellow-500 text-yellow-500' : 'text-muted-foreground/40'}`} 
                                                     />
                                                 ))}
                                             </div>
@@ -266,7 +266,7 @@ export default function ReviewsSection({
                                                             ) : (
                                                                 <div className="flex items-center gap-2">
                                                                     <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center">
-                                                                        <User className="w-3 h-3 text-zinc-400" />
+                                                                        <User className="w-3 h-3 text-muted-foreground/60" />
                                                                     </div>
                                                                     <span className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">{review.user.name || 'Customer'}</span>
                                                                 </div>
